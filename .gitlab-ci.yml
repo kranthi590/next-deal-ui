@@ -1,0 +1,27 @@
+variables:
+  SERVICE_NAME: "nextdealapp"
+
+stages:
+  - build
+  - deploy
+
+image: google/cloud-sdk:alpine
+before_script:
+    - gcloud config set project ${GCP_PROJECT_ID}
+    - gcloud auth activate-service-account --key-file ${GOOGLE_CLOUD_CREDENTIALS}
+
+build:
+    stage: build
+    only:
+      - main
+    script:
+      - gcloud builds submit --tag gcr.io/${GCP_PROJECT_ID}/${SERVICE_NAME}
+
+
+deploy-dev:
+  environment: dev
+  stage: deploy
+  only:
+    - main
+  script:
+    - gcloud run deploy ${SERVICE_NAME} --image gcr.io/${GCP_PROJECT_ID}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="JWT_SECRET_KEY=${JWT_SECRET_KEY},JWT_SECRET_KEY_EXPIRE=1d" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50
