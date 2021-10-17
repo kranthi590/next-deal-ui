@@ -1,17 +1,12 @@
-import styles from '../styles/Home.module.css'
+import React from 'react';
+import SignInPage from "./signin";
+import {useAuth} from "../util/use-auth";
+import DashboardPage from "./dashboard";
 
-function Home({ health }) {
-  return (
-    <div className={styles.container}>
-      <h1>{health.status === 200 ? 'Im Healthy': 'Im Fractured' }</h1>
-    </div>
-  )
-};
+const homePage = () => {
+  const {authUser} = useAuth();
 
-Home.getInitialProps = async () => {
-    const res = await fetch('https://nextdealapi-al2of5j4vq-uc.a.run.app/health')
-    const json = await res.json()
-    return { health: json }
+  return authUser ? <DashboardPage/> : <SignInPage/>;
 }
 
-export default Home;
+export default homePage;

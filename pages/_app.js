@@ -1,7 +1,34 @@
-import '../styles/globals.css'
+import React from 'react';
+import Head from 'next/head'
+import withRedux from 'next-redux-wrapper';
+import 'antd/dist/antd.css';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+import "../public/vendors/style";
+import "../styles/style.css"
+import initStore from '../redux/store';
+import {Provider} from "react-redux";
+import LocaleProvider from "../app/core/LocaleProvider";
+import {AuthProvider} from "../util/use-auth";
+import Layout from "../app/core/Layout";
 
-export default MyApp
+const Page = ({Component, pageProps, store}) => {
+
+  return (
+    <React.Fragment>
+      <Head>
+        <title>NextDeal- Admin Dashboard</title>
+      </Head>
+      <Provider store={store}>
+        <AuthProvider>
+          <LocaleProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </LocaleProvider>
+        </AuthProvider>
+      </Provider>
+    </React.Fragment>
+  );
+};
+
+export default withRedux(initStore)(Page);
