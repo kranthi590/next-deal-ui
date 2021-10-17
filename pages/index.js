@@ -9,7 +9,7 @@ function Home({ health }) {
 };
 
 Home.getInitialProps = async () => {
-    const res = await fetch('https://service.nextdeal.dev/health')
+    const res = await fetch('https://nextdealapi-al2of5j4vq-uc.a.run.app/health')
     const json = await res.json()
     return { health: json }
 }
