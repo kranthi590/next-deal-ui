@@ -48,17 +48,16 @@ const useProviderRegistration = () => {
         }
       })
       .catch(function (error) {
-        callbackFun([])
         fetchError(error.message);
       });
   };
 
-  const fetchCommune = (params, callbackFun) => {
+  const fetchCommune = ({ regionId }, callbackFun) => {
     fetchStart();
     httpClient
-      .get(`${process.env.NEXT_PUBLIC_API_HOST}config/countries/cl/regions`, {
-        params,
-      })
+      .get(
+        `${process.env.NEXT_PUBLIC_API_HOST}config/countries/cl/regions/${regionId}/comunas`
+      )
       .then(({ data }) => {
         if (data.data) {
           fetchSuccess();

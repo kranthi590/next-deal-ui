@@ -1,5 +1,5 @@
 {
-  "name": "next-deal-ui-v1",
+  "name": "nextdeal-ui",
   "version": "2.5.0",
   "scripts": {
     "dev": "node server/index.js",
