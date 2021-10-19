@@ -37,14 +37,14 @@ const BuyerRegistration = (props) => {
 
   useEffect(() => {
     fetchRegions(({ regions }) => {
-      console.log("regions", regions)
       setRegions(regions);
     });
   }, []);
 
   const regionChangeHandler = (value) => {
-    fetchCommune({}, ({ regions }) => {
-      setCommunes(regions);
+    fetchCommune({ regionId: value }, (data) => {
+      const communes = data && data.length > 0 ? data[0] : [];
+      setCommunes(communes);
     });
   };
 
@@ -61,6 +61,7 @@ const BuyerRegistration = (props) => {
       phoneNumber2,
       phone1_prefix,
       phone2_prefix,
+      webSiteUrl,
       ...rest
     } = values;
     const formData = {
@@ -72,12 +73,13 @@ const BuyerRegistration = (props) => {
         countryId: 0,
         emailId,
         phoneNumber1: `${phone1_prefix}${phoneNumber1}`,
-        phoneNumber2: `${phone2_prefix}${phoneNumber2}`,
+        phoneNumber2: `${phone2_prefix || ""}${phoneNumber2 || "5600000000"}`,
       },
-      emailId,
       ...rest,
       iAccept,
-      additionalData: "Test",
+      additionalData: "test data",
+      webSiteUrl: webSiteUrl || "",
+      emailId,
     };
     console.log(formData);
 

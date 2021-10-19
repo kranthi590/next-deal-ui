@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Checkbox, Form, Input, Select, Divider } from "antd";
 import Link from "next/link";
 
@@ -20,6 +20,8 @@ const { Option } = Select;
 const SignUp = (props) => {
   const { isLoading, userSignup, getAuthUser } = useAuth();
 
+  const [iAccept, setIAccept] = useState(false);
+
   const getFormData = (data) => {
     return {
       firstName: data.firstName,
@@ -29,14 +31,15 @@ const SignUp = (props) => {
       additionalData: "none",
       type: "buyer",
       buyerId: 1,
+      iAccept,
       contactInfo: {
-        addressLine1: "",
-        addressLine2: "",
+        addressLine1: "Dept: 34",
+        addressLine2: "Del Inca 4421",
         communeId: 1,
         regionId: 1,
         countryId: 1,
-        phoneNumber1: "",
-        emailId: "",
+        phoneNumber1: "+56 935234098",
+        emailId: data.email,
       },
     };
   };
@@ -49,14 +52,6 @@ const SignUp = (props) => {
       getAuthUser();
     });
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="56">+56</Option>
-      </Select>
-    </Form.Item>
-  );
 
   return (
     <div className="gx-app-login-wrap registration-container">
@@ -171,8 +166,16 @@ const SignUp = (props) => {
                   />
                 </Form.Item>
 
-                <Form.Item>
-                  <Checkbox>
+                <Form.Item
+                  name="iAccept"
+                  rules={[
+                    {
+                      required: !iAccept,
+                      message: "Please accept!",
+                    },
+                  ]}
+                >
+                  <Checkbox onChange={() => setIAccept(!iAccept)}>
                     <IntlMessages id="appModule.iAccept" />
                   </Checkbox>
                   <span className="gx-signup-form-forgot gx-link">
