@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Layout, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
+import { NotificationContainer } from "react-notifications";
 
 import HorizontalDefault from "../Topbar/HorizontalDefault";
 import HorizontalDark from "../Topbar/HorizontalDark";
@@ -175,6 +176,7 @@ const AppLayout = ({ children }) => {
             </div>
           </Footer>
         </Content>
+        <NotificationContainer />
       </Layout>
     </Layout>
   );
