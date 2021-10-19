@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip } from "antd";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -12,6 +8,7 @@ import { useRouter } from "next/router";
 import IntlMessages from "../../../util/IntlMessages";
 import { useAuth } from "../../../util/use-auth";
 import { useRegistration } from "../../../util/business-registration";
+import { NOTIFICATION_TIMEOUT, successNotification } from "../../../util/util";
 
 // Components
 import CircularProgress from "../../../app/components/CircularProgress";
@@ -85,8 +82,10 @@ const BuyerRegistration = (props) => {
 
     registerBuyer(formData, (data) => {
       console.log(data);
-      router.push("/signup");
-      NotificationManager.success("Details saved successfully!");
+      successNotification("Details saved successfully!");
+      setTimeout(() => {
+        router.push("/signup");
+      }, NOTIFICATION_TIMEOUT);
     });
   };
 
@@ -380,7 +379,6 @@ const BuyerRegistration = (props) => {
           <CircularProgress />
         </div>
       )}
-      <NotificationContainer />
     </div>
   );
 };
