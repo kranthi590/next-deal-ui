@@ -6,6 +6,7 @@ import Link from "next/link";
 import IntlMessages from "../../../util/IntlMessages";
 import { useAuth } from "../../../util/use-auth";
 import { useRegistration } from "../../../util/business-registration";
+import { NOTIFICATION_TIMEOUT, successNotification } from "../../../util/utils";
 
 // Components
 import CircularProgress from "../../../app/components/CircularProgress";
@@ -23,12 +24,13 @@ const { Option } = Select;
 const SupplierRegistration = (props) => {
   const { isLoading } = useAuth();
 
-  const { fetchRegions, fetchCommune } = useRegistration();
+  const { fetchRegions, fetchCommune, registerSupplier } = useRegistration();
 
   const [type, setType] = useState("");
   const [sameAsBusiness, setSameAsBusiness] = useState(false);
-  const [regions, setRegions] = useState(false);
-  const [communes, setCommunes] = useState(false);
+  const [regions, setRegions] = useState([]);
+  const [communes1, setCommunes1] = useState([]);
+  const [communes2, setCommunes2] = useState([]);
   const [iAccept, setIAccept] = useState(false);
 
   useEffect(() => {
@@ -41,9 +43,17 @@ const SupplierRegistration = (props) => {
     setType(value);
   };
 
-  const regionChangeHandler = (value) => {
-    fetchCommune({}, ({ regions }) => {
-      setCommunes(regions);
+  const businessRegionChangeHandler = (value) => {
+    fetchCommune({ regionId: value }, (data) => {
+      const communes = data && data.length > 0 ? data[0] : [];
+      setCommunes1(communes);
+    });
+  };
+
+  const billingRegionChangeHandler = (value) => {
+    fetchCommune({ regionId: value }, (data) => {
+      const communes = data && data.length > 0 ? data[0] : [];
+      setCommunes2(communes);
     });
   };
 
@@ -53,20 +63,63 @@ const SupplierRegistration = (props) => {
 
   const getFormData = (data) => {
     return {
-      inchargeContactInfo: {},
+      inchargeContactInfo: {
+        addressLine1: "Del Inca 4421",
+        addressLine2: "Dept: 34",
+        communeId: 109,
+        regionId: 7,
+        countryId: 1,
+        emailId: data["bcontact_email"] || "",
+        phoneNumber1: "+56 935234098",
+      },
+      businessAddress: {
+        addressLine1: data["business_address1"],
+        addressLine2: data["business_address2"],
+        communeId: data["business_commune"],
+        regionId: data["business_region"],
+        countryId: 1,
+        emailId: data["business_email"],
+        phoneNumber1: data["business_telephone1"],
+      },
+      billingAddress: {
+        addressLine1: data["billing_address1"] || "",
+        addressLine2: data["billing_address2"] || "",
+        communeId: data["billing_commune"] || "",
+        regionId: data["billing_region"] || "",
+        countryId: 1,
+        emailId: "kkranthi@nisum.com",
+        phoneNumber1: data["billing_telephone1"] || "",
+      },
+      legalName: data["business_businessName"],
+      fantasyName: data["business_fantasyName"],
+      rut: data["business_rut"],
+      webSiteUrl: data["business_webURL"],
+      emailId: "pasala.kk@gmail.com",
+      logoUrl:
+        "https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg",
+      isShared: true,
+      inchargeFullName: `${data["bcontact_name"] || ""} ${
+        data["bcontact_surname"] || ""
+      }`,
+      inchargeRole: "Owner",
+      categories: data["business_category"],
+      serviceLocations: data["service_locations"],
+      type: type,
     };
   };
 
   const onFinishFailed = (errorInfo) => {};
 
   const onFinish = (values) => {
-    const formData = {
-      ...values,
-      sameAsBusiness,
-      iAccept,
-    };
+    console.log(getFormData(values));
 
-    console.log(formData);
+    registerSupplier(getFormData(values), (data) => {
+      console.log(data);
+      successNotification("Details saved successfully!");
+      setTimeout(() => {
+        router.push("/signup");
+      }, NOTIFICATION_TIMEOUT);
+    });
   };
 
   return (
@@ -104,7 +157,7 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input your username!",
+                        message: "Please input your Fantasy Name!",
                       },
                     ]}
                   >
@@ -184,7 +237,7 @@ const SupplierRegistration = (props) => {
                     <Select
                       size="large"
                       placeholder="Please select Region"
-                      onChange={regionChangeHandler}
+                      onChange={businessRegionChangeHandler}
                     >
                       <Option value=""></Option>
                       {regions &&
@@ -214,10 +267,10 @@ const SupplierRegistration = (props) => {
                     <Select
                       size="large"
                       placeholder="Select your service locations"
-                      onChange={regionChangeHandler}
                       mode="multiple"
                     >
                       <Option value=""></Option>
+                      {/* TODO: Change this to locations */}
                       {regions &&
                         regions.map((region) => (
                           <Option
@@ -244,8 +297,8 @@ const SupplierRegistration = (props) => {
                   >
                     <Select size="large" placeholder="Please select Commune">
                       <Option value=""></Option>
-                      {communes &&
-                        communes.map((commune) => (
+                      {communes1 &&
+                        communes1.map((commune) => (
                           <Option
                             key={commune.id + commune.name}
                             value={commune.id}
@@ -311,7 +364,7 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     label="Business Email"
-                    name="email"
+                    name="business_email"
                     rules={[
                       {
                         required: true,
@@ -415,7 +468,7 @@ const SupplierRegistration = (props) => {
                       <Select
                         size="large"
                         placeholder="Please select Region"
-                        onChange={regionChangeHandler}
+                        onChange={billingRegionChangeHandler}
                       >
                         <Option value=""></Option>
                         {regions &&
@@ -434,8 +487,8 @@ const SupplierRegistration = (props) => {
                     <FormItem label="Commune" name="billing_commune">
                       <Select size="large" placeholder="Please select Commune">
                         <Option value=""></Option>
-                        {communes &&
-                          communes.map((commune) => (
+                        {communes2 &&
+                          communes2.map((commune) => (
                             <Option
                               key={commune.id + commune.name}
                               value={commune.id}

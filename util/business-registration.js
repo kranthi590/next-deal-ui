@@ -88,11 +88,29 @@ const useProviderRegistration = () => {
       });
   };
 
+  const registerSupplier = (data, callbackFun) => {
+    fetchStart();
+    httpClient
+      .post("supplier/register", data)
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
     fetchRegions,
     fetchCommune,
     registerBuyer,
+    registerSupplier,
   };
 };
