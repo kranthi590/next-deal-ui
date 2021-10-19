@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import IntlMessages from "../../../util/IntlMessages";
 import { useAuth } from "../../../util/use-auth";
 import { useRegistration } from "../../../util/business-registration";
-import { NOTIFICATION_TIMEOUT, successNotification } from "../../../util/util";
+import {errorNotification, NOTIFICATION_TIMEOUT, successNotification} from "../../../util/util";
 
 // Components
 import CircularProgress from "../../../app/components/CircularProgress";
@@ -25,7 +25,7 @@ const { Option } = Select;
 const BuyerRegistration = (props) => {
   const router = useRouter();
   const { isLoading } = useAuth();
-  const { fetchRegions, fetchCommune, registerBuyer } = useRegistration();
+  const { fetchRegions, fetchCommune, registerBuyer, error } = useRegistration();
 
   const [regions, setRegions] = useState([]);
   const [communes, setCommunes] = useState([]);
@@ -379,6 +379,11 @@ const BuyerRegistration = (props) => {
           <CircularProgress />
         </div>
       )}
+      {
+        error && (
+          errorNotification(error)
+        )
+      }
     </div>
   );
 };

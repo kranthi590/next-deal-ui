@@ -13,12 +13,15 @@ import Footer from "../../../app/components/Footer";
 
 // Styles
 import "../../../styles/form-page.css";
+import {errorNotification, NOTIFICATION_TIMEOUT, successNotification} from "../../../util/util";
+import {useRouter} from "next/router";
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
 const SignUp = (props) => {
-  const { isLoading, userSignup, getAuthUser } = useAuth();
+  const router = useRouter();
+  const { isLoading, userSignup, getAuthUser, error } = useAuth();
 
   const [iAccept, setIAccept] = useState(false);
 
@@ -49,7 +52,10 @@ const SignUp = (props) => {
   const onFinish = (values) => {
     console.log(getFormData(values));
     userSignup(getFormData(values), () => {
-      getAuthUser();
+      successNotification("Details saved successfully!");
+      setTimeout(() => {
+      }, NOTIFICATION_TIMEOUT);
+      router.push("/signin");
     });
   };
 
@@ -208,6 +214,11 @@ const SignUp = (props) => {
           <CircularProgress />
         </div>
       )}
+      {
+        error && (
+          errorNotification(error)
+        )
+      }
     </div>
   );
 };
