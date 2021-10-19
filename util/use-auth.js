@@ -69,9 +69,6 @@ const useProvideAuth = () => {
       .then(({ data }) => {
         if (data.result) {
           fetchSuccess();
-          setAuthToken(data?.token?.access_token);
-          const cookies = new Cookies();
-          cookies.set("token", data.token.access_token);
           if (callbackFun) callbackFun(data);
         } else {
           fetchError(data.error);
@@ -168,8 +165,6 @@ export const isUnRestrictedRoute = (pathname) => {
   return (
     pathname === "/signin" ||
     pathname === "/signup" ||
-    pathname === "/forgot-password" ||
-    pathname === "/reset-password" ||
     pathname === "/buyer-registration" ||
     pathname === "/supplier-registration"
   );

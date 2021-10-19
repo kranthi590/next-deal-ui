@@ -162,7 +162,10 @@ const AppLayout = ({ children }) => {
   }
 
   return isUnRestrictedRoute(router.pathname) ? (
-    <Layout className={`gx-app-layout`}>{children}</Layout>
+    <Layout className={`gx-app-layout`}>
+      {children}
+      <NotificationContainer />
+    </Layout>
   ) : (
     <Layout className={`gx-app-layout`}>
       <AppSidebar navStyle={navStyle} />
