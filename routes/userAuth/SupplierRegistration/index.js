@@ -6,7 +6,7 @@ import Link from "next/link";
 import IntlMessages from "../../../util/IntlMessages";
 import { useAuth } from "../../../util/use-auth";
 import { useRegistration } from "../../../util/business-registration";
-import { NOTIFICATION_TIMEOUT, successNotification } from "../../../util/utils";
+import {errorNotification, NOTIFICATION_TIMEOUT, successNotification} from "../../../util/util";
 
 // Components
 import CircularProgress from "../../../app/components/CircularProgress";
@@ -24,7 +24,7 @@ const { Option } = Select;
 const SupplierRegistration = (props) => {
   const { isLoading } = useAuth();
 
-  const { fetchRegions, fetchCommune, registerSupplier } = useRegistration();
+  const { fetchRegions, fetchCommune, registerSupplier, error } = useRegistration();
 
   const [type, setType] = useState("");
   const [sameAsBusiness, setSameAsBusiness] = useState(false);
@@ -63,15 +63,6 @@ const SupplierRegistration = (props) => {
 
   const getFormData = (data) => {
     return {
-      inchargeContactInfo: {
-        addressLine1: "Del Inca 4421",
-        addressLine2: "Dept: 34",
-        communeId: 109,
-        regionId: 7,
-        countryId: 1,
-        emailId: data["bcontact_email"] || "",
-        phoneNumber1: "+56 935234098",
-      },
       businessAddress: {
         addressLine1: data["business_address1"],
         addressLine2: data["business_address2"],
@@ -82,13 +73,13 @@ const SupplierRegistration = (props) => {
         phoneNumber1: data["business_telephone1"],
       },
       billingAddress: {
-        addressLine1: data["billing_address1"] || "",
-        addressLine2: data["billing_address2"] || "",
-        communeId: data["billing_commune"] || "",
-        regionId: data["billing_region"] || "",
+        addressLine1: data["billing_address1"],
+        addressLine2: data["billing_address2"],
+        communeId: data["billing_commune"],
+        regionId: data["billing_region"],
         countryId: 1,
         emailId: "kkranthi@nisum.com",
-        phoneNumber1: data["billing_telephone1"] || "",
+        phoneNumber1: data["billing_telephone1"],
       },
       legalName: data["business_businessName"],
       fantasyName: data["business_fantasyName"],
@@ -98,13 +89,13 @@ const SupplierRegistration = (props) => {
       logoUrl:
         "https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg",
       isShared: true,
-      inchargeFullName: `${data["bcontact_name"] || ""} ${
+      inchargeFullName: `${data["bcontact_name"]} ${
         data["bcontact_surname"] || ""
       }`,
       inchargeRole: "Owner",
       categories: data["business_category"],
       serviceLocations: data["service_locations"],
-      type: type,
+      type: data["business_type"],
     };
   };
 
@@ -573,6 +564,9 @@ const SupplierRegistration = (props) => {
           <CircularProgress />
         </div>
       )}
+      {error && (
+          errorNotification(error)
+        )}
     </div>
   );
 };
