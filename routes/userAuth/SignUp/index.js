@@ -50,7 +50,6 @@ const SignUp = (props) => {
   const onFinishFailed = (errorInfo) => {};
 
   const onFinish = (values) => {
-    console.log(getFormData(values));
     userSignup(getFormData(values), () => {
       successNotification("Details saved successfully!");
       setTimeout(() => {

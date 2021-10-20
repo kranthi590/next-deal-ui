@@ -67,8 +67,9 @@ const useProvideAuth = () => {
     httpClient
       .post("user/register", data)
       .then(({ data }) => {
-        if (data.result) {
+        if (data) {
           fetchSuccess();
+          console.log("coming")
           if (callbackFun) callbackFun(data);
         } else {
           fetchError(data.error);
