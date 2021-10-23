@@ -1,7 +1,7 @@
 import React from 'react';
 import asyncComponent from '../../util/asyncComponent'
 
-const Dashboard = asyncComponent(() => import('../../routes/Dashboard'));
+const Dashboard = asyncComponent(() => import('../../routes/CreateProject'));
 
 const DashboardPage = () => <Dashboard/>;
 

@@ -48,10 +48,12 @@ const useProvideAuth = () => {
         if (data) {
           fetchSuccess();
           const cookies = new Cookies();
+          let expiryTime = new Date();
+          expiryTime.setDate(expiryTime.getDate() + 1);
           const expires = (new Date(Date.now()+ 86400*1000)).toUTCString();
           cookies.set("token", data.token, {
             path: '/',
-            expires: expires + 86400,
+            expires: expiryTime,
             secure: false
           });
           setAuthUser(data.user);

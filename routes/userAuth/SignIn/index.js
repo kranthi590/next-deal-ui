@@ -51,7 +51,7 @@ const SignIn = (props) => {
                 className="gx-signin-form gx-form-row0"
               >
                 <Form.Item
-                  name="emailId"
+                  name="email"
                   label="Email"
                   initialValue="pasala.kk@gmail.com"
                   rules={[
