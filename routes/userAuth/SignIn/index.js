@@ -14,9 +14,10 @@ import Footer from "../../../app/components/Footer";
 
 // Styles
 import "../../../styles/form-page.css";
+import {errorNotification} from "../../../util/util";
 
 const SignIn = (props) => {
-  const { isLoading, userLogin } = useAuth();
+  const { isLoading, userLogin, error } = useAuth();
 
   const onFinishFailed = (errorInfo) => {};
 
@@ -50,9 +51,9 @@ const SignIn = (props) => {
                 className="gx-signin-form gx-form-row0"
               >
                 <Form.Item
-                  name="email"
+                  name="emailId"
                   label="Email"
-                  initialValue="demo@example.com"
+                  initialValue="pasala.kk@gmail.com"
                   rules={[
                     {
                       required: true,
@@ -64,7 +65,7 @@ const SignIn = (props) => {
                 </Form.Item>
                 <Form.Item
                   label="Password"
-                  initialValue="demo#123"
+                  initialValue="konahamaru"
                   rules={[
                     { required: true, message: "Please input your Password!" },
                   ]}
@@ -112,6 +113,11 @@ const SignIn = (props) => {
           <CircularProgress />
         </div>
       )}
+      {
+        error && (
+          errorNotification(error)
+        )
+      }
     </div>
   );
 };

@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, Select, Col, Row } from "antd";
+import React, {useEffect, useState} from "react";
+import {Button, Checkbox, Form, Input, Select, Col, Row} from "antd";
 import Link from "next/link";
 
 // Utils
 import IntlMessages from "../../../util/IntlMessages";
-import { useAuth } from "../../../util/use-auth";
-import { useRegistration } from "../../../util/business-registration";
-import {errorNotification, NOTIFICATION_TIMEOUT, successNotification} from "../../../util/util";
+import {useAuth} from "../../../util/use-auth";
+import {useRegistration} from "../../../util/business-registration";
+import {
+  errorNotification,
+  NOTIFICATION_TIMEOUT,
+  successNotification,
+} from "../../../util/util";
 
 // Components
 import CircularProgress from "../../../app/components/CircularProgress";
@@ -18,15 +22,17 @@ import Footer from "../../../app/components/Footer";
 import "../../../styles/form-page.css";
 
 const FormItem = Form.Item;
-const { TextArea } = Input;
-const { Option } = Select;
+const {TextArea} = Input;
+const {Option} = Select;
 
 const SupplierRegistration = (props) => {
-  const { isLoading } = useAuth();
+  const {isLoading} = useAuth();
 
-  const { fetchRegions, fetchCommune, registerSupplier, error } = useRegistration();
+  const {fetchRegions, fetchCommune, registerSupplier, error} =
+    useRegistration();
 
-  const [type, setType] = useState("");
+  const [form] = Form.useForm();
+
   const [sameAsBusiness, setSameAsBusiness] = useState(false);
   const [regions, setRegions] = useState([]);
   const [communes1, setCommunes1] = useState([]);
@@ -34,24 +40,28 @@ const SupplierRegistration = (props) => {
   const [iAccept, setIAccept] = useState(false);
 
   useEffect(() => {
-    fetchRegions(({ regions }) => {
+    fetchRegions(({regions}) => {
       setRegions(regions);
     });
   }, []);
 
-  const typeChangeHandler = (value) => {
-    setType(value);
-  };
-
   const businessRegionChangeHandler = (value) => {
-    fetchCommune({ regionId: value }, (data) => {
+    form.setFieldsValue({
+      business_commune: "",
+    });
+    setCommunes1([]);
+    fetchCommune({regionId: value}, (data) => {
       const communes = data && data.length > 0 ? data[0] : [];
       setCommunes1(communes);
     });
   };
 
   const billingRegionChangeHandler = (value) => {
-    fetchCommune({ regionId: value }, (data) => {
+    form.setFieldsValue({
+      billing_commune: "",
+    });
+    setCommunes2([]);
+    fetchCommune({regionId: value}, (data) => {
       const communes = data && data.length > 0 ? data[0] : [];
       setCommunes2(communes);
     });
@@ -61,26 +71,37 @@ const SupplierRegistration = (props) => {
     setSameAsBusiness(!sameAsBusiness);
   };
 
+  const prefixSelector = (name) => (
+    <Form.Item name={name} noStyle>
+      <Select style={{width: 70}} defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}>
+        <Option value="56">+56</Option>
+      </Select>
+    </Form.Item>
+  );
+
   const getFormData = (data) => {
+    const businessAddress = {
+      addressLine1: data["business_address1"],
+      addressLine2: data["business_address2"],
+      communeId: data["business_commune"],
+      regionId: data["business_region"],
+      countryId: 1,
+      emailId: data["business_email"],
+      phoneNumber1: data["business_telephone1"],
+    };
     return {
-      businessAddress: {
-        addressLine1: data["business_address1"],
-        addressLine2: data["business_address2"],
-        communeId: data["business_commune"],
-        regionId: data["business_region"],
-        countryId: 1,
-        emailId: data["business_email"],
-        phoneNumber1: data["business_telephone1"],
-      },
-      billingAddress: {
-        addressLine1: data["billing_address1"],
-        addressLine2: data["billing_address2"],
-        communeId: data["billing_commune"],
-        regionId: data["billing_region"],
-        countryId: 1,
-        emailId: "kkranthi@nisum.com",
-        phoneNumber1: data["billing_telephone1"],
-      },
+      businessAddress,
+      billingAddress: sameAsBusiness
+        ? businessAddress
+        : {
+          addressLine1: data["billing_address1"],
+          addressLine2: data["billing_address2"],
+          communeId: data["billing_commune"],
+          regionId: data["billing_region"],
+          countryId: 1,
+          emailId: "kkranthi@nisum.com",
+          phoneNumber1: data["billing_telephone1"],
+        },
       legalName: data["business_businessName"],
       fantasyName: data["business_fantasyName"],
       rut: data["business_rut"],
@@ -92,14 +113,15 @@ const SupplierRegistration = (props) => {
       inchargeFullName: `${data["bcontact_name"]} ${
         data["bcontact_surname"] || ""
       }`,
-      inchargeRole: "Owner",
+      inchargeRole: data["bcontact_charge"],
       categories: data["business_category"],
       serviceLocations: data["service_locations"],
       type: data["business_type"],
     };
   };
 
-  const onFinishFailed = (errorInfo) => {};
+  const onFinishFailed = (errorInfo) => {
+  };
 
   const onFinish = (values) => {
     console.log(getFormData(values));
@@ -115,7 +137,7 @@ const SupplierRegistration = (props) => {
 
   return (
     <div className="gx-app-login-wrap registration-container">
-      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount" />
+      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount"/>
       <div className="right-aside">
         <div className="form-container">
           <div className="gx-app-login-content registration-form">
@@ -124,14 +146,15 @@ const SupplierRegistration = (props) => {
               <p>
                 <Link href="/signin">
                   <a>
-                    <IntlMessages id="app.userAuth.login" />
+                    <IntlMessages id="app.userAuth.login"/>
                   </a>
                 </Link>
               </p>
             </div>
             <Form
               layout="inline"
-              initialValues={{ remember: true }}
+              form={form}
+              initialValues={{remember: true}}
               name="basic"
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
@@ -139,7 +162,7 @@ const SupplierRegistration = (props) => {
             >
               <Row gutter={24} className="bottom-divider">
                 <Col xs={24}>
-                  <WidgetHeader title="Business Information" />
+                  <WidgetHeader title="Business Information"/>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
@@ -152,7 +175,7 @@ const SupplierRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Fantasy Name" />
+                    <Input size="large" placeholder="Fantasy Name"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -166,7 +189,7 @@ const SupplierRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Business Name" />
+                    <Input size="large" placeholder="Business Name"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -174,10 +197,10 @@ const SupplierRegistration = (props) => {
                     name="business_rut"
                     label="RUT"
                     rules={[
-                      { required: true, message: "Please input your rut!" },
+                      {required: true, message: "Please input your rut!"},
                     ]}
                   >
-                    <Input size="large" placeholder="RUT" />
+                    <Input size="large" placeholder="RUT"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -232,14 +255,14 @@ const SupplierRegistration = (props) => {
                     >
                       <Option value=""></Option>
                       {regions &&
-                        regions.map((region) => (
-                          <Option
-                            key={region.id + region.name}
-                            value={region.id}
-                          >
-                            {region.name}
-                          </Option>
-                        ))}
+                      regions.map((region) => (
+                        <Option
+                          key={region.id + region.name}
+                          value={region.id}
+                        >
+                          {region.name}
+                        </Option>
+                      ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -263,14 +286,14 @@ const SupplierRegistration = (props) => {
                       <Option value=""></Option>
                       {/* TODO: Change this to locations */}
                       {regions &&
-                        regions.map((region) => (
-                          <Option
-                            key={region.id + region.name}
-                            value={region.id}
-                          >
-                            {region.name}
-                          </Option>
-                        ))}
+                      regions.map((region) => (
+                        <Option
+                          key={region.id + region.name}
+                          value={region.id}
+                        >
+                          {region.name}
+                        </Option>
+                      ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -289,14 +312,14 @@ const SupplierRegistration = (props) => {
                     <Select size="large" placeholder="Please select Commune">
                       <Option value=""></Option>
                       {communes1 &&
-                        communes1.map((commune) => (
-                          <Option
-                            key={commune.id + commune.name}
-                            value={commune.id}
-                          >
-                            {commune.name}
-                          </Option>
-                        ))}
+                      communes1.map((commune) => (
+                        <Option
+                          key={commune.id + commune.name}
+                          value={commune.id}
+                        >
+                          {commune.name}
+                        </Option>
+                      ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -305,11 +328,11 @@ const SupplierRegistration = (props) => {
                     name="business_webURL"
                     label="Web URL"
                     rules={[
-                      { required: false },
-                      { type: "url", warningOnly: true },
+                      {required: false},
+                      {type: "url", warningOnly: true},
                     ]}
                   >
-                    <Input size="large" placeholder="https://example.com" />
+                    <Input size="large" placeholder="https://example.com"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -323,11 +346,7 @@ const SupplierRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Select
-                      size="large"
-                      placeholder="Please select type"
-                      onChange={typeChangeHandler}
-                    >
+                    <Select size="large" placeholder="Please select type">
                       <Option value="supplier">Emprendedor</Option>
                       <Option value="buyer">Pyme</Option>
                     </Select>
@@ -344,12 +363,17 @@ const SupplierRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Telephone1" />
+                    <Input
+                      size="large"
+                      addonBefore={prefixSelector("business_telephone1")}
+                      placeholder="Telephone1"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem label="Telephone2" name="business_telephone2">
-                    <Input placeholder="Telephone2" />
+                    <Input placeholder="Telephone2"
+                           addonBefore={prefixSelector("business_telephone2")}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -364,7 +388,7 @@ const SupplierRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email" />
+                    <Input size="large" placeholder="Email"/>
                   </FormItem>
                 </Col>
                 <Col xs={24}>
@@ -418,7 +442,7 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col xs={24}>
                   <FormItem label="Comments" name="business_supplier_info">
-                    <TextArea placeholder="services offer" autosize />
+                    <TextArea placeholder="services offer" autosize/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -436,7 +460,7 @@ const SupplierRegistration = (props) => {
               {!sameAsBusiness && (
                 <Row gutter={24} className="bottom-divider">
                   <Col xs={24}>
-                    <WidgetHeader title="Billing Information" />
+                    <WidgetHeader title="Billing Information"/>
                   </Col>
                   <Col sm={12} xs={24}>
                     <FormItem label="Address 1" name="billing_address1">
@@ -463,14 +487,14 @@ const SupplierRegistration = (props) => {
                       >
                         <Option value=""></Option>
                         {regions &&
-                          regions.map((region) => (
-                            <Option
-                              key={region.id + region.name}
-                              value={region.id}
-                            >
-                              {region.name}
-                            </Option>
-                          ))}
+                        regions.map((region) => (
+                          <Option
+                            key={region.id + region.name}
+                            value={region.id}
+                          >
+                            {region.name}
+                          </Option>
+                        ))}
                       </Select>
                     </FormItem>
                   </Col>
@@ -479,42 +503,50 @@ const SupplierRegistration = (props) => {
                       <Select size="large" placeholder="Please select Commune">
                         <Option value=""></Option>
                         {communes2 &&
-                          communes2.map((commune) => (
-                            <Option
-                              key={commune.id + commune.name}
-                              value={commune.id}
-                            >
-                              {commune.name}
-                            </Option>
-                          ))}
+                        communes2.map((commune) => (
+                          <Option
+                            key={commune.id + commune.name}
+                            value={commune.id}
+                          >
+                            {commune.name}
+                          </Option>
+                        ))}
                       </Select>
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
                     <FormItem label="Telephone1" name="billing_telephone1">
-                      <Input size="large" placeholder="Telephone1" />
+                      <Input
+                        size="large"
+                        placeholder="Telephone1"
+                        addonBefore={prefixSelector("billing_telephone1")}
+                      />
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
                     <FormItem label="Telephone2" name="billing_telephone2">
-                      <Input size="large" placeholder="Telephone2" />
+                      <Input
+                        size="large"
+                        placeholder="Telephone2"
+                        addonBefore={prefixSelector("billing_telephone2")}
+                      />
                     </FormItem>
                   </Col>
                 </Row>
               )}
 
-              <Row gutter={24} style={{ marginBottom: 20 }}>
+              <Row gutter={24} style={{marginBottom: 20}}>
                 <Col xs={24}>
-                  <WidgetHeader title="Business Contact in Charge" />
+                  <WidgetHeader title="Business Contact in Charge"/>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem label="Name" name="bcontact_name">
-                    <Input size="large" placeholder="Name" />
+                    <Input size="large" placeholder="Name"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem label="Surname" name="bcontact_surname">
-                    <Input size="large" placeholder="Surname" />
+                    <Input size="large" placeholder="Surname"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -529,44 +561,42 @@ const SupplierRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email" />
+                    <Input size="large" placeholder="Email"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem label="Charge" name="bcontact_charge">
-                    <Input size="large" placeholder="Charge" />
+                    <Input size="large" placeholder="Charge"/>
                   </FormItem>
                 </Col>
               </Row>
 
               <Form.Item>
                 <Checkbox onChange={() => setIAccept(!iAccept)}>
-                  <IntlMessages id="appModule.iAccept" />
+                  <IntlMessages id="appModule.iAccept"/>
                 </Checkbox>
                 <span className="gx-signup-form-forgot gx-link">
-                  <IntlMessages id="appModule.termAndCondition" />
+                  <IntlMessages id="appModule.termAndCondition"/>
                 </span>
               </Form.Item>
               <FormItem>
                 <div>
                   <Button type="primary" className="gx-mb-0" htmlType="submit">
-                    <IntlMessages id="app.userAuth.signUp" />
+                    <IntlMessages id="app.userAuth.signUp"/>
                   </Button>
                 </div>
               </FormItem>
             </Form>
           </div>
         </div>
-        <Footer />
+        <Footer/>
       </div>
       {isLoading && (
         <div className="gx-loader-view">
-          <CircularProgress />
+          <CircularProgress/>
         </div>
       )}
-      {error && (
-          errorNotification(error)
-        )}
+      {error && errorNotification(error)}
     </div>
   );
 };

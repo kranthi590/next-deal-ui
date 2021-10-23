@@ -8,7 +8,11 @@ import { useRouter } from "next/router";
 import IntlMessages from "../../../util/IntlMessages";
 import { useAuth } from "../../../util/use-auth";
 import { useRegistration } from "../../../util/business-registration";
-import {errorNotification, NOTIFICATION_TIMEOUT, successNotification} from "../../../util/util";
+import {
+  errorNotification,
+  NOTIFICATION_TIMEOUT,
+  successNotification,
+} from "../../../util/util";
 
 // Components
 import CircularProgress from "../../../app/components/CircularProgress";
@@ -25,7 +29,10 @@ const { Option } = Select;
 const BuyerRegistration = (props) => {
   const router = useRouter();
   const { isLoading } = useAuth();
-  const { fetchRegions, fetchCommune, registerBuyer, error } = useRegistration();
+  const { fetchRegions, fetchCommune, registerBuyer, error } =
+    useRegistration();
+
+  const [form] = Form.useForm();
 
   const [regions, setRegions] = useState([]);
   const [communes, setCommunes] = useState([]);
@@ -39,15 +46,17 @@ const BuyerRegistration = (props) => {
   }, []);
 
   const regionChangeHandler = (value) => {
+    form.setFieldsValue({
+      communeId: "",
+    });
+    setCommunes([]);
     fetchCommune({ regionId: value }, (data) => {
       const communes = data && data.length > 0 ? data[0] : [];
       setCommunes(communes);
     });
   };
 
-  const onFinishFailed = (errorInfo) => {};
-
-  const onFinish = (values) => {
+  const getFormData = (data) => {
     const {
       addressLine1,
       addressLine2,
@@ -60,8 +69,8 @@ const BuyerRegistration = (props) => {
       phone2_prefix,
       webSiteUrl,
       ...rest
-    } = values;
-    const formData = {
+    } = data;
+    return {
       contactInfo: {
         addressLine1,
         addressLine2,
@@ -78,9 +87,14 @@ const BuyerRegistration = (props) => {
       webSiteUrl: webSiteUrl || "",
       emailId,
     };
-    console.log(formData);
+  };
 
-    registerBuyer(formData, (data) => {
+  const onFinishFailed = (errorInfo) => {};
+
+  const onFinish = (values) => {
+    console.log(getFormData(values));
+
+    registerBuyer(getFormData(values), (data) => {
       console.log(data);
       successNotification("Details saved successfully!");
       setTimeout(() => {
@@ -91,8 +105,8 @@ const BuyerRegistration = (props) => {
 
   const prefixSelector = (name) => (
     <Form.Item name={name} noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="56">+56</Option>
+      <Select style={{ width: 70 }} defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}>
+        <Option value="56" >+56</Option>
       </Select>
     </Form.Item>
   );
@@ -115,6 +129,7 @@ const BuyerRegistration = (props) => {
             </div>
             <Form
               layout="inline"
+              form={form}
               initialValues={{ remember: true }}
               name="basic"
               onFinish={onFinish}
@@ -379,11 +394,7 @@ const BuyerRegistration = (props) => {
           <CircularProgress />
         </div>
       )}
-      {
-        error && (
-          errorNotification(error)
-        )
-      }
+      {error && errorNotification(error)}
     </div>
   );
 };
