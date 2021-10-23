@@ -137,11 +137,6 @@ const AppLayout = ({ children }) => {
     });
   }, [dispatch]);
 
-  useEffect(() => {
-    if (error) {
-      message.error(error.toString()).then((r) => r);
-    }
-  }, [error]);
 
   useEffect(() => {
     if (!isLoadingUser) {

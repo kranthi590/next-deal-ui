@@ -43,15 +43,18 @@ const useProvideAuth = () => {
   const userLogin = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("auth/login", data)
-      .then(({ data }) => {
-        if (data.result) {
+      .post("user/login", data)
+      .then(({ data: {data} }) => {
+        if (data) {
           fetchSuccess();
-          setAuthToken(data.token.access_token);
-          // httpClient.defaults.headers.common['Authorization'] = 'Bearer ' + data.token.access_token;
           const cookies = new Cookies();
-          cookies.set("token", data.token.access_token);
-          getAuthUser();
+          const expires = (new Date(Date.now()+ 86400*1000)).toUTCString();
+          cookies.set("token", data.token, {
+            path: '/',
+            expires: expires + 86400,
+            secure: false
+          });
+          setAuthUser(data.user);
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
@@ -89,7 +92,6 @@ const useProvideAuth = () => {
           fetchSuccess();
           setAuthUser(false);
           setAuthToken("");
-          // httpClient.defaults.headers.common['Authorization'] = '';
           const cookies = new Cookies();
           cookies.remove("token");
           if (callbackFun) callbackFun();
@@ -126,11 +128,11 @@ const useProvideAuth = () => {
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
 
+  //TODO:: Auth Checking Starts From Here
   useEffect(() => {
     const cookies = new Cookies();
     const token = cookies.get("token");
     setAuthToken(token);
-    // httpClient.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
     httpClient
       .post("auth/me")
