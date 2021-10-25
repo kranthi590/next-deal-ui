@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { httpClient, setAuthToken } from "./Api";
 import { Cookies } from "react-cookie";
+import {getData, setData} from "./localStorage";
 
 const authContext = createContext({});
 
@@ -50,13 +51,14 @@ const useProvideAuth = () => {
           const cookies = new Cookies();
           let expiryTime = new Date();
           expiryTime.setDate(expiryTime.getDate() + 1);
-          const expires = (new Date(Date.now()+ 86400*1000)).toUTCString();
           cookies.set("token", data.token, {
             path: '/',
             expires: expiryTime,
             secure: false
           });
           setAuthUser(data.user);
+          console.log("data.user", data.user)
+          setData(data.user, 'user')
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
@@ -135,21 +137,25 @@ const useProvideAuth = () => {
     const cookies = new Cookies();
     const token = cookies.get("token");
     setAuthToken(token);
-
-    httpClient
-      .post("auth/me")
-      .then(({ data }) => {
-        if (data.user) {
-          setAuthUser(data.user);
-        }
+    try {
+      if (token){
         setLoadingUser(false);
-      })
-      .catch(function (error) {
+        const getUserData = getData('user')
+        console.log("token", token)
+        console.log('getUserData', getUserData);
+        setAuthUser(getUserData);
+      } else {
         cookies.remove("token");
         setAuthToken("");
         // httpClient.defaults.headers.common['Authorization'] = '';
         setLoadingUser(false);
-      });
+      }
+    } catch (e) {
+      cookies.remove("token");
+      setAuthToken("");
+      // httpClient.defaults.headers.common['Authorization'] = '';
+      setLoadingUser(false);
+    }
   }, []);
 
   // Return the user object and auth methods
