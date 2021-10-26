@@ -58,7 +58,6 @@ const useProvideAuth = () => {
             domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN
           });
           setAuthUser(data.user);
-          setData(data.user, 'user')
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);

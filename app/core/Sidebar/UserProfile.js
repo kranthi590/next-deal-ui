@@ -11,12 +11,12 @@ const UserProfile = () => {
       </li>
     </ul>
   );
-const generateAvatar = `https://ui-avatars.com/api/?name=${authUser.firstName || 'Next Deal'}&format=svg`
+//const generateAvatar = `https://ui-avatars.com/api/?name=${authUser && authUser.firstName || 'Next Deal'}&format=svg`
   return authUser ? (
     <div className="gx-flex-row gx-align-items-center gx-avatar-row">
       <Popover placement="bottomRight" content={userMenuOptions} trigger="click">
-        <Avatar src={generateAvatar} className="gx-size-40 gx-pointer gx-mr-3" alt=""/>
-        <span className="gx-avatar-name">{authUser.firstName}<i className="icon icon-chevron-down gx-fs-xxs gx-ml-2"/></span>
+        <Avatar src={`https://ui-avatars.com/api/?name=${authUser && authUser.firstName || 'Next Deal'}&format=svg`} className="gx-size-40 gx-pointer gx-mr-3" alt=""/>
+        <span className="gx-avatar-name">{authUser && authUser.firstName}<i className="icon icon-chevron-down gx-fs-xxs gx-ml-2"/></span>
       </Popover>
     </div>
   ) : null
