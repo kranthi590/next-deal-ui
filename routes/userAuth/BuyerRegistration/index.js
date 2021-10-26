@@ -13,6 +13,7 @@ import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
+  getPhonePrefix,
 } from "../../../util/util";
 
 // Components
@@ -73,18 +74,18 @@ const BuyerRegistration = (props) => {
     } = data;
 
     let formData = {
-      contactInfo: {
+      businessAddress: {
         addressLine1,
         addressLine2,
         communeId,
         regionId,
         emailId,
-        phoneNumber1: `${phone1_prefix}${phoneNumber1}`,
-        countryId: 0,
+        phoneNumber1: `${getPhonePrefix(phone1_prefix)}${phoneNumber1}`,
+        countryId: 1,
       },
       ...rest,
       emailId,
-      additionalData: "test data",
+      additionalData: "none",
       iAccept,
     };
 

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Checkbox, Form, Input, Select, Col, Row} from "antd";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 // Utils
 import IntlMessages from "../../../util/IntlMessages";
@@ -29,6 +30,7 @@ const {TextArea} = Input;
 const {Option} = Select;
 
 const SupplierRegistration = (props) => {
+  const router = useRouter();
   const {isLoading} = useAuth();
 
   const {fetchRegions, fetchCommune, registerSupplier, error} =
@@ -603,7 +605,12 @@ const SupplierRegistration = (props) => {
                 </Col>
               </Row>
 
-              <Form.Item>
+              <Form.Item
+                name="iAccept"
+                rules={[
+                  { required: !iAccept && true, message: "Please accept!" },
+                ]}
+              >
                 <Checkbox onChange={() => setIAccept(!iAccept)}>
                   <IntlMessages id="appModule.iAccept"/>
                 </Checkbox>
