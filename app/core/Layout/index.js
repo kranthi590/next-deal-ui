@@ -146,14 +146,10 @@ const AppLayout = ({ children }) => {
       } else if (authUser && isUnRestrictedRoute(router.pathname)) {
         const {buyer} = authUser
         const userAuthCallBackUrl = buyer && buyer.subDomainName + process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
-        window.location = userAuthCallBackUrl;
+        //window.location.href = 'https://'+userAuthCallBackUrl;
         //window.location.replace("userAuthCallBackUrl");
-        //window.history.pushState({}, '', userAuthCallBackUrl)
         console.log("userAuthCallBackUrl", userAuthCallBackUrl);
-        //router.push('/').then((r) => r);
-        //router.push('/').then((r) => r);
-        //window.location.replace(userAuthCallBackUrl);
-        //setTimeout(()=> location.reload(), 2000)
+        router.push('https://'+userAuthCallBackUrl).then((r) => r);
       }
     }
   }, [authUser, isLoadingUser, router.pathname]);
