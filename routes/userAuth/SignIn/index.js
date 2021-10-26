@@ -53,7 +53,7 @@ const SignIn = (props) => {
                 <Form.Item
                   name="emailId"
                   label="Email"
-                  initialValue="pasala.kk@gmail.com"
+                  initialValue="kranthi.kumar5901@gmail.com"
                   rules={[
                     {
                       required: true,

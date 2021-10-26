@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { httpClient, setAuthToken } from "./Api";
 import { Cookies } from "react-cookie";
-import {getData, setData} from "./localStorage";
+import {getData, removeData, setData} from "./localStorage";
 
 const authContext = createContext({});
 
@@ -89,23 +89,18 @@ const useProvideAuth = () => {
 
   const userSignOut = (callbackFun) => {
     fetchStart();
-    httpClient
-      .post("auth/logout")
-      .then(({ data }) => {
-        if (data.result) {
+    try {
           fetchSuccess();
           setAuthUser(false);
           setAuthToken("");
+      removeData('user');
           const cookies = new Cookies();
           cookies.remove("token");
           if (callbackFun) callbackFun();
-        } else {
-          fetchError(data.error);
-        }
-      })
-      .catch(function (error) {
+    } catch (error) {
+      setLoadingUser(false);
         fetchError(error.message);
-      });
+    }
   };
 
   const getAuthUser = () => {
@@ -147,7 +142,8 @@ const useProvideAuth = () => {
       } else {
         cookies.remove("token");
         setAuthToken("");
-        // httpClient.defaults.headers.common['Authorization'] = '';
+        setAuthUser("");
+        removeData('user');
         setLoadingUser(false);
       }
     } catch (e) {

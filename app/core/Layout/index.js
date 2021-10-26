@@ -143,7 +143,11 @@ const AppLayout = ({ children }) => {
       if (!authUser && !isUnRestrictedRoute(router.pathname)) {
         router.push("/signin").then((r) => r);
       } else if (authUser && isUnRestrictedRoute(router.pathname)) {
-        router.push("/").then((r) => r);
+        const {buyer} = authUser
+        const userAuthCallBackUrl = buyer && buyer.subDomainName + '.nextdeal.dev';
+        window.location = userAuthCallBackUrl;
+        console.log("router", router)
+        //router.push(userAuthCallBackUrl + '/').then((r) => r);
       }
     }
   }, [authUser, isLoadingUser, router.pathname]);
