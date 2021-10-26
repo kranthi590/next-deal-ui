@@ -35,6 +35,7 @@ import AppSidebar from "./AppSidebar";
 
 // Styles
 import "react-notifications/lib/notifications.css";
+import {setData} from "../../../util/localStorage";
 
 const getContainerClass = (navStyle) => {
   switch (navStyle) {
@@ -144,12 +145,11 @@ const AppLayout = ({ children }) => {
       if (!authUser && !isUnRestrictedRoute(router.pathname)) {
         router.push("/signin").then((r) => r);
       } else if (authUser && isUnRestrictedRoute(router.pathname)) {
+        //TODO handle error scenarios too
         const {buyer} = authUser
         const userAuthCallBackUrl = buyer && buyer.subDomainName + process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
-        //window.location.href = 'https://'+userAuthCallBackUrl;
-        //window.location.replace("userAuthCallBackUrl");
-        console.log("userAuthCallBackUrl", userAuthCallBackUrl);
         router.push('https://'+userAuthCallBackUrl).then((r) => r);
+        setData(authUser, 'user')
       }
     }
   }, [authUser, isLoadingUser, router.pathname]);
