@@ -51,7 +51,7 @@ const SignUp = (props) => {
 
   const onFinish = (values) => {
     userSignup(getFormData(values), () => {
-      successNotification("Details saved successfully!");
+      successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
       }, NOTIFICATION_TIMEOUT);
       router.push("/signin");
@@ -215,7 +215,7 @@ const SignUp = (props) => {
       )}
       {
         error && (
-          errorNotification(error)
+          errorNotification(error, "app.registration.errorMessageTitle")
         )
       }
     </div>

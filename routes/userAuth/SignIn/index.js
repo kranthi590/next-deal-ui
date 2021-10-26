@@ -115,7 +115,7 @@ const SignIn = (props) => {
       )}
       {
         error && (
-          errorNotification(error)
+          errorNotification(error, "app.registration.errorMessageTitle")
         )
       }
     </div>
