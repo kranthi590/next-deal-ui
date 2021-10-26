@@ -311,5 +311,7 @@
   "sidebar.project.addProject": "Add Project",
   "sidebar.project.filters": "Filters",
   "sidebar.project.Projects": "Projects",
-  "app.userAuth.welcome": "Welcome to Next Deal"
+  "app.userAuth.welcome": "Welcome to Next Deal",
+  "app.registration.detailsSaveSuccessMessage": "Details saved successfully!",
+  "app.registration.errorMessageTitle": "There was an unexpected error occurred!"
 }

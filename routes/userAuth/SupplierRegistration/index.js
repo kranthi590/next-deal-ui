@@ -10,6 +10,9 @@ import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
+  extractData,
+  isValidObject,
+  getPhonePrefix,
 } from "../../../util/util";
 
 // Components
@@ -47,7 +50,7 @@ const SupplierRegistration = (props) => {
 
   const businessRegionChangeHandler = (value) => {
     form.setFieldsValue({
-      business_commune: "",
+      business_communeId: "",
     });
     setCommunes1([]);
     fetchCommune({regionId: value}, (data) => {
@@ -58,7 +61,7 @@ const SupplierRegistration = (props) => {
 
   const billingRegionChangeHandler = (value) => {
     form.setFieldsValue({
-      billing_commune: "",
+      billing_communeId: "",
     });
     setCommunes2([]);
     fetchCommune({regionId: value}, (data) => {
@@ -73,66 +76,82 @@ const SupplierRegistration = (props) => {
 
   const prefixSelector = (name) => (
     <Form.Item name={name} noStyle>
-      <Select style={{width: 70}} defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}>
+      <Select
+        style={{ width: 70 }}
+        defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
+      >
         <Option value="56">+56</Option>
       </Select>
     </Form.Item>
   );
 
   const getFormData = (data) => {
+    const business = extractData("business_", data);
+    const billing = extractData("billing_", data);
+    const contact = extractData("bcontact_", data);
+
     const businessAddress = {
-      addressLine1: data["business_address1"],
-      addressLine2: data["business_address2"],
-      communeId: data["business_commune"],
-      regionId: data["business_region"],
+      addressLine1: business.addressLine1,
+      addressLine2: business.addressLine2,
+      communeId: business.communeId,
+      regionId: business.regionId,
+      emailId: business.emailId,
+      phoneNumber1: getPhonePrefix(business.telephone1) + business.phoneNumber1,
       countryId: 1,
-      emailId: data["business_email"],
-      phoneNumber1: data["business_telephone1"],
     };
-    return {
-      businessAddress,
-      billingAddress: sameAsBusiness
-        ? businessAddress
-        : {
-          addressLine1: data["billing_address1"],
-          addressLine2: data["billing_address2"],
-          communeId: data["billing_commune"],
-          regionId: data["billing_region"],
+
+    const billingAddress = {
+      addressLine1: billing.addressLine1,
+      addressLine2: billing.addressLine2,
+      communeId: billing.communeId,
+      regionId: billing.regionId,
+      emailId: billing.emailId,
+      phoneNumber1: getPhonePrefix(billing.telephone1) + billing.phoneNumber1,
           countryId: 1,
-          emailId: "kkranthi@nisum.com",
-          phoneNumber1: data["billing_telephone1"],
-        },
-      legalName: data["business_businessName"],
-      fantasyName: data["business_fantasyName"],
-      rut: data["business_rut"],
-      webSiteUrl: data["business_webURL"],
-      emailId: "pasala.kk@gmail.com",
+    };
+
+    let formData = {
+      businessAddress: businessAddress,
+      legalName: business.legalName,
+      fantasyName: business.fantasyName,
+      rut: business.rut,
+      webSiteUrl: business.webSiteUrl,
+      emailId: business.emailId,
+      categories: business.categories,
+      serviceLocations: data.serviceLocations,
+      type: business.type,
+
+      isShared: true,
+      inchargeRole: "Owner",
       logoUrl:
         "https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg",
-      isShared: true,
-      inchargeFullName: `${data["bcontact_name"]} ${
-        data["bcontact_surname"] || ""
-      }`,
-      inchargeRole: data["bcontact_charge"],
-      categories: data["business_category"],
-      serviceLocations: data["service_locations"],
-      type: data["business_type"],
     };
+
+    if (sameAsBusiness) {
+      formData.billingAddress = businessAddress;
+    } else if (isValidObject(billing)) {
+      formData.billingAddress = billingAddress;
+    }
+
+    if (isValidObject(contact)) {
+      formData.inchargeFullName = `${contact.name} ${contact.surname}`;
+    }
+
+    return formData;
   };
 
-  const onFinishFailed = (errorInfo) => {
-  };
+  const onFinishFailed = (errorInfo) => {};
 
   const onFinish = (values) => {
     console.log(getFormData(values));
 
-    registerSupplier(getFormData(values), (data) => {
-      console.log(data);
-      successNotification("Details saved successfully!");
-      setTimeout(() => {
-        router.push("/signup");
-      }, NOTIFICATION_TIMEOUT);
-    });
+     registerSupplier(getFormData(values), (data) => {
+       console.log(data);
+       successNotification("app.registration.detailsSaveSuccessMessage");
+       setTimeout(() => {
+         router.push("/signup");
+       }, NOTIFICATION_TIMEOUT);
+     });
   };
 
   return (
@@ -180,7 +199,7 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    name="business_businessName"
+                    name="business_legalName"
                     label="Business Name"
                     rules={[
                       {
@@ -205,7 +224,7 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    name="business_address1"
+                    name="business_addressLine1"
                     label="Address 1"
                     rules={[
                       {
@@ -222,7 +241,7 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    name="business_address2"
+                    name="business_addressLine2"
                     label="Address 2"
                     rules={[
                       {
@@ -240,7 +259,7 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     label="Region"
-                    name="business_region"
+                    name="business_regionId"
                     rules={[
                       {
                         required: true,
@@ -269,7 +288,7 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     label="Service Locations"
-                    name="service_locations"
+                    name="serviceLocations"
                     rules={[
                       {
                         required: true,
@@ -301,7 +320,7 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     label="Commune"
-                    name="business_commune"
+                    name="business_communeId"
                     rules={[
                       {
                         required: true,
@@ -325,7 +344,7 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    name="business_webURL"
+                    name="business_webSiteUrl"
                     label="Web URL"
                     rules={[
                       {required: false},
@@ -355,23 +374,36 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     label="Telephone1"
-                    name="business_telephone1"
+                    name="business_phoneNumber1"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your telephone!",
+                        validator: (_, value) => {
+                          if (!value) {
+                            return Promise.reject(
+                              "Please input your telephone!"
+                            );
+                          } else if (isNaN(value)) {
+                            return Promise.reject(
+                              "Please input valid telephone!"
+                            );
+                          }
+                          return Promise.resolve();
+                        },
                       },
                     ]}
                   >
                     <Input
                       size="large"
                       addonBefore={prefixSelector("business_telephone1")}
-                      placeholder="Telephone1"/>
+                      placeholder="Telephone1"
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label="Telephone2" name="business_telephone2">
-                    <Input placeholder="Telephone2"
+                  <FormItem label="Telephone2" name="business_phoneNumber2">
+                    <Input
+                      placeholder="Telephone2"
                            addonBefore={prefixSelector("business_telephone2")}
                     />
                   </FormItem>
@@ -379,7 +411,7 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     label="Business Email"
-                    name="business_email"
+                    name="business_emailId"
                     rules={[
                       {
                         required: true,
@@ -394,7 +426,7 @@ const SupplierRegistration = (props) => {
                 <Col xs={24}>
                   <Form.Item
                     label="Category"
-                    name="business_category"
+                    name="business_categories"
                     rules={[
                       {
                         required: true,
@@ -463,7 +495,7 @@ const SupplierRegistration = (props) => {
                     <WidgetHeader title="Billing Information"/>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Address 1" name="billing_address1">
+                    <FormItem label="Address 1" name="billing_addressLine1">
                       <Input
                         size="large"
                         placeholder="san pascual 101, las condes, chile"
@@ -471,7 +503,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Address 2" name="billing_address2">
+                    <FormItem label="Address 2" name="billing_addressLine2">
                       <Input
                         size="large"
                         placeholder="san pascual 101, las condes, chile"
@@ -479,7 +511,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Region" name="billing_region">
+                    <FormItem label="Region" name="billing_regionId">
                       <Select
                         size="large"
                         placeholder="Please select Region"
@@ -499,7 +531,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Commune" name="billing_commune">
+                    <FormItem label="Commune" name="billing_communeId">
                       <Select size="large" placeholder="Please select Commune">
                         <Option value=""></Option>
                         {communes2 &&
@@ -515,7 +547,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Telephone1" name="billing_telephone1">
+                    <FormItem label="Telephone1" name="billing_phoneNumber1">
                       <Input
                         size="large"
                         placeholder="Telephone1"
@@ -524,7 +556,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Telephone2" name="billing_telephone2">
+                    <FormItem label="Telephone2" name="billing_phoneNumber2">
                       <Input
                         size="large"
                         placeholder="Telephone2"
@@ -596,7 +628,7 @@ const SupplierRegistration = (props) => {
           <CircularProgress/>
         </div>
       )}
-      {error && errorNotification(error)}
+      {error && errorNotification(error, "app.registration.errorMessageTitle")}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { isEmpty } from "lodash";
 
 // Utils
 import IntlMessages from "../../../util/IntlMessages";
@@ -70,23 +71,31 @@ const BuyerRegistration = (props) => {
       webSiteUrl,
       ...rest
     } = data;
-    return {
+
+    let formData = {
       contactInfo: {
         addressLine1,
         addressLine2,
         communeId,
         regionId,
-        countryId: 0,
         emailId,
         phoneNumber1: `${phone1_prefix}${phoneNumber1}`,
-        phoneNumber2: `${phone2_prefix || ""}${phoneNumber2 || "5600000000"}`,
+        countryId: 0,
       },
       ...rest,
-      iAccept,
-      additionalData: "test data",
-      webSiteUrl: webSiteUrl || "",
       emailId,
+      additionalData: "test data",
+      iAccept,
     };
+
+    if (!isEmpty(webSiteUrl)) {
+      formData.webSiteUrl = webSiteUrl;
+    }
+    if (!isEmpty(phoneNumber2)) {
+      formData.phoneNumber2 = `${getPhonePrefix(phone2_prefix)}${phoneNumber2}`;
+    }
+
+    return formData;
   };
 
   const onFinishFailed = (errorInfo) => {};
@@ -94,18 +103,21 @@ const BuyerRegistration = (props) => {
   const onFinish = (values) => {
     console.log(getFormData(values));
 
-    registerBuyer(getFormData(values), (data) => {
-      console.log(data);
-      successNotification("Details saved successfully!");
-      setTimeout(() => {
-        router.push("/signup");
-      }, NOTIFICATION_TIMEOUT);
-    });
+     registerBuyer(getFormData(values), (data) => {
+       console.log(data);
+       successNotification("app.registration.detailsSaveSuccessMessage");
+       setTimeout(() => {
+         router.push("/signup");
+       }, NOTIFICATION_TIMEOUT);
+     });
   };
 
   const prefixSelector = (name) => (
     <Form.Item name={name} noStyle>
-      <Select style={{ width: 70 }} defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}>
+      <Select
+        style={{ width: 70 }}
+        defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
+      >
         <Option value="56" >+56</Option>
       </Select>
     </Form.Item>
@@ -394,7 +406,7 @@ const BuyerRegistration = (props) => {
           <CircularProgress />
         </div>
       )}
-      {error && errorNotification(error)}
+      {error && errorNotification(error, "app.registration.errorMessageTitle")}
     </div>
   );
 };
