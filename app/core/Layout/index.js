@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Layout, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { NotificationContainer } from "react-notifications";
+import redirect from 'nextjs-redirect'
 
 import HorizontalDefault from "../Topbar/HorizontalDefault";
 import HorizontalDark from "../Topbar/HorizontalDark";
@@ -143,12 +144,17 @@ const AppLayout = ({ children }) => {
       if (!authUser && !isUnRestrictedRoute(router.pathname)) {
         router.push("/signin").then((r) => r);
       } else if (authUser && isUnRestrictedRoute(router.pathname)) {
-        /*const {buyer} = authUser
-        const userAuthCallBackUrl = buyer && buyer.subDomainName + '.nextdeal.dev';
-        window.location = userAuthCallBackUrl;
-        window.location.replace("userAuthCallBackUrl");
-        console.log("router", router)*/
+        const {buyer} = authUser
+        const userAuthCallBackUrl = buyer && buyer.subDomainName + process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
+        //window.location = userAuthCallBackUrl;
+        //window.location.replace("userAuthCallBackUrl");
+        //window.history.pushState({}, '', userAuthCallBackUrl)
+        console.log("userAuthCallBackUrl", userAuthCallBackUrl);
+        redirect(userAuthCallBackUrl)
+        //router.push('/').then((r) => r);
         router.push('/').then((r) => r);
+        //window.location.replace(userAuthCallBackUrl);
+        //setTimeout(()=> location.reload(), 2000)
       }
     }
   }, [authUser, isLoadingUser, router.pathname]);

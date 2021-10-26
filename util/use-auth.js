@@ -54,10 +54,10 @@ const useProvideAuth = () => {
           cookies.set("token", data.token, {
             path: '/',
             expires: expiryTime,
-            secure: false
+            secure: false,
+            domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN
           });
           setAuthUser(data.user);
-          console.log("data.user", data.user)
           setData(data.user, 'user')
           if (callbackFun) callbackFun();
         } else {
