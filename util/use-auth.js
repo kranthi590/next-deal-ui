@@ -134,7 +134,7 @@ const useProvideAuth = () => {
         //setAuthToken(token);
         //httpClient.defaults.headers.common['Authorization'] = token;
         setAuthToken(token)
-        httpClient.get("https://housestarcks11.nextdeal.dev/user/profile").then(({data}) => {
+        httpClient.get("https://service.nextdeal.dev/user/profile").then(({data}) => {
           if (data.result) {
             console.log("Auth User", data.result)
             setAuthUser(data.user);
