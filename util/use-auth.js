@@ -54,7 +54,7 @@ const useProvideAuth = () => {
           cookies.set("token", data.token, {
             path: '/',
             expires: expiryTime,
-            secure: true,
+            secure: false,
             domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN
           });
           setAuthUser(data.user);
@@ -75,7 +75,6 @@ const useProvideAuth = () => {
       .then(({data}) => {
         if (data) {
           fetchSuccess();
-          console.log("coming")
           if (callbackFun) callbackFun(data);
         } else {
           fetchError(data.error);
@@ -133,10 +132,25 @@ const useProvideAuth = () => {
     try {
       if (token) {
         //setAuthToken(token);
+        //httpClient.defaults.headers.common['Authorization'] = token;
+        setAuthToken(token)
+        httpClient.post("https://housestarcks11.nextdeal.dev/user/profile").then(({data}) => {
+          if (data.result) {
+            console.log("Auth User", data.result)
+            setAuthUser(data.user);
+          }
+          setLoadingUser(false);
+        }).catch(function (error) {
+          cookies.remove('token');
+          setAuthToken("")
+          setLoadingUser(false);
+        });
+
+       /* console.log("Auth User", authUser)
         setLoadingUser(false);
         const getUserData = getData('user')
         setAuthUser(getUserData);
-        console.log("Im at use auth first place")
+        console.log("Im at use auth first place")*/
       } else {
         cookies.remove("token");
         setAuthToken("");
