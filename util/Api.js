@@ -8,5 +8,5 @@ export const httpClient = axios.create({
 });
 
 export const setAuthToken = (token) => {
-  httpClient.defaults.headers.common["Authorization"] = "Bearer " + token;
+  httpClient.defaults.headers.common["Authorization"] = token;
 };
