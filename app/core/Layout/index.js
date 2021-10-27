@@ -145,7 +145,7 @@ const AppLayout = ({ children }) => {
       if (!authUser && !isUnRestrictedRoute(router.pathname)) {
         router.push("/signin").then((r) => r);
       } else if (authUser && isUnRestrictedRoute(router.pathname)) {
-        //TODO handle error scenarios too
+        //TODO handle error scenarios
         const {buyer} = authUser
         const userAuthCallBackUrl = buyer && buyer.subDomainName + process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
         router.push('https://'+userAuthCallBackUrl).then((r) => r);
