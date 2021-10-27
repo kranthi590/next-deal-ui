@@ -133,9 +133,10 @@ const useProvideAuth = () => {
     try {
       if (token) {
         setAuthToken(token)
-  /*      httpClient.get("user/profile").then(({data}) => {
+        httpClient.get("user/profile").then(({data}) => {
           if (data.result) {
             console.log("Auth User", data.result)
+            setData(data.user, 'user')
             setAuthUser(data.user);
           }
           setLoadingUser(false);
@@ -143,13 +144,7 @@ const useProvideAuth = () => {
           cookies.remove('token');
           setAuthToken("")
           setLoadingUser(false);
-        });*/
-        //const getUserData = getData('user')
-        const setUser = {firstName: "kranthi kumar",}
-        setData(setUser, 'user')
-        setAuthUser(setUser);
-        setLoadingUser(false);
-        console.log("Im at use auth first place")
+        });
       } else {
         cookies.remove("token");
         setAuthToken("");
