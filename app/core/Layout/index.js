@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { Layout, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { NotificationContainer } from "react-notifications";
+import React, {useEffect} from "react";
+import {Layout, message} from "antd";
+import {useDispatch, useSelector} from "react-redux";
+import {NotificationContainer} from "react-notifications";
 import redirect from 'nextjs-redirect'
 
 import HorizontalDefault from "../Topbar/HorizontalDefault";
@@ -27,10 +27,10 @@ import {
   THEME_TYPE_DARK,
 } from "../../../constants/ThemeSetting";
 import NoHeaderNotification from "../Topbar/NoHeaderNotification";
-import { isUnRestrictedRoute, useAuth } from "../../../util/use-auth";
-import { useRouter } from "next/router";
+import {isUnRestrictedRoute, useAuth} from "../../../util/use-auth";
+import {useRouter} from "next/router";
 import CircularProgress from "../../components/CircularProgress";
-import { updateWindowWidth } from "../../../redux/actions";
+import {updateWindowWidth} from "../../../redux/actions";
 import AppSidebar from "./AppSidebar";
 
 // Styles
@@ -57,38 +57,38 @@ const getContainerClass = (navStyle) => {
 const getNavStyles = (navStyle) => {
   switch (navStyle) {
     case NAV_STYLE_DEFAULT_HORIZONTAL:
-      return <HorizontalDefault />;
+      return <HorizontalDefault/>;
     case NAV_STYLE_DARK_HORIZONTAL:
-      return <HorizontalDark />;
+      return <HorizontalDark/>;
     case NAV_STYLE_INSIDE_HEADER_HORIZONTAL:
-      return <InsideHeader />;
+      return <InsideHeader/>;
     case NAV_STYLE_ABOVE_HEADER:
-      return <AboveHeader />;
+      return <AboveHeader/>;
     case NAV_STYLE_BELOW_HEADER:
-      return <BelowHeader />;
+      return <BelowHeader/>;
     case NAV_STYLE_FIXED:
-      return <Topbar />;
+      return <Topbar/>;
     case NAV_STYLE_DRAWER:
-      return <Topbar />;
+      return <Topbar/>;
     case NAV_STYLE_MINI_SIDEBAR:
-      return <Topbar />;
+      return <Topbar/>;
     case NAV_STYLE_NO_HEADER_MINI_SIDEBAR:
-      return <NoHeaderNotification />;
+      return <NoHeaderNotification/>;
     case NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR:
-      return <NoHeaderNotification />;
+      return <NoHeaderNotification/>;
     default:
       return null;
   }
 };
 
-const { Content, Footer } = Layout;
+const {Content, Footer} = Layout;
 const today = new Date();
 
-const AppLayout = ({ children }) => {
-  const { authUser, isLoadingUser, error } = useAuth();
-  const themeType = useSelector(({ settings }) => settings.themeType);
-  const navStyle = useSelector(({ settings }) => settings.navStyle);
-  const layoutType = useSelector(({ settings }) => settings.layoutType);
+const AppLayout = ({children}) => {
+  const {authUser, isLoadingUser, error} = useAuth();
+  const themeType = useSelector(({settings}) => settings.themeType);
+  const navStyle = useSelector(({settings}) => settings.navStyle);
+  const layoutType = useSelector(({settings}) => settings.layoutType);
 
   const router = useRouter();
   const dispatch = useDispatch();
@@ -148,8 +148,12 @@ const AppLayout = ({ children }) => {
         //TODO handle error scenarios
         const {buyer} = authUser
         const userAuthCallBackUrl = buyer && buyer.subDomainName + process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
-        router.push('https://'+userAuthCallBackUrl).then((r) => r);
-        setData(authUser, 'user')
+        console.log("checking auth user availability", authUser)
+        router.push('https://' + userAuthCallBackUrl).then((r) => {
+          console.log("im router callback");
+          r,
+            setData(authUser, 'user')
+        });
       }
     }
   }, [authUser, isLoadingUser, router.pathname]);
@@ -157,7 +161,7 @@ const AppLayout = ({ children }) => {
   if (isLoadingUser) {
     return (
       <div className="gx-loader-view">
-        <CircularProgress />
+        <CircularProgress/>
       </div>
     );
   }
@@ -165,11 +169,11 @@ const AppLayout = ({ children }) => {
   return isUnRestrictedRoute(router.pathname) ? (
     <Layout className={`gx-app-layout`}>
       {children}
-      <NotificationContainer />
+      <NotificationContainer/>
     </Layout>
   ) : (
     <Layout className={`gx-app-layout`}>
-      <AppSidebar navStyle={navStyle} />
+      <AppSidebar navStyle={navStyle}/>
       <Layout>
         {getNavStyles(navStyle)}
         <Content className={`gx-layout-content ${getContainerClass(navStyle)}`}>
@@ -180,7 +184,7 @@ const AppLayout = ({ children }) => {
             </div>
           </Footer>
         </Content>
-        <NotificationContainer />
+        <NotificationContainer/>
       </Layout>
     </Layout>
   );

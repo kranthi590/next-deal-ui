@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
-import { httpClient, setAuthToken } from "./Api";
-import { Cookies } from "react-cookie";
+import React, {useState, useEffect, useContext, createContext} from "react";
+import {httpClient, setAuthToken} from "./Api";
+import {Cookies} from "react-cookie";
 import {getData, removeData, setData} from "./localStorage";
 
 const authContext = createContext({});
@@ -8,7 +8,7 @@ const authContext = createContext({});
 // Provider component that wraps app and makes auth object ..
 // ... available to any child component that calls useAuth().
 
-export function AuthProvider({ children }) {
+export function AuthProvider({children}) {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
@@ -45,7 +45,7 @@ const useProvideAuth = () => {
     fetchStart();
     httpClient
       .post("user/login", data)
-      .then(({ data: {data} }) => {
+      .then(({data: {data}}) => {
         if (data) {
           fetchSuccess();
           const cookies = new Cookies();
@@ -72,7 +72,7 @@ const useProvideAuth = () => {
     fetchStart();
     httpClient
       .post("user/register", data)
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data) {
           fetchSuccess();
           console.log("coming")
@@ -89,16 +89,16 @@ const useProvideAuth = () => {
   const userSignOut = (callbackFun) => {
     fetchStart();
     try {
-          fetchSuccess();
-          setAuthUser(false);
-          setAuthToken("");
+      fetchSuccess();
+      const cookies = new Cookies();
+      cookies.remove("token");
+      setAuthUser(null);
+      setAuthToken("");
       removeData('user');
-          const cookies = new Cookies();
-          cookies.remove("token");
-          if (callbackFun) callbackFun();
+      if (callbackFun) callbackFun();
     } catch (error) {
       setLoadingUser(false);
-        fetchError(error.message);
+      fetchError(error.message);
     }
   };
 
@@ -106,7 +106,7 @@ const useProvideAuth = () => {
     fetchStart();
     httpClient
       .post("auth/me")
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data.user) {
           fetchSuccess();
           setAuthUser(data.user);
@@ -130,12 +130,13 @@ const useProvideAuth = () => {
   useEffect(() => {
     const cookies = new Cookies();
     const token = cookies.get("token");
-    setAuthToken(token);
     try {
-      if (token){
+      if (token) {
+        //setAuthToken(token);
         setLoadingUser(false);
         const getUserData = getData('user')
         setAuthUser(getUserData);
+        console.log("Im at use auth first place")
       } else {
         cookies.remove("token");
         setAuthToken("");
