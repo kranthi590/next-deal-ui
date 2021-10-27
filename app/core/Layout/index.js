@@ -149,11 +149,8 @@ const AppLayout = ({children}) => {
         const {buyer} = authUser
         const userAuthCallBackUrl = buyer && buyer.subDomainName + process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
         console.log("checking auth user availability", authUser)
-        router.push('https://' + userAuthCallBackUrl).then((r) => {
-          console.log("im router callback");
-          r,
-            setData(authUser, 'user')
-        });
+        router.push('https://' + userAuthCallBackUrl).then((r) => r);
+        //router.push('/').then((r) => r);
       }
     }
   }, [authUser, isLoadingUser, router.pathname]);
