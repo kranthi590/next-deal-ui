@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext, createContext} from "react";
 import {httpClient, setAuthToken} from "./Api";
 import {Cookies} from "react-cookie";
 import {getData, removeData, setData} from "./localStorage";
+import {useRouter} from "next/router";
 
 const authContext = createContext({});
 
@@ -131,10 +132,8 @@ const useProvideAuth = () => {
     const token = cookies.get("token");
     try {
       if (token) {
-        //setAuthToken(token);
-        //httpClient.defaults.headers.common['Authorization'] = token;
         setAuthToken(token)
-        httpClient.get("https://service.nextdeal.dev/user/profile").then(({data}) => {
+  /*      httpClient.get("user/profile").then(({data}) => {
           if (data.result) {
             console.log("Auth User", data.result)
             setAuthUser(data.user);
@@ -144,17 +143,17 @@ const useProvideAuth = () => {
           cookies.remove('token');
           setAuthToken("")
           setLoadingUser(false);
-        });
-
-       /* console.log("Auth User", authUser)
+        });*/
+        //const getUserData = getData('user')
+        const setUser = {firstName: "kranthi kumar",}
+        setData(setUser, 'user')
+        setAuthUser(setUser);
         setLoadingUser(false);
-        const getUserData = getData('user')
-        setAuthUser(getUserData);
-        console.log("Im at use auth first place")*/
+        console.log("Im at use auth first place")
       } else {
         cookies.remove("token");
         setAuthToken("");
-        setAuthUser("");
+        setAuthUser(null);
         removeData('user');
         setLoadingUser(false);
       }
