@@ -134,8 +134,8 @@ const useProvideAuth = () => {
       if (token) {
         setAuthToken(token)
         httpClient.get("user/profile").then(({data}) => {
-          if (data.result) {
-            console.log("Auth User", data.result)
+          if (data) {
+            console.log("Auth User", data)
             setData(data.user, 'user')
             setAuthUser(data.user);
           }
