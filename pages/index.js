@@ -3,24 +3,41 @@ import { httpClient } from "../util/Api";
 
 import DashboardPage from "./dashboard";
 
-export async function getServerSideProps(context) {
+const setApiContent = (req, res, query) => {
+  const browsersHeaders = req.headers;
+  const cookies = cookie.parse(browsersHeaders.cookie || "");
+  const headers = {
+    "Content-Type": "application/json",
+    authorization: cookies.token || query.token,
+    origin: req.headers.host,
+  };
+  if (query.token) {
+    res.setHeader("set-cookie", [`token=${query.token}`]);
+  }
+  return headers;
+};
+export async function getServerSideProps({ req, res, query }) {
+  let userProfile = null;
   try {
-    const headers = context.req.headers;
-    console.log(headers);
-    const cookies = cookie.parse(headers.cookie || '');
-    headers.authorization = cookies.token;
+    const headers = setApiContent(req, res, query);
     const apiResponse = await httpClient.get("user/profile", {
-      headers: {
-        "Content-Type": "application/json",
-        authorization: cookies.token,
-        origin: "https://housestarcks11.nextdeal.dev",
-      },
+      headers,
     });
-    console.log("data::", apiResponse.data);
+    userProfile = apiResponse.data;
+    if (query.token) {
+      res.writeHead(301, {
+        Location: "/",
+      });
+      res.end();
+    }
   } catch (error) {
     console.error(error);
   }
-  return { props: {} };
+  return {
+    props: {
+      userProfile,
+    },
+  };
 }
 
 export default DashboardPage;

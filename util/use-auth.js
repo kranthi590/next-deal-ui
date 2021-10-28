@@ -61,9 +61,9 @@ const useProvideAuth = () => {
           //   domain: "housestarcks11.localhost"
           // });
           document.cookie = `token=${data.token}; path=/;`
-          document.cookie = `token=${data.token}; path=/;domain=housestarcks11.nextdeal.dev`
+          //  document.cookie = `token=${data.token}; path=/;domain=housestarcks11.nextdeal.dev`
           setAuthUser(data.user);
-          window.location.href = "http://housestarcks11.nextdeal.dev";
+          window.location.href = `http://housestarcks11.localhost?token=${data.token}`;
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
