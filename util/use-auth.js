@@ -136,7 +136,7 @@ const useProvideAuth = () => {
         httpClient.get("user/profile").then(({data}) => {
           if (data) {
             console.log("Auth User", data)
-            setData(data.user, 'user')
+            setData(data, 'user')
             setAuthUser(data.user);
           }
           setLoadingUser(false);
