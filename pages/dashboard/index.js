@@ -1,8 +1,10 @@
-import React from 'react';
-import asyncComponent from '../../util/asyncComponent'
+import React from "react";
 
-const Dashboard = asyncComponent(() => import('../../routes/Dashboard'));
-
-const DashboardPage = () => <Dashboard/>;
+const DashboardPage = (props) => {
+  console.log(props);
+  return (
+    <div>HI, This is a Dashboard for {props.userProfile.data.firstName}</div>
+  );
+};
 
 export default DashboardPage;
