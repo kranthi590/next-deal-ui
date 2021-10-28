@@ -38,3 +38,6 @@ export const isValidObject = (obj) => {
 export const getPhonePrefix = (prefix) => {
   return prefix || process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX;
 };
+
+
+export const isClient = typeof window !== "undefined";

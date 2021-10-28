@@ -1,7 +1,5 @@
 import React from 'react';
-import asyncComponent from '../util/asyncComponent'
-
-const SignIn = asyncComponent(() => import('../routes/userAuth/SignIn'));
+import SignIn from '../routes/userAuth/SignIn'
 
 const SignInPage = () => <SignIn/>;
 

@@ -160,7 +160,7 @@ const AppLayout = ({children}) => {
   //   );
   // }
 
-  return !isUnRestrictedRoute(router.pathname) ? (
+  return isUnRestrictedRoute(router.pathname) ? (
     <Layout className={`gx-app-layout`}>
       {children}
       <NotificationContainer/>
