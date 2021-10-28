@@ -49,21 +49,9 @@ const useProvideAuth = () => {
       .then(({ data: { data } }) => {
         if (data) {
           fetchSuccess();
-          // const cookies = new Cookies();
-          // // cookies.set("token", data.token, {
-          // //   path: "/",
-          // //   secure: false,
-          // //   //  domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN
-          // // });
-          // cookies.set("token", data.token, {
-          //   path: "/",
-          //   secure: false,
-          //   domain: "housestarcks11.localhost"
-          // });
           document.cookie = `token=${data.token}; path=/;`
-          //  document.cookie = `token=${data.token}; path=/;domain=housestarcks11.nextdeal.dev`
           setAuthUser(data.user);
-          window.location.href = `/token=${data.token}`;
+          window.location.href = `http://${data.user.buyer.subDomainName}.${new URL(window.location).host}?token=${data.token}`;
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
