@@ -16,6 +16,7 @@ const setApiContent = (req, res, query) => {
   }
   return headers;
 };
+
 export async function getServerSideProps({ req, res, query }) {
   let userProfile = null;
   try {
