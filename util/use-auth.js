@@ -63,7 +63,7 @@ const useProvideAuth = () => {
           document.cookie = `token=${data.token}; path=/;`
           document.cookie = `token=${data.token}; path=/;domain=housestarcks11.nextdeal.dev`
           setAuthUser(data.user);
-          window.location.href = "http://housestarcks11.localhost:3000";
+          window.location.href = "http://housestarcks11.nextdeal.dev";
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
