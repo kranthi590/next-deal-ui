@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import {Layout, message} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {NotificationContainer} from "react-notifications";
-import redirect from 'nextjs-redirect'
 
 import HorizontalDefault from "../Topbar/HorizontalDefault";
 import HorizontalDark from "../Topbar/HorizontalDark";
