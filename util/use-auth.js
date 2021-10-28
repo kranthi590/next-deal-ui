@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useContext, createContext} from "react";
-import {httpClient, setAuthToken} from "./Api";
-import {Cookies} from "react-cookie";
-import {getData, removeData, setData} from "./localStorage";
-import {useRouter} from "next/router";
+import React, { useState, useEffect, useContext, createContext } from "react";
+import { httpClient, setAuthToken } from "./Api";
+import { Cookies } from "react-cookie";
+import { getData, removeData, setData } from "./localStorage";
+import { useRouter } from "next/router";
 
 const authContext = createContext({});
 
 // Provider component that wraps app and makes auth object ..
 // ... available to any child component that calls useAuth().
 
-export function AuthProvider({children}) {
+export function AuthProvider({ children }) {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
@@ -46,19 +46,24 @@ const useProvideAuth = () => {
     fetchStart();
     httpClient
       .post("user/login", data)
-      .then(({data: {data}}) => {
+      .then(({ data: { data } }) => {
         if (data) {
           fetchSuccess();
-          const cookies = new Cookies();
-          let expiryTime = new Date();
-          expiryTime.setDate(expiryTime.getDate() + 1);
-          cookies.set("token", data.token, {
-            path: '/',
-            expires: expiryTime,
-            secure: false,
-            domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN
-          });
+          // const cookies = new Cookies();
+          // // cookies.set("token", data.token, {
+          // //   path: "/",
+          // //   secure: false,
+          // //   //  domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN
+          // // });
+          // cookies.set("token", data.token, {
+          //   path: "/",
+          //   secure: false,
+          //   domain: "housestarcks11.localhost"
+          // });
+          document.cookie = `token=${data.token}; path=/;`
+          document.cookie = `token=${data.token}; path=/;domain=housestarcks11.nextdeal.dev`
           setAuthUser(data.user);
+          window.location.href = "http://housestarcks11.nextdeal.dev";
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
@@ -73,7 +78,7 @@ const useProvideAuth = () => {
     fetchStart();
     httpClient
       .post("user/register", data)
-      .then(({data}) => {
+      .then(({ data }) => {
         if (data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data);
@@ -94,7 +99,7 @@ const useProvideAuth = () => {
       cookies.remove("token");
       setAuthUser(null);
       setAuthToken("");
-      removeData('user');
+      removeData("user");
       if (callbackFun) callbackFun();
     } catch (error) {
       setLoadingUser(false);
@@ -106,7 +111,7 @@ const useProvideAuth = () => {
     fetchStart();
     httpClient
       .post("auth/me")
-      .then(({data}) => {
+      .then(({ data }) => {
         if (data.user) {
           fetchSuccess();
           setAuthUser(data.user);
@@ -127,39 +132,39 @@ const useProvideAuth = () => {
   // ... latest auth object.
 
   //TODO:: Auth Checking Starts From Here
-  useEffect(() => {
-    const cookies = new Cookies();
-    const token = cookies.get("token");
-    try {
-      if (token) {
-        setAuthToken(token)
-        httpClient.get("user/profile")
-          .then(({data: {data}}) => {
-          if (data) {
-            console.log("Auth User", data)
-            setData(data, 'user')
-            setAuthUser(data);
-          }
-          setLoadingUser(false);
-        }).catch(function (error) {
-          cookies.remove('token');
-          setAuthToken("")
-          setLoadingUser(false);
-        });
-      } else {
-        cookies.remove("token");
-        setAuthToken("");
-        setAuthUser(null);
-        removeData('user');
-        setLoadingUser(false);
-      }
-    } catch (e) {
-      cookies.remove("token");
-      setAuthToken("");
-      // httpClient.defaults.headers.common['Authorization'] = '';
-      setLoadingUser(false);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const cookies = new Cookies();
+  //   const token = cookies.get("token");
+  //   try {
+  //     if (token) {
+  //       setAuthToken(token)
+  //       httpClient.get("user/profile")
+  //         .then(({data: {data}}) => {
+  //         if (data) {
+  //           console.log("Auth User", data)
+  //           setData(data, 'user')
+  //           setAuthUser(data.user);
+  //         }
+  //         setLoadingUser(false);
+  //       }).catch(function (error) {
+  //         cookies.remove('token');
+  //         setAuthToken("")
+  //         setLoadingUser(false);
+  //       });
+  //     } else {
+  //       cookies.remove("token");
+  //       setAuthToken("");
+  //       setAuthUser(null);
+  //       removeData('user');
+  //       setLoadingUser(false);
+  //     }
+  //   } catch (e) {
+  //     cookies.remove("token");
+  //     setAuthToken("");
+  //     // httpClient.defaults.headers.common['Authorization'] = '';
+  //     setLoadingUser(false);
+  //   }
+  // }, []);
 
   // Return the user object and auth methods
   return {
