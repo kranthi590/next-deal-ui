@@ -138,7 +138,7 @@ const useProvideAuth = () => {
           if (data) {
             console.log("Auth User", data)
             setData(data, 'user')
-            setAuthUser(data.user);
+            setAuthUser(data);
           }
           setLoadingUser(false);
         }).catch(function (error) {
