@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 
 #Copy new files or directories into the filesystem of the container
 COPY package.json /usr/src/app
-COPY yarn.lock /usr/src/app
+COPY package-lock.json /usr/src/app
 
 #Execute commands in a new layer on top of the current image and commit the results
 RUN npm install
