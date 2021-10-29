@@ -1,12 +1,14 @@
 import React from "react";
+import { getData } from "../../util/localStorage";
+import { isClient } from "../../util/util";
 
 const DashboardPage = (props) => {
-  let name;
-  if (props.userProfile) {
-    name = props.userProfile.data.firstName;
+  if (!isClient) {
+    return <div/>
   }
+  const userProfile = getData('user');
   return (
-    <div>HI, This is a Dashboard for {name}</div>
+    <div>HI, This is a Dashboard for</div>
   );
 };
 

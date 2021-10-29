@@ -48,27 +48,18 @@ const useProvideAuth = () => {
       .then(({ data: { data } }) => {
         if (data) {
           fetchSuccess();
-          document.cookie = `token=${data.token}; path=/;`;
+          document.cookie = `token=${
+            data.token
+          }; path=/;domain=${window.location.hostname.replace(
+            "www",
+            data.user.buyer.subDomainName
+          )}`;
           setAuthUser(data.user);
-          const urlParams = new URLSearchParams(window.location.search);
-          let redirectionUrl;
-          if (urlParams.get("redirect")) {
-            const url = new URL(urlParams.get("redirect"));
-            let params = new URLSearchParams(url.search);
-            params.append("token", data.token);
-            redirectionUrl = `${url.origin}${url.pathname}?${params.toString()}`.replace(
-              "www",
-              data.user.buyer.subDomainName
-            );
-          } else {
-            redirectionUrl = `http://${data.user.buyer.subDomainName}.${new URL(
-              window.location
-            ).host.replace(data.user.buyer.subDomainName, "")}/?token=${
-              data.token
-            }`.replace("www.", "");
-          }
-          setData(data.user, 'user');
-          window.location.replace(redirectionUrl);
+          setData(data.user, "user");
+          window.location.href = `http://${window.location.hostname.replace(
+            "www",
+            data.user.buyer.subDomainName
+          )}`;
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
@@ -105,6 +96,7 @@ const useProvideAuth = () => {
       setAuthUser(null);
       setAuthToken("");
       removeData("user");
+      window.location.href = "/signin";
       if (callbackFun) callbackFun();
     } catch (error) {
       setLoadingUser(false);

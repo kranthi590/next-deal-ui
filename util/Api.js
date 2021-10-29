@@ -15,22 +15,18 @@ export const setAuthToken = (token) => {
 
 export const setApiContext = (req, res, query) => {
   const browsersHeaders = req.headers;
+  console.log(JSON.stringify(browsersHeaders));
   const cookies = cookie.parse(browsersHeaders.cookie || "");
   const headers = {
     "Content-Type": "application/json",
-    origin: browsersHeaders.host,
+    'nd-domain': browsersHeaders.host,
   };
   if (browsersHeaders.referer) {
     headers.referer = browsersHeaders.referer;
   }
-  if (cookies.token || query.token) {
-    console.log('setting auth');
-    headers.authorization = cookies.token || query.token;
+  if (cookies.token) {
+    headers.authorization = cookies.token;
   }
-   if (query.token) {
-    res.setHeader("set-cookie", [`token=${query.token}`]);
-   }
-  console.log(`query to server: ${JSON.stringify(headers)}`);
   return headers;
 };
 
@@ -38,7 +34,7 @@ export const handleApiErrors = (req, res, query, error) => {
   const errorCode = _.get(error, "response.data.errors[0].errorCode", null);
   if (errorCode === "INVALID_DOMAIN" || errorCode === "INVALID_JWT_TOKEN") {
     res.writeHead(302, {
-      Location: `/signin?redirect=http://${req.headers.host}${req.url}`,
+      Location: `/signin`,
     });
     res.end();
   } else {
