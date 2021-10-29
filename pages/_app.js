@@ -12,7 +12,6 @@ import {AuthProvider} from "../util/use-auth";
 import Layout from "../app/core/Layout";
 
 const Page = ({Component, pageProps, store}) => {
-
   return (
     <React.Fragment>
       <Head>

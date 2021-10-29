@@ -1,26 +1,18 @@
+import { isClient } from "./util";
+
 export const setData = (data, key) => {
-  if (!window.localStorage || !window.JSON || !key) {
-    return;
-  }
   localStorage.setItem(key, JSON.stringify(data));
-}
+};
 
-export const getData = key => {
-  if (!window.localStorage || !window.JSON || !key) {
-    return;
+export const getData = (key) => {
+  if (isClient) {
+    return JSON.parse(localStorage.getItem(key));
   }
-  const item = localStorage.getItem(key);
+  return;
+};
 
-  if (!item) {
-    return;
+export const removeData = (key) => {
+  if (isClient) {
+    localStorage.removeItem(key);
   }
-
-  return JSON.parse(item);
-}
-
-export const removeData = key => {
-  if (!window.localStorage || !window.JSON || !key) {
-    return;
-  }
-  localStorage.removeItem(key);
-}
+};

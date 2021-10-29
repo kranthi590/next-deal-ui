@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import { httpClient, setAuthToken } from "./Api";
 import { Cookies } from "react-cookie";
-import { getData, removeData, setData } from "./localStorage";
-import { useRouter } from "next/router";
+import { removeData, setData } from "./localStorage";
 
 const authContext = createContext({});
 
@@ -49,9 +48,27 @@ const useProvideAuth = () => {
       .then(({ data: { data } }) => {
         if (data) {
           fetchSuccess();
-          document.cookie = `token=${data.token}; path=/;`
+          document.cookie = `token=${data.token}; path=/;`;
           setAuthUser(data.user);
-          window.location.href = `http://${data.user.buyer.subDomainName}.${new URL(window.location).host}?token=${data.token}`;
+          const urlParams = new URLSearchParams(window.location.search);
+          let redirectionUrl;
+          if (urlParams.get("redirect")) {
+            const url = new URL(urlParams.get("redirect"));
+            let params = new URLSearchParams(url.search);
+            params.append("token", data.token);
+            redirectionUrl = `${url.origin}${url.pathname}?${params.toString()}`.replace(
+              "www",
+              data.user.buyer.subDomainName
+            );
+          } else {
+            redirectionUrl = `http://${data.user.buyer.subDomainName}.${new URL(
+              window.location
+            ).host.replace(data.user.buyer.subDomainName, "")}/?token=${
+              data.token
+            }`.replace("www.", "");
+          }
+          setData(data.user, 'user');
+          window.location.replace(redirectionUrl);
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
