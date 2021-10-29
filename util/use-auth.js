@@ -50,10 +50,7 @@ const useProvideAuth = () => {
           fetchSuccess();
           document.cookie = `token=${
             data.token
-          }; path=/;domain=${window.location.hostname.replace(
-            "www",
-            data.user.buyer.subDomainName
-          )}`;
+          }; path=/;domain=${window.location.hostname.replace("www.", "")}`;
           setAuthUser(data.user);
           setData(data.user, "user");
           window.location.href = `http://${window.location.hostname.replace(
