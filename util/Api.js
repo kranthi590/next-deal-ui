@@ -3,7 +3,7 @@ import cookie from "cookie";
 const _ = require("lodash");
 
 export const httpClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_HOST, //YOUR_API_URL HERE
+  baseURL: `${process.env.NEXT_PUBLIC_API_HOST}api/v1/`, //YOUR_API_URL HERE
   headers: {
     "Content-Type": "application/json",
   },

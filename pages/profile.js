@@ -21,7 +21,7 @@ export async function getServerSideProps({ req, res, query }) {
   let userProfile = null;
   try {
     const headers = setApiContext(req, res, query);
-    const apiResponse = await httpClient.get("user/profile", {
+    const apiResponse = await httpClient.get("users/1", {
       headers,
     });
     userProfile = apiResponse.data.data;

@@ -44,7 +44,7 @@ const useProvideAuth = () => {
   const userLogin = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("user/login", data)
+      .post("users/login", data)
       .then(({ data: { data } }) => {
         if (data) {
           fetchSuccess();
@@ -70,7 +70,7 @@ const useProvideAuth = () => {
   const userSignup = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("user/register", data)
+      .post("users", data)
       .then(({ data }) => {
         if (data) {
           fetchSuccess();

@@ -74,7 +74,7 @@ const useProviderRegistration = () => {
   const registerBuyer = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("buyer/register", data)
+      .post("buyers", data)
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
@@ -91,7 +91,7 @@ const useProviderRegistration = () => {
   const registerSupplier = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("supplier/register", data)
+      .post("suppliers", data)
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
