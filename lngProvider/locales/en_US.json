@@ -311,7 +311,16 @@
   "sidebar.project.addProject": "Add Project",
   "sidebar.project.filters": "Filters",
   "sidebar.project.Projects": "Projects",
+  "sidebar.project.saveProject": "Save Project",
   "app.userAuth.welcome": "Welcome to Next Deal",
+  "app.project.field.projectname": "Project Name",
+  "app.project.field.manager": "Manager",
+  "app.project.field.costcenter": "Cost Center",
+  "app.project.field.description": "Description",
+  "app.project.field.startdate": "Start Date",
+  "app.project.field.enddate": "End Date",
+  "app.project.field.estimatedBudget": "Estimated Budget",
+  "app.project.field.currency": "Currency",
   "app.registration.detailsSaveSuccessMessage": "Details saved successfully!",
   "app.registration.errorMessageTitle": "There was an unexpected error occurred!"
 }

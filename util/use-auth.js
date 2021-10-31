@@ -120,45 +120,6 @@ const useProvideAuth = () => {
       });
   };
 
-  // Subscribe to user on mount
-  // Because this sets state in the callback it will cause any ...
-  // ... component that utilizes this hook to re-render with the ...
-  // ... latest auth object.
-
-  //TODO:: Auth Checking Starts From Here
-  // useEffect(() => {
-  //   const cookies = new Cookies();
-  //   const token = cookies.get("token");
-  //   try {
-  //     if (token) {
-  //       setAuthToken(token)
-  //       httpClient.get("user/profile")
-  //         .then(({data: {data}}) => {
-  //         if (data) {
-  //           console.log("Auth User", data)
-  //           setData(data, 'user')
-  //           setAuthUser(data.user);
-  //         }
-  //         setLoadingUser(false);
-  //       }).catch(function (error) {
-  //         cookies.remove('token');
-  //         setAuthToken("")
-  //         setLoadingUser(false);
-  //       });
-  //     } else {
-  //       cookies.remove("token");
-  //       setAuthToken("");
-  //       setAuthUser(null);
-  //       removeData('user');
-  //       setLoadingUser(false);
-  //     }
-  //   } catch (e) {
-  //     cookies.remove("token");
-  //     setAuthToken("");
-  //     // httpClient.defaults.headers.common['Authorization'] = '';
-  //     setLoadingUser(false);
-  //   }
-  // }, []);
 
   // Return the user object and auth methods
   return {
