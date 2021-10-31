@@ -1,16 +1,25 @@
 import React from "react";
-import {cardsList} from "./data";
 import {Col, Row} from "antd";
+
+// Components
 import ContainerHeader from "../../../app/components/ContainerHeader";
-import IntlMessages from "../../../util/IntlMessages";
 import CardsListItem from "./CardsListItem";
+
+// Utils
+import IntlMessages from "../../../util/IntlMessages";
+
+// Data
+import { cardsList } from "./data";
 
 function CardList({match}) {
   return (
     <div className="gx-module-list gx-mail-list">
       <Row>
         <Col span={24}>
-          <ContainerHeader title={<IntlMessages id="sidebar.listType.cardListView"/>} match={match}/>
+          <ContainerHeader
+            title={<IntlMessages id="sidebar.listType.cardListView" />}
+            match={match}
+          />
         </Col>
         <Col span={24}>
           {cardsList.map((data, index) => (
@@ -19,8 +28,7 @@ function CardList({match}) {
         </Col>
       </Row>
     </div>
-  )
+  );
 }
 
 export default CardList;
-

@@ -136,30 +136,6 @@ const AppLayout = ({children}) => {
     });
   }, [dispatch]);
 
-
-  // useEffect(() => {
-  //   if (!isLoadingUser) {
-  //     if (!authUser && !isUnRestrictedRoute(router.pathname)) {
-  //       router.push("/signin").then((r) => r);
-  //     } else if (authUser && isUnRestrictedRoute(router.pathname)) {
-  //       //TODO handle error scenarios
-  //       const {buyer} = authUser
-  //       //  const userAuthCallBackUrl = buyer && buyer.subDomainName + process.env.NEXT_PUBLIC_COOKIE_DOMAIN;
-  //       console.log("checking auth user availability", authUser)
-  //       router.push('https://' + userAuthCallBackUrl).then((r) => r);
-  //       //router.push('/').then((r) => r);
-  //     }
-  //   }
-  // }, [authUser, isLoadingUser, router.pathname]);
-
-  // if (isLoadingUser) {
-  //   return (
-  //     <div className="gx-loader-view">
-  //       <CircularProgress/>
-  //     </div>
-  //   );
-  // }
-
   return isUnRestrictedRoute(router.pathname) ? (
     <Layout className={`gx-app-layout`}>
       {children}

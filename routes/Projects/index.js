@@ -25,7 +25,7 @@ class Projects extends PureComponent {
         <div className="gx-module-side-content">
           <CustomScrollbars className="gx-module-side-scroll">
             <div className="gx-module-add-task">
-              <Link href="/createproject">
+              <Link href="/new-project">
                 <Button type="primary" className="gx-btn-block">
                   <i className="icon icon-add gx-mr-2" />
                   <IntlMessages id="sidebar.project.addProject" />

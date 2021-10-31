@@ -1,6 +1,7 @@
 import { NotificationManager } from "react-notifications";
 import { isEmpty } from "lodash";
 import IntlMessages from "./IntlMessages";
+import moment from "moment";
 
 export const NOTIFICATION_TIMEOUT = 4000;
 
@@ -41,3 +42,7 @@ export const getPhonePrefix = (prefix) => {
 
 
 export const isClient = typeof window !== "undefined";
+
+export const getDateInMilliseconds = (date) => {
+  return date && moment(date).format("x");
+};
