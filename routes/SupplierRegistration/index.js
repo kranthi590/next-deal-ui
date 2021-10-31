@@ -145,10 +145,7 @@ const SupplierRegistration = (props) => {
   const onFinishFailed = (errorInfo) => {};
 
   const onFinish = (values) => {
-    console.log(getFormData(values));
-
      registerSupplier(getFormData(values), (data) => {
-       console.log(data);
        successNotification("app.registration.detailsSaveSuccessMessage");
        setTimeout(() => {
          router.push("/signup");

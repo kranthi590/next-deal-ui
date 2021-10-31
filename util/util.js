@@ -1,7 +1,9 @@
+import React from 'react';
 import { NotificationManager } from "react-notifications";
 import { isEmpty } from "lodash";
 import IntlMessages from "./IntlMessages";
 import moment from "moment";
+import {getData} from "./localStorage";
 
 export const NOTIFICATION_TIMEOUT = 4000;
 
@@ -46,3 +48,11 @@ export const isClient = typeof window !== "undefined";
 export const getDateInMilliseconds = (date) => {
   return date && moment(date).format("x");
 };
+
+export const getBuyerId = () => {
+  if (isClient) {
+    const buyerInfo = getData('user');
+    return buyerInfo && JSON.parse(buyerInfo.buyerId);
+  }
+  return;
+}

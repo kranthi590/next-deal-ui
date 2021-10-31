@@ -102,10 +102,7 @@ const BuyerRegistration = (props) => {
   const onFinishFailed = (errorInfo) => {};
 
   const onFinish = (values) => {
-    console.log(getFormData(values));
-
      registerBuyer(getFormData(values), (data) => {
-       console.log(data);
        successNotification("app.registration.detailsSaveSuccessMessage");
        setTimeout(() => {
          router.push("/signup");
@@ -117,7 +114,7 @@ const BuyerRegistration = (props) => {
     <Form.Item name={name} noStyle>
       <Select
         style={{ width: 70 }}
-        defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
+          defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
       >
         <Option value="56" >+56</Option>
       </Select>

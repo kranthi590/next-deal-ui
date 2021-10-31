@@ -20,8 +20,9 @@ import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
-  getDateInMilliseconds,
+  getDateInMilliseconds, getBuyerId,
 } from "../../util/util";
+import {useRouter} from "next/router";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -47,6 +48,7 @@ const stringRule = {
 };
 
 const NewProject = () => {
+  const router = useRouter();
   const [estimatedBudget, setEstimatedBudget] = useState(false);
   const [startDate, setStartDate] = useState(null);
   const [expectedEndDate, setExpectedEndDate] = useState(null);
@@ -86,12 +88,21 @@ const NewProject = () => {
   };
 
   const onSave = (values) => {
-    console.log(getFormData(values));
-
-    newProject(getFormData(values), (response) => {
-      console.log("res: ", response);
-      successNotification("app.registration.detailsSaveSuccessMessage");
-    });
+    try {
+      const buyerId = getBuyerId();
+      if (buyerId) {
+        values.buyerId = buyerId;
+        newProject(getFormData(values), () => {
+          successNotification("app.registration.detailsSaveSuccessMessage");
+          setTimeout(() => {
+            router.push("/projects");
+          }, NOTIFICATION_TIMEOUT);
+        });
+      }
+    } catch (e) {
+      console.log("Error", e)
+    //TODO handle if buyer id empty
+    }
   };
 
   return (
@@ -115,7 +126,7 @@ const NewProject = () => {
               <Input placeholder="Project Name" />
             </Form.Item>
             <Form.Item
-              name="manager"
+              name="managerName"
               label={<IntlMessages id="app.project.field.manager" />}
               rules={[stringRule]}
             >
