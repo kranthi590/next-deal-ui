@@ -1,5 +1,5 @@
 import React, { useState, useContext, createContext } from "react";
-import { httpClient } from "../util/Api";
+import {httpClient, setAuthToken} from "../util/Api";
 
 const projectContext = createContext({});
 
@@ -37,8 +37,11 @@ const useProviderProject = () => {
 
   const newProject = (data, callbackFun) => {
     fetchStart();
+    const headers = setAuthToken();
     httpClient
-      .post("project/create", data)
+      .post(`buyers/${data.buyerId}/projects`, {...data}, {
+        headers: headers
+      })
       .then(({ data }) => {
         if (data) {
           fetchSuccess();

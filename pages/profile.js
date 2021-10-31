@@ -32,7 +32,6 @@ export async function getServerSideProps({ req, res, query }) {
       const redirectionUrl = `${url.origin}${
         url.pathname
       }?${params.toString()}`;
-      console.log(`redirectionUrl: ${redirectionUrl}`);
       res.writeHead(301, {
         Location: redirectionUrl,
       });
