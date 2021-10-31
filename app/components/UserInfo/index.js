@@ -1,6 +1,6 @@
 import React from "react";
 import {Avatar, Popover} from "antd";
-import {useAuth} from "../../../util/use-auth";
+import {useAuth} from "../../../contexts/use-auth";
 
 const UserInfo = () => {
   const {authUser, userSignOut} = useAuth();

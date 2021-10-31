@@ -1,5 +1,5 @@
 import React, { useState, useContext, createContext } from "react";
-import { httpClient } from "./Api";
+import { httpClient } from "../util/Api";
 
 const registrationContext = createContext({});
 
@@ -38,7 +38,7 @@ const useProviderRegistration = () => {
   const fetchRegions = (callbackFun) => {
     fetchStart();
     httpClient
-      .get(`${process.env.NEXT_PUBLIC_API_HOST}api/v1/config/countries/cl/regions`)
+      .get('config/countries/cl/regions')
       .then(({ data }) => {
         if (data.data) {
           fetchSuccess();
@@ -56,7 +56,7 @@ const useProviderRegistration = () => {
     fetchStart();
     httpClient
       .get(
-        `${process.env.NEXT_PUBLIC_API_HOST}api/v1/config/countries/cl/regions/${regionId}/comunas`
+        `config/countries/cl/regions/${regionId}/comunas`
       )
       .then(({ data }) => {
         if (data.data) {

@@ -1,5 +1,7 @@
 import axios from "axios";
 import cookie from "cookie";
+import {Cookies} from "react-cookie";
+import {useRouter} from "next/router";
 const _ = require("lodash");
 
 export const httpClient = axios.create({
@@ -9,8 +11,15 @@ export const httpClient = axios.create({
   },
 });
 
-export const setAuthToken = (token) => {
-  httpClient.defaults.headers.common["Authorization"] = token;
+export const setAuthToken = () => {
+  const router = useRouter();
+  const cookie = new Cookies();
+  if (cookie && cookie.token){
+    httpClient.defaults.headers.common["Authorization"] = cookie.token;
+  } else {
+    router.push('/signin')
+  }
+
 };
 
 export const setApiContext = (req, res, query) => {

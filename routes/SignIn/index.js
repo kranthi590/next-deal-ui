@@ -4,17 +4,17 @@ import Link from "next/link";
 import { LoginOutlined } from "@ant-design/icons";
 
 // Utils
-import IntlMessages from "../../../util/IntlMessages";
-import { useAuth } from "../../../util/use-auth";
+import IntlMessages from "../../util/IntlMessages";
+import { useAuth } from "../../contexts/use-auth";
 
 // Components
-import CircularProgress from "../../../app/components/CircularProgress";
-import Aside from "../../../app/components/Aside";
-import Footer from "../../../app/components/Footer";
+import CircularProgress from "../../app/components/CircularProgress";
+import Aside from "../../app/components/Aside";
+import Footer from "../../app/components/Footer";
 
 // Styles
-import "../../../styles/form-page.css";
-import {errorNotification} from "../../../util/util";
+import "../../styles/form-page.css";
+import {errorNotification} from "../../util/util";
 
 const SignIn = (props) => {
   const { isLoading, userLogin, error } = useAuth();

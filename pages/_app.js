@@ -8,7 +8,7 @@ import "../styles/style.css"
 import initStore from '../redux/store';
 import {Provider} from "react-redux";
 import LocaleProvider from "../app/core/LocaleProvider";
-import {AuthProvider} from "../util/use-auth";
+import {AuthProvider} from "../contexts/use-auth";
 import Layout from "../app/core/Layout";
 
 const Page = ({Component, pageProps, store}) => {

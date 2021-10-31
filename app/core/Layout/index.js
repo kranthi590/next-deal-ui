@@ -26,7 +26,7 @@ import {
   THEME_TYPE_DARK,
 } from "../../../constants/ThemeSetting";
 import NoHeaderNotification from "../Topbar/NoHeaderNotification";
-import {isUnRestrictedRoute, useAuth} from "../../../util/use-auth";
+import {isUnRestrictedRoute, useAuth} from "../../../contexts/use-auth";
 import {useRouter} from "next/router";
 import CircularProgress from "../../components/CircularProgress";
 import {updateWindowWidth} from "../../../redux/actions";

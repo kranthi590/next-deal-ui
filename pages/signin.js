@@ -1,5 +1,5 @@
 import React from 'react';
-import SignIn from '../routes/userAuth/SignIn'
+import SignIn from '../routes/SignIn'
 
 const SignInPage = () => <SignIn/>;
 

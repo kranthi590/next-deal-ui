@@ -1,5 +1,5 @@
 import React, { useState, useContext, createContext } from "react";
-import { httpClient } from "./Api";
+import { httpClient } from "../util/Api";
 
 const projectContext = createContext({});
 
@@ -35,7 +35,7 @@ const useProviderProject = () => {
     setError(error);
   };
 
-  const createProject = (data, callbackFun) => {
+  const newProject = (data, callbackFun) => {
     fetchStart();
     httpClient
       .post("project/create", data)
@@ -55,6 +55,6 @@ const useProviderProject = () => {
   return {
     isLoading,
     error,
-    createProject,
+    newProject,
   };
 };

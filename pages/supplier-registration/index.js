@@ -1,9 +1,9 @@
 import React from "react";
 import asyncComponent from "../../util/asyncComponent";
-import {RegistrationProvider} from "../../util/business-registration";
+import {RegistrationProvider} from "../../contexts/business-registration";
 
 const SupplierRegistration = asyncComponent(() =>
-  import("../../routes/userAuth/SupplierRegistration")
+  import("../../routes/SupplierRegistration")
 );
 
 const SupplierRegistrationPage = () => (
