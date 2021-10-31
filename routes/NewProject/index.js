@@ -15,7 +15,7 @@ import { InboxOutlined } from "@ant-design/icons";
 
 // Uitls
 import IntlMessages from "../../util/IntlMessages";
-import { useProject } from "../../util/projects";
+import { useProject } from "../../contexts/projects";
 import {
   errorNotification,
   NOTIFICATION_TIMEOUT,

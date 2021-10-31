@@ -1,15 +1,6 @@
 import React from "react";
-import { getData } from "../../util/localStorage";
-import { isClient } from "../../util/util";
+import Dashboard from "../../routes/Dashboard";
 
-const DashboardPage = (props) => {
-  if (!isClient) {
-    return <div/>
-  }
-  const userProfile = getData('user');
-  return (
-    <div>HI, This is a Dashboard for</div>
-  );
-};
+const DashboardPage = () => <Dashboard/>
 
 export default DashboardPage;

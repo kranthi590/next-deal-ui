@@ -3,17 +3,17 @@ import { Button, Checkbox, Form, Input, Select, Divider } from "antd";
 import Link from "next/link";
 
 // Utils
-import IntlMessages from "../../../util/IntlMessages";
-import { useAuth } from "../../../util/use-auth";
+import IntlMessages from "../../util/IntlMessages";
+import { useAuth } from "../../contexts/use-auth";
 
 // Components
-import CircularProgress from "../../../app/components/CircularProgress";
-import Aside from "../../../app/components/Aside";
-import Footer from "../../../app/components/Footer";
+import CircularProgress from "../../app/components/CircularProgress";
+import Aside from "../../app/components/Aside";
+import Footer from "../../app/components/Footer";
 
 // Styles
-import "../../../styles/form-page.css";
-import {errorNotification, NOTIFICATION_TIMEOUT, successNotification} from "../../../util/util";
+import "../../styles/form-page.css";
+import {errorNotification, NOTIFICATION_TIMEOUT, successNotification} from "../../util/util";
 import {useRouter} from "next/router";
 
 const FormItem = Form.Item;

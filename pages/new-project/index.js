@@ -1,6 +1,6 @@
 import React from 'react';
 import NewProject from '../../routes/NewProject'
-import { ProjectProvider } from "../../util/projects";
+import { ProjectProvider } from "../../contexts/projects";
 
 
 const NewProjectPage = () => (

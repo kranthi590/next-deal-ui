@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { httpClient, setAuthToken } from "./Api";
+import { httpClient, setAuthToken } from "../util/Api";
 import { Cookies } from "react-cookie";
-import { removeData, setData } from "./localStorage";
+import { removeData, setData } from "../util/localStorage";
 
 const authContext = createContext({});
 

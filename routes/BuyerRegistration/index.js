@@ -6,24 +6,24 @@ import { useRouter } from "next/router";
 import { isEmpty } from "lodash";
 
 // Utils
-import IntlMessages from "../../../util/IntlMessages";
-import { useAuth } from "../../../util/use-auth";
-import { useRegistration } from "../../../util/business-registration";
+import IntlMessages from "../../util/IntlMessages";
+import { useAuth } from "../../contexts/use-auth";
+import { useRegistration } from "../../contexts/business-registration";
 import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
   getPhonePrefix,
-} from "../../../util/util";
+} from "../../util/util";
 
 // Components
-import CircularProgress from "../../../app/components/CircularProgress";
-import WidgetHeader from "../../../app/components/WidgetHeader";
-import Aside from "../../../app/components/Aside";
-import Footer from "../../../app/components/Footer";
+import CircularProgress from "../../app/components/CircularProgress";
+import WidgetHeader from "../../app/components/WidgetHeader";
+import Aside from "../../app/components/Aside";
+import Footer from "../../app/components/Footer";
 
 // Styles
-import "../../../styles/form-page.css";
+import "../../styles/form-page.css";
 
 const FormItem = Form.Item;
 const { Option } = Select;
