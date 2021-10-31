@@ -38,7 +38,7 @@ const useProviderRegistration = () => {
   const fetchRegions = (callbackFun) => {
     fetchStart();
     httpClient
-      .get(`${process.env.NEXT_PUBLIC_API_HOST}config/countries/cl/regions`)
+      .get(`${process.env.NEXT_PUBLIC_API_HOST}api/v1/config/countries/cl/regions`)
       .then(({ data }) => {
         if (data.data) {
           fetchSuccess();
@@ -56,7 +56,7 @@ const useProviderRegistration = () => {
     fetchStart();
     httpClient
       .get(
-        `${process.env.NEXT_PUBLIC_API_HOST}config/countries/cl/regions/${regionId}/comunas`
+        `${process.env.NEXT_PUBLIC_API_HOST}api/v1/config/countries/cl/regions/${regionId}/comunas`
       )
       .then(({ data }) => {
         if (data.data) {
@@ -74,7 +74,7 @@ const useProviderRegistration = () => {
   const registerBuyer = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("buyers", data)
+      .post("api/v1/buyers", data)
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
@@ -91,7 +91,7 @@ const useProviderRegistration = () => {
   const registerSupplier = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("suppliers", data)
+      .post("api/v1/suppliers", data)
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
