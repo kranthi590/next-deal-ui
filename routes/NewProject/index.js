@@ -51,7 +51,7 @@ const NewProject = () => {
   const [startDate, setStartDate] = useState(null);
   const [expectedEndDate, setExpectedEndDate] = useState(null);
 
-  const { isLoading, error, createProject } = useProject();
+  const { isLoading, error, newProject } = useProject();
 
   const [form] = Form.useForm();
 
@@ -88,7 +88,7 @@ const NewProject = () => {
   const onSave = (values) => {
     console.log(getFormData(values));
 
-    createProject(getFormData(values), (response) => {
+    newProject(getFormData(values), (response) => {
       console.log("res: ", response);
       successNotification("app.registration.detailsSaveSuccessMessage");
     });
