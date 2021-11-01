@@ -17,11 +17,14 @@ const ProjectsPage = (props) => {
 export default ProjectsPage;
 
 export async function getServerSideProps(context) {
+
   const {req, res, query} = context;
+  const {cookies} = req;
+  const buyerID = cookies['buyerId']
   let projectsList = null;
   try {
     const headers = setApiContext(req, res, query);
-    const response = await httpClient.get(`buyers/20/projects`, {
+    const response = await httpClient.get(`buyers/${buyerID}/projects`, {
       headers,
     });
     projectsList = response.data.data;

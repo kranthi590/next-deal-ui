@@ -42,6 +42,7 @@ const useProvideAuth = () => {
   };
 
   const userLogin = (data, callbackFun) => {
+    const cookies = new Cookies();
     fetchStart();
     httpClient
       .post("users/login", data)
@@ -51,6 +52,10 @@ const useProvideAuth = () => {
           document.cookie = `token=${
             data.token
           }; path=/;domain=${window.location.hostname.replace("www.", "")}`;
+          cookies.set('buyerId', data.user.buyerId || '', {
+            path:'/',
+            domain: `${window.location.hostname.replace("www.", "")}`
+          })
           setAuthUser(data.user);
           setData(data.user, "user");
           window.location.href = `http://${window.location.hostname.replace(
