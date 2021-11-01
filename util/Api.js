@@ -3,6 +3,7 @@ import cookie from "cookie";
 import {Cookies} from "react-cookie";
 import {isClient} from "./util";
 const _ = require("lodash");
+import { v4 as uuidv4 } from 'uuid';
 
 export const httpClient = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_HOST}api/v1/`, //YOUR_API_URL HERE
@@ -12,7 +13,8 @@ export const setAuthToken = () => {
   const cookie = new Cookies();
   const headers = {
       "Content-Type": "application/json",
-      "nd-domain":  isClient ? window.location.hostname : ""
+      "nd-domain":  isClient ? window.location.hostname : "",
+      "x-trace-id": uuidv4()
   }
   if (cookie.get('token')){
     headers.authorization = cookie.get('token');
@@ -26,6 +28,7 @@ export const setApiContext = (req, res, query) => {
   const headers = {
     "Content-Type": "application/json",
     'nd-domain': browsersHeaders.host,
+    "x-trace-id": uuidv4()
   };
   if (browsersHeaders.referer) {
     headers.referer = browsersHeaders.referer;

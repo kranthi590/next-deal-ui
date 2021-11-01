@@ -128,7 +128,7 @@ const BuyerRegistration = (props) => {
         <div className="form-container">
           <div className="gx-app-login-content registration-form">
             <div className="heading-wrapper">
-              <h1>Buyer Registration</h1>
+              <h1>Business Registration</h1>
               <p>
                 <Link href="/signin">
                   <a>
