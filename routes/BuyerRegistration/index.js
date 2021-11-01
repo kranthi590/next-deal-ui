@@ -374,8 +374,6 @@ const BuyerRegistration = (props) => {
                   </FormItem>
                 </Col>
               </Row>
-              <Row>
-                <Col style={{textAlign:'right'}}>
               <Form.Item
                 name="iAccept"
                 rules={[
@@ -396,8 +394,6 @@ const BuyerRegistration = (props) => {
                   </Button>
                 </div>
               </FormItem>
-                </Col>
-              </Row>
             </Form>
           </div>
         </div>
