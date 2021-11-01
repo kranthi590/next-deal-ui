@@ -1,23 +1,36 @@
-import React from "react";
-import Head from "next/head";
+import React, {Fragment} from "react";
 import Projects from "../../routes/Projects";
 import {ProjectProvider} from "../../contexts/projects";
-import IntlMessages from "../../util/IntlMessages";
+import {handleApiErrors, httpClient, setApiContext} from "../../util/Api";
 
 
-const ProjectsPage = () => {
+const ProjectsPage = (props) => {
   return (
-    <React.Fragment>
-      <Head>
-        <title>
-          <IntlMessages id="sidebar.project.Projects" />
-        </title>
-      </Head>
+    <Fragment>
       <ProjectProvider>
-        <Projects/>
+        <Projects {...props}/>
       </ProjectProvider>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
 export default ProjectsPage;
+
+export async function getServerSideProps(context) {
+  const {req, res, query} = context;
+  let projectsList = null;
+  try {
+    const headers = setApiContext(req, res, query);
+    const response = await httpClient.get(`buyers/20/projects`, {
+      headers,
+    });
+    projectsList = response.data.data;
+  } catch (error) {
+    handleApiErrors(req, res, query, error)
+  }
+  return {
+    props: {
+      projectsList: projectsList.rows
+    }
+  }
+}

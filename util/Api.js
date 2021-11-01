@@ -1,6 +1,7 @@
 import axios from "axios";
 import cookie from "cookie";
 import {Cookies} from "react-cookie";
+import {isClient} from "./util";
 const _ = require("lodash");
 
 export const httpClient = axios.create({
@@ -11,6 +12,7 @@ export const setAuthToken = () => {
   const cookie = new Cookies();
   const headers = {
       "Content-Type": "application/json",
+      "nd-domain":  isClient ? window.location.hostname : ""
   }
   if (cookie.get('token')){
     headers.authorization = cookie.get('token');
