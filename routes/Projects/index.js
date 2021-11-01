@@ -1,11 +1,10 @@
-import React, { PureComponent } from "react";
-import { Button, Drawer, Menu, message } from "antd";
+import React, {PureComponent} from "react";
+import {Button, Drawer, Menu, message} from "antd";
 import Link from "next/link";
 import CustomScrollbars from "../../util/CustomScrollbars";
 
 import mails from "./data/mails";
 import labels from "./data/labels";
-import AppModuleHeader from "../../app/components/AppModuleHeader";
 import IntlMessages from "../../util/IntlMessages";
 import CircularProgress from "../../app/components/CircularProgress";
 import Card from "./Card";
@@ -13,12 +12,12 @@ import Card from "./Card";
 import "./index.css";
 
 class Projects extends PureComponent {
-  MailSideBar = () => {
+  ProjectSideBar = () => {
     return (
       <div className="gx-module-side">
         <div className="gx-module-side-header">
           <div className="gx-module-logo">
-            <IntlMessages id="sidebar.project.Projects" />
+            <IntlMessages id="sidebar.project.Projects"/>
           </div>
         </div>
 
@@ -27,15 +26,15 @@ class Projects extends PureComponent {
             <div className="gx-module-add-task">
               <Link href="/new-project">
                 <Button type="primary" className="gx-btn-block">
-                  <i className="icon icon-add gx-mr-2" />
-                  <IntlMessages id="sidebar.project.addProject" />
+                  <i className="icon icon-add gx-mr-2"/>
+                  <IntlMessages id="sidebar.project.addProject"/>
                 </Button>
               </Link>
             </div>
 
             <ul className="gx-module-nav">
               <li className="gx-module-nav-label">
-                <IntlMessages id="sidebar.project.filters" />
+                <IntlMessages id="sidebar.project.filters"/>
               </li>
 
               {this.getNavLabels()}
@@ -51,16 +50,16 @@ class Projects extends PureComponent {
     const mails = this.state.allMail.map((mail) => {
       if (mail.selected && mail.folder === this.state.selectedFolder) {
         if (mail.labels.includes(id)) {
-          return { ...mail, labels: this.removeLabel(mail, id) };
+          return {...mail, labels: this.removeLabel(mail, id)};
         } else {
-          return { ...mail, labels: this.addLabel(mail, id) };
+          return {...mail, labels: this.addLabel(mail, id)};
         }
       } else {
         return mail;
       }
     });
     this.setState({
-      noContentFoundMessage: "No Mail found in selected label",
+      noContentFoundMessage: "No Project found in selected label",
       alertMessage: "Label Updated Successfully",
       showMessage: true,
       allMail: mails,
@@ -89,76 +88,50 @@ class Projects extends PureComponent {
           );
           this.setState({
             loader: true,
-            noContentFoundMessage: "No Mail found in selected label",
+            noContentFoundMessage: "No Projects found in selected label",
             folderMails: filterMails,
           });
           setTimeout(() => {
-            this.setState({ loader: false });
+            this.setState({loader: false});
           }, 1500);
         }}
       >
         <span className="gx-link">
-          <i className={`icon icon-tag gx-text-${label.color}`} />
+          <i className={`icon icon-tag gx-text-${label.color}`}/>
           <span>{label.title}</span>
         </span>
       </li>
     ));
   };
 
-  searchMail = (searchText) => {
-    if (searchText === "") {
-      this.setState({
-        folderMails: this.state.allMail.filter((mail) => !mail.deleted),
-      });
-    } else {
-      const searchMails = this.state.allMail.filter(
-        (mail) =>
-          !mail.deleted &&
-          mail.subject.toLowerCase().indexOf(searchText.toLowerCase()) > -1
-      );
-      this.setState({
-        folderMails: searchMails,
-      });
-    }
-  };
 
-  displayMail = (currentMail, folderMails, noContentFoundMessage) => {
+  displayProjects = (projects, noContentFoundMessage) => {
     return (
       <div className="gx-module-box-column">
-        {currentMail === null ? (
-          folderMails.length === 0 ? (
-            <div className="gx-no-content-found gx-text-light gx-d-flex gx-align-items-center gx-justify-content-center">
+        {
+          projects && projects.length === 0 ? (
+            <div
+              className="gx-no-content-found gx-text-light gx-d-flex gx-align-items-center gx-justify-content-center">
               {noContentFoundMessage}
             </div>
           ) : (
-            <Card />
+            <Card projects={projects}/>
           )
-        ) : (
-          <div>New Detail Page</div>
-        )}
+        }
       </div>
     );
   };
-
-  labelMenu = () => (
-    <Menu id="label-menu" onClick={this.onLabelMenuItemSelect.bind(this)}>
-      {labels.map((label) => (
-        <Menu.Item key={label.id}>{label.title}</Menu.Item>
-      ))}
-    </Menu>
-  );
 
   constructor() {
     super();
     this.state = {
       searchMail: "",
-      noContentFoundMessage: "No Mail found in selected folder",
+      noContentFoundMessage: "Todavía no has empezado ningún proyecto.",
       alertMessage: "",
       showMessage: false,
       drawerState: false,
       allMail: mails,
       loader: true,
-      currentMail: null,
       user: {
         name: "Robert Johnson",
         email: "robert@example.com",
@@ -172,7 +145,7 @@ class Projects extends PureComponent {
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ loader: false });
+      this.setState({loader: false});
     }, 1500);
   }
 
@@ -183,7 +156,7 @@ class Projects extends PureComponent {
       mail.id === this.state.currentMail.id
     ) {
       this.setState({
-        currentMail: { ...mail, labels: mail.labels },
+        currentMail: {...mail, labels: mail.labels},
       });
     }
     return mail.labels;
@@ -195,7 +168,7 @@ class Projects extends PureComponent {
       mail.id === this.state.currentMail.id
     ) {
       this.setState({
-        currentMail: { ...mail, labels: mail.labels.concat(label) },
+        currentMail: {...mail, labels: mail.labels.concat(label)},
       });
     }
     return mail.labels.concat(label);
@@ -215,9 +188,9 @@ class Projects extends PureComponent {
   }
 
   render() {
+    console.log("Projects data", this.props);
     const {
       loader,
-      currentMail,
       drawerState,
       folderMails,
       user,
@@ -225,6 +198,8 @@ class Projects extends PureComponent {
       showMessage,
       noContentFoundMessage,
     } = this.state;
+    const {projectsList = []} = this.props;
+    console.log("rows", projectsList)
     return (
       <div className="gx-main-content">
         <div className="gx-app-module">
@@ -235,11 +210,11 @@ class Projects extends PureComponent {
               visible={drawerState}
               onClose={this.onToggleDrawer.bind(this)}
             >
-              {this.MailSideBar()}
+              {this.ProjectSideBar()}
             </Drawer>
           </div>
           <div className="gx-module-sidenav gx-d-none gx-d-lg-flex">
-            {this.MailSideBar()}
+            {this.ProjectSideBar()}
           </div>
 
           <div className="gx-module-box">
@@ -251,23 +226,16 @@ class Projects extends PureComponent {
                   onClick={this.onToggleDrawer.bind(this)}
                 />
               </span>
-              <AppModuleHeader
-                placeholder="Search mails"
-                user={this.state.user}
-                onChange={this.updateSearch.bind(this)}
-                value={this.state.searchMail}
-              />
             </div>
 
             <div className="gx-module-box-content cards-wrapper">
               {loader ? (
                 <div className="gx-loader-view">
-                  <CircularProgress />
+                  <CircularProgress/>
                 </div>
               ) : (
-                this.displayMail(
-                  currentMail,
-                  folderMails,
+                this.displayProjects(
+                  projectsList,
                   noContentFoundMessage
                 )
               )}
@@ -275,11 +243,11 @@ class Projects extends PureComponent {
           </div>
         </div>
         {showMessage &&
-          message.info(
-            <span id="message-id">{alertMessage}</span>,
-            3,
-            this.handleRequestClose
-          )}
+        message.info(
+          <span id="message-id">{alertMessage}</span>,
+          3,
+          this.handleRequestClose
+        )}
       </div>
     );
   }

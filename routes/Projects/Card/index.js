@@ -11,18 +11,17 @@ import IntlMessages from "../../../util/IntlMessages";
 // Data
 import { cardsList } from "./data";
 
-function CardList({match}) {
+function CardList({projects}) {
   return (
     <div className="gx-module-list gx-mail-list">
       <Row>
         <Col span={24}>
           <ContainerHeader
             title={<IntlMessages id="sidebar.listType.cardListView" />}
-            match={match}
           />
         </Col>
         <Col span={24}>
-          {cardsList.map((data, index) => (
+          {projects && projects.map((data, index) => (
             <CardsListItem key={index} data={data} styleName="gx-card-list"/>
           ))}
         </Col>
