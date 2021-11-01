@@ -53,11 +53,13 @@ const useProvideAuth = () => {
             data.token
           }; path=/;domain=${window.location.hostname.replace("www.", "")}`;
           cookies.set('buyerId', data.user.buyerId || '', {
-            path:'/',
+            path: '/',
             domain: `${window.location.hostname.replace("www.", "")}`
-          })
-          setAuthUser(data.user);
-          setData(data.user, "user");
+          });
+          cookies.set('userId', data.user.id || '', {
+            path: '/',
+            domain: `${window.location.hostname.replace("www.", "")}`
+          });
           window.location.href = `http://${window.location.hostname.replace(
             "www",
             data.user.buyer.subDomainName

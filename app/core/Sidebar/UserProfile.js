@@ -1,12 +1,9 @@
 import React from "react";
 import { Avatar, Popover } from "antd";
-import { getData } from "../../../util/localStorage";
-import {useAuth} from "../../../contexts/use-auth";
+import { useAuth } from "../../../contexts/use-auth";
 
 const UserProfile = () => {
-  const authUser = getData("user");
-  const {userSignOut} = useAuth();
-
+  const { userSignOut, authUser } = useAuth();
 
   if (!authUser) {
     return <div />;

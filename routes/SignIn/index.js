@@ -14,7 +14,7 @@ import Footer from "../../app/components/Footer";
 
 // Styles
 import "../../styles/form-page.css";
-import {errorNotification} from "../../util/util";
+import { errorNotification } from "../../util/util";
 
 const SignIn = (props) => {
   const { isLoading, userLogin, error } = useAuth();
@@ -53,7 +53,6 @@ const SignIn = (props) => {
                 <Form.Item
                   name="emailId"
                   label="Email"
-                  initialValue="kranthi.kumar5901@gmail.com"
                   rules={[
                     {
                       required: true,
@@ -65,7 +64,6 @@ const SignIn = (props) => {
                 </Form.Item>
                 <Form.Item
                   label="Password"
-                  initialValue="konahamaru"
                   rules={[
                     { required: true, message: "Please input your Password!" },
                   ]}
@@ -113,11 +111,7 @@ const SignIn = (props) => {
           <CircularProgress />
         </div>
       )}
-      {
-        error && (
-          errorNotification(error, "app.registration.errorMessageTitle")
-        )
-      }
+      {error && errorNotification(error, "app.registration.errorMessageTitle")}
     </div>
   );
 };
