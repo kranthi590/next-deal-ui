@@ -188,7 +188,6 @@ class Projects extends PureComponent {
   }
 
   render() {
-    console.log("Projects data", this.props);
     const {
       loader,
       drawerState,
@@ -199,7 +198,6 @@ class Projects extends PureComponent {
       noContentFoundMessage,
     } = this.state;
     const {projectsList = []} = this.props;
-    console.log("rows", projectsList)
     return (
       <div className="gx-main-content">
         <div className="gx-app-module">
