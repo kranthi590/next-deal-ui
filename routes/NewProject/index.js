@@ -36,9 +36,9 @@ const formLayout = {
   },
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 5 },
-    md: { span: 5 },
-    lg: { span: 5 },
+    sm: { span: 7 },
+    md: { span: 7 },
+    lg: { span: 7 },
   },
 };
 
@@ -88,21 +88,12 @@ const NewProject = () => {
   };
 
   const onSave = (values) => {
-    try {
-      const buyerId = getBuyerId();
-      if (buyerId) {
-        values.buyerId = buyerId;
         newProject(getFormData(values), () => {
           successNotification("app.registration.detailsSaveSuccessMessage");
           setTimeout(() => {
             router.push("/projects");
           }, NOTIFICATION_TIMEOUT);
         });
-      }
-    } catch (e) {
-      console.log("Error", e)
-    //TODO handle if buyer id empty
-    }
   };
 
   return (

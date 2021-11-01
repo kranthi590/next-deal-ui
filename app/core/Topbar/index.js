@@ -79,7 +79,7 @@ const Topbar = () => {
         value={searchText}
       /> */}
       <ul className="gx-header-notifications gx-ml-auto">
-        <li className="gx-notify">
+    {/*    <li className="gx-notify">
           <Popover
             overlayClassName="gx-popover-horizantal"
             placement="bottomRight"
@@ -90,7 +90,7 @@ const Topbar = () => {
               <i className="icon icon-notification" />
             </span>
           </Popover>
-        </li>
+        </li>*/}
         <li className="gx-language">
           <UserProfile />
         </li>

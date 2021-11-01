@@ -1,5 +1,6 @@
 import React, { useState, useContext, createContext } from "react";
 import {httpClient, setAuthToken} from "../util/Api";
+import {Cookies} from "react-cookie";
 
 const projectContext = createContext({});
 
@@ -38,8 +39,10 @@ const useProviderProject = () => {
   const newProject = (data, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
+    const cookie = new Cookies()
+    const buyerId = cookie.get('buyerId');
     httpClient
-      .post(`buyers/${data.buyerId}/projects`, {...data}, {
+      .post(`buyers/${buyerId}/projects`, {...data}, {
         headers: headers
       })
       .then(({ data }) => {
