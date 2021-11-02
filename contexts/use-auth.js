@@ -60,7 +60,7 @@ const useProvideAuth = () => {
             path: '/',
             domain: `${window.location.hostname.replace("www.", "")}`
           });
-          window.location.href = `http://${window.location.hostname.replace(
+          window.location.href = `https://${window.location.hostname.replace(
             "www",
             data.user.buyer.subDomainName
           )}`;
@@ -76,8 +76,11 @@ const useProvideAuth = () => {
 
   const userSignup = (data, callbackFun) => {
     fetchStart();
+    const headers = setAuthToken()
     httpClient
-      .post("users", data)
+      .post("users", data, {
+        headers: headers
+      })
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
@@ -97,8 +100,7 @@ const useProvideAuth = () => {
       fetchSuccess();
       const cookies = new Cookies();
       cookies.remove("token");
-      //setAuthUser(null);
-      //setAuthToken("");
+      cookies.remove("buyerId");
       removeData("user");
       window.location.href = "/signin";
       if (callbackFun) callbackFun();

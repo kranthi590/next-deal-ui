@@ -105,7 +105,12 @@ const BuyerRegistration = (props) => {
      registerBuyer(getFormData(values), (data) => {
        successNotification("app.registration.detailsSaveSuccessMessage");
        setTimeout(() => {
-         router.push("/signup");
+        if (data){
+          window.location.href = `https://${window.location.hostname.replace(
+            "www",
+            data.subDomainName
+          )}/signup`;
+        }
        }, NOTIFICATION_TIMEOUT);
      });
   };
