@@ -8,8 +8,6 @@ export async function getServerSideProps({ req, res, query }) {
   let userProfile = null;
   try {
     const headers = setApiContext(req, res, query);
-      console.log(`users/${headers[`user-id`]}`);
-      console.log(headers);
     const apiResponse = await httpClient.get(`users/${headers[`user-id`]}`, {
       headers,
     });

@@ -21,22 +21,10 @@ export async function getServerSideProps({ req, res, query }) {
   let userProfile = null;
   try {
     const headers = setApiContext(req, res, query);
-    const apiResponse = await httpClient.get("users/1", {
+    const apiResponse = await httpClient.get(`users/${headers[`user-id`]}`, {
       headers,
     });
     userProfile = apiResponse.data.data;
-    if (query.token) {
-      const url = new URL(`http://${req.headers.host}${req.url}`);
-      let params = new URLSearchParams(url.search);
-      params.delete("token");
-      const redirectionUrl = `${url.origin}${
-        url.pathname
-      }?${params.toString()}`;
-      res.writeHead(301, {
-        Location: redirectionUrl,
-      });
-      res.end();
-    }
   } catch (error) {
     handleApiErrors(req, res, query, error);
   }
