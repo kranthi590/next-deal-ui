@@ -68,7 +68,7 @@ const Topbar = () => {
         <img
           alt=""
           className="gx-d-block gx-d-lg-none gx-pointer"
-          src={"/images/w-logo.png"}
+          src={"/images/w-logo.jpeg"}
         />
       </Link>
 

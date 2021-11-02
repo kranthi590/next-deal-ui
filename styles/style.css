@@ -32658,6 +32658,7 @@ h6,
   }
 }
 .gx-layout-sider-header .gx-site-logo {
+  width: 110px;
   display: block;
 }
 .ant-layout-sider-collapsed .gx-layout-sider-header .gx-site-logo {
