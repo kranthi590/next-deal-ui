@@ -1,8 +1,8 @@
 import React from "react";
 
-const Dashboard = () => {
+const Dashboard = ({ userProfile }) => {
   return (
-    <div>HI, This is a Dashboard for</div>
+    <div>HI, This is a Dashboard for { userProfile.firstName} { userProfile.lastName}</div>
   );
 };
 
