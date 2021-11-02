@@ -106,10 +106,11 @@ const BuyerRegistration = (props) => {
        successNotification("app.registration.detailsSaveSuccessMessage");
        setTimeout(() => {
         if (data){
-          window.location.href = `https://${window.location.hostname.replace(
+          window.location.href = `https://${data.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/signup`;
+    /*      window.location.href = `https://${window.location.hostname.replace(
             "www",
             data.subDomainName
-          )}/signup`;
+          )}/signup`;*/
         }
        }, NOTIFICATION_TIMEOUT);
      });
@@ -247,7 +248,7 @@ const BuyerRegistration = (props) => {
                   >
                     <Input
                       size="large"
-                      placeholder="san pascual 101, las condes, chile"
+                      placeholder="san pascual"
                     />
                   </FormItem>
                 </Col>
@@ -264,7 +265,7 @@ const BuyerRegistration = (props) => {
                   >
                     <Input
                       size="large"
-                      placeholder="san pascual 101, las condes, chile"
+                      placeholder="las condes"
                     />
                   </FormItem>
                 </Col>
