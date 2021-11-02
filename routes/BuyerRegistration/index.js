@@ -107,10 +107,6 @@ const BuyerRegistration = (props) => {
        setTimeout(() => {
         if (data){
           window.location.href = `https://${data.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/signup`;
-    /*      window.location.href = `https://${window.location.hostname.replace(
-            "www",
-            data.subDomainName
-          )}/signup`;*/
         }
        }, NOTIFICATION_TIMEOUT);
      });
@@ -380,6 +376,8 @@ const BuyerRegistration = (props) => {
                   </FormItem>
                 </Col>
               </Row>
+              <Row style={{ width: "100%", justifyContent: "right" }}>
+                <Col>
               <Form.Item
                 name="iAccept"
                 rules={[
@@ -393,13 +391,21 @@ const BuyerRegistration = (props) => {
                   <IntlMessages id="appModule.termAndCondition" />
                 </span>
               </Form.Item>
+                </Col>
+                <Col>
               <FormItem>
                 <div>
-                  <Button type="primary" className="gx-mb-0" htmlType="submit">
+                      <Button
+                        type="primary"
+                        className="gx-mb-0"
+                        htmlType="submit"
+                      >
                     <IntlMessages id="app.userAuth.signUp" />
                   </Button>
                 </div>
               </FormItem>
+                </Col>
+              </Row>
             </Form>
           </div>
         </div>
