@@ -36,6 +36,9 @@ export const setApiContext = (req, res, query) => {
   if (cookies.token) {
     headers.authorization = cookies.token;
   }
+  if (cookies.userId){
+    headers[`user-id`] = cookies.userId;
+  }
   return headers;
 };
 

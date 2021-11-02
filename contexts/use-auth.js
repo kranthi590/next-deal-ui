@@ -49,21 +49,20 @@ const useProvideAuth = () => {
       .then(({ data: { data } }) => {
         if (data) {
           fetchSuccess();
-          document.cookie = `token=${
-            data.token
-          }; path=/;domain=${window.location.hostname.replace("www.", "")}`;
-          cookies.set('buyerId', data.user.buyerId || '', {
-            path: '/',
-            domain: `${window.location.hostname.replace("www.", "")}`
+          document.cookie = `token=${data.token}; path=/;domain=${process.env.NEXT_PUBLIC_APP_HOST}`;
+          cookies.set("token", data.token || "", {
+            path: "/",
+            domain: process.env.NEXT_PUBLIC_APP_HOST,
           });
-          cookies.set('userId', data.user.id || '', {
-            path: '/',
-            domain: `${window.location.hostname.replace("www.", "")}`
+          cookies.set("buyerId", data.user.buyerId || "", {
+            path: "/",
+            domain: process.env.NEXT_PUBLIC_APP_HOST,
           });
-          window.location.href = `https://${window.location.hostname.replace(
-            "www",
-            data.user.buyer.subDomainName
-          )}`;
+          cookies.set("userId", data.user.id || "", {
+            path: "/",
+            domain: process.env.NEXT_PUBLIC_APP_HOST,
+          });
+          window.location.href = `https://${data.user.buyer.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}`;
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
@@ -76,10 +75,10 @@ const useProvideAuth = () => {
 
   const userSignup = (data, callbackFun) => {
     fetchStart();
-    const headers = setAuthToken()
+    const headers = setAuthToken();
     httpClient
       .post("users", data, {
-        headers: headers
+        headers: headers,
       })
       .then(({ data }) => {
         if (data) {
@@ -128,7 +127,6 @@ const useProvideAuth = () => {
         fetchError(error.message);
       });
   };
-
 
   // Return the user object and auth methods
   return {

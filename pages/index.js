@@ -1,6 +1,27 @@
 import React from "react";
 import Dashboard from "../routes/Dashboard";
+import { handleApiErrors, httpClient, setApiContext } from "../util/Api";
 
-const DashboardPage = () => <Dashboard/>
+const DashboardPage = () => <Dashboard />;
+
+export async function getServerSideProps({ req, res, query }) {
+  let userProfile = null;
+  try {
+    const headers = setApiContext(req, res, query);
+      console.log(`users/${headers[`user-id`]}`);
+      console.log(headers);
+    const apiResponse = await httpClient.get(`users/${headers[`user-id`]}`, {
+      headers,
+    });
+    userProfile = apiResponse.data.data;
+  } catch (error) {
+    handleApiErrors(req, res, query, error);
+  }
+  return {
+    props: {
+      userProfile,
+    },
+  };
+}
 
 export default DashboardPage;
