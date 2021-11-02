@@ -56,3 +56,8 @@ export const getBuyerId = () => {
   }
   return;
 }
+
+export const getSubDomain = (url='') => {
+  const domain = isClient ? window.location.hostname.replace('www.','').split('.'): '';
+  return domain[0]
+}

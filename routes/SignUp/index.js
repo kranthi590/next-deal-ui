@@ -13,7 +13,7 @@ import Footer from "../../app/components/Footer";
 
 // Styles
 import "../../styles/form-page.css";
-import {errorNotification, NOTIFICATION_TIMEOUT, successNotification} from "../../util/util";
+import {errorNotification, getSubDomain, isClient, NOTIFICATION_TIMEOUT, successNotification} from "../../util/util";
 import {useRouter} from "next/router";
 
 const FormItem = Form.Item;
@@ -66,7 +66,7 @@ const SignUp = (props) => {
           <div className="gx-app-login-content registration-form">
             <div className="form-wrapper-login">
               <div className="heading-wrapper">
-                <h1>Sign Up to Next Deal</h1>
+                <h1>Sign Up to {getSubDomain(isClient ? window.location.hostname: 'www.nextdeal.dev')}</h1>
                 <p>
                   <Link href="/signin">
                     <a>
