@@ -98,8 +98,9 @@ const useProvideAuth = () => {
     try {
       fetchSuccess();
       const cookies = new Cookies();
-      cookies.remove("token");
-      cookies.remove("buyerId");
+      cookies.remove("token", { path: '/' });
+      cookies.remove("buyerId", { path: '/' });
+      cookies.remove("userId", { path: '/' });
       removeData("user");
       window.location.href = "/signin";
       if (callbackFun) callbackFun();
