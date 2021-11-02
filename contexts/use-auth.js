@@ -98,9 +98,18 @@ const useProvideAuth = () => {
     try {
       fetchSuccess();
       const cookies = new Cookies();
-      cookies.remove("token", { path: '/' });
-      cookies.remove("buyerId", { path: '/' });
-      cookies.remove("userId", { path: '/' });
+      cookies.remove("token", {
+        path: "/",
+        domain: process.env.NEXT_PUBLIC_APP_HOST,
+      });
+      cookies.remove("buyerId", {
+        path: "/",
+        domain: process.env.NEXT_PUBLIC_APP_HOST,
+      });
+      cookies.remove("userId", {
+        path: "/",
+        domain: process.env.NEXT_PUBLIC_APP_HOST,
+      });
       removeData("user");
       window.location.href = "/signin";
       if (callbackFun) callbackFun();
