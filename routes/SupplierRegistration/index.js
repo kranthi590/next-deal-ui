@@ -234,7 +234,7 @@ const SupplierRegistration = (props) => {
                   >
                     <Input
                       size="large"
-                      placeholder="san pascual 101, las condes, chile"
+                      placeholder="san pascual"
                     />
                   </FormItem>
                 </Col>
@@ -251,7 +251,7 @@ const SupplierRegistration = (props) => {
                   >
                     <Input
                       size="large"
-                      placeholder="san pascual 101, las condes, chile"
+                      placeholder="las condes"
                     />
                   </FormItem>
                 </Col>
@@ -497,7 +497,7 @@ const SupplierRegistration = (props) => {
                     <FormItem label="Address 1" name="billing_addressLine1">
                       <Input
                         size="large"
-                        placeholder="san pascual 101, las condes, chile"
+                        placeholder="san pascual"
                       />
                     </FormItem>
                   </Col>
@@ -505,7 +505,7 @@ const SupplierRegistration = (props) => {
                     <FormItem label="Address 2" name="billing_addressLine2">
                       <Input
                         size="large"
-                        placeholder="san pascual 101, las condes, chile"
+                        placeholder="las condes"
                       />
                     </FormItem>
                   </Col>
