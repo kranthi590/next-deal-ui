@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Component, useEffect, useState} from "react";
 import {Button, Checkbox, Form, Input, Select, Col, Row} from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -15,6 +15,8 @@ import {
   isValidObject,
   getPhonePrefix,
 } from "../../util/util";
+import {  validate, clean, format } from 'rut.js'
+
 
 // Components
 import CircularProgress from "../../app/components/CircularProgress";
@@ -29,6 +31,25 @@ const FormItem = Form.Item;
 const {TextArea} = Input;
 const {Option} = Select;
 
+class NumericInput extends Component {
+  onChange = async (e) => {
+    let getRut = await format(e.target.value);
+    if (getRut === '-'){
+      getRut = ''
+    }
+    this.props.onChange(getRut)
+  }
+  render() {
+    return (
+        <Input
+          {...this.props}
+          onChange={this.onChange}
+          placeholder="RUT"
+          maxLength={12}
+        />
+    );
+  }
+}
 const SupplierRegistration = (props) => {
   const router = useRouter();
   const {isLoading} = useAuth();
@@ -43,6 +64,7 @@ const SupplierRegistration = (props) => {
   const [communes1, setCommunes1] = useState([]);
   const [communes2, setCommunes2] = useState([]);
   const [iAccept, setIAccept] = useState(false);
+  const [rut, setRut] = useState(null)
 
   useEffect(() => {
     fetchRegions(({regions}) => {
@@ -116,7 +138,7 @@ const SupplierRegistration = (props) => {
       businessAddress: businessAddress,
       legalName: business.legalName,
       fantasyName: business.fantasyName,
-      rut: business.rut,
+      rut: business.rut ? clean(business.rut): business.rut,
       webSiteUrl: business.webSiteUrl,
       emailId: business.emailId,
       categories: business.categories,
@@ -152,6 +174,9 @@ const SupplierRegistration = (props) => {
        }, NOTIFICATION_TIMEOUT);
      });
   };
+  const onChange = async (value) => {
+    setRut(value);
+  }
 
   return (
     <div className="gx-app-login-wrap registration-container">
@@ -215,10 +240,26 @@ const SupplierRegistration = (props) => {
                     name="business_rut"
                     label="RUT"
                     rules={[
-                      {required: true, message: "Please input your rut!"},
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          if (!validate(value)) {
+                            return Promise.reject(
+                              "Please input your valid rut!"
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
                     ]}
                   >
-                    <Input size="large" placeholder="RUT"/>
+                    <NumericInput
+                      {...props}
+                      className="gx-w-100"
+                      value={rut}
+                      size="large"
+                      onChange={onChange}
+                      placeholder="RUT"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -350,7 +391,9 @@ const SupplierRegistration = (props) => {
                       {type: "url", warningOnly: true},
                     ]}
                   >
-                    <Input size="large" placeholder="https://example.com"/>
+                    <Input
+                      addonBefore="https://"
+                      size="large" placeholder="https://nextdeal.cl"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>

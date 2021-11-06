@@ -328,7 +328,9 @@ const BuyerRegistration = (props) => {
                       { type: "url", warningOnly: true },
                     ]}
                   >
-                    <Input size="large" placeholder="https://example.com" />
+                    <Input
+                      addonBefore="https://"
+                      size="large" placeholder="nextdeal.cl" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
