@@ -126,7 +126,6 @@ const NewProject = () => {
             <Form.Item
               name="costCenter"
               label={<IntlMessages id="app.project.field.costcenter"/>}
-              rules={[stringRule]}
             >
               <Input placeholder="Cost Center" />
             </Form.Item>
@@ -171,6 +170,8 @@ const NewProject = () => {
             >
               <InputNumber
                 className="gx-w-100"
+                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                parser={value => value.replace(/\$\s?|(,*)/g, '')}
                 placeholder="Estimated Budget"
                 onChange={(value) => setEstimatedBudget(value)}
               />
