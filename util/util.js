@@ -61,3 +61,10 @@ export const getSubDomain = (url='') => {
   const domain = isClient ? window.location.hostname.replace('www.','').split('.'): '';
   return domain[0]
 }
+
+export const sanitizeString = string => {
+  if (!string){
+    return;
+  }
+  return string.replace(/[^a-zA-Z0-9]/g, '');
+}
