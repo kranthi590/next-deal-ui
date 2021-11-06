@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import React, {useEffect, useState} from "react";
+import {Button, Checkbox, Form, Input, Select, Col, Row, Tooltip} from "antd";
+import {QuestionCircleOutlined} from "@ant-design/icons";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { isEmpty } from "lodash";
+import {useRouter} from "next/router";
+import {isEmpty} from "lodash";
 
 // Utils
 import IntlMessages from "../../util/IntlMessages";
-import { useAuth } from "../../contexts/use-auth";
-import { useRegistration } from "../../contexts/business-registration";
+import {useAuth} from "../../contexts/use-auth";
+import {useRegistration} from "../../contexts/business-registration";
 import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
@@ -26,12 +26,12 @@ import Footer from "../../app/components/Footer";
 import "../../styles/form-page.css";
 
 const FormItem = Form.Item;
-const { Option } = Select;
+const {Option} = Select;
 
 const BuyerRegistration = (props) => {
   const router = useRouter();
-  const { isLoading } = useAuth();
-  const { fetchRegions, fetchCommune, registerBuyer, error } =
+  const {isLoading} = useAuth();
+  const {fetchRegions, fetchCommune, registerBuyer, error} =
     useRegistration();
 
   const [form] = Form.useForm();
@@ -39,10 +39,10 @@ const BuyerRegistration = (props) => {
   const [regions, setRegions] = useState([]);
   const [communes, setCommunes] = useState([]);
   const [iAccept, setIAccept] = useState(false);
-  const [domainName, setDomainName] = useState(false);
+  const [domainName, setDomainName] = useState('');
 
   useEffect(() => {
-    fetchRegions(({ regions }) => {
+    fetchRegions(({regions}) => {
       setRegions(regions);
     });
   }, []);
@@ -52,7 +52,7 @@ const BuyerRegistration = (props) => {
       communeId: "",
     });
     setCommunes([]);
-    fetchCommune({ regionId: value }, (data) => {
+    fetchCommune({regionId: value}, (data) => {
       const communes = data && data.length > 0 ? data[0] : [];
       setCommunes(communes);
     });
@@ -99,33 +99,35 @@ const BuyerRegistration = (props) => {
     return formData;
   };
 
-  const onFinishFailed = (errorInfo) => {};
+  const onFinishFailed = (errorInfo) => {
+  };
 
   const onFinish = (values) => {
-     registerBuyer(getFormData(values), (data) => {
-       successNotification("app.registration.detailsSaveSuccessMessage");
-       setTimeout(() => {
-        if (data){
+    console.log('form values', getFormData(values))
+    registerBuyer(getFormData(values), (data) => {
+      successNotification("app.registration.detailsSaveSuccessMessage");
+      setTimeout(() => {
+        if (data) {
           window.location.href = `https://${data.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/signup`;
         }
-       }, NOTIFICATION_TIMEOUT);
-     });
+      }, NOTIFICATION_TIMEOUT);
+    });
   };
 
   const prefixSelector = (name) => (
     <Form.Item name={name} noStyle>
       <Select
-        style={{ width: 70 }}
-          defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
+        style={{width: 70}}
+        defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
       >
-        <Option value="56" >+56</Option>
+        <Option value="56">+56</Option>
       </Select>
     </Form.Item>
   );
 
   return (
     <div className="gx-app-login-wrap registration-container">
-      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount" />
+      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount"/>
       <div className="right-aside">
         <div className="form-container">
           <div className="gx-app-login-content registration-form">
@@ -134,7 +136,7 @@ const BuyerRegistration = (props) => {
               <p>
                 <Link href="/signin">
                   <a>
-                    <IntlMessages id="app.userAuth.login" />
+                    <IntlMessages id="app.userAuth.login"/>
                   </a>
                 </Link>
               </p>
@@ -142,15 +144,20 @@ const BuyerRegistration = (props) => {
             <Form
               layout="inline"
               form={form}
-              initialValues={{ remember: true }}
               name="basic"
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
               className="gx-signin-form gx-form-row0"
+              fields={[
+                {
+                  name: ["subDomainName"],
+                  value: domainName,
+                },
+              ]}
             >
               <Row gutter={24} className="bottom-divider">
                 <Col xs={24}>
-                  <WidgetHeader title="Business Information" />
+                  <WidgetHeader title="Business Information"/>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
@@ -163,20 +170,25 @@ const BuyerRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Fantasy Name" />
+                    <Input
+                      size="large"
+                      placeholder="Fantasy Name"
+                      onChange={(e) => setDomainName(e.target.value)}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="subDomainName"
+                    id="subDomainName"
                     label={
                       <span>
                         Domain Name&nbsp;
                         <Tooltip title="Domain name should be alpha numeric">
-                          <QuestionCircleOutlined />
+                          <QuestionCircleOutlined/>
                         </Tooltip>
                         &nbsp;
-                        {!!domainName && `${domainName}.nextdeal.cl`}
+                        {!!domainName && `${domainName}${process.env.NEXT_PUBLIC_APP_HOST}`}
                       </span>
                     }
                     rules={[
@@ -201,7 +213,7 @@ const BuyerRegistration = (props) => {
                       size="large"
                       placeholder="Domain Name"
                       addonBefore="https://"
-                      addonAfter=".nextdeal.cl"
+                      addonAfter={process.env.NEXT_PUBLIC_APP_HOST}
                       onChange={(e) => setDomainName(e.target.value)}
                     />
                   </FormItem>
@@ -217,7 +229,7 @@ const BuyerRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Business Name" />
+                    <Input size="large" placeholder="Business Name"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -225,10 +237,10 @@ const BuyerRegistration = (props) => {
                     name="rut"
                     label="RUT"
                     rules={[
-                      { required: true, message: "Please input your rut!" },
+                      {required: true, message: "Please input your rut!"},
                     ]}
                   >
-                    <Input size="large" placeholder="RUT" />
+                    <Input size="large" placeholder="RUT"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -283,14 +295,14 @@ const BuyerRegistration = (props) => {
                     >
                       <Option value=""></Option>
                       {regions &&
-                        regions.map((region) => (
-                          <Option
-                            key={region.id + region.name}
-                            value={region.id}
-                          >
-                            {region.name}
-                          </Option>
-                        ))}
+                      regions.map((region) => (
+                        <Option
+                          key={region.id + region.name}
+                          value={region.id}
+                        >
+                          {region.name}
+                        </Option>
+                      ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -308,14 +320,14 @@ const BuyerRegistration = (props) => {
                     <Select size="large" placeholder="Please select Commune">
                       <Option value=""></Option>
                       {communes &&
-                        communes.map((commune) => (
-                          <Option
-                            key={commune.id + commune.name}
-                            value={commune.id}
-                          >
-                            {commune.name}
-                          </Option>
-                        ))}
+                      communes.map((commune) => (
+                        <Option
+                          key={commune.id + commune.name}
+                          value={commune.id}
+                        >
+                          {commune.name}
+                        </Option>
+                      ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -324,13 +336,13 @@ const BuyerRegistration = (props) => {
                     name="webSiteUrl"
                     label="Web URL"
                     rules={[
-                      { required: false },
-                      { type: "url", warningOnly: true },
+                      {required: false},
+                      {type: "url", warningOnly: true},
                     ]}
                   >
                     <Input
                       addonBefore="https://"
-                      size="large" placeholder="nextdeal.cl" />
+                      size="large" placeholder="nextdeal.cl"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -345,7 +357,7 @@ const BuyerRegistration = (props) => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email" />
+                    <Input size="large" placeholder="Email"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -363,7 +375,7 @@ const BuyerRegistration = (props) => {
                       size="large"
                       placeholder="Phone number"
                       addonBefore={prefixSelector("phone1_prefix")}
-                      style={{ width: "100%" }}
+                      style={{width: "100%"}}
                     />
                   </Form.Item>
                 </Col>
@@ -373,49 +385,49 @@ const BuyerRegistration = (props) => {
                       size="large"
                       placeholder="Phone number"
                       addonBefore={prefixSelector("phone2_prefix")}
-                      style={{ width: "100%" }}
+                      style={{width: "100%"}}
                     />
                   </FormItem>
                 </Col>
               </Row>
-              <Row style={{ width: "100%", justifyContent: "right" }}>
+              <Row style={{width: "100%", justifyContent: "right"}}>
                 <Col>
-              <Form.Item
-                name="iAccept"
-                rules={[
-                  { required: !iAccept && true, message: "Please accept!" },
-                ]}
-              >
-                <Checkbox onChange={() => setIAccept(!iAccept)}>
-                  <IntlMessages id="appModule.iAccept" />
-                </Checkbox>
-                <span className="gx-signup-form-forgot gx-link">
-                  <IntlMessages id="appModule.termAndCondition" />
+                  <Form.Item
+                    name="iAccept"
+                    rules={[
+                      {required: !iAccept && true, message: "Please accept!"},
+                    ]}
+                  >
+                    <Checkbox onChange={() => setIAccept(!iAccept)}>
+                      <IntlMessages id="appModule.iAccept"/>
+                    </Checkbox>
+                    <span className="gx-signup-form-forgot gx-link">
+                  <IntlMessages id="appModule.termAndCondition"/>
                 </span>
-              </Form.Item>
+                  </Form.Item>
                 </Col>
                 <Col>
-              <FormItem>
-                <div>
+                  <FormItem>
+                    <div>
                       <Button
                         type="primary"
                         className="gx-mb-0"
                         htmlType="submit"
                       >
-                    <IntlMessages id="app.userAuth.signUp" />
-                  </Button>
-                </div>
-              </FormItem>
+                        <IntlMessages id="app.userAuth.signUp"/>
+                      </Button>
+                    </div>
+                  </FormItem>
                 </Col>
               </Row>
             </Form>
           </div>
         </div>
-        <Footer />
+        <Footer/>
       </div>
       {isLoading && (
         <div className="gx-loader-view">
-          <CircularProgress />
+          <CircularProgress/>
         </div>
       )}
       {error && errorNotification(error, "app.registration.errorMessageTitle")}
