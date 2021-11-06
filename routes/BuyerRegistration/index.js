@@ -13,7 +13,7 @@ import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
-  getPhonePrefix,
+  getPhonePrefix, sanitizeString,
 } from "../../util/util";
 
 // Components
@@ -103,7 +103,6 @@ const BuyerRegistration = (props) => {
   };
 
   const onFinish = (values) => {
-    console.log('form values', getFormData(values))
     registerBuyer(getFormData(values), (data) => {
       successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
@@ -173,7 +172,7 @@ const BuyerRegistration = (props) => {
                     <Input
                       size="large"
                       placeholder="Fantasy Name"
-                      onChange={(e) => setDomainName(e.target.value)}
+                      onChange={(e) => setDomainName(sanitizeString(e.target.value))}
                     />
                   </FormItem>
                 </Col>
