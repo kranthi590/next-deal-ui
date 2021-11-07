@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Checkbox, Form, Input, Select, Col, Row} from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -15,7 +15,7 @@ import {
   isValidObject,
   getPhonePrefix,
 } from "../../util/util";
-import {  validate, clean, format } from 'rut.js'
+import {  validate, clean } from 'rut.js'
 
 
 // Components
@@ -23,6 +23,7 @@ import CircularProgress from "../../app/components/CircularProgress";
 import WidgetHeader from "../../app/components/WidgetHeader";
 import Aside from "../../app/components/Aside";
 import Footer from "../../app/components/Footer";
+import Rut from "../../shared/Rut";
 
 // Styles
 import "../../styles/form-page.css";
@@ -31,25 +32,6 @@ const FormItem = Form.Item;
 const {TextArea} = Input;
 const {Option} = Select;
 
-class NumericInput extends Component {
-  onChange = async (e) => {
-    let getRut = await format(e.target.value);
-    if (getRut === '-'){
-      getRut = ''
-    }
-    this.props.onChange(getRut)
-  }
-  render() {
-    return (
-        <Input
-          {...this.props}
-          onChange={this.onChange}
-          placeholder="RUT"
-          maxLength={12}
-        />
-    );
-  }
-}
 const SupplierRegistration = (props) => {
   const router = useRouter();
   const {isLoading} = useAuth();
@@ -253,7 +235,7 @@ const SupplierRegistration = (props) => {
                       },
                     ]}
                   >
-                    <NumericInput
+                    <Rut
                       {...props}
                       className="gx-w-100"
                       value={rut}
