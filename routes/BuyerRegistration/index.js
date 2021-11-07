@@ -24,6 +24,8 @@ import Footer from "../../app/components/Footer";
 
 // Styles
 import "../../styles/form-page.css";
+import Rut from "../../shared/Rut";
+import {clean, validate} from "rut.js";
 
 const FormItem = Form.Item;
 const {Option} = Select;
@@ -40,6 +42,8 @@ const BuyerRegistration = (props) => {
   const [communes, setCommunes] = useState([]);
   const [iAccept, setIAccept] = useState(false);
   const [domainName, setDomainName] = useState('');
+  const [rut, setRut] = useState(null)
+
 
   useEffect(() => {
     fetchRegions(({regions}) => {
@@ -87,6 +91,7 @@ const BuyerRegistration = (props) => {
       emailId,
       additionalData: "none",
       iAccept,
+      rut: rut ? clean(rut): rut,
     };
 
     if (!isEmpty(webSiteUrl)) {
@@ -123,6 +128,10 @@ const BuyerRegistration = (props) => {
       </Select>
     </Form.Item>
   );
+
+  const onChange = async (value) => {
+    setRut(value);
+  }
 
   return (
     <div className="gx-app-login-wrap registration-container">
@@ -236,10 +245,26 @@ const BuyerRegistration = (props) => {
                     name="rut"
                     label="RUT"
                     rules={[
-                      {required: true, message: "Please input your rut!"},
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          if (!validate(value)) {
+                            return Promise.reject(
+                              "Please input your valid rut!"
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
                     ]}
                   >
-                    <Input size="large" placeholder="RUT"/>
+                    <Rut
+                      {...props}
+                      className="gx-w-100"
+                      value={rut}
+                      size="large"
+                      onChange={onChange}
+                      placeholder="RUT"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
