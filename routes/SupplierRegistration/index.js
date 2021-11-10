@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Checkbox, Form, Input, Select, Col, Row} from "antd";
+import {Button, Checkbox, Form, Input, Select, Col, Row, Upload} from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -27,6 +27,7 @@ import Rut from "../../shared/Rut";
 
 // Styles
 import "../../styles/form-page.css";
+import {UploadOutlined} from "@ant-design/icons";
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
@@ -36,7 +37,7 @@ const SupplierRegistration = (props) => {
   const router = useRouter();
   const {isLoading} = useAuth();
 
-  const {fetchRegions, fetchCommune, registerSupplier, error} =
+  const {fetchRegions, fetchCommune, registerSupplier, error, uploadSupplierLogo} =
     useRegistration();
 
   const [form] = Form.useForm();
@@ -46,7 +47,8 @@ const SupplierRegistration = (props) => {
   const [communes1, setCommunes1] = useState([]);
   const [communes2, setCommunes2] = useState([]);
   const [iAccept, setIAccept] = useState(false);
-  const [rut, setRut] = useState(null)
+  const [rut, setRut] = useState(null);
+  const [isLogoUploaded, setLogoUploaded] = useState(false);
 
   useEffect(() => {
     fetchRegions(({regions}) => {
@@ -148,16 +150,49 @@ const SupplierRegistration = (props) => {
 
   const onFinishFailed = (errorInfo) => {};
 
-  const onFinish = (values) => {
-     registerSupplier(getFormData(values), (data) => {
-       successNotification("app.registration.detailsSaveSuccessMessage");
-       setTimeout(() => {
-         router.push("/signup");
-       }, NOTIFICATION_TIMEOUT);
-     });
+  const onFinish = async (values) => {
+
+
+    registerSupplier(getFormData(values), (data) => {
+      console.log('sup data', data)
+      console.log('isLogoUploaded', isLogoUploaded);
+      try {
+        if (data && isLogoUploaded){
+          //console.log('isLogoUploaded', isLogoUploaded);
+          //console.log('values[\'business_logo\']', values['business_logo'])
+          const formData = new FormData();
+          formData.append("logo", values['business_logo'].file.originFileObj);
+          formData.append("supplierId", data.id);
+          console.log('formData', JSON.stringify(formData))
+          uploadSupplierLogo(formData, (data) => {
+            console.log('Supplier File Upload', data)
+          })
+          return;
+        }
+        setTimeout(() => {
+          router.push("/signup");
+        }, NOTIFICATION_TIMEOUT);
+      } catch (e) {
+        //handle errors
+      }
+      //successNotification("app.registration.detailsSaveSuccessMessage");
+    /*  setTimeout(() => {
+        router.push("/signup");
+      }, NOTIFICATION_TIMEOUT);*/
+    });
   };
   const onChange = async (value) => {
     setRut(value);
+  }
+
+  const dummyRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
+
+  const handleFileUpload = () => {
+    setLogoUploaded(true)
   }
 
   return (
@@ -445,6 +480,23 @@ const SupplierRegistration = (props) => {
                     ]}
                   >
                     <Input size="large" placeholder="Email"/>
+                  </FormItem>
+                </Col>
+                <Col sm={12} xs={24}>
+                  <FormItem
+                    label="Logo"
+                    name="business_logo"
+                  >
+                      <Upload
+                        accept="image/png, image/jpeg"
+                        maxCount={1}
+                        onChange={handleFileUpload}
+                        customRequest={dummyRequest}
+                      >
+                        <Button>
+                          <UploadOutlined /> upload
+                        </Button>
+                      </Upload>
                   </FormItem>
                 </Col>
                 <Col xs={24}>

@@ -105,6 +105,27 @@ const useProviderRegistration = () => {
       });
   };
 
+  const uploadSupplierLogo = (data, callbackFun) => {
+    fetchStart();
+    httpClient
+      .post("suppliers/files", data, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+    }
+      })
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -112,5 +133,6 @@ const useProviderRegistration = () => {
     fetchCommune,
     registerBuyer,
     registerSupplier,
+    uploadSupplierLogo
   };
 };
