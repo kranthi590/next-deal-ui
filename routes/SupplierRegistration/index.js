@@ -152,7 +152,7 @@ const SupplierRegistration = (props) => {
      registerSupplier(getFormData(values), (data) => {
        successNotification("app.registration.detailsSaveSuccessMessage");
        setTimeout(() => {
-         router.push("/signup");
+         router.push("/app/user/register");
        }, NOTIFICATION_TIMEOUT);
      });
   };
@@ -169,7 +169,7 @@ const SupplierRegistration = (props) => {
             <div className="heading-wrapper">
               <h1>Supplier Registration</h1>
               <p>
-                <Link href="/signin">
+                <Link href="/app/user/signin">
                   <a>
                     <IntlMessages id="app.userAuth.login"/>
                   </a>

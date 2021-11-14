@@ -62,7 +62,7 @@ const useProvideAuth = () => {
             path: "/",
             domain: process.env.NEXT_PUBLIC_APP_HOST,
           });
-          window.location.href = `http://${data.user.buyer.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}`;
+          window.location.href = `http://${data.user.buyer.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/app`;
           if (callbackFun) callbackFun();
         } else {
           fetchError(data.error);
@@ -111,7 +111,7 @@ const useProvideAuth = () => {
         domain: process.env.NEXT_PUBLIC_APP_HOST,
       });
       removeData("user");
-      window.location.href = "/signin";
+      window.location.href = "/app/user/signin";
       if (callbackFun) callbackFun();
     } catch (error) {
       setLoadingUser(false);
@@ -154,8 +154,8 @@ const useProvideAuth = () => {
 
 export const isUnRestrictedRoute = (pathname) => {
   return (
-    pathname === "/signin" ||
-    pathname === "/signup" ||
+    pathname === "/app/user/signin" ||
+    pathname === "/app/user/signup" ||
     pathname === "/buyer-registration" ||
     pathname === "/supplier-registration"
   );
