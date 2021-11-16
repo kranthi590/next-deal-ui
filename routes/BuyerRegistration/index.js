@@ -142,7 +142,7 @@ const BuyerRegistration = (props) => {
             <div className="heading-wrapper">
               <h1>Business Registration</h1>
               <p>
-                <Link href="/app/user/signin">
+                <Link href="/user/signin">
                   <a>
                     <IntlMessages id="app.userAuth.login"/>
                   </a>

@@ -322,5 +322,10 @@
   "app.project.create.validations": "El campo no puede estar vacío",
   "app.userAuth.welcome": "Bienvenido a Next Deal",
   "app.registration.detailsSaveSuccessMessage": "Detalles guardados con éxito!",
-  "app.registration.errorMessageTitle": "Se ha producido un error inesperado!"
+  "app.registration.errorMessageTitle": "Se ha producido un error inesperado!",
+  "app.quotation.addQuotation": "Agregar presupuesto",
+  "app.quotation.field.quotationname": "Nombre del presupuesto",
+  "app.quotation.field.supplier": "Proveedor",
+  "app.quotation.savequotation": "Guardar presupuesto",
+  "app.quotation.addquotation": "Agregar presupuesto"
 }

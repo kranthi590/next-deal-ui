@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {Button, Drawer, Menu, message} from "antd";
+import {Button, Drawer, message} from "antd";
 import Link from "next/link";
 import CustomScrollbars from "../../util/CustomScrollbars";
 

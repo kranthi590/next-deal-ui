@@ -14,22 +14,5 @@ module.exports = withCSS({
     });
     return config;
   },
-  exportPathMap: async function (
-    defaultPathMap,
-    { dev, dir, outDir, distDir, buildId }
-  ) {
-    return {
-      '/app': { page: '/' },
-      '/app/user/signin': { page: '/signin' },
-      '/app/business/register': { page: '/buyer-registration' },
-      '/app/supplier/register': { page: '/supplier-registration' },
-      '/app/user/register': { page: '/signup' },
-      '/app/dashboard': { page: '/dashboard' },
-      '/app/project/create': { page: '/new-project' },
-      '/app/projects': { page: '/projects' },
-      '/app/404': { page: '/404' },
-      '/app/profile': { page: '/profile' },
-    }
-  },
 });
 
