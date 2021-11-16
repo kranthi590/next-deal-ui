@@ -322,5 +322,10 @@
   "app.project.field.estimatedBudget": "Estimated Budget",
   "app.project.field.currency": "Currency",
   "app.registration.detailsSaveSuccessMessage": "Details saved successfully!",
-  "app.registration.errorMessageTitle": "There was an unexpected error occurred!"
+  "app.registration.errorMessageTitle": "There was an unexpected error occurred!",
+  "app.quotation.addQuotation": "Add Quotation",
+  "app.quotation.field.quotationname": "Quotation Name",
+  "app.quotation.field.supplier": "Supplier",
+  "app.quotation.savequotation": "Save Quotation",
+  "app.quotation.addquotation": "Add Quotation"
 }
