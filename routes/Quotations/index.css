@@ -29,6 +29,6 @@
   padding: 15px;
 }
 
-/* .project-details .gx-featured-content {
-  padding: 15px 15px 15px 0;
-} */
+.customCardHeight{
+  height: 100vh;
+}
