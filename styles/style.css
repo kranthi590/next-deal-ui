@@ -38680,6 +38680,10 @@ fieldset[disabled] a.gx-btn {
   margin-bottom: 8px;
   color: #038fde;
 }
+.gx-show-hand {
+  cursor: pointer;
+  cursor: hand;
+}
 .gx-show-detail {
   margin-bottom: 12px;
 }
