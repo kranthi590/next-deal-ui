@@ -35,7 +35,7 @@ const SignIn = (props) => {
               <div className="heading-wrapper">
                 <h1>Sign in to Next Deal</h1>
                 <p>
-                  <Link href="/user/signin">
+                  <Link href="/signin">
                     <a>
                       <IntlMessages id="app.userAuth.login" />
                     </a>
@@ -93,7 +93,7 @@ const SignIn = (props) => {
                     <IntlMessages id="app.userAuth.or" />
                   </Divider>
                   <div style={{ textAlign: "center" }}>
-                    <Link href="/user/register">
+                    <Link href="/signup">
                       <a>
                         <IntlMessages id="app.userAuth.signUp" />
                       </a>

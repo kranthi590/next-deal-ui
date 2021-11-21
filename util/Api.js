@@ -46,7 +46,7 @@ export const handleApiErrors = (req, res, query, error) => {
   const errorCode = _.get(error, "response.data.errors[0].errorCode", null);
   if (errorCode === "INVALID_DOMAIN" || errorCode === "INVALID_JWT_TOKEN") {
     res.writeHead(302, {
-      Location: `/signin`,
+      Location: `/app/signin`,
     });
     res.end();
   } else {

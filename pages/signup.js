@@ -1,7 +1,5 @@
 import React from 'react';
-import asyncComponent from "../util/asyncComponent";
-
-const SignUp = asyncComponent(() => import('../routes/SignUp'));
+import SignUp from '../routes/SignUp';
 
 const SignUpPage = () => <SignUp/>;
 

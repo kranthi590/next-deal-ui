@@ -42,7 +42,7 @@ const useProviderProject = () => {
     const cookie = new Cookies()
     const buyerId = cookie.get('buyerId');
     httpClient
-      .post(`buyers/${buyerId}/projects`, {...data}, {
+      .post(`projects`, {...data}, {
         headers: headers
       })
       .then(({ data }) => {
