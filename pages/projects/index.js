@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
   let projectsList = null;
   try {
     const headers = setApiContext(req, res, query);
-    const response = await httpClient.get(`buyers/${buyerID}/projects`, {
+    const response = await httpClient.get(`projects`, {
       headers,
     });
     projectsList = response.data.data;

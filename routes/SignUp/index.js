@@ -195,7 +195,7 @@ const SignUp = (props) => {
                     <IntlMessages id="app.userAuth.or" />
                   </Divider>
                   <div style={{ textAlign: "center" }}>
-                    <Link href="/user/signin">
+                    <Link href="/signin">
                       <a>
                         <IntlMessages id="app.userAuth.login" />
                       </a>

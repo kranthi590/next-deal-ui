@@ -20,6 +20,7 @@ module.exports = withPlugins(
     })],
   ],
   {
-    basePath: '/app'
+    basePath: '/app',
+    assetPrefix:'/app/'
   },
 );

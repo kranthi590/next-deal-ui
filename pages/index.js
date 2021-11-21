@@ -11,7 +11,6 @@ export async function getServerSideProps({ req, res, query }) {
     const apiResponse = await httpClient.get(`users/${headers[`user-id`]}`, {
       headers,
     });
-    console.log('apiResponse.data.data', apiResponse.data.data);
     userProfile = apiResponse.data.data;
   } catch (error) {
     handleApiErrors(req, res, query, error);
