@@ -1,9 +1,10 @@
-import React, { useState, useContext, createContext } from "react";
-import { httpClient } from "../util/Api";
+import React, {useState, useContext, createContext} from "react";
+import {httpClient, setAuthToken} from "../util/Api";
+import {Cookies} from "react-cookie";
 
 const registrationContext = createContext({});
 
-export function RegistrationProvider({ children }) {
+export function RegistrationProvider({children}) {
   const registration = useProviderRegistration();
   return (
     <registrationContext.Provider value={registration}>
@@ -39,7 +40,7 @@ const useProviderRegistration = () => {
     fetchStart();
     httpClient
       .get('config/countries/cl/regions')
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data.data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
@@ -52,13 +53,13 @@ const useProviderRegistration = () => {
       });
   };
 
-  const fetchCommune = ({ regionId }, callbackFun) => {
+  const fetchCommune = ({regionId}, callbackFun) => {
     fetchStart();
     httpClient
       .get(
         `config/countries/cl/regions/${regionId}/comunas`
       )
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data.data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
@@ -75,7 +76,7 @@ const useProviderRegistration = () => {
     fetchStart();
     httpClient
       .post("buyers", data)
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
@@ -92,7 +93,7 @@ const useProviderRegistration = () => {
     fetchStart();
     httpClient
       .post("suppliers", data)
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
@@ -109,12 +110,33 @@ const useProviderRegistration = () => {
     fetchStart();
     httpClient
       .post("suppliers/files", data, {
-      headers: {
-        "Content-Type": "multipart/form-data"
-    }
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
       })
-      .then(({ data }) => {
+      .then(({data}) => {
         if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        fetchError(error.message);
+      });
+  };
+
+  const getBuyerSuppliers = (callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies()
+    const buyerId = cookie.get('buyerId');
+
+    httpClient
+      .get(`buyers/${buyerId}/suppliers`, {headers})
+      .then(({data}) => {
+        if (data.data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
@@ -133,6 +155,7 @@ const useProviderRegistration = () => {
     fetchCommune,
     registerBuyer,
     registerSupplier,
-    uploadSupplierLogo
+    uploadSupplierLogo,
+    getBuyerSuppliers
   };
 };
