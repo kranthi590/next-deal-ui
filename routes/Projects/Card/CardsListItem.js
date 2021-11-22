@@ -1,30 +1,44 @@
+import Link from 'next/link';
 import React from "react";
-import {Button} from "antd";
-import {getDateInMilliseconds} from "../../../util/util";
+import {Badge, Card} from "antd";
 
-const CardsListItem=({styleName, data})=> {
-  const {createdAt, expectedEndDate, costCenter, name, managerName} = data;
+const CardsListItem = ({styleName, data}) => {
+  const {status, costCenter, name, managerName, quotationsCount, id} = data;
   return (
-    <div className={`gx-user-list ${styleName}`}>
-      <img alt="..." src={`https://ui-avatars.com/api/?name=${
-        (name) || "Next Deal"
-      }&format=svg`} className="gx-avatar-img gx-border-0"/>
-      <div className="gx-description">
-        <div className="gx-flex-row">
-          <h4>{name}</h4>
-          <span className="gx-d-inline-block gx-toolbar-separator">&nbsp;</span>
-          <span>{costCenter}</span>
+    <Badge.Ribbon text={status} color="cyan" placement="start">
+      <div className={`gx-user-list ${styleName}`}>
+        <img alt="..." src={`https://ui-avatars.com/api/?name=${
+          (name) || "Next Deal"
+        }&format=svg`} className="gx-avatar-img gx-border-0"/>
+        <div className="gx-description">
+          <div className="gx-flex-row">
+            <h4><Link href={'/projects/' + [id]} as={'/projects/' + id}>{name}</Link></h4>
+            <span className="gx-d-inline-block gx-toolbar-separator">&nbsp;</span>
+            <span>{costCenter}</span>
+          </div>
+          <p className="gx-text-grey gx-mb-2">{managerName}</p>
+          <div className="gx-media gx-align-items-left gx-flex-nowrap">
+            <div className="gx-mr-2 gx-mr-xxl-3">
+              <i className="icon icon-diamond gx-fs-icon-lg"></i></div>
+            <div className="gx-media-body">
+              <h1
+                className="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-orange">{quotationsCount}</h1><p
+              className="gx-mb-0">Quotation {`${quotationsCount > 10 ? 's' : ''}`}</p></div>
+          </div>
         </div>
-        <p className="gx-text-grey gx-mb-2">{managerName}</p>
-        <p>
-          <span className="gx-mr-3 gx-d-inline-block">Created Date: {getDateInMilliseconds(createdAt)}</span>
-          <span className="gx-mr-3 gx-d-inline-block">Expected End Date: {getDateInMilliseconds(expectedEndDate)}</span>
-        </p>
+        <div className="gx-card-list-footer">
+          <div className="gx-featured-content-right"><p
+            className="gx-text-primary gx-text-truncate gx-mt-auto gx-mb-0 gx-pointer">
+            <Link href={'/projects/' + [id]} as={'/projects/' + id}>
+              Check in detail
+            </Link>
+            <i
+              className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"></i>
+          </p>
+          </div>
+        </div>
       </div>
-      <div className="gx-card-list-footer">
-
-      </div>
-    </div>
+    </Badge.Ribbon>
   );
 };
 
