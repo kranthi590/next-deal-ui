@@ -1,12 +1,11 @@
-import React, {PureComponent} from "react";
-import {Button, Drawer, message} from "antd";
+import React, {PureComponent, useState} from "react";
+import {Button, Drawer, message, Skeleton} from "antd";
 import Link from "next/link";
 import CustomScrollbars from "../../util/CustomScrollbars";
 
 import mails from "./data/mails";
 import labels from "./data/labels";
 import IntlMessages from "../../util/IntlMessages";
-import CircularProgress from "../../app/components/CircularProgress";
 import Card from "./Card";
 
 import "./index.css";
@@ -36,7 +35,6 @@ class Projects extends PureComponent {
               <li className="gx-module-nav-label">
                 <IntlMessages id="sidebar.project.filters"/>
               </li>
-
               {this.getNavLabels()}
             </ul>
           </CustomScrollbars>
@@ -105,7 +103,7 @@ class Projects extends PureComponent {
   };
 
 
-  displayProjects = (projects, noContentFoundMessage) => {
+  displayProjects = (projects, noContentFoundMessage, loader) => {
     return (
       <div className="gx-module-box-column">
         {
@@ -115,9 +113,10 @@ class Projects extends PureComponent {
               {noContentFoundMessage}
             </div>
           ) : (
-            <Card projects={projects}/>
+            <Card projects={projects} loader={loader}/>
           )
         }
+
       </div>
     );
   };
@@ -227,16 +226,12 @@ class Projects extends PureComponent {
             </div>
 
             <div className="gx-module-box-content cards-wrapper">
-              {loader ? (
-                <div className="gx-loader-view">
-                  <CircularProgress/>
-                </div>
-              ) : (
+              {
                 this.displayProjects(
                   projectsList,
-                  noContentFoundMessage
-                )
-              )}
+                  noContentFoundMessage,
+                  loader
+                )}
             </div>
           </div>
         </div>
