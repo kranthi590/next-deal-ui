@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { NotificationManager } from "react-notifications";
 import { isEmpty } from "lodash";
 import IntlMessages from "./IntlMessages";
@@ -42,7 +42,6 @@ export const getPhonePrefix = (prefix) => {
   return prefix || process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX;
 };
 
-
 export const isClient = typeof window !== "undefined";
 
 export const getDateInMilliseconds = (date) => {
@@ -51,20 +50,25 @@ export const getDateInMilliseconds = (date) => {
 
 export const getBuyerId = () => {
   if (isClient) {
-    const buyerInfo = getData('user');
+    const buyerInfo = getData("user");
     return buyerInfo && JSON.parse(buyerInfo.buyerId);
   }
   return;
-}
+};
 
-export const getSubDomain = (url='') => {
-  const domain = isClient ? window.location.hostname.replace('www.','').split('.'): '';
-  return domain[0]
-}
+export const getSubDomain = (url = "") => {
+  const domain = isClient
+    ? window.location.hostname.replace("www.", "").split(".")
+    : "";
+  return domain[0];
+};
 
-export const sanitizeString = string => {
+export const sanitizeString = (string) => {
   if (!string){
     return;
   }
-  return string.replace(/[^a-zA-Z0-9]/g, '');
-}
+  return string.replace(/[^a-zA-Z0-9]/g, "");
+};
+
+export const formatAmount = (amount) =>
+  amount && amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");

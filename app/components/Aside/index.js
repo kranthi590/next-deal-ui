@@ -15,7 +15,7 @@ const Aside = ({ heading, content }) => {
         </p>
       </div>
       <div className="image-wrapper">
-        <img src="/images/13.png" alt="Neature" />
+        <img src="/app/images/13.png" alt="Neature" />
       </div>
     </div>
   );

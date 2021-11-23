@@ -49,7 +49,7 @@ const stringRule = {
 
 const NewProject = () => {
   const router = useRouter();
-  const [estimatedBudget, setEstimatedBudget] = useState(false);
+  const [estimatedBudget, setEstimatedBudget] = useState(0);
   const [startDate, setStartDate] = useState(null);
   const [expectedEndDate, setExpectedEndDate] = useState(null);
 
