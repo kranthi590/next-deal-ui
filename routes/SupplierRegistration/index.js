@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Checkbox, Form, Input, Select, Col, Row, Upload} from "antd";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 // Utils
 import IntlMessages from "../../util/IntlMessages";
@@ -15,7 +15,7 @@ import {
   isValidObject,
   getPhonePrefix,
 } from "../../util/util";
-import {  validate, clean } from 'rut.js'
+import {validate, clean} from 'rut.js'
 
 
 // Components
@@ -37,8 +37,13 @@ const SupplierRegistration = (props) => {
   const router = useRouter();
   const {isLoading} = useAuth();
 
-  const {fetchRegions, fetchCommune, registerSupplier, error, uploadSupplierLogo} =
-    useRegistration();
+  const {
+    fetchRegions,
+    fetchCommune,
+    registerSupplier,
+    error,
+    uploadSupplierLogo
+  } = useRegistration();
 
   const [form] = Form.useForm();
 
@@ -85,7 +90,7 @@ const SupplierRegistration = (props) => {
   const prefixSelector = (name) => (
     <Form.Item name={name} noStyle>
       <Select
-        style={{ width: 70 }}
+        style={{width: 70}}
         defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
       >
         <Option value="56">+56</Option>
@@ -94,6 +99,7 @@ const SupplierRegistration = (props) => {
   );
 
   const getFormData = (data) => {
+    console.log('props', props);
     const business = extractData("business_", data);
     const billing = extractData("billing_", data);
     const contact = extractData("bcontact_", data);
@@ -115,21 +121,21 @@ const SupplierRegistration = (props) => {
       regionId: billing.regionId,
       emailId: billing.emailId,
       phoneNumber1: getPhonePrefix(billing.telephone1) + billing.phoneNumber1,
-          countryId: 1,
+      countryId: 1,
     };
 
     let formData = {
       businessAddress: businessAddress,
       legalName: business.legalName,
       fantasyName: business.fantasyName,
-      rut: business.rut ? clean(business.rut): business.rut,
+      rut: business.rut ? clean(business.rut) : business.rut,
       webSiteUrl: business.webSiteUrl,
       emailId: business.emailId,
       categories: business.categories,
       serviceLocations: data.serviceLocations,
       type: business.type,
 
-      isShared: true,
+      isShared: props.isShared,
       inchargeRole: "Owner",
       logoUrl:
         "https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg",
@@ -148,24 +154,18 @@ const SupplierRegistration = (props) => {
     return formData;
   };
 
-  const onFinishFailed = (errorInfo) => {};
+  const onFinishFailed = (errorInfo) => {
+  };
 
   const onFinish = async (values) => {
 
-
     registerSupplier(getFormData(values), (data) => {
-      console.log('sup data', data)
-      console.log('isLogoUploaded', isLogoUploaded);
       try {
-        if (data && isLogoUploaded){
-          //console.log('isLogoUploaded', isLogoUploaded);
-          //console.log('values[\'business_logo\']', values['business_logo'])
+        if (data && isLogoUploaded) {
           const formData = new FormData();
           formData.append("logo", values['business_logo'].file.originFileObj);
           formData.append("supplierId", data.id);
-          console.log('formData', JSON.stringify(formData))
           uploadSupplierLogo(formData, (data) => {
-            console.log('Supplier File Upload', data)
           })
           return;
         }
@@ -175,17 +175,13 @@ const SupplierRegistration = (props) => {
       } catch (e) {
         //handle errors
       }
-      //successNotification("app.registration.detailsSaveSuccessMessage");
-    /*  setTimeout(() => {
-        router.push("/signup");
-      }, NOTIFICATION_TIMEOUT);*/
     });
   };
   const onChange = async (value) => {
     setRut(value);
   }
 
-  const dummyRequest = ({ file, onSuccess }) => {
+  const dummyRequest = ({file, onSuccess}) => {
     setTimeout(() => {
       onSuccess("ok");
     }, 0);
@@ -195,6 +191,7 @@ const SupplierRegistration = (props) => {
     setLogoUploaded(true)
   }
 
+  console.log('props', props);
   return (
     <div className="gx-app-login-wrap registration-container">
       <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount"/>
@@ -203,13 +200,17 @@ const SupplierRegistration = (props) => {
           <div className="gx-app-login-content registration-form">
             <div className="heading-wrapper">
               <h1>Supplier Registration</h1>
-              <p>
-                <Link href="/signin">
-                  <a>
-                    <IntlMessages id="app.userAuth.login"/>
-                  </a>
-                </Link>
-              </p>
+              {
+                props && props.showLoginLink && (
+                  <p>
+                    <Link href="/signin">
+                      <a>
+                        <IntlMessages id="app.userAuth.login"/>
+                      </a>
+                    </Link>
+                  </p>
+                )
+              }
             </div>
             <Form
               layout="inline"
@@ -463,7 +464,7 @@ const SupplierRegistration = (props) => {
                   <FormItem label="Telephone2" name="business_phoneNumber2">
                     <Input
                       placeholder="Telephone2"
-                           addonBefore={prefixSelector("business_telephone2")}
+                      addonBefore={prefixSelector("business_telephone2")}
                     />
                   </FormItem>
                 </Col>
@@ -487,16 +488,16 @@ const SupplierRegistration = (props) => {
                     label="Logo"
                     name="business_logo"
                   >
-                      <Upload
-                        accept="image/png, image/jpeg"
-                        maxCount={1}
-                        onChange={handleFileUpload}
-                        customRequest={dummyRequest}
-                      >
-                        <Button>
-                          <UploadOutlined /> upload
-                        </Button>
-                      </Upload>
+                    <Upload
+                      accept="image/png, image/jpeg"
+                      maxCount={1}
+                      onChange={handleFileUpload}
+                      customRequest={dummyRequest}
+                    >
+                      <Button>
+                        <UploadOutlined/> upload
+                      </Button>
+                    </Upload>
                   </FormItem>
                 </Col>
                 <Col xs={24}>
@@ -678,34 +679,34 @@ const SupplierRegistration = (props) => {
                   </FormItem>
                 </Col>
               </Row>
-              <Row style={{ width: "100%", justifyContent: "right" }}>
+              <Row style={{width: "100%", justifyContent: "right"}}>
                 <Col>
-              <Form.Item
-                name="iAccept"
-                rules={[
-                  { required: !iAccept && true, message: "Please accept!" },
-                ]}
-              >
-                <Checkbox onChange={() => setIAccept(!iAccept)}>
-                  <IntlMessages id="appModule.iAccept"/>
-                </Checkbox>
-                <span className="gx-signup-form-forgot gx-link">
+                  <Form.Item
+                    name="iAccept"
+                    rules={[
+                      {required: !iAccept && true, message: "Please accept!"},
+                    ]}
+                  >
+                    <Checkbox onChange={() => setIAccept(!iAccept)}>
+                      <IntlMessages id="appModule.iAccept"/>
+                    </Checkbox>
+                    <span className="gx-signup-form-forgot gx-link">
                   <IntlMessages id="appModule.termAndCondition"/>
                 </span>
-              </Form.Item>
+                  </Form.Item>
                 </Col>
                 <Col>
-              <FormItem>
-                <div>
+                  <FormItem>
+                    <div>
                       <Button
                         type="primary"
                         className="gx-mb-0"
                         htmlType="submit"
                       >
-                    <IntlMessages id="app.userAuth.signUp"/>
-                  </Button>
-                </div>
-              </FormItem>
+                        <IntlMessages id="app.userAuth.signUp"/>
+                      </Button>
+                    </div>
+                  </FormItem>
                 </Col>
               </Row>
             </Form>
@@ -723,4 +724,8 @@ const SupplierRegistration = (props) => {
   );
 };
 
+SupplierRegistration.defaultProps = {
+  showLoginLink: true,
+  isShared: true
+}
 export default SupplierRegistration;

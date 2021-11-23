@@ -3,9 +3,9 @@ import {RegistrationProvider} from "../../contexts/business-registration";
 import SupplierRegistration from '../../routes/SupplierRegistration'
 
 
-const SupplierRegistrationPage = () => (
+const SupplierRegistrationPage = (props) => (
   <RegistrationProvider>
-    <SupplierRegistration />
+    <SupplierRegistration {...props}/>
   </RegistrationProvider>
 );
 

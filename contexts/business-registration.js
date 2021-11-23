@@ -91,19 +91,39 @@ const useProviderRegistration = () => {
 
   const registerSupplier = (data, callbackFun) => {
     fetchStart();
-    httpClient
-      .post("suppliers", data)
-      .then(({data}) => {
-        if (data) {
-          fetchSuccess();
-          if (callbackFun) callbackFun(data.data);
-        } else {
-          fetchError(data.error);
-        }
-      })
-      .catch(function (error) {
-        fetchError(error.message);
-      });
+    console.log('data.isShared', data.isShared)
+    if (data && !data.isShared){
+      const headers = setAuthToken();
+      const cookie = new Cookies()
+      const buyerId = cookie.get('buyerId');
+      httpClient
+        .post(`buyers/${buyerId}/suppliers`, data, {headers})
+        .then(({data}) => {
+          if (data.data) {
+            fetchSuccess();
+            if (callbackFun) callbackFun(data.data);
+          } else {
+            fetchError(data.error);
+          }
+        })
+        .catch(function (error) {
+          fetchError(error.message);
+        });
+    } else {
+      httpClient
+        .post("suppliers", data)
+        .then(({data}) => {
+          if (data) {
+            fetchSuccess();
+            if (callbackFun) callbackFun(data.data);
+          } else {
+            fetchError(data.error);
+          }
+        })
+        .catch(function (error) {
+          fetchError(error.message);
+        });
+    }
   };
 
   const uploadSupplierLogo = (data, callbackFun) => {
@@ -132,7 +152,6 @@ const useProviderRegistration = () => {
     const headers = setAuthToken();
     const cookie = new Cookies()
     const buyerId = cookie.get('buyerId');
-
     httpClient
       .get(`buyers/${buyerId}/suppliers`, {headers})
       .then(({data}) => {
