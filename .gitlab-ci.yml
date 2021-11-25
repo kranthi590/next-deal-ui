@@ -7,15 +7,15 @@ stages:
   - deploy-staging
 
 image: google/cloud-sdk:alpine
-before_script:
-    - gcloud config set project ${GCP_PROJECT_ID}
-    - gcloud auth activate-service-account --key-file ${GOOGLE_CLOUD_CREDENTIALS}
 
 build:
     environment: staging
     stage: build
     only:
       - main
+    before_script:
+      - gcloud config set project ${GCP_PROJECT_ID}
+      - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
     script:
       - gcloud builds submit --tag gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME}
 
@@ -24,6 +24,9 @@ deploy-dev:
   stage: deploy-dev
   only:
     - main
+  before_script:
+      - gcloud config set project ${GCP_PROJECT_ID}
+      - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
   script:
     - gcloud run deploy ${SERVICE_NAME}-dev --image gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST}" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
 
@@ -32,5 +35,9 @@ deploy-staging:
   stage: deploy-staging
   only:
     - main
+  before_script:
+      - gcloud config set project ${GCP_PROJECT_ID}
+      - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
   script:
     - gcloud run deploy ${SERVICE_NAME}-staging --image gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST}" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
+  when: manual
