@@ -8,13 +8,9 @@ import CardsListItem from "./CardsListItem";
 // Utils
 import IntlMessages from "../../../util/IntlMessages";
 
-// Data
-import {cardsList} from "./data";
-
 function CardList({projects, loader}) {
   return (
     <div className="gx-module-list gx-mail-list">
-      <Row>
         <Col span={24}>
           <ContainerHeader
             title={<IntlMessages id="sidebar.listType.cardListView"/>}
@@ -29,7 +25,6 @@ function CardList({projects, loader}) {
             <CardsListItem key={index} data={data} styleName="gx-card-list"/>
           ))}
         </Col>
-      </Row>
     </div>
   );
 }

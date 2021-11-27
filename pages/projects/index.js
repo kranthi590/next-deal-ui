@@ -17,7 +17,6 @@ export default ProjectsPage;
 
 export async function getServerSideProps(context) {
   const { req, res, query } = context;
-  const { cookies } = req;
   let projectsList = null;
   try {
     const headers = setApiContext(req, res, query);

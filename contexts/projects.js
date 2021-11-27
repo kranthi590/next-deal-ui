@@ -58,9 +58,31 @@ const useProviderProject = () => {
       });
   };
 
+  const getProjectById = (id, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies()
+    httpClient
+      .get(`projects/${id}`, {
+        headers: headers
+      })
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
     newProject,
+    getProjectById
   };
 };

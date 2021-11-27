@@ -5,7 +5,7 @@ import {Badge, Card} from "antd";
 const CardsListItem = ({styleName, data}) => {
   const {status, costCenter, name, managerName, quotationsCount, id} = data;
   return (
-    <Badge.Ribbon text={status} color="cyan" placement="start">
+    <Badge.Ribbon text={status} color="cyan" placement="start" style={{top: 0}}>
       <div className={`gx-user-list ${styleName}`}>
         <img alt="..." src={`https://ui-avatars.com/api/?name=${
           (name) || "Next Deal"

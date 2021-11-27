@@ -10,10 +10,11 @@ import QuotationCard from "../../../app/components/NextDeal/QuotationCard";
 import "../../../routes/Quotations/index.css";
 
 import {formatAmount} from "../../../util/util";
+import CustomScrollbars from "../../../util/CustomScrollbars";
 
 const colSpan = 24 / 3;
 
-const Quotations = ({project = {}, inProgress = [], awarded = []}) => {
+const Quotations = ({project = {}, inProgress = [], awarded = [], completed=[]}) => {
   const Header = (title) => {
     return (
       <div className="ant-card-head">
@@ -30,7 +31,7 @@ const Quotations = ({project = {}, inProgress = [], awarded = []}) => {
         <div className="gx-media gx-featured-item">
           <div className="gx-featured-thumb">
             <img
-              className="gx-rounded-lg gx-width-175"
+              className="gx-rounded-lg gx-size-100"
               src={"https://via.placeholder.com/1100x750"}
               alt="..."
             />
@@ -54,12 +55,15 @@ const Quotations = ({project = {}, inProgress = [], awarded = []}) => {
     );
   };
 
+
   return (
     <div className="quotations">
       <div className="quotations-header">
         <div className="project-details">{ProjectDetails()}</div>
         <div>
-          <Link href={'/projects/' + ['1'] + '/new-quote'} as={'/projects/' + ['1'] + '/new-quote'}>
+          <Link
+            href={'/projects/' + [project.id] + '/new-quote'}
+          >
             <Button type="primary" className="gx-btn-block">
               <i className="icon icon-add gx-mr-2"/>
               <IntlMessages id="app.quotation.addQuotation"/>
@@ -70,22 +74,23 @@ const Quotations = ({project = {}, inProgress = [], awarded = []}) => {
       <Row>
         <Col span={colSpan} className="gx-bg-grey customCardHeight">
           {Header("In progress")}
-          {
-            !inProgress && Array(10).fill(1)
-              .map((x, i) => <Skeleton key={i} className="gx-mb-4" active paragraph={{rows: 2}}/>)
-          }
-          {inProgress &&
-          inProgress.map((item) => (
-            <QuotationCard key={item.id} data={item}/>
-          ))}
+          <CustomScrollbars className="gx-customizer">
+            {inProgress &&
+            inProgress.map((item) => (
+              <QuotationCard key={item.id} data={item}/>
+            ))}
+          </CustomScrollbars>
         </Col>
         <Col span={colSpan} className="gx-bg-grey left-border">
-          {Header("Awarded")}
-          {awarded &&
-          awarded.map((item) => <QuotationCard key={item.id} data={item}/>)}
+          <CustomScrollbars className="gx-customizer">
+            {Header("Awarded")}
+            {awarded &&
+            awarded.map((item) => <QuotationCard key={item.id} data={item}/>)}
+          </CustomScrollbars>
         </Col>
         <Col span={colSpan} className="gx-bg-grey left-border">
-          {Header("Ended")}
+          {Header("Completed")}
+          {completed && completed.map((item) => <QuotationCard key={item.id} data={item}/>)}
         </Col>
       </Row>
     </div>
@@ -100,7 +105,7 @@ export async function getServerSideProps(context) {
   let project = {};
   let inProgress = [];
   let awarded = [];
-  let ended = [];
+  let completed = [];
   try {
     const headers = setApiContext(req, res, query);
 
@@ -114,12 +119,16 @@ export async function getServerSideProps(context) {
       await httpClient.get(`projects/${query.id}/quotations?status=awarded`, {
         headers,
       }),
+      await httpClient.get(`projects/${query.id}/quotations?status=completed`, {
+        headers,
+      }),
     ];
     await Promise.all(promises).then(
-      ([projectData, inProgressData, awardedData]) => {
+      ([projectData, inProgressData, awardedData,completedData]) => {
         project = projectData.data.data;
         inProgress = inProgressData.data.data.rows;
         awarded = awardedData.data.data.rows;
+        completed = completedData.data.data.rows;
       }
     );
   } catch (error) {
@@ -130,6 +139,7 @@ export async function getServerSideProps(context) {
       project,
       inProgress,
       awarded,
+      completed
     },
   };
 }

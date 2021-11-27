@@ -5,7 +5,7 @@ function CryptoNewsItem({data}) {
   const {image, title, subTitle, desc} = data;
   return (
     <div className="gx-news-item">
-      <div className="gx-news-thumb"><img className="gx-width-175 gx-rounded-lg" src={image} alt="..."/></div>
+      <div className="gx-news-thumb"><img className="gx-size-100 gx-rounded-lg" src={image} alt="..."/></div>
       <div className="gx-news-content">
         <h4 className="gx-mt-0">{title}</h4>
         <p className="gx-mb-2">{subTitle}</p>

@@ -52,6 +52,7 @@ const SupplierRegistration = (props) => {
   const [communes1, setCommunes1] = useState([]);
   const [communes2, setCommunes2] = useState([]);
   const [iAccept, setIAccept] = useState(false);
+  const [isSupplierInfoShareable, setSupplierInfoShareable] = useState(false);
   const [rut, setRut] = useState(null);
   const [isLogoUploaded, setLogoUploaded] = useState(false);
 
@@ -99,7 +100,6 @@ const SupplierRegistration = (props) => {
   );
 
   const getFormData = (data) => {
-    console.log('props', props);
     const business = extractData("business_", data);
     const billing = extractData("billing_", data);
     const contact = extractData("bcontact_", data);
@@ -135,7 +135,7 @@ const SupplierRegistration = (props) => {
       serviceLocations: data.serviceLocations,
       type: business.type,
 
-      isShared: props.isShared,
+      isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
       inchargeRole: "Owner",
       logoUrl:
         "https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg",
@@ -158,7 +158,7 @@ const SupplierRegistration = (props) => {
   };
 
   const onFinish = async (values) => {
-
+    getFormData(values)
     registerSupplier(getFormData(values), (data) => {
       try {
         if (data && isLogoUploaded) {
@@ -361,7 +361,6 @@ const SupplierRegistration = (props) => {
                       mode="multiple"
                     >
                       <Option value=""></Option>
-                      {/* TODO: Change this to locations */}
                       {regions &&
                       regions.map((region) => (
                         <Option
@@ -679,12 +678,28 @@ const SupplierRegistration = (props) => {
                   </FormItem>
                 </Col>
               </Row>
+              {
+                props.isBuyer && (
+                  <Row style={{width: "100%", justifyContent: "right"}} gutter={24} className="bottom-divider">
+                    <Col>
+                      <Form.Item
+                        name="supplierInfoSharing"
+                      >
+                        <Checkbox onChange={() => setSupplierInfoShareable(!isSupplierInfoShareable)}>
+                          Do you want to share supplier info with others ?
+                        </Checkbox>
+                        <span className="gx-signup-form-forgot gx-link">
+                </span>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                )}
               <Row style={{width: "100%", justifyContent: "right"}}>
                 <Col>
                   <Form.Item
                     name="iAccept"
                     rules={[
-                      {required: !iAccept && true, message: "Please accept!"},
+                      {required: !iAccept && true, message: "Should accept agreement!"},
                     ]}
                   >
                     <Checkbox onChange={() => setIAccept(!iAccept)}>

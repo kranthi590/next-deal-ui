@@ -108,12 +108,16 @@ class Projects extends PureComponent {
       <div className="gx-module-box-column">
         {
           projects && projects.length === 0 ? (
+
             <div
               className="gx-no-content-found gx-text-light gx-d-flex gx-align-items-center gx-justify-content-center">
               {noContentFoundMessage}
             </div>
           ) : (
-            <Card projects={projects} loader={loader}/>
+            <CustomScrollbars className="gx-module-side-scroll">
+              <Card projects={projects} loader={loader}/>
+            </CustomScrollbars>
+
           )
         }
 
