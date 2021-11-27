@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Row, Col, Button, Skeleton} from "antd";
 import Link from "next/link";
 import {handleApiErrors, httpClient, setApiContext} from "../../../util/Api";
@@ -133,3 +133,5 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+
