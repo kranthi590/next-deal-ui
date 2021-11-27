@@ -1,8 +1,7 @@
 import React, {useState} from "react";
-import {Button, Col, Form, Input, Row} from "antd";
 import Widget from "../../Widget";
-import Link from "next/link";
 import QuotationDrawer from "../QuotationDrawer";
+import "../../../../routes/Quotations/index.css";
 
 const QuotationCard = ({data}) => {
 
@@ -11,10 +10,9 @@ const QuotationCard = ({data}) => {
   const toggleCustomizer = () => {
     setIsCustomizerOpened(!isCustomizerOpened);
   };
-console.log('data.suppliers', data)
   return (
     <>
-      <Widget styleName={`gx-card-full gx-px-3`}>
+      <Widget styleName={`gx-card-full gx-card-quote-border gx-mb-3`}>
         <h2 className="h3 gx-mb-2 gx-pt-2 gx-show-hand" onClick={toggleCustomizer}>{data.name}</h2>
         <div className="gx-currentplan-row gx-card-full">
           <div className="gx-currentplan-col"><h2
