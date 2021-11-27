@@ -133,37 +133,5 @@ export async function getServerSideProps(context) {
     },
   };
 }
-const InboxComponent = ({user, otherUser}) => {
-  const talkjsContainer = React.createRef();
-
-  useEffect(() => {
-    const currentUser = user;
-
-    Talk.ready.then(() => {
-      let me = new Talk.User({
-        is: currentUser.id,
-        name: currentUser.username,
-        photoUrl: currentUser.avatar,
-        welcomeMessage: 'Hey!!'
-      });
-
-      const session = new Talk.Session({
-        appId: 'testid',
-        me: me
-      });
-
-      if (otherUser){
-        let other = new Talk.User({
-          id: otherUser.id,
-          name: otherUser.username,
-          photoUrl: otherUser.avatar
-        });
-
-        const conversation = session.getOrCreateCOnversation(Talk.oneOnOneId(me, other));
-
-      }
-    })
-  }, [])
-}
 
 
