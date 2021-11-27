@@ -11,7 +11,7 @@ const QuotationCard = ({data}) => {
   const toggleCustomizer = () => {
     setIsCustomizerOpened(!isCustomizerOpened);
   };
-
+console.log('data.suppliers', data)
   return (
     <>
       <Widget styleName={`gx-card-full gx-px-3`}>
@@ -28,7 +28,7 @@ const QuotationCard = ({data}) => {
             </p>*/}
           </div>
           <div className="gx-currentplan-col gx-currentplan-right">
-            <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">{data.suppliers && data.suppliers.length}<sub
+            <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">{data.suppliersCount}<sub
               className="gx-fs-md gx-bottom-0">/Suppliers</sub></h2>
             <div className="gx-currentplan-right-content">
             <span className="gx-text-primary gx-fs-md gx-pointer gx-mts-3 gx-oth-plans-down">Other plans <i
