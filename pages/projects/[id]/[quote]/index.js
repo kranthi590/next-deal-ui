@@ -19,10 +19,8 @@ import {RegistrationProvider, useRegistration} from '../../../../contexts/busine
 import {ProjectProvider, useProject} from "../../../../contexts/projects";
 import {
   errorNotification,
-  getDateInMilliseconds, NOTIFICATION_TIMEOUT, successNotification,
+  getDateInMilliseconds, successNotification,
 } from "../../../../util/util";
-import NewQuotation from "../../../../routes/NewQuotation";
-import SupplierRegistration from "../../../../routes/SupplierRegistration";
 import SupplierRegistrationPage from "../../../supplier-registration";
 import {QuotationProvider, useQuotation} from "../../../../contexts/quotations";
 

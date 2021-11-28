@@ -53,7 +53,7 @@ const NewProject = () => {
   const [startDate, setStartDate] = useState(null);
   const [expectedEndDate, setExpectedEndDate] = useState(null);
 
-  const { isLoading, error, newProject } = useProject();
+  const { error, newProject } = useProject();
 
   const [form] = Form.useForm();
 
@@ -198,28 +198,6 @@ const NewProject = () => {
               rules={[stringRule]}
             >
               <TextArea placeholder="Description" rows={8} />
-            </Form.Item>
-          </Col>
-          <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-            <Form.Item label="Dragger">
-              <Form.Item
-                name="dragger"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                noStyle
-              >
-                <Upload.Dragger name="files" action="/upload.do">
-                  <p className="ant-upload-drag-icon">
-                    <InboxOutlined />
-                  </p>
-                  <p className="ant-upload-text">
-                    Click or drag file to this area to upload
-                  </p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload.
-                  </p>
-                </Upload.Dragger>
-              </Form.Item>
             </Form.Item>
           </Col>
         </Row>
