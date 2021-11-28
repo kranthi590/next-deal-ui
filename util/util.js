@@ -72,3 +72,10 @@ export const sanitizeString = (string) => {
 
 export const formatAmount = (amount) =>
   amount && amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+export const getAvatar = str => {
+  if (!str) return;
+  const stringInfo = str.match(/\b(\w)/g);
+  const splitString = stringInfo.splice(0,2)
+  return splitString.join('').toUpperCase();
+}

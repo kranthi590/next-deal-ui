@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {Row, Col, Button, Skeleton} from "antd";
+import React from "react";
+import {Row, Col, Button} from "antd";
 import Link from "next/link";
 import {handleApiErrors, httpClient, setApiContext} from "../../../util/Api";
 
@@ -101,7 +101,6 @@ export default Quotations;
 
 export async function getServerSideProps(context) {
   const {req, res, query} = context;
-  const {cookies} = req;
   let project = {};
   let inProgress = [];
   let awarded = [];

@@ -1,15 +1,19 @@
 import Link from 'next/link';
 import React from "react";
-import {Badge, Card} from "antd";
+import {Badge, Avatar} from "antd";
+import {getAvatar} from "../../../util/util";
 
 const CardsListItem = ({styleName, data}) => {
   const {status, costCenter, name, managerName, quotationsCount, id} = data;
   return (
     <Badge.Ribbon text={status} color="cyan" placement="start" style={{top: 0}}>
       <div className={`gx-user-list ${styleName}`}>
-        <img alt="..." src={`https://ui-avatars.com/api/?name=${
-          (name) || "Next Deal"
-        }&format=svg`} className="gx-avatar-img gx-border-0"/>
+        <Avatar
+          className={`gx-mr-2`}
+          size={40}
+          style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
+          {getAvatar(name || 'Next Deal')}
+        </Avatar>
         <div className="gx-description">
           <div className="gx-flex-row">
             <h4><Link href={'/projects/' + [id]} as={'/projects/' + id}>{name}</Link></h4>
@@ -19,7 +23,7 @@ const CardsListItem = ({styleName, data}) => {
           <p className="gx-text-grey gx-mb-2">{managerName}</p>
           <div className="gx-media gx-align-items-left gx-flex-nowrap">
             <div className="gx-mr-2 gx-mr-xxl-3">
-              <i className="icon icon-diamond gx-fs-icon-lg"></i></div>
+              <i className="icon icon-diamond gx-fs-icon-lg"/></div>
             <div className="gx-media-body">
               <h1
                 className="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-orange">{quotationsCount}</h1><p
@@ -33,7 +37,7 @@ const CardsListItem = ({styleName, data}) => {
               Check in detail
             </Link>
             <i
-              className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"></i>
+  className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
           </p>
           </div>
         </div>
