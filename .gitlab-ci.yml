@@ -28,7 +28,7 @@ deploy-dev:
       - gcloud config set project ${GCP_PROJECT_ID}
       - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
   script:
-    - gcloud run deploy ${SERVICE_NAME}-dev --image gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST}" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
+    - gcloud run deploy ${SERVICE_NAME}-dev --image gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST},NEXT_PUBLIC_LOCALE_LANG=${NEXT_PUBLIC_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_LANG=${NEXT_PUBLIC_DEFAULT_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX=56,NODE_TLS_REJECT_UNAUTHORIZED=0" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
 
 deploy-staging:
   environment: staging
@@ -39,5 +39,5 @@ deploy-staging:
       - gcloud config set project ${GCP_PROJECT_ID}
       - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
   script:
-    - gcloud run deploy ${SERVICE_NAME}-staging --image gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST}" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
+    - gcloud run deploy ${SERVICE_NAME}-staging --image gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST},NEXT_PUBLIC_LOCALE_LANG=${NEXT_PUBLIC_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_LANG=${NEXT_PUBLIC_DEFAULT_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX=56,NODE_TLS_REJECT_UNAUTHORIZED=0" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
   when: manual
