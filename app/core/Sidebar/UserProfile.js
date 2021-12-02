@@ -28,7 +28,7 @@ const UserProfile = () => {
           alt=""
         >{getAvatar(authUser.firstName)}</Avatar>
         <span className="gx-avatar-name">
-          <i className="icon icon-chevron-down gx-fs-xxs gx-ml-2" />
+          <i className="icon icon-chevron-down gx-pl-0" />
         </span>
       </Popover>
     </div>

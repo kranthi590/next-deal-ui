@@ -25,9 +25,9 @@ const CardsListItem = ({styleName, data}) => {
             <div className="gx-mr-2 gx-mr-xxl-3">
               <i className="icon icon-diamond gx-fs-icon-lg"/></div>
             <div className="gx-media-body">
-              <h1
-                className="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-orange">{quotationsCount}</h1><p
-              className="gx-mb-0">Quotation {`${quotationsCount > 10 ? 's' : ''}`}</p></div>
+              <h1 className="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-orange">{quotationsCount}</h1>
+              <p className="gx-mb-0">Quotation {`${quotationsCount > 10 ? 's' : ''}`}</p>
+            </div>
           </div>
         </div>
         <div className="gx-card-list-footer">
@@ -36,8 +36,7 @@ const CardsListItem = ({styleName, data}) => {
             <Link href={'/projects/' + [id]} as={'/projects/' + id}>
               Check in detail
             </Link>
-            <i
-  className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
+            <i className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle"/>
           </p>
           </div>
         </div>

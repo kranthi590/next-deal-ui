@@ -1,5 +1,5 @@
 import React from "react";
-import {Row, Col, Button} from "antd";
+import {Row, Col, Button, Avatar} from "antd";
 import Link from "next/link";
 import {handleApiErrors, httpClient, setApiContext} from "../../../util/Api";
 
@@ -9,7 +9,7 @@ import QuotationCard from "../../../app/components/NextDeal/QuotationCard";
 
 import "../../../routes/Quotations/index.css";
 
-import {formatAmount} from "../../../util/util";
+import {formatAmount, getAvatar} from "../../../util/util";
 import CustomScrollbars from "../../../util/CustomScrollbars";
 
 const colSpan = 24 / 3;
@@ -30,11 +30,11 @@ const Quotations = ({project = {}, inProgress = [], awarded = [], completed=[]})
       <Widget>
         <div className="gx-media gx-featured-item">
           <div className="gx-featured-thumb">
-            <img
+            <Avatar
               className="gx-rounded-lg gx-size-100"
-              src={"https://via.placeholder.com/1100x750"}
-              alt="..."
-            />
+              alt={project.name}
+              style={{color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '2rem'}}
+              >{getAvatar(project.name)}</Avatar>
           </div>
           <div className="gx-media-body gx-featured-content">
             <div className="gx-featured-content-left">
@@ -54,8 +54,6 @@ const Quotations = ({project = {}, inProgress = [], awarded = [], completed=[]})
       </Widget>
     );
   };
-
-
   return (
     <div className="quotations">
       <div className="quotations-header">
