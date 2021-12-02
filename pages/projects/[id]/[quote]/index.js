@@ -96,7 +96,6 @@ const NewQuote = (props) => {
   const onSave = (values) => {
     const projectId = projectInfo && projectInfo.id
     createQuotation(projectId, getFormData(values), (data) => {
-      console.log('data', data);
       successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
         router.back();
@@ -107,8 +106,7 @@ const NewQuote = (props) => {
   return (
     <Card
       className="gx-card"
-      title={<IntlMessages id="app.quotation.addquotation"/>}
-    >
+      title={<IntlMessages id="app.quotation.addquotation"/>}>
       <Form
         form={form}
         fields={

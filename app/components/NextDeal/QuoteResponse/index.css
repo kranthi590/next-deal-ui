@@ -1,0 +1,8 @@
+.gx-progress-form .ant-form-item-control-input-content {
+  display: flex;
+  justify-content: center;
+}
+.gx-progress-form .ant-row {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
