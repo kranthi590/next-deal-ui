@@ -25,6 +25,8 @@ deploy-dev:
   only:
     - main
   before_script:
+      - chmod +x ./setup_env.sh
+      - ./setup_env.sh
       - gcloud config set project ${GCP_PROJECT_ID}
       - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
   script:
