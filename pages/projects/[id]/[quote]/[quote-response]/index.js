@@ -1,11 +1,27 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { Avatar } from "antd";
 import Widget from "../../../../../app/components/Widget";
-import {formatAmount, getAvatar} from "../../../../../util/util";
+import { formatAmount, getAvatar, successNotification } from "../../../../../util/util";
 import ProjectProgressTabs from "../../../../../app/components/NextDeal/ProjectProgressTabs";
 import QuoteResponses from "../../../../../app/components/NextDeal/QuoteResponse";
+import QuotationAwarded from "../../../../../app/components/NextDeal/QuotationAwarded";
+import { handleApiErrors, httpClient, setApiContext } from "../../../../../util/Api";
+import { ResponsesProvider, useResponse } from "../../../../../contexts/responses";
 
-const QuoteResponse = (props) => {
+const NewQuoteResponse = (props) => {
+  const { projectsList } = props;
+  const { createResponses } = useResponse();
+  const router = useRouter();
+  const projectId = router.query.id;
+  const onSave = (values) => {
+    createResponses(projectId, values, (data) => {
+      successNotification("app.registration.detailsSaveSuccessMessage");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    });
+  };
   const ProjectDetails = () => {
     return (
       <Widget>
@@ -36,11 +52,22 @@ const QuoteResponse = (props) => {
     );
   };
 
+  const InProgressForms = () => {
+    return (<>
+      {
+        projectsList.map(item => (<QuoteResponses formData={item} key={item.id} onSave={onSave} />))
+      }
+    </>)
+  }
+  const AwardedForms = () =>{
+    return(<QuotationAwarded formData={{}} />)
+  }
+
   const projectDetailsTabs = {
     defaultActiveKey: "1",
     tabs: [
-      { key: "1", title: "In Process", badgeCount: "10", tabContentComponent: <QuoteResponses /> },
-      { key: "2", title: "Awarded", badgeCount: "5", tabContentComponent: "" },
+      { key: "1", title: "In Progress", badgeCount: projectsList.length, tabContentComponent: <InProgressForms /> },
+      { key: "2", title: "Awarded", badgeCount: "5", tabContentComponent: <AwardedForms /> },
       { key: "3", title: "Completed", badgeCount: "1", tabContentComponent: "" },
     ]
   }
@@ -55,4 +82,45 @@ const QuoteResponse = (props) => {
   )
 }
 
+export async function getServerSideProps(context) {
+  const { req, res, query } = context;
+  console.log("Query text");
+  console.log(query);
+  let AssignedForResponses = [];
+  let ResponsesList = []
+  let projectsList = null;
+  try {
+
+    const headers = setApiContext(req, res, query);
+    const promises = [
+    await httpClient.get(`quotations/${query.quote}/suppliers`, {
+      headers,
+    }),
+      await httpClient.get(`quotations/${query.quote}/responses`, {
+        headers,
+      })
+    ]
+    await Promise.all(promises).then(
+      ([assignedForResponsesData, responsesListData]) => {
+        AssignedForResponses = assignedForResponsesData.data.data;
+        ResponsesList = responsesListData.data.data.rows;
+      }
+    );
+
+    console.log({AssignedForResponses:AssignedForResponses, ResponsesList: ResponsesList})
+  } catch (error) {
+    handleApiErrors(req, res, query, error);
+  }
+  return {
+    props: {
+      projectsList: AssignedForResponses,
+    },
+  };
+}
+
+const QuoteResponse = (props) => (
+  <ResponsesProvider>
+    <NewQuoteResponse {...props} />
+  </ResponsesProvider>
+)
 export default QuoteResponse;

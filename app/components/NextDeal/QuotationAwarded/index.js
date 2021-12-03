@@ -1,21 +1,19 @@
 import React, { useState } from "react";
 import {
-    Button, Row, Col, Form, Input, Checkbox, Select,
+    Button, Row, Col, Form, Input,
     DatePicker, Upload, Card, Divider, InputNumber
 } from "antd";
 import { SaveOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import "./index.css"
 import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 
-const QuoteResponses = (props) => {
+const QuoteAwarded = (props) => {
     const { onSave } = props;
     const { id, fantasyName } = props.formData;
     const [deliveryDate, setDeliveryDate] = useState(null);
     const [validityDate, setValidityDate] = useState(null);
 
     const [form] = Form.useForm();
-    const { Option } = Select;
 
     const deliveryDateChangeHandler = (date) => {
         setDeliveryDate(moment(date).valueOf());
@@ -45,7 +43,7 @@ const QuoteResponses = (props) => {
         // on finish
         console.log(getFormData(values))
         const formValues = getFormData(values);
-        onSave({ ...formValues, supplierId:id, currency: "clp", includesTax: true },);
+        onSave({ ...formValues, supplierId: id, currency: "clp", includesTax: true },);
 
     };
 
@@ -61,7 +59,7 @@ const QuoteResponses = (props) => {
             <Row>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="netWorth"
+                        name="amount"
                         rules={[
                             {
                                 required: true,
@@ -72,29 +70,8 @@ const QuoteResponses = (props) => {
                             className="gx-w-100"
                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                            placeholder="Net Worth"
-                            addonAfter={
-                                <Checkbox name="includesTax" style={{ padding: "0" }}>
-                                    Incl.IVA
-                                </Checkbox>
-                            }
+                            placeholder="Amount"
                         />
-                    </Form.Item>
-                </Col>
-                <Col xl={6} xs={24}>
-                    <Form.Item
-                        name="incoterm"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Input something!',
-                            },
-                        ]}>
-                        <Select allowClear placeholder="Incoterm">
-                            <Option value="term1">Term 1</Option>
-                            <Option value="term2">Term 2</Option>
-                            <Option value="term3">Temrm 3</Option>
-                        </Select>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
@@ -108,24 +85,8 @@ const QuoteResponses = (props) => {
                         ]}>
                         <DatePicker
                             style={{ width: '100%' }}
-                            placeholder="Delivery Date(With a purchase order confirm)"
+                            placeholder="Delivery Date"
                             onChange={deliveryDateChangeHandler}
-                        />
-                    </Form.Item>
-                </Col>
-                <Col xl={6} xs={24}>
-                    <Form.Item
-                        name="validityDate"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Input something!',
-                            },
-                        ]}>
-                        <DatePicker
-                            style={{ width: '100%' }}
-                            placeholder="Validity Date"
-                            onChange={validityDateChangeHandler}
                         />
                     </Form.Item>
                 </Col>
@@ -143,6 +104,18 @@ const QuoteResponses = (props) => {
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
+                        name="paymentCondition"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Input something!',
+                            },
+                        ]}>
+                        <Input placeholder="Number Of Purchase Order" />
+                    </Form.Item>
+                </Col>
+                <Col xl={6} xs={24}>
+                    <Form.Item
                         name="description"
                         rules={[
                             {
@@ -150,13 +123,12 @@ const QuoteResponses = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Comments"></Input.TextArea>
+                        <Input.TextArea placeholder="Observation"></Input.TextArea>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>Awarded</Button>
-                        <Button type="primary" icon={<DeleteOutlined />}>Delete</Button>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>Confirm Receiption</Button>
                     </Form.Item>
                 </Col>
             </Row>
@@ -164,4 +136,4 @@ const QuoteResponses = (props) => {
     </Card>)
 }
 
-export default QuoteResponses;
+export default QuoteAwarded;

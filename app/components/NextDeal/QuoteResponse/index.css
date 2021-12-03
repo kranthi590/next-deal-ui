@@ -6,3 +6,6 @@
   margin-right: 0 !important;
   margin-left: 0 !important;
 }
+.gx-card-widget .ant-card-head-title{
+  text-align: center;
+}
