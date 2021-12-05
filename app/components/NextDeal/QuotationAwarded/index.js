@@ -1,53 +1,34 @@
 import React, { useState } from "react";
 import {
-    Button, Row, Col, Form, Input, Checkbox, Select,
+    Button, Row, Col, Form, Input,
     DatePicker, Upload, Card, Divider, InputNumber
 } from "antd";
 import { SaveOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import "./index.css"
 import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 
-const QuoteResponses = (props) => {
+const QuoteAwarded = (props) => {
     const { onSave } = props;
-    const { id, fantasyName, newQuote, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
+    const { id, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
     const [cvalidityDate, setCValidityDate] = useState(null);
-
-    let initialFormData = {};
-    if (newQuote !== true) {
-        initialFormData = {
-            netWorth: netWorth,
-            paymentCondition: paymentCondition,
-            includesTax: includesTax,
-            incoterm: incoterm,
-            deliveryDate: moment(deliveryDate),
-            validityDate: moment(validityDate),
-            description: additionalData
-        }
-    } else {
-        initialFormData = {
-            netWorth: null,
-            includesTax: false,
-            paymentCondition: null,
-            incoterm: null,
-            deliveryDate: null,
-            validityDate: null,
-            description: null
-        }
-    }
-
     const [form] = Form.useForm();
-    const { Option } = Select;
 
+    const initialFormData = {
+        netWorth: netWorth,
+        paymentCondition: paymentCondition,
+        // includesTax: includesTax,
+        // incoterm: incoterm,
+        deliveryDate: moment(deliveryDate),
+        // validityDate: moment(validityDate),
+        description: additionalData
+    }
     const deliveryDateChangeHandler = (date) => {
         setCDeliveryDate(moment(date).valueOf());
-        // setDeliveryDate(getDateInMilliseconds(date));
     };
     const validityDateChangeHandler = (date) => {
         setCValidityDate(moment(date).valueOf());
-        // setValidityDate(getDateInMilliseconds(date));
     };
     const onFinishFailed = (errorInfo) => {
     };
@@ -67,15 +48,11 @@ const QuoteResponses = (props) => {
     };
     const onFinish = (values) => {
         // on finish
-        if (newQuote !== true) {
-            onSave(null, id);
-        } else {
-            const formValues = getFormData(values);
-            onSave({ ...formValues, supplierId: id, currency: "clp", includesTax: formValues.includesTax ? true : false },);
-        }
+        onSave({ purchaseOrderNumber:values.purchaseOrderNumber},id);
+
     };
 
-    return (<Card title={fantasyName ? fantasyName : supplier.fantasyName} className="ant-card-bordered gx-card-widget">
+    return (<Card title={supplier.fantasyName} className="ant-card-bordered gx-card-widget">
         <Divider />
         <Form
             form={form}
@@ -99,24 +76,9 @@ const QuoteResponses = (props) => {
                             className="gx-w-100"
                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                            placeholder="Net Worth"
+                            placeholder="Amount"
+                            disabled
                         />
-                    </Form.Item>
-                </Col>
-                <Col xl={6} xs={24}>
-                    <Form.Item
-                        name="incoterm"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Input something!',
-                            },
-                        ]}>
-                        <Select allowClear placeholder="Incoterm">
-                            <Option value="term1">Term 1</Option>
-                            <Option value="term2">Term 2</Option>
-                            <Option value="term3">Temrm 3</Option>
-                        </Select>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
@@ -130,24 +92,9 @@ const QuoteResponses = (props) => {
                         ]}>
                         <DatePicker
                             style={{ width: '100%' }}
-                            placeholder="Delivery Date(With a purchase order confirm)"
+                            placeholder="Delivery Date"
                             onChange={deliveryDateChangeHandler}
-                        />
-                    </Form.Item>
-                </Col>
-                <Col xl={6} xs={24}>
-                    <Form.Item
-                        name="validityDate"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Input something!',
-                            },
-                        ]}>
-                        <DatePicker
-                            style={{ width: '100%' }}
-                            placeholder="Validity Date"
-                            onChange={validityDateChangeHandler}
+                            disabled
                         />
                     </Form.Item>
                 </Col>
@@ -160,30 +107,31 @@ const QuoteResponses = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" />
+                        <Input.TextArea placeholder="Payment Conditions" disabled/>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="description">
-                        <Input.TextArea placeholder="Comments"></Input.TextArea>
+                        name="description"                        
+                        >
+                        <Input.TextArea placeholder="Comments" disabled></Input.TextArea>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
-                    <Form.Item name="includesTax" valuePropName="checked">
-                        <Checkbox>
-                            Incl.IVA
-                        </Checkbox>
+                    <Form.Item
+                        name="purchaseOrderNumber"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Input something!',
+                            },
+                        ]}>
+                        <Input placeholder="Number Of Purchase Order" />
                     </Form.Item>
                 </Col>
-                <Col xl={6} xs={24} className="gx-d-flex">
+                <Col xl={6} xs={24}>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
-                            {
-                                newQuote ? "Save" : "Awarded"
-                            }
-                        </Button>
-                        <Button type="primary" icon={<DeleteOutlined />}>Delete</Button>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>Confirm Receiption</Button>
                     </Form.Item>
                 </Col>
             </Row>
@@ -191,4 +139,4 @@ const QuoteResponses = (props) => {
     </Card>)
 }
 
-export default QuoteResponses;
+export default QuoteAwarded;
