@@ -21,6 +21,15 @@ module.exports = withPlugins(
   ],
   {
     basePath: '/app',
-    assetPrefix:'/app/'
+    assetPrefix: '/app/',
+    reactStrictMode: true,
+    env: {
+      NEXT_PUBLIC_API_HOST: process.env.NEXT_PUBLIC_API_HOST,
+      NEXT_PUBLIC_LOCALE_LANG: process.env.NEXT_PUBLIC_LOCALE_LANG,
+      NEXT_PUBLIC_DEFAULT_LOCALE_LANG: process.env.NEXT_PUBLIC_DEFAULT_LOCALE_LANG,
+      NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX: process.env.NEXT_PUBLIC_DEFAULT_LOCALE_LANG,
+      NEXT_PUBLIC_APP_HOST: process.env.NEXT_PUBLIC_DEFAULT_LOCALE_LANG,
+      NODE_TLS_REJECT_UNAUTHORIZED: process.env.NEXT_PUBLIC_DEFAULT_LOCALE_LANG,
+    }
   },
 );
