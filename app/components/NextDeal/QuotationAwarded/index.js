@@ -9,28 +9,35 @@ import moment from "moment";
 
 const QuoteAwarded = (props) => {
     const { onSave } = props;
-    const { id, fantasyName } = props.formData;
-    const [deliveryDate, setDeliveryDate] = useState(null);
-    const [validityDate, setValidityDate] = useState(null);
+    const { id, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
 
+    const [cdeliveryDate, setCDeliveryDate] = useState(null);
+    const [cvalidityDate, setCValidityDate] = useState(null);
     const [form] = Form.useForm();
 
+    const initialFormData = {
+        netWorth: netWorth,
+        paymentCondition: paymentCondition,
+        // includesTax: includesTax,
+        // incoterm: incoterm,
+        deliveryDate: moment(deliveryDate),
+        // validityDate: moment(validityDate),
+        description: additionalData
+    }
     const deliveryDateChangeHandler = (date) => {
-        setDeliveryDate(moment(date).valueOf());
-        // setDeliveryDate(getDateInMilliseconds(date));
+        setCDeliveryDate(moment(date).valueOf());
     };
     const validityDateChangeHandler = (date) => {
-        setValidityDate(moment(date).valueOf());
-        // setValidityDate(getDateInMilliseconds(date));
+        setCValidityDate(moment(date).valueOf());
     };
     const onFinishFailed = (errorInfo) => {
     };
     const getFormData = (data) => {
         const formData = Object.keys(data).reduce((acc, key) => {
             if (data[key] && key === "deliveryDate") {
-                acc = { ...acc, deliveryDate };
+                acc = { ...acc, deliveryDate: cdeliveryDate };
             } else if (data[key] && key === "validityDate") {
-                acc = { ...acc, validityDate };
+                acc = { ...acc, validityDate: cvalidityDate };
             } else if (data[key]) {
                 acc = { ...acc, [key]: data[key] };
             }
@@ -41,16 +48,15 @@ const QuoteAwarded = (props) => {
     };
     const onFinish = (values) => {
         // on finish
-        console.log(getFormData(values))
-        const formValues = getFormData(values);
-        onSave({ ...formValues, supplierId: id, currency: "clp", includesTax: true },);
+        onSave({ purchaseOrderNumber:values.purchaseOrderNumber},id);
 
     };
 
-    return (<Card title={fantasyName} className="ant-card-bordered gx-card-widget">
+    return (<Card title={supplier.fantasyName} className="ant-card-bordered gx-card-widget">
         <Divider />
         <Form
             form={form}
+            initialValues={initialFormData}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             name="quoteResponseForm"
@@ -59,7 +65,7 @@ const QuoteAwarded = (props) => {
             <Row>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="amount"
+                        name="netWorth"
                         rules={[
                             {
                                 required: true,
@@ -71,6 +77,7 @@ const QuoteAwarded = (props) => {
                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             placeholder="Amount"
+                            disabled
                         />
                     </Form.Item>
                 </Col>
@@ -87,6 +94,7 @@ const QuoteAwarded = (props) => {
                             style={{ width: '100%' }}
                             placeholder="Delivery Date"
                             onChange={deliveryDateChangeHandler}
+                            disabled
                         />
                     </Form.Item>
                 </Col>
@@ -99,12 +107,19 @@ const QuoteAwarded = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" />
+                        <Input.TextArea placeholder="Payment Conditions" disabled/>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="paymentCondition"
+                        name="description"                        
+                        >
+                        <Input.TextArea placeholder="Comments" disabled></Input.TextArea>
+                    </Form.Item>
+                </Col>
+                <Col xl={6} xs={24}>
+                    <Form.Item
+                        name="purchaseOrderNumber"
                         rules={[
                             {
                                 required: true,
@@ -112,18 +127,6 @@ const QuoteAwarded = (props) => {
                             },
                         ]}>
                         <Input placeholder="Number Of Purchase Order" />
-                    </Form.Item>
-                </Col>
-                <Col xl={6} xs={24}>
-                    <Form.Item
-                        name="description"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Input something!',
-                            },
-                        ]}>
-                        <Input.TextArea placeholder="Observation"></Input.TextArea>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>

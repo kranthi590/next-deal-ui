@@ -10,19 +10,43 @@ import moment from "moment";
 
 const QuoteResponses = (props) => {
     const { onSave } = props;
-    const { id, fantasyName } = props.formData;
-    const [deliveryDate, setDeliveryDate] = useState(null);
-    const [validityDate, setValidityDate] = useState(null);
+    const { id, fantasyName, newQuote, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
+
+    const [cdeliveryDate, setCDeliveryDate] = useState(null);
+    const [cvalidityDate, setCValidityDate] = useState(null);
+
+    let initialFormData = {};
+    if (newQuote !== true) {
+        initialFormData = {
+            netWorth: netWorth,
+            paymentCondition: paymentCondition,
+            includesTax: includesTax,
+            incoterm: incoterm,
+            deliveryDate: moment(deliveryDate),
+            validityDate: moment(validityDate),
+            description: additionalData
+        }
+    } else {
+        initialFormData = {
+            netWorth: null,
+            includesTax: false,
+            paymentCondition: null,
+            incoterm: null,
+            deliveryDate: null,
+            validityDate: null,
+            description: null
+        }
+    }
 
     const [form] = Form.useForm();
     const { Option } = Select;
 
     const deliveryDateChangeHandler = (date) => {
-        setDeliveryDate(moment(date).valueOf());
+        setCDeliveryDate(moment(date).valueOf());
         // setDeliveryDate(getDateInMilliseconds(date));
     };
     const validityDateChangeHandler = (date) => {
-        setValidityDate(moment(date).valueOf());
+        setCValidityDate(moment(date).valueOf());
         // setValidityDate(getDateInMilliseconds(date));
     };
     const onFinishFailed = (errorInfo) => {
@@ -30,9 +54,9 @@ const QuoteResponses = (props) => {
     const getFormData = (data) => {
         const formData = Object.keys(data).reduce((acc, key) => {
             if (data[key] && key === "deliveryDate") {
-                acc = { ...acc, deliveryDate };
+                acc = { ...acc, deliveryDate: cdeliveryDate };
             } else if (data[key] && key === "validityDate") {
-                acc = { ...acc, validityDate };
+                acc = { ...acc, validityDate: cvalidityDate };
             } else if (data[key]) {
                 acc = { ...acc, [key]: data[key] };
             }
@@ -43,16 +67,19 @@ const QuoteResponses = (props) => {
     };
     const onFinish = (values) => {
         // on finish
-        console.log(getFormData(values))
-        const formValues = getFormData(values);
-        onSave({ ...formValues, supplierId:id, currency: "clp", includesTax: true },);
-
+        if (newQuote !== true) {
+            onSave(null, id);
+        } else {
+            const formValues = getFormData(values);
+            onSave({ ...formValues, supplierId: id, currency: "clp", includesTax: formValues.includesTax ? true : false },);
+        }
     };
 
-    return (<Card title={fantasyName} className="ant-card-bordered gx-card-widget">
+    return (<Card title={fantasyName ? fantasyName : supplier.fantasyName} className="ant-card-bordered gx-card-widget">
         <Divider />
         <Form
             form={form}
+            initialValues={initialFormData}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             name="quoteResponseForm"
@@ -73,11 +100,6 @@ const QuoteResponses = (props) => {
                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             placeholder="Net Worth"
-                            addonAfter={
-                                <Checkbox name="includesTax" style={{ padding: "0" }}>
-                                    Incl.IVA
-                                </Checkbox>
-                            }
                         />
                     </Form.Item>
                 </Col>
@@ -143,19 +165,24 @@ const QuoteResponses = (props) => {
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="description"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Input something!',
-                            },
-                        ]}>
+                        name="description">
                         <Input.TextArea placeholder="Comments"></Input.TextArea>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
+                    <Form.Item name="includesTax" valuePropName="checked">
+                        <Checkbox>
+                            Incl.IVA
+                        </Checkbox>
+                    </Form.Item>
+                </Col>
+                <Col xl={6} xs={24} className="gx-d-flex">
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>Awarded</Button>
+                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+                            {
+                                newQuote ? "Save" : "Awarded"
+                            }
+                        </Button>
                         <Button type="primary" icon={<DeleteOutlined />}>Delete</Button>
                     </Form.Item>
                 </Col>

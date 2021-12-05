@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { useRouter } from "next/router";
 import { Avatar } from "antd";
 import Widget from "../../../../../app/components/Widget";
@@ -8,20 +8,42 @@ import QuoteResponses from "../../../../../app/components/NextDeal/QuoteResponse
 import QuotationAwarded from "../../../../../app/components/NextDeal/QuotationAwarded";
 import { handleApiErrors, httpClient, setApiContext } from "../../../../../util/Api";
 import { ResponsesProvider, useResponse } from "../../../../../contexts/responses";
+import NoDataAvailable from "../../../../../app/components/NoDataAvailable.js";
 
 const NewQuoteResponse = (props) => {
-  const { projectsList } = props;
-  const { createResponses } = useResponse();
+  const { projectsList, quotationData, awardedResponses } = props;
+  const { createResponses, createAward, completeQuotation } = useResponse();
   const router = useRouter();
-  const projectId = router.query.id;
-  const onSave = (values) => {
-    createResponses(projectId, values, (data) => {
+  const projectId = router.query.quote;
+
+  const onSave = (values, qid) => {
+    if (values) {
+      createResponses(projectId, values, (data) => {
+        successNotification("app.registration.detailsSaveSuccessMessage");
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      });
+    }
+    if (qid) {
+      createAward(qid, (data) => {
+        successNotification("app.registration.detailsSaveSuccessMessage");
+        setTimeout(() => {
+          window.location.hash = "2";
+          window.location.reload();
+        }, 1000);
+      })
+    }
+  };
+  const onCompleteQuotation = (values, qid) => {
+    completeQuotation(qid, values, (data) => {
       successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
+        window.location.hash = "3";
         window.location.reload();
       }, 1000);
     });
-  };
+  }
   const ProjectDetails = () => {
     return (
       <Widget>
@@ -29,21 +51,21 @@ const NewQuoteResponse = (props) => {
           <div className="gx-featured-thumb">
             <Avatar
               className="gx-rounded-lg gx-size-100"
-              alt={'Hello'}
-              style={{color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '2rem'}}
-            >{getAvatar('Hello')}</Avatar>
+              alt={quotationData.name}
+              style={{ color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '2rem' }}
+            >{getAvatar(quotationData.name)}</Avatar>
           </div>
           <div className="gx-media-body gx-featured-content">
             <div className="gx-featured-content-left">
-              <h3 className="gx-mb-2">{'Hello'}</h3>
-              <p className="gx-text-grey gx-mb-1">{'Hello'}</p>
+              <h3 className="gx-mb-2">{quotationData.name}-{quotationData.code}</h3>
+              <p className="gx-text-grey gx-mb-1">{quotationData.description}</p>
             </div>
             <div className="gx-featured-content-right">
               <div>
                 <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
-                  {formatAmount(`${200000}`)}
+                  {formatAmount(`${quotationData.estimatedBudget}`)}
                 </h2>
-                <p className="gx-text-grey gx-fs-sm gx-text-uppercase">{'CF'}</p>
+                <p className="gx-text-grey gx-fs-sm gx-text-uppercase">{quotationData.currency}</p>
               </div>
             </div>
           </div>
@@ -54,20 +76,28 @@ const NewQuoteResponse = (props) => {
 
   const InProgressForms = () => {
     return (<>
+      {(projectsList.length === 0) && <NoDataAvailable />}
       {
         projectsList.map(item => (<QuoteResponses formData={item} key={item.id} onSave={onSave} />))
       }
     </>)
   }
-  const AwardedForms = () =>{
-    return(<QuotationAwarded formData={{}} />)
+  const AwardedForms = () => {
+    return (
+      <>
+        {(awardedResponses.length === 0) && <NoDataAvailable />}
+        {
+          awardedResponses.map(item => (<QuotationAwarded formData={item} key={item.id} onSave={onCompleteQuotation} />))
+        }
+      </>
+    )
   }
 
   const projectDetailsTabs = {
     defaultActiveKey: "1",
     tabs: [
       { key: "1", title: "In Progress", badgeCount: projectsList.length, tabContentComponent: <InProgressForms /> },
-      { key: "2", title: "Awarded", badgeCount: "5", tabContentComponent: <AwardedForms /> },
+      { key: "2", title: "Awarded", badgeCount: awardedResponses.length, tabContentComponent: <AwardedForms /> },
       { key: "3", title: "Completed", badgeCount: "1", tabContentComponent: "" },
     ]
   }
@@ -75,7 +105,7 @@ const NewQuoteResponse = (props) => {
     <div className="quotations">
       <div className="quotations-header">
         <div className="project-details">{ProjectDetails()}
-          <ProjectProgressTabs tabsConfig={projectDetailsTabs} />
+          <ProjectProgressTabs tabsConfig={projectDetailsTabs} enableHash/>
         </div>
       </div>
     </div>
@@ -87,33 +117,52 @@ export async function getServerSideProps(context) {
   console.log("Query text");
   console.log(query);
   let AssignedForResponses = [];
-  let ResponsesList = []
+  let ResponsesList = [];
+  let AwardedResponsesList = [];
+  let QuotationData = {};
   let projectsList = null;
   try {
 
     const headers = setApiContext(req, res, query);
     const promises = [
-    await httpClient.get(`quotations/${query.quote}/suppliers`, {
-      headers,
-    }),
+      await httpClient.get(`quotations/${query.quote}/suppliers`, {
+        headers,
+      }),
       await httpClient.get(`quotations/${query.quote}/responses`, {
+        headers,
+      }),
+      await httpClient.get(`quotations/${query.quote}`, {
         headers,
       })
     ]
     await Promise.all(promises).then(
-      ([assignedForResponsesData, responsesListData]) => {
-        AssignedForResponses = assignedForResponsesData.data.data;
-        ResponsesList = responsesListData.data.data.rows;
+      ([assignedForResponsesData, responsesListData, quotationData]) => {
+        AssignedForResponses = (assignedForResponsesData.data.data).map(item => ({ ...item, newQuote: true }));
+        (responsesListData.data.data.rows).map(item => {
+          if (item.isAwarded === true) {
+            AwardedResponsesList.push(item);
+          } else {
+            ResponsesList.push(item)
+          }
+        });
+        QuotationData = quotationData.data.data;
       }
     );
 
-    console.log({AssignedForResponses:AssignedForResponses, ResponsesList: ResponsesList})
+    // console.log({
+    //   AssignedForResponses: AssignedForResponses,
+    //   ResponsesList: ResponsesList,
+    //   QuotationData: QuotationData,
+    //   AwardedResponsesList: AwardedResponsesList
+    // })
   } catch (error) {
     handleApiErrors(req, res, query, error);
   }
   return {
     props: {
-      projectsList: AssignedForResponses,
+      projectsList: [...AssignedForResponses, ...ResponsesList],
+      quotationData: QuotationData,
+      awardedResponses: AwardedResponsesList
     },
   };
 }
