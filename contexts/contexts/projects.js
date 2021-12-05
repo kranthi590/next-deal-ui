@@ -1,23 +1,23 @@
-import React, {useState, useContext, createContext} from "react";
+import React, { useState, useContext, createContext } from "react";
 import {httpClient, setAuthToken} from "../util/Api";
 import {Cookies} from "react-cookie";
 
-const responsesContext = createContext({});
+const projectContext = createContext({});
 
-export function ResponsesProvider({children}) {
-  const project = useProviderResponses();
+export function ProjectProvider({ children }) {
+  const project = useProviderProject();
   return (
-    <responsesContext.Provider value={project}>
+    <projectContext.Provider value={project}>
       {children}
-    </responsesContext.Provider>
+    </projectContext.Provider>
   );
 }
 
-export const useResponse = () => {
-  return useContext(responsesContext);
+export const useProject = () => {
+  return useContext(projectContext);
 };
 
-const useProviderResponses = () => {
+const useProviderProject = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -36,32 +36,13 @@ const useProviderResponses = () => {
     setError(error);
   };
 
-  const createResponses = (id, data, callbackFun) => {
+  const newProject = (data, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies()
+    const buyerId = cookie.get('buyerId');
     httpClient
-      .post(`quotations/${id}/responses`,  data,{
-        headers: headers
-      })
-      .then(({data}) => {
-        if (data) {
-          fetchSuccess();
-          if (callbackFun) callbackFun(data.data);
-        } else {
-          fetchError(data.error);
-        }
-      })
-      .catch(function (error) {
-        fetchError(error.message);
-      });
-  };
-  const createAward = (id, callbackFun) => {
-    fetchStart();
-    const headers = setAuthToken();
-    const cookie = new Cookies()
-    httpClient
-      .post(`quotations/${id}/award`, {}, {
+      .post(`projects`, {...data}, {
         headers: headers
       })
       .then(({ data }) => {
@@ -76,12 +57,13 @@ const useProviderResponses = () => {
         fetchError(error.message);
       });
   };
-  const completeQuotation = (id, data, callbackFun) => {
+
+  const getProjectById = (id, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies()
     httpClient
-      .post(`quotations/${id}/complete`, data, {
+      .get(`projects/${id}`, {
         headers: headers
       })
       .then(({ data }) => {
@@ -100,8 +82,7 @@ const useProviderResponses = () => {
   return {
     isLoading,
     error,
-    createResponses,
-    createAward,
-    completeQuotation
+    newProject,
+    getProjectById
   };
 };
