@@ -1,14 +1,10 @@
 import React from "react";
-import asyncComponent from "../../util/asyncComponent";
-import { ProjectProvider } from "../../util/project";
-
-const CreateProject = asyncComponent(() =>
-  import("../../routes/CreateProject")
-);
+import { ProjectProvider } from "../../contexts/projects";
+import createProject from '../../routes/NewProject';
 
 const CreateProjectPage = () => (
   <ProjectProvider>
-    <CreateProject />
+    <createProject />
   </ProjectProvider>
 );
 

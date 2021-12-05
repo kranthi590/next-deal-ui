@@ -22,6 +22,6 @@ module.exports = withPlugins(
   {
     basePath: '/app',
     assetPrefix: '/app/',
-    reactStrictMode: true,
+    reactStrictMode: true
   },
 );

@@ -1,10 +1,10 @@
-import React, {useState, useContext, createContext} from "react";
-import {httpClient, setAuthToken} from "../util/Api";
-import {Cookies} from "react-cookie";
+import React, { useState, useContext, createContext } from "react";
+import { httpClient, setAuthToken } from "../util/Api";
+import { Cookies } from "react-cookie";
 
 const responsesContext = createContext({});
 
-export function ResponsesProvider({children}) {
+export function ResponsesProvider({ children }) {
   const project = useProviderResponses();
   return (
     <responsesContext.Provider value={project}>
@@ -41,10 +41,10 @@ const useProviderResponses = () => {
     const headers = setAuthToken();
     const cookie = new Cookies()
     httpClient
-      .post(`quotations/${id}/responses`,  data,{
+      .post(`quotations/${id}/responses`, data, {
         headers: headers
       })
-      .then(({data}) => {
+      .then(({ data }) => {
         if (data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);

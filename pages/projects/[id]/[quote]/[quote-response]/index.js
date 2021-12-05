@@ -158,6 +158,8 @@ export async function getServerSideProps(context) {
   } catch (error) {
     handleApiErrors(req, res, query, error);
   }
+
+  console.log('AwardedResponsesList', AwardedResponsesList);
   return {
     props: {
       projectsList: [...AssignedForResponses, ...ResponsesList],
