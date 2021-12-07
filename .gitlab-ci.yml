@@ -11,7 +11,7 @@ deploy-dev:
   environment: dev
   stage: deploy-dev
   only:
-    - env-pipes
+    - main
   before_script:
       - chmod +x ./setup_env.sh
       - ./setup_env.sh
@@ -25,7 +25,7 @@ deploy-staging:
   environment: staging
   stage: deploy-staging
   only:
-    - env-pipes
+    - main
   before_script:
       - chmod +x ./setup_env.sh
       - ./setup_env.sh
