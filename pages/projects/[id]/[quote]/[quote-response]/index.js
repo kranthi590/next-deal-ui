@@ -9,12 +9,20 @@ import QuotationAwarded from "../../../../../app/components/NextDeal/QuotationAw
 import { handleApiErrors, httpClient, setApiContext } from "../../../../../util/Api";
 import { ResponsesProvider, useResponse } from "../../../../../contexts/responses";
 import NoDataAvailable from "../../../../../app/components/NoDataAvailable.js";
+import QuotationCompleted from "../../../../../app/components/NextDeal/QuotationCompleted";
 
 const NewQuoteResponse = (props) => {
   const { projectsList, quotationData, awardedResponses } = props;
   const { createResponses, createAward, completeQuotation } = useResponse();
   const router = useRouter();
   const projectId = router.query.quote;
+  let awarded = false, completed = false;
+  if (awardedResponses.length) {
+    awarded = true;
+    if (quotationData.status === 'completed') {
+      completed = true;
+    }
+  }
 
   const onSave = (values, qid) => {
     if (values) {
@@ -78,7 +86,7 @@ const NewQuoteResponse = (props) => {
     return (<>
       {(projectsList.length === 0) && <NoDataAvailable />}
       {
-        projectsList.map(item => (<QuoteResponses formData={item} key={item.id} onSave={onSave} />))
+        projectsList.map(item => (<QuoteResponses formData={item} key={item.id} onSave={onSave} awarded={awarded} />))
       }
     </>)
   }
@@ -87,7 +95,19 @@ const NewQuoteResponse = (props) => {
       <>
         {(awardedResponses.length === 0) && <NoDataAvailable />}
         {
-          awardedResponses.map(item => (<QuotationAwarded formData={item} key={item.id} onSave={onCompleteQuotation} />))
+          awardedResponses.map(item => (<QuotationAwarded formData={item} key={item.id} onSave={onCompleteQuotation} completed={completed} />))
+        }
+      </>
+    )
+  }
+  const CompletedForms = () => {
+    return (
+      <>
+        {
+          (completed === false || awardedResponses.length === 0) ?
+            <NoDataAvailable />
+            :
+            awardedResponses.map(item => (<QuotationCompleted formData={item} key={item.id} completed={completed} />))
         }
       </>
     )
@@ -98,7 +118,7 @@ const NewQuoteResponse = (props) => {
     tabs: [
       { key: "1", title: "In Progress", badgeCount: projectsList.length, tabContentComponent: <InProgressForms /> },
       { key: "2", title: "Awarded", badgeCount: awardedResponses.length, tabContentComponent: <AwardedForms /> },
-      { key: "3", title: "Completed", badgeCount: "1", tabContentComponent: "" },
+      { key: "3", title: "Completed", badgeCount: (completed === true) ? awardedResponses.length : 0, tabContentComponent: <CompletedForms /> },
     ]
   }
   return (
@@ -149,12 +169,12 @@ export async function getServerSideProps(context) {
       }
     );
 
-    // console.log({
+    console.log({
     //   AssignedForResponses: AssignedForResponses,
     //   ResponsesList: ResponsesList,
-    //   QuotationData: QuotationData,
-    //   AwardedResponsesList: AwardedResponsesList
-    // })
+      QuotationData: QuotationData,
+      AwardedResponsesList: AwardedResponsesList
+    })
   } catch (error) {
     handleApiErrors(req, res, query, error);
   }

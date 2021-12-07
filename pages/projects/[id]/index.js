@@ -11,6 +11,7 @@ import "../../../routes/Quotations/index.css";
 
 import {formatAmount, getAvatar} from "../../../util/util";
 import CustomScrollbars from "../../../util/CustomScrollbars";
+import NoDataAvailable from "../../../app/components/NoDataAvailable.js";
 
 const colSpan = 24 / 3;
 
@@ -69,26 +70,42 @@ const Quotations = ({project = {}, inProgress = [], awarded = [], completed=[]})
           </Link>
         </div>
       </div>
-      <Row>
-        <Col span={colSpan} className="gx-bg-grey customCardHeight">
+      <Row gutter={8}>
+        <Col span={colSpan} style={{ backgroundColor: "transparent!important" }}>
+          <div style={{ backgroundColor: "#ffffff" }} className="customCardHeight">
           {Header("In progress")}
           <CustomScrollbars className="gx-customizer">
+              <div className="gx-p-2">
             {inProgress &&
             inProgress.map((item) => (
               <QuotationCard key={item.id} data={item}/>
             ))}
+                {(inProgress.length === 0) && (<NoDataAvailable />)}
+              </div>
           </CustomScrollbars>
+          </div>
         </Col>
-        <Col span={colSpan} className="gx-bg-grey left-border">
-          <CustomScrollbars className="gx-customizer">
+        <Col span={colSpan} style={{ backgroundColor: "transparent!important" }}>
+          <div style={{ backgroundColor: "#ffffff" }} className="customCardHeight">
             {Header("Awarded")}
-            {awarded &&
-            awarded.map((item) => <QuotationCard key={item.id} data={item}/>)}
+          <CustomScrollbars className="gx-customizer">
+              <div className="gx-p-2">
+                {awarded && awarded.map((item) => <QuotationCard key={item.id} data={item} />)}
+                {(awarded.length === 0) && (<NoDataAvailable />)}
+              </div>
           </CustomScrollbars>
+          </div>
         </Col>
-        <Col span={colSpan} className="gx-bg-grey left-border">
+        <Col span={colSpan} style={{ backgroundColor: "transparent!important" }} className="customCardHeight">
+          <div style={{ backgroundColor: "#ffffff" }} className="customCardHeight">
           {Header("Completed")}
+            <CustomScrollbars className="gx-customizer">
+              <div className="gx-p-2">
           {completed && completed.map((item) => <QuotationCard key={item.id} data={item}/>)}
+                {(completed.length === 0) && (<NoDataAvailable />)}
+              </div>
+            </CustomScrollbars>
+          </div>
         </Col>
       </Row>
     </div>

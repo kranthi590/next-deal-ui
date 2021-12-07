@@ -7,8 +7,8 @@ import { SaveOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons'
 import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 
-const QuoteAwarded = (props) => {
-    const { onSave,completed } = props;
+const QuotationCompleted = (props) => {
+    const { onSave } = props;
     const { id, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
@@ -80,7 +80,6 @@ const QuoteAwarded = (props) => {
                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             placeholder="Amount"
-                            disabled
                         />
                     </Form.Item>
                 </Col>
@@ -100,7 +99,6 @@ const QuoteAwarded = (props) => {
                             style={{ width: '100%' }}
                             placeholder="Delivery Date"
                             onChange={deliveryDateChangeHandler}
-                            disabled
                         />
                     </Form.Item>
                 </Col>
@@ -116,7 +114,7 @@ const QuoteAwarded = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" disabled />
+                        <Input.TextArea placeholder="Payment Conditions" />
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
@@ -126,10 +124,10 @@ const QuoteAwarded = (props) => {
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                     >
-                        <Input.TextArea placeholder="Comments" disabled></Input.TextArea>
+                        <Input.TextArea placeholder="Comments"></Input.TextArea>
                     </Form.Item>
                 </Col>
-                <Col xl={6} xs={24}>
+                {/* <Col xl={6} xs={24}>
                     <Form.Item
                         name="purchaseOrderNumber"
                         label="Purchase Order Number"
@@ -143,19 +141,10 @@ const QuoteAwarded = (props) => {
                         ]}>
                         <Input placeholder="Number Of Purchase Order" />
                     </Form.Item>
-                </Col>
-                {
-                    !completed && (
-                        <Col xl={6} xs={24}>
-                            <Form.Item wrapperCol={{ span: 24 }}>
-                                <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>Confirm Receiption</Button>
-                            </Form.Item>
-                        </Col>
-                    )
-                }
+                </Col> */}
             </Row>
         </Form>
     </Card>)
 }
 
-export default QuoteAwarded;
+export default QuotationCompleted;
