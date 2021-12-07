@@ -2,22 +2,10 @@ variables:
   SERVICE_NAME: "nextdealapp"
 
 stages:
-  - build
   - deploy-dev
   - deploy-staging
 
 image: google/cloud-sdk:alpine
-
-build:
-    environment: staging
-    stage: build
-    only:
-      - main
-    before_script:
-      - gcloud config set project ${GCP_PROJECT_ID}
-      - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
-    script:
-      - gcloud builds submit --tag gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME}
 
 deploy-dev:
   environment: dev
@@ -25,9 +13,12 @@ deploy-dev:
   only:
     - main
   before_script:
+      - chmod +x ./setup_env.sh
+      - ./setup_env.sh
       - gcloud config set project ${GCP_PROJECT_ID}
       - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
   script:
+    - gcloud builds submit --tag gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME}
     - gcloud run deploy ${SERVICE_NAME}-dev --image gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST},NEXT_PUBLIC_LOCALE_LANG=${NEXT_PUBLIC_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_LANG=${NEXT_PUBLIC_DEFAULT_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX=${NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX},NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED}" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
 
 deploy-staging:
@@ -36,8 +27,11 @@ deploy-staging:
   only:
     - main
   before_script:
+      - chmod +x ./setup_env.sh
+      - ./setup_env.sh
       - gcloud config set project ${GCP_PROJECT_ID}
       - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
   script:
+    - gcloud builds submit --tag gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME}
     - gcloud run deploy ${SERVICE_NAME}-staging --image gcr.io/${GCP_PROJECT_ID_IMAGES}/${SERVICE_NAME} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST},NEXT_PUBLIC_LOCALE_LANG=${NEXT_PUBLIC_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_LANG=${NEXT_PUBLIC_DEFAULT_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX=${NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX},NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED}" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
   when: manual
