@@ -9,7 +9,7 @@ import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 
 const QuoteResponses = (props) => {
-    const { onSave } = props;
+    const { onSave,awarded } = props;
     const { id, fantasyName, newQuote, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
@@ -85,10 +85,13 @@ const QuoteResponses = (props) => {
             name="quoteResponseForm"
             className="gx-progress-form"
         >
-            <Row>
+            <Row gutter={2}>
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="netWorth"
+                        label="Net Worth"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
@@ -106,6 +109,9 @@ const QuoteResponses = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="incoterm"
+                        label="Incoterm"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
@@ -122,6 +128,9 @@ const QuoteResponses = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="deliveryDate"
+                        label="Delivery Date"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
@@ -138,6 +147,9 @@ const QuoteResponses = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="validityDate"
+                        label="Validity Date"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
@@ -154,6 +166,9 @@ const QuoteResponses = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="paymentCondition"
+                        label="Payment Conditions"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
@@ -165,27 +180,37 @@ const QuoteResponses = (props) => {
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="description">
+                        name="description"
+                        label="Comments"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
+                    >
                         <Input.TextArea placeholder="Comments"></Input.TextArea>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
-                    <Form.Item name="includesTax" valuePropName="checked">
+                    <Form.Item name="includesTax" valuePropName="checked"                       
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
+                    >
                         <Checkbox>
                             Incl.IVA
                         </Checkbox>
                     </Form.Item>
                 </Col>
-                <Col xl={6} xs={24} className="gx-d-flex">
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
-                            {
-                                newQuote ? "Save" : "Awarded"
-                            }
-                        </Button>
-                        <Button type="primary" icon={<DeleteOutlined />}>Delete</Button>
-                    </Form.Item>
-                </Col>
+                {
+                    !awarded&&(
+                        <Col xl={6} xs={24} className="gx-d-flex">
+                        <Form.Item wrapperCol={{ span: 24 }}>
+                            <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+                                {
+                                    newQuote ? "Save" : "Awarded"
+                                }
+                            </Button>
+                        </Form.Item>
+                    </Col>
+                    )
+                }
             </Row>
         </Form>
     </Card>)
