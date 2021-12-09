@@ -45,7 +45,7 @@ const Quotations = ({project = {}, inProgress = [], awarded = [], completed=[]})
             <div className="gx-featured-content-right">
               <div>
                 <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
-                  {formatAmount(`${project.estimatedBudget}`)}
+                  ${formatAmount(`${project.estimatedBudget}`)}
                 </h2>
                 <p className="gx-text-grey gx-fs-sm gx-text-uppercase">{project.currency}</p>
               </div>
@@ -58,7 +58,8 @@ const Quotations = ({project = {}, inProgress = [], awarded = [], completed=[]})
   return (
     <div className="quotations">
       <div className="quotations-header">
-        <div className="project-details">{ProjectDetails()}</div>
+        <div className="project-details gx-mr-0">{ProjectDetails()}</div>
+      </div>
         <div>
           <Link
             href={'/projects/' + [project.id] + '/new-quote'}
@@ -69,7 +70,6 @@ const Quotations = ({project = {}, inProgress = [], awarded = [], completed=[]})
             </Button>
           </Link>
         </div>
-      </div>
       <Row gutter={8}>
         <Col span={colSpan} style={{ backgroundColor: "transparent!important" }}>
           <div style={{ backgroundColor: "#ffffff" }} className="customCardHeight">

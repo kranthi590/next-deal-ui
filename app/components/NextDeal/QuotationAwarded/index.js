@@ -141,15 +141,18 @@ const QuoteAwarded = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input placeholder="Number Of Purchase Order" />
+                        <Input placeholder="Number Of Purchase Order" disabled={completed}/>
                     </Form.Item>
                 </Col>
                 {
                     !completed && (
-                        <Col xl={6} xs={24}>
+                        <Col xl={12} xs={24} className="gx-d-flex">
                             <Form.Item wrapperCol={{ span: 24 }}>
                                 <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>Confirm Receiption</Button>
                             </Form.Item>
+                            {/* <Form.Item wrapperCol={{ span: 24 }}>
+                                <Button type="primary" htmlType="submit" icon={<DeleteOutlined />}>Deaward</Button>
+                            </Form.Item> */}
                         </Col>
                     )
                 }

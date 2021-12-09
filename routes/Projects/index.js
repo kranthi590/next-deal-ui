@@ -30,13 +30,6 @@ class Projects extends PureComponent {
                 </Button>
               </Link>
             </div>
-
-            <ul className="gx-module-nav">
-              <li className="gx-module-nav-label">
-                <IntlMessages id="sidebar.project.filters"/>
-              </li>
-              {this.getNavLabels()}
-            </ul>
           </CustomScrollbars>
         </div>
       </div>
@@ -74,41 +67,12 @@ class Projects extends PureComponent {
     });
   };
 
-  getNavLabels = () => {
-    return labels.map((label, index) => (
-      <li
-        key={index}
-        onClick={() => {
-          const filterMails = this.state.allMail.filter(
-            (mail) =>
-              mail.labels.includes(label.id) &&
-              mail.folder === this.state.selectedFolder
-          );
-          this.setState({
-            loader: true,
-            noContentFoundMessage: "No Projects found in selected label",
-            folderMails: filterMails,
-          });
-          setTimeout(() => {
-            this.setState({loader: false});
-          }, 1500);
-        }}
-      >
-        <span className="gx-link">
-          <i className={`icon icon-tag gx-text-${label.color}`}/>
-          <span>{label.title}</span>
-        </span>
-      </li>
-    ));
-  };
-
 
   displayProjects = (projects, noContentFoundMessage, loader) => {
     return (
       <div className="gx-module-box-column">
         {
           projects && projects.length === 0 ? (
-
             <div
               className="gx-no-content-found gx-text-light gx-d-flex gx-align-items-center gx-justify-content-center">
               {noContentFoundMessage}
@@ -117,7 +81,6 @@ class Projects extends PureComponent {
             <CustomScrollbars className="gx-module-side-scroll">
               <Card projects={projects} loader={loader}/>
             </CustomScrollbars>
-
           )
         }
 

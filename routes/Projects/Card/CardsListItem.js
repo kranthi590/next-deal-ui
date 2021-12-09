@@ -26,7 +26,7 @@ const CardsListItem = ({styleName, data}) => {
               <i className="icon icon-diamond gx-fs-icon-lg"/></div>
             <div className="gx-media-body">
               <h1 className="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-orange">{quotationsCount}</h1>
-              <p className="gx-mb-0">Quotation {`${quotationsCount > 10 ? 's' : ''}`}</p>
+              <p className="gx-mb-0">Quotations {`${quotationsCount > 10 ? 's' : ''}`}</p>
             </div>
           </div>
         </div>
