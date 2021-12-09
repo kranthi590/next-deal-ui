@@ -9,7 +9,7 @@ import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 
 const QuoteResponses = (props) => {
-    const { onSave,awarded } = props;
+    const { onSave, awarded } = props;
     const { id, fantasyName, newQuote, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
@@ -84,6 +84,7 @@ const QuoteResponses = (props) => {
             onFinishFailed={onFinishFailed}
             name="quoteResponseForm"
             className="gx-progress-form"
+
         >
             <Row gutter={2}>
                 <Col xl={6} xs={24}>
@@ -103,6 +104,7 @@ const QuoteResponses = (props) => {
                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             placeholder="Net Worth"
+                            disabled={awarded}
                         />
                     </Form.Item>
                 </Col>
@@ -118,7 +120,7 @@ const QuoteResponses = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Select allowClear placeholder="Incoterm">
+                        <Select allowClear placeholder="Incoterm" disabled={awarded}>
                             <Option value="term1">Term 1</Option>
                             <Option value="term2">Term 2</Option>
                             <Option value="term3">Temrm 3</Option>
@@ -140,6 +142,7 @@ const QuoteResponses = (props) => {
                         <DatePicker
                             style={{ width: '100%' }}
                             placeholder="Delivery Date(With a purchase order confirm)"
+                            disabled={awarded}
                             onChange={deliveryDateChangeHandler}
                         />
                     </Form.Item>
@@ -159,6 +162,7 @@ const QuoteResponses = (props) => {
                         <DatePicker
                             style={{ width: '100%' }}
                             placeholder="Validity Date"
+                            disabled={awarded}
                             onChange={validityDateChangeHandler}
                         />
                     </Form.Item>
@@ -175,7 +179,7 @@ const QuoteResponses = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" />
+                        <Input.TextArea placeholder="Payment Conditions" disabled={awarded}/>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
@@ -185,30 +189,30 @@ const QuoteResponses = (props) => {
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                     >
-                        <Input.TextArea placeholder="Comments"></Input.TextArea>
+                        <Input.TextArea placeholder="Comments" disabled={awarded}></Input.TextArea>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
-                    <Form.Item name="includesTax" valuePropName="checked"                       
+                    <Form.Item name="includesTax" valuePropName="checked"
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                     >
-                        <Checkbox>
+                        <Checkbox disabled={awarded}>
                             Incl.IVA
                         </Checkbox>
                     </Form.Item>
                 </Col>
                 {
-                    !awarded&&(
+                    !awarded && (
                         <Col xl={6} xs={24} className="gx-d-flex">
-                        <Form.Item wrapperCol={{ span: 24 }}>
-                            <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
-                                {
-                                    newQuote ? "Save" : "Awarded"
-                                }
-                            </Button>
-                        </Form.Item>
-                    </Col>
+                            <Form.Item wrapperCol={{ span: 24 }}>
+                                <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+                                    {
+                                        newQuote ? "Save" : "Award"
+                                    }
+                                </Button>
+                            </Form.Item>
+                        </Col>
                     )
                 }
             </Row>

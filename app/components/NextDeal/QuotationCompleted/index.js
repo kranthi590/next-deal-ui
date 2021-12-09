@@ -80,6 +80,7 @@ const QuotationCompleted = (props) => {
                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             placeholder="Amount"
+                            disabled
                         />
                     </Form.Item>
                 </Col>
@@ -98,6 +99,7 @@ const QuotationCompleted = (props) => {
                         <DatePicker
                             style={{ width: '100%' }}
                             placeholder="Delivery Date"
+                            disabled
                             onChange={deliveryDateChangeHandler}
                         />
                     </Form.Item>
@@ -114,7 +116,7 @@ const QuotationCompleted = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" />
+                        <Input.TextArea placeholder="Payment Conditions" disabled/>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
@@ -124,7 +126,7 @@ const QuotationCompleted = (props) => {
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                     >
-                        <Input.TextArea placeholder="Comments"></Input.TextArea>
+                        <Input.TextArea placeholder="Comments" disabled></Input.TextArea>
                     </Form.Item>
                 </Col>
                 {/* <Col xl={6} xs={24}>

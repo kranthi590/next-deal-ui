@@ -137,6 +137,7 @@ const NewProject = () => {
                 className="gx-w-100"
                 placeholder="Start Date"
                 onChange={startDateChangeHandler}
+                disabledDate={d => !d || d.isBefore(new Date())}
               />
             </Form.Item>
             <Form.Item
@@ -162,6 +163,7 @@ const NewProject = () => {
                 className="gx-w-100"
                 placeholder="End Date"
                 onChange={endDateChangeHandler}
+                disabledDate={d => !d || d.isBefore(startDate?new Date(startDate):new Date())}
               />
             </Form.Item>
             <Form.Item

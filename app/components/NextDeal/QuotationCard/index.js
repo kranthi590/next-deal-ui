@@ -26,9 +26,9 @@ const QuotationCard = ({ data, activeTab }) => {
           <div className="gx-currentplan-col"><h2
             className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">{data.quotationsCount}<sub
               className="gx-fs-md gx-bottom-0">/Responses</sub></h2>
-            <p className="gx-mb-1">
+            {/* <p className="gx-mb-1">
               <span className="gx-size-8 gx-bg-dark gx-rounded-xs gx-d-inline-block gx-mr-1" /> Lorem ipsum - 10
-            </p>
+            </p> */}
           </div>
           <div className="gx-currentplan-col gx-currentplan-right">
             <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">{data.suppliersCount}<sub
