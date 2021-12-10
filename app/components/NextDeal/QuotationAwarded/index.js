@@ -8,7 +8,7 @@ import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 
 const QuoteAwarded = (props) => {
-    const { onSave,completed } = props;
+    const { onSave, completed } = props;
     const { id, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
@@ -106,6 +106,21 @@ const QuoteAwarded = (props) => {
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
+                        name="purchaseOrderNumber"
+                        label="Purchase Order Number"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Input something!',
+                            },
+                        ]}>
+                        <Input placeholder="Number Of Purchase Order" disabled={completed} />
+                    </Form.Item>
+                </Col>
+                <Col xl={6} xs={24}>
+                    <Form.Item
                         name="paymentCondition"
                         label="Payment Conditions"
                         labelCol={{ span: 24 }}
@@ -129,30 +144,15 @@ const QuoteAwarded = (props) => {
                         <Input.TextArea placeholder="Comments" disabled></Input.TextArea>
                     </Form.Item>
                 </Col>
-                <Col xl={6} xs={24}>
-                    <Form.Item
-                        name="purchaseOrderNumber"
-                        label="Purchase Order Number"
-                        labelCol={{ span: 24 }}
-                        wrapperCol={{ span: 24 }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Input something!',
-                            },
-                        ]}>
-                        <Input placeholder="Number Of Purchase Order" disabled={completed}/>
-                    </Form.Item>
-                </Col>
                 {
                     !completed && (
-                        <Col xl={12} xs={24} className="gx-d-flex">
+                        <Col xl={18} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
                             <Form.Item wrapperCol={{ span: 24 }}>
-                                <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>Confirm Receiption</Button>
+                                <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="gx-mb-0">Confirm Receiption</Button>
                             </Form.Item>
-                            {/* <Form.Item wrapperCol={{ span: 24 }}>
-                                <Button type="primary" htmlType="submit" icon={<DeleteOutlined />}>Deaward</Button>
-                            </Form.Item> */}
+                           {/* <Form.Item wrapperCol={{ span: 24 }}>
+                                <Button type="primary" htmlType="submit" icon={<DeleteOutlined />} className="gx-mb-0">Deaward</Button>
+                            </Form.Item>*/}
                         </Col>
                     )
                 }

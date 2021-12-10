@@ -144,6 +144,7 @@ const QuoteResponses = (props) => {
                             placeholder="Delivery Date(With a purchase order confirm)"
                             disabled={awarded}
                             onChange={deliveryDateChangeHandler}
+                            disabledDate={d => !d || d.isBefore(new Date())}
                         />
                     </Form.Item>
                 </Col>
@@ -164,6 +165,7 @@ const QuoteResponses = (props) => {
                             placeholder="Validity Date"
                             disabled={awarded}
                             onChange={validityDateChangeHandler}
+                            disabledDate={d => !d || d.isBefore(new Date())}
                         />
                     </Form.Item>
                 </Col>
@@ -179,7 +181,7 @@ const QuoteResponses = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" disabled={awarded}/>
+                        <Input.TextArea placeholder="Payment Conditions" disabled={awarded} />
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
@@ -196,6 +198,7 @@ const QuoteResponses = (props) => {
                     <Form.Item name="includesTax" valuePropName="checked"
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
+                        className="gx-pt-4"
                     >
                         <Checkbox disabled={awarded}>
                             Incl.IVA
@@ -204,9 +207,9 @@ const QuoteResponses = (props) => {
                 </Col>
                 {
                     !awarded && (
-                        <Col xl={6} xs={24} className="gx-d-flex">
+                        <Col xl={6} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
                             <Form.Item wrapperCol={{ span: 24 }}>
-                                <Button type="primary" htmlType="submit" icon={<SaveOutlined />}>
+                                <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="gx-mb-0">
                                     {
                                         newQuote ? "Save" : "Award"
                                     }

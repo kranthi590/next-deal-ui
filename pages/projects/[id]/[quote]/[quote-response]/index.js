@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from "react";
+import Link from 'next/link';
 import { useRouter } from "next/router";
 import { Avatar } from "antd";
 import Widget from "../../../../../app/components/Widget";
@@ -65,13 +66,19 @@ const NewQuoteResponse = (props) => {
           </div>
           <div className="gx-media-body gx-featured-content">
             <div className="gx-featured-content-left">
-              <h3 className="gx-mb-2">{quotationData.name}-{quotationData.code}</h3>
+              <h3 className="gx-mb-2">
+              <Link href={'/projects/' + [quotationData.projectId]} as={'/projects/' + quotationData.projectId}>
+                  <a>
+                    {quotationData.name}-{quotationData.code}
+                  </a>
+                </Link>
+                </h3>
               <p className="gx-text-grey gx-mb-1">{quotationData.description}</p>
             </div>
             <div className="gx-featured-content-right">
               <div>
                 <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
-                  {formatAmount(`${quotationData.estimatedBudget}`)}
+                  ${formatAmount(`${quotationData.estimatedBudget}`)}
                 </h2>
                 <p className="gx-text-grey gx-fs-sm gx-text-uppercase">{quotationData.currency}</p>
               </div>
@@ -134,8 +141,6 @@ const NewQuoteResponse = (props) => {
 
 export async function getServerSideProps(context) {
   const { req, res, query } = context;
-  console.log("Query text");
-  console.log(query);
   let AssignedForResponses = [];
   let ResponsesList = [];
   let AwardedResponsesList = [];
@@ -169,12 +174,6 @@ export async function getServerSideProps(context) {
       }
     );
 
-    console.log({
-    //   AssignedForResponses: AssignedForResponses,
-    //   ResponsesList: ResponsesList,
-      QuotationData: QuotationData,
-      AwardedResponsesList: AwardedResponsesList
-    })
   } catch (error) {
     handleApiErrors(req, res, query, error);
   }
@@ -182,7 +181,7 @@ export async function getServerSideProps(context) {
   console.log('AwardedResponsesList', AwardedResponsesList);
   return {
     props: {
-      projectsList: [...AssignedForResponses, ...ResponsesList],
+      projectsList: [...ResponsesList, ...AssignedForResponses],
       quotationData: QuotationData,
       awardedResponses: AwardedResponsesList
     },
