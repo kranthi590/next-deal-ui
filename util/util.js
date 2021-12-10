@@ -71,7 +71,7 @@ export const sanitizeString = (string) => {
 };
 
 export const formatAmount = (amount) =>
-  amount && amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  amount && amount.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
 export const getAvatar = str => {
   if (!str) return;

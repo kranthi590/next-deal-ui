@@ -116,7 +116,7 @@ const QuotationCompleted = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" disabled/>
+                        <Input.TextArea placeholder="Payment Conditions" disabled />
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
