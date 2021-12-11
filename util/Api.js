@@ -53,3 +53,16 @@ export const handleApiErrors = (req, res, query, error) => {
     throw error;
   }
 };
+
+export const uploadFiles = (files, context, isSecure = false) => {
+  let formData = new FormData();
+    formData.append("file", files[0].originFileObj);
+    Object.keys(context).forEach((key) => {
+      formData.append(key, context[key]);
+    });
+    return httpClient
+      .post(
+        `${process.env.NEXT_PUBLIC_API_HOST}api/v1/${isSecure ? 'secureFiles' : 'files'}`,
+        formData
+      )
+}

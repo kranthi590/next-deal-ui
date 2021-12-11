@@ -2,6 +2,7 @@ import React from 'react';
 import { Upload, Modal, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {Cookies} from "react-cookie";
+import axios from "axios";
 
 const cookie = new Cookies();
 
@@ -38,7 +39,10 @@ export default class PicturesWall extends React.Component {
     });
   };
 
-  handleChange = ({ fileList }) => this.setState({ fileList });
+  handleChange = ({ fileList }) => {
+    this.setState({ fileList });
+    this.props.customSubmitHandler && this.props.customSubmitHandler({fileList});
+  };
 
   componentDidMount() {
     this.setState({
@@ -46,7 +50,7 @@ export default class PicturesWall extends React.Component {
         return {
           uid: index,
           name: file.name,
-          status: 'done',
+          status: file.status || 'done',
           url: file.fileUrl,
           type: file.mimeType,
         }
@@ -56,13 +60,14 @@ export default class PicturesWall extends React.Component {
 
   render() {
     const { previewVisible, previewImage, fileList, previewTitle, mimeType } = this.state;
-    const { context } = this.props;
+    const { context, maxCount, customSubmitHandler } = this.props;
     const uploadButton = (
       <div>
         <PlusOutlined />
         <div style={{ marginTop: 8 }}>Upload</div>
       </div>
     );
+    console.log(fileList);
     let modelBody = (<a className="ant-btn ant-btn-primary gx-mt-2" href={previewImage}
       target="_blank" download>View in new tab</a>);
     if (mimeType === 'application/pdf') {
@@ -91,11 +96,13 @@ export default class PicturesWall extends React.Component {
         </>
       );
     }
-    console.log(fileList);
+    const actionUrl = customSubmitHandler ? undefined :
+      `${process.env.NEXT_PUBLIC_API_HOST}api/v1/secureFiles?token=${cookie.get('token')}`;
+
     return (
       <>
         <Upload
-          action={`${process.env.NEXT_PUBLIC_API_HOST}api/v1/secureFiles?token=${cookie.get('token')}`}
+          action={actionUrl}
           listType="picture-card"
           fileList={fileList}
           data={context}
@@ -106,11 +113,9 @@ export default class PicturesWall extends React.Component {
           showUploadList={{
             showRemoveIcon: false
           }}
-          // beforeUpload={(file, fileList) => {
-          //   this.setState({
-          //     fileList: [...fileList, file]
-          //   });
-          // }}
+          beforeUpload={() => !customSubmitHandler}
+          maxCount={maxCount}
+          disabled={maxCount && fileList.length > maxCount}
         >
           {uploadButton}
         </Upload>

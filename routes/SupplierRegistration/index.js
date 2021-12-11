@@ -16,7 +16,8 @@ import {
   getPhonePrefix,
 } from "../../util/util";
 import {validate, clean} from 'rut.js'
-
+import FilesManager from "../../app/common/FileManager";
+import { uploadFiles } from '../../util/Api';
 
 // Components
 import CircularProgress from "../../app/components/CircularProgress";
@@ -55,6 +56,7 @@ const SupplierRegistration = (props) => {
   const [isSupplierInfoShareable, setSupplierInfoShareable] = useState(false);
   const [rut, setRut] = useState(null);
   const [isLogoUploaded, setLogoUploaded] = useState(false);
+  const [files, setFiles] = useState([]);
 
   useEffect(() => {
     fetchRegions(({regions}) => {
@@ -159,15 +161,21 @@ const SupplierRegistration = (props) => {
 
   const onFinish = async (values) => {
     getFormData(values)
-    registerSupplier(getFormData(values), (data) => {
+    registerSupplier(getFormData(values), async (data) => {
       try {
-        if (data && isLogoUploaded) {
-          const formData = new FormData();
-          formData.append("logo", values['business_logo'].file.originFileObj);
-          formData.append("supplierId", data.id);
-          uploadSupplierLogo(formData, (data) => {
-          })
-          return;
+        // if (data && isLogoUploaded) {
+        //   const formData = new FormData();
+        //   formData.append("logo", values['business_logo'].file.originFileObj);
+        //   formData.append("supplierId", data.id);
+        //   uploadSupplierLogo(formData, (data) => {
+        //   })
+        //   return;
+        // }
+        if (files.length > 0) {
+          await uploadFiles(files, {
+            fileType: "supplier_logo",
+            supplierId: data.id,
+          }, false);
         }
         setTimeout(() => {
           router.push("/signup");
@@ -191,7 +199,6 @@ const SupplierRegistration = (props) => {
     setLogoUploaded(true)
   }
 
-  console.log('props', props);
   return (
     <div className="gx-app-login-wrap registration-container">
       <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount"/>
@@ -482,23 +489,6 @@ const SupplierRegistration = (props) => {
                     <Input size="large" placeholder="Email"/>
                   </FormItem>
                 </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label="Logo"
-                    name="business_logo"
-                  >
-                    <Upload
-                      accept="image/png, image/jpeg"
-                      maxCount={1}
-                      onChange={handleFileUpload}
-                      customRequest={dummyRequest}
-                    >
-                      <Button>
-                        <UploadOutlined/> upload
-                      </Button>
-                    </Upload>
-                  </FormItem>
-                </Col>
                 <Col xs={24}>
                   <Form.Item
                     label="Category"
@@ -694,6 +684,23 @@ const SupplierRegistration = (props) => {
                     </Col>
                   </Row>
                 )}
+              <Row gutter={24} style={{ marginBottom: 20 }}>
+                <Col xs={24}>
+                  <WidgetHeader title="Business Logo"/>
+                </Col>
+                <Col xs={24}>
+                  <FilesManager
+                    files={files}
+                    context={{
+                      fileType: "project",
+                    }}
+                    maxCount={1}
+                    customSubmitHandler={({ fileList }) => {
+                      setFiles(fileList);
+                    }}
+                  />
+                </Col>
+              </Row>
               <Row style={{width: "100%", justifyContent: "right"}}>
                 <Col>
                   <Form.Item

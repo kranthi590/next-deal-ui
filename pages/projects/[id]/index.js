@@ -28,6 +28,7 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
   };
 
   const ProjectDetails = () => {
+    //  project.files[0].status = 'uploading';
     return (
       <>
       <Widget>
@@ -55,11 +56,12 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
           </Col>
           <Col span={12}>
             <FilesManager
-              files={project.files}
-              context={{
-                fileType: "project",
-                projectId: project.id
-                }} />
+                files={project.files}
+                context={{
+                  fileType: "project",
+                  projectId: project.id
+                }}
+              />
           </Col>
         </Row>
       </Widget>
@@ -139,7 +141,6 @@ export async function getServerSideProps(context) {
   let completed = [];
   try {
     const headers = setApiContext(req, res, query);
-    console.log(req.headers);
     const cookies = cookie.parse(req.headers.cookie || "");
     let promises = [
       await httpClient.get(`projects/${query.id}`, {
