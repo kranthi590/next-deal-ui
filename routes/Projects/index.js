@@ -4,11 +4,10 @@ import Link from "next/link";
 import CustomScrollbars from "../../util/CustomScrollbars";
 
 import mails from "./data/mails";
-import labels from "./data/labels";
 import IntlMessages from "../../util/IntlMessages";
 import Card from "./Card";
 
-import "./index.css";
+//import "./index.css";
 
 class Projects extends PureComponent {
   ProjectSideBar = () => {
@@ -140,13 +139,6 @@ class Projects extends PureComponent {
     return mail.labels.concat(label);
   }
 
-  updateSearch(evt) {
-    this.setState({
-      searchMail: evt.target.value,
-    });
-    this.searchMail(evt.target.value);
-  }
-
   onToggleDrawer() {
     this.setState({
       drawerState: !this.state.drawerState,
@@ -157,8 +149,6 @@ class Projects extends PureComponent {
     const {
       loader,
       drawerState,
-      folderMails,
-      user,
       alertMessage,
       showMessage,
       noContentFoundMessage,

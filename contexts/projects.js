@@ -1,6 +1,7 @@
 import React, { useState, useContext, createContext } from "react";
 import {httpClient, setAuthToken} from "../util/Api";
 import {Cookies} from "react-cookie";
+import {errorNotification} from "../util/util";
 
 const projectContext = createContext({});
 
@@ -54,6 +55,7 @@ const useProviderProject = () => {
         }
       })
       .catch(function (error) {
+        errorNotification(error.message, "app.registration.errorMessageTitle")
         fetchError(error.message);
       });
   };
@@ -71,10 +73,12 @@ const useProviderProject = () => {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
+          errorNotification(data.error, "app.registration.errorMessageTitle")
           fetchError(data.error);
         }
       })
       .catch(function (error) {
+        errorNotification(error.message, "app.registration.errorMessageTitle")
         fetchError(error.message);
       });
   };

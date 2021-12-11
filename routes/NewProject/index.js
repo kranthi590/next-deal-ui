@@ -212,7 +212,6 @@ const NewProject = () => {
           </Col>
         </Row>
       </Form>
-      {error && errorNotification(error, "app.registration.errorMessageTitle")}
     </Card>
     </>
   );

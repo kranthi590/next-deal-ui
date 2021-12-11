@@ -1,6 +1,7 @@
 import React, {useState, useContext, createContext} from "react";
 import {httpClient, setAuthToken} from "../util/Api";
 import {Cookies} from "react-cookie";
+import {errorNotification} from "../util/util";
 
 const registrationContext = createContext({});
 
@@ -45,10 +46,12 @@ const useProviderRegistration = () => {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
+          errorNotification(data.error, "app.registration.errorMessageTitle")
           fetchError(data.error);
         }
       })
       .catch(function (error) {
+        errorNotification(error.message, "app.registration.errorMessageTitle")
         fetchError(error.message);
       });
   };
@@ -64,10 +67,12 @@ const useProviderRegistration = () => {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
+          errorNotification(data.error, "app.registration.errorMessageTitle")
           fetchError(data.error);
         }
       })
       .catch(function (error) {
+        errorNotification(error.message, "app.registration.errorMessageTitle")
         fetchError(error.message);
       });
   };
@@ -81,17 +86,18 @@ const useProviderRegistration = () => {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
+          errorNotification(data.error, "app.registration.errorMessageTitle")
           fetchError(data.error);
         }
       })
       .catch(function (error) {
+        errorNotification(error.message, "app.registration.errorMessageTitle")
         fetchError(error.message);
       });
   };
 
   const registerSupplier = (data, callbackFun) => {
     fetchStart();
-    console.log('data.isShared', data.isShared)
     if (data && !data.isShared){
       const headers = setAuthToken();
       const cookie = new Cookies()
@@ -103,10 +109,12 @@ const useProviderRegistration = () => {
             fetchSuccess();
             if (callbackFun) callbackFun(data.data);
           } else {
+            errorNotification(data.error, "app.registration.errorMessageTitle")
             fetchError(data.error);
           }
         })
         .catch(function (error) {
+          errorNotification(error.message, "app.registration.errorMessageTitle")
           fetchError(error.message);
         });
     } else {
@@ -117,10 +125,12 @@ const useProviderRegistration = () => {
             fetchSuccess();
             if (callbackFun) callbackFun(data.data);
           } else {
+            errorNotification(data.error, "app.registration.errorMessageTitle")
             fetchError(data.error);
           }
         })
         .catch(function (error) {
+          errorNotification(error.message, "app.registration.errorMessageTitle")
           fetchError(error.message);
         });
     }
@@ -139,10 +149,12 @@ const useProviderRegistration = () => {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
+          errorNotification(data.error, "app.registration.errorMessageTitle")
           fetchError(data.error);
         }
       })
       .catch(function (error) {
+        errorNotification(error.message, "app.registration.errorMessageTitle")
         fetchError(error.message);
       });
   };
@@ -159,10 +171,12 @@ const useProviderRegistration = () => {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
+          errorNotification(data.error, "app.registration.errorMessageTitle")
           fetchError(data.error);
         }
       })
       .catch(function (error) {
+        errorNotification(error.message, "app.registration.errorMessageTitle")
         fetchError(error.message);
       });
   };

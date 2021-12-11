@@ -204,7 +204,6 @@ export async function getServerSideProps(context) {
     handleApiErrors(req, res, query, error);
   }
 
-  console.log('AwardedResponsesList', AwardedResponsesList);
   if (QuotationData.files) {
     const cookies = cookie.parse(req.headers.cookie || "");
     QuotationData.files.forEach(file => {
