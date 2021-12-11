@@ -21,7 +21,7 @@ import {
   getDateInMilliseconds, getBuyerId,
 } from "../../util/util";
 import {useRouter} from "next/router";
-import BreadCrumb from "../../app/components/Breadcrumb";
+import BreadCrumb from "../../app/components/BreadCrumb";
 
 const { TextArea } = Input;
 const { Option } = Select;

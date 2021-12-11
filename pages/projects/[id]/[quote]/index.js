@@ -24,7 +24,7 @@ import SupplierRegistrationPage from "../../../supplier-registration";
 import {QuotationProvider, useQuotation} from "../../../../contexts/quotations";
 import FilesManager from "../../../../app/common/FileManager";
 import { uploadFiles } from '../../../../util/Api';
-import BreadCrumb from "../../../../app/components/Breadcrumb";
+import BreadCrumb from "../../../../app/components/BreadCrumb";
 
 
 const {TextArea} = Input;
