@@ -23,6 +23,8 @@ import {
 } from "../../../../util/util";
 import SupplierRegistrationPage from "../../../supplier-registration";
 import {QuotationProvider, useQuotation} from "../../../../contexts/quotations";
+import FilesManager from "../../../../app/common/FileManager";
+import { uploadFiles } from '../../../../util/Api';
 
 const {TextArea} = Input;
 const {Option} = Select;
@@ -59,6 +61,7 @@ const NewQuote = (props) => {
   const [projectInfo, setProjectInfo] = useState({})
   const [form] = Form.useForm();
   const router = useRouter();
+  const [files, setFiles] = useState([]);
 
   useEffect(() => {
     const projectId = router.query.id;
@@ -95,7 +98,14 @@ const NewQuote = (props) => {
 
   const onSave = (values) => {
     const projectId = projectInfo && projectInfo.id
-    createQuotation(projectId, getFormData(values), (data) => {
+    createQuotation(projectId, getFormData(values), async (data) => {
+      debugger
+      if (files.length > 0) {
+        await uploadFiles(files, {
+          assetRelation: "quotation_request",
+          assetRelationId: data.id,
+        }, true);
+      }
       successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
         router.back();
@@ -106,7 +116,8 @@ const NewQuote = (props) => {
   return (
     <Card
       className="gx-card"
-      title={<IntlMessages id="app.quotation.addquotation"/>}>
+      title={<IntlMessages id="app.quotation.addquotation" />}
+    >
       <Form
         form={form}
         fields={
@@ -255,8 +266,23 @@ const NewQuote = (props) => {
               <p className="gx-text-center"><Button type="link" onClick={() => setVisible(true)}>Add a Supplier</Button>
               </p>
             </Form.Item>
+            <Row gutter={24} style={{ marginBottom: 20 }}>
+                <Col xs={24}>
+                </Col>
+                <Col xs={24}>
+                  <FilesManager
+                    files={files}
+                    context={{
+                      assetRelation: "quotation_request",
+                      //  assetRelationId: project.id
+                    }}
+                    customSubmitHandler={({ fileList }) => {
+                      setFiles(fileList);
+                    }}
+                  />
+                </Col>
+              </Row>
           </Col>
-
         </Row>
         <Row>
           <Col span={24} style={{textAlign: "right"}}>

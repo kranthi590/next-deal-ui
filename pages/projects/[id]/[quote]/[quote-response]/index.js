@@ -1,7 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import cookie from "cookie";
 import Link from 'next/link';
 import { useRouter } from "next/router";
-import { Avatar } from "antd";
+import { Avatar, Row, Col } from "antd";
+
 import Widget from "../../../../../app/components/Widget";
 import { formatAmount, getAvatar, successNotification } from "../../../../../util/util";
 import ProjectProgressTabs from "../../../../../app/components/NextDeal/ProjectProgressTabs";
@@ -11,6 +13,7 @@ import { handleApiErrors, httpClient, setApiContext } from "../../../../../util/
 import { ResponsesProvider, useResponse } from "../../../../../contexts/responses";
 import NoDataAvailable from "../../../../../app/components/NoDataAvailable.js";
 import QuotationCompleted from "../../../../../app/components/NextDeal/QuotationCompleted";
+import FilesManager from "../../../../../app/common/FileManager";
 
 const NewQuoteResponse = (props) => {
   const { projectsList, quotationData, awardedResponses } = props;
@@ -56,35 +59,48 @@ const NewQuoteResponse = (props) => {
   const ProjectDetails = () => {
     return (
       <Widget>
-        <div className="gx-media gx-featured-item">
-          <div className="gx-featured-thumb">
-            <Avatar
-              className="gx-rounded-lg gx-size-100"
-              alt={quotationData.name}
-              style={{ color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '2rem' }}
-            >{getAvatar(quotationData.name)}</Avatar>
-          </div>
-          <div className="gx-media-body gx-featured-content">
-            <div className="gx-featured-content-left">
-              <h3 className="gx-mb-2">
-              <Link href={'/projects/' + [quotationData.projectId]} as={'/projects/' + quotationData.projectId}>
-                  <a>
-                    {quotationData.name}-{quotationData.code}
-                  </a>
-                </Link>
-                </h3>
-              <p className="gx-text-grey gx-mb-1">{quotationData.description}</p>
-            </div>
-            <div className="gx-featured-content-right">
-              <div>
-                <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
-                  ${formatAmount(`${quotationData.estimatedBudget}`)}
-                </h2>
-                <p className="gx-text-grey gx-fs-sm gx-text-uppercase">{quotationData.currency}</p>
+        <Row>
+          <Col span={12}>
+              <div className="gx-media gx-featured-item">
+              <div className="gx-featured-thumb">
+                <Avatar
+                  className="gx-rounded-lg gx-size-100"
+                  alt={quotationData.name}
+                  style={{ color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '2rem' }}
+                >{getAvatar(quotationData.name)}</Avatar>
+              </div>
+              <div className="gx-media-body gx-featured-content">
+                <div className="gx-featured-content-left">
+                  <h3 className="gx-mb-2">
+                  <Link href={'/projects/' + [quotationData.projectId]} as={'/projects/' + quotationData.projectId}>
+                      <a>
+                        {quotationData.name}-{quotationData.code}
+                      </a>
+                    </Link>
+                    </h3>
+                  <p className="gx-text-grey gx-mb-1">{quotationData.description}</p>
+                </div>
+                <div className="gx-featured-content-right">
+                  <div>
+                    <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
+                      ${formatAmount(`${quotationData.estimatedBudget}`)}
+                    </h2>
+                    <p className="gx-text-grey gx-fs-sm gx-text-uppercase">{quotationData.currency}</p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Col>
+          <Col span={12}>
+            <FilesManager
+                files={quotationData.files}
+                context={{
+                  assetRelation: "quotation_request",
+                  assetRelationId: quotationData.id
+                }}
+              />
+          </Col>
+        </Row>
       </Widget>
     );
   };
@@ -179,6 +195,12 @@ export async function getServerSideProps(context) {
   }
 
   console.log('AwardedResponsesList', AwardedResponsesList);
+  if (QuotationData.files) {
+    const cookies = cookie.parse(req.headers.cookie || "");
+    QuotationData.files.forEach(file => {
+      file.fileUrl = `${file.fileUrl}?token=${cookies.token}`;
+    });
+  }
   return {
     props: {
       projectsList: [...ResponsesList, ...AssignedForResponses],

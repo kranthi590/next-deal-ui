@@ -67,7 +67,6 @@ export default class PicturesWall extends React.Component {
         <div style={{ marginTop: 8 }}>Upload</div>
       </div>
     );
-    console.log(fileList);
     let modelBody = (<a className="ant-btn ant-btn-primary gx-mt-2" href={previewImage}
       target="_blank" download>View in new tab</a>);
     if (mimeType === 'application/pdf') {

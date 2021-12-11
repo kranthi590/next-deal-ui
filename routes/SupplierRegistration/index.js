@@ -692,7 +692,8 @@ const SupplierRegistration = (props) => {
                   <FilesManager
                     files={files}
                     context={{
-                      fileType: "project",
+                      assetRelation: "supplier_logo",
+                      //  assetRelationId: quotationData.id
                     }}
                     maxCount={1}
                     customSubmitHandler={({ fileList }) => {

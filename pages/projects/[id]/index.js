@@ -58,8 +58,8 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
             <FilesManager
                 files={project.files}
                 context={{
-                  fileType: "project",
-                  projectId: project.id
+                  assetRelation: "project",
+                  assetRelationId: project.id
                 }}
               />
           </Col>
