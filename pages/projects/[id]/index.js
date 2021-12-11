@@ -13,7 +13,7 @@ import FilesManager from "../../../app/common/FileManager";
 import { formatAmount, getAvatar } from "../../../util/util";
 import CustomScrollbars from "../../../util/CustomScrollbars";
 import NoDataAvailable from "../../../app/components/NoDataAvailable.js";
-import BreadCrumb from "../../../app/components/Breadcrumb";
+import BreadCrumb from "../../../app/components/BreadCrumb";
 
 const colSpan = 24 / 3;
 

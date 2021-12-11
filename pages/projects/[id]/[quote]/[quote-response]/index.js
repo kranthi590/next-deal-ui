@@ -14,7 +14,7 @@ import { ResponsesProvider, useResponse } from "../../../../../contexts/response
 import NoDataAvailable from "../../../../../app/components/NoDataAvailable.js";
 import QuotationCompleted from "../../../../../app/components/NextDeal/QuotationCompleted";
 import FilesManager from "../../../../../app/common/FileManager";
-import BreadCrumb from "../../../../../app/components/Breadcrumb";
+import BreadCrumb from "../../../../../app/components/BreadCrumb";
 
 
 const NewQuoteResponse = (props) => {
