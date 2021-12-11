@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import {
     Button, Row, Col, Form, Input,
-    DatePicker, Upload, Card, Divider, InputNumber
+    DatePicker, Card, Divider, InputNumber
 } from "antd";
-import { SaveOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import { getDateInMilliseconds } from "../../../../util/util";
+import { SaveOutlined} from '@ant-design/icons';
 import moment from "moment";
 
 const QuoteAwarded = (props) => {
     const { onSave, completed } = props;
-    const { id, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
+    const { id, netWorth, paymentCondition, deliveryDate, supplier, additionalData } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
     const [cvalidityDate, setCValidityDate] = useState(null);
@@ -18,10 +17,7 @@ const QuoteAwarded = (props) => {
     const initialFormData = {
         netWorth: netWorth,
         paymentCondition: paymentCondition,
-        // includesTax: includesTax,
-        // incoterm: incoterm,
         deliveryDate: moment(deliveryDate),
-        // validityDate: moment(validityDate),
         description: additionalData
     }
     const deliveryDateChangeHandler = (date) => {

@@ -6,7 +6,6 @@ import {
   Card,
   Col,
   Row,
-  Upload,
   DatePicker,
   Select,
   InputNumber, Divider, Modal
@@ -25,6 +24,8 @@ import SupplierRegistrationPage from "../../../supplier-registration";
 import {QuotationProvider, useQuotation} from "../../../../contexts/quotations";
 import FilesManager from "../../../../app/common/FileManager";
 import { uploadFiles } from '../../../../util/Api';
+import BreadCrumb from "../../../../app/components/Breadcrumb";
+
 
 const {TextArea} = Input;
 const {Option} = Select;
@@ -73,6 +74,13 @@ const NewQuote = (props) => {
     });
   }, []);
 
+  const reloadSuppliers =()=>{
+    setVisible(false);
+    getBuyerSuppliers((data) => {
+      setSuppliers(data);
+    });
+  }
+
   const startDateChangeHandler = (date) => {
     setStartDate(getDateInMilliseconds(date));
   };
@@ -114,10 +122,15 @@ const NewQuote = (props) => {
   };
 
   return (
+    <>
+      <BreadCrumb navItems={[
+        { text: "Projects", route: "/projects" },
+        { text: projectInfo.name, route: "/projects/"+projectInfo.id},
+        { text: "New Quotation" }]}
+      />
     <Card
       className="gx-card"
-      title={<IntlMessages id="app.quotation.addquotation" />}
-    >
+        title={<IntlMessages id="app.quotation.addquotation" />}>
       <Form
         form={form}
         fields={
@@ -283,6 +296,7 @@ const NewQuote = (props) => {
                 </Col>
               </Row>
           </Col>
+
         </Row>
         <Row>
           <Col span={24} style={{textAlign: "right"}}>
@@ -296,15 +310,18 @@ const NewQuote = (props) => {
         title="Supplier Registration"
         centered
         visible={visible}
-        onOk={() => setVisible(false)}
+          // onOk={() => setVisible(false)}
         onCancel={() => setVisible(false)}
         width={'auto'}
         bodyStyle={{'padding': '0'}}
+          okButtonProps={{style:{display:"none"}}}
       >
-        <SupplierRegistrationPage showLoginLink={false} isBuyer={true}/>
+          <SupplierRegistrationPage showLoginLink={false} isBuyer={true}
+          isAuthenticated={true} onAletSuccess={reloadSuppliers}/>
       </Modal>
       {error && errorNotification(error, "app.registration.errorMessageTitle")}
     </Card>
+    </>
   );
 };
 

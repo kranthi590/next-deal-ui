@@ -6,12 +6,10 @@ import {
   Card,
   Col,
   Row,
-  Upload,
   DatePicker,
   Select,
   InputNumber,
 } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
 
 // Uitls
 import IntlMessages from "../../util/IntlMessages";
@@ -23,6 +21,7 @@ import {
   getDateInMilliseconds, getBuyerId,
 } from "../../util/util";
 import {useRouter} from "next/router";
+import BreadCrumb from "../../app/components/Breadcrumb";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -97,6 +96,8 @@ const NewProject = () => {
   };
 
   return (
+    <>
+      <BreadCrumb navItems={[{ text: "Projects", route: "/projects" }, { text: "Create Project" }]} />
     <Card
       className="gx-card"
       title={<IntlMessages id="app.project.createNewProject" />}
@@ -213,6 +214,7 @@ const NewProject = () => {
       </Form>
       {error && errorNotification(error, "app.registration.errorMessageTitle")}
     </Card>
+    </>
   );
 };
 
