@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Badge, Tabs } from "antd";
-import "./index.css";
+//import "./index.css";
 
 const ProjectProgressTabs = (props) => {
     const { TabPane } = Tabs;

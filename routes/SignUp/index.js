@@ -213,11 +213,6 @@ const SignUp = (props) => {
           <CircularProgress />
         </div>
       )}
-      {
-        error && (
-          errorNotification(error, "app.registration.errorMessageTitle")
-        )
-      }
     </div>
   );
 };

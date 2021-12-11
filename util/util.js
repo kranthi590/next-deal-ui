@@ -5,7 +5,7 @@ import IntlMessages from "./IntlMessages";
 import moment from "moment";
 import {getData} from "./localStorage";
 
-export const NOTIFICATION_TIMEOUT = 2000;
+export const NOTIFICATION_TIMEOUT = 1000;
 
 export const successNotification = (messageId) => {
   NotificationManager.success(

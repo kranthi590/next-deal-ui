@@ -319,7 +319,6 @@ const NewQuote = (props) => {
           <SupplierRegistrationPage showLoginLink={false} isBuyer={true}
           isAuthenticated={true} onAletSuccess={reloadSuppliers}/>
       </Modal>
-      {error && errorNotification(error, "app.registration.errorMessageTitle")}
     </Card>
     </>
   );

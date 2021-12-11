@@ -5,11 +5,13 @@ import "antd/dist/antd.css";
 
 import "../public/vendors/style";
 import "../styles/style.css";
+
 import initStore from "../redux/store";
 import { Provider } from "react-redux";
 import LocaleProvider from "../app/core/LocaleProvider";
 import { AuthProvider } from "../contexts/use-auth";
 import Layout from "../app/core/Layout";
+import "../static/index.css";
 
 const Page = ({ Component, pageProps, store }) => {
   return (

@@ -753,7 +753,6 @@ const SupplierRegistration = (props) => {
           <CircularProgress/>
         </div>
       )}
-      {error && errorNotification(error, "app.registration.errorMessageTitle")}
       <SweetAlert
         confirmBtnText="OK"
         show={showAlert}

@@ -8,7 +8,7 @@ import Widget from "../../../app/components/Widget";
 import IntlMessages from "../../../util/IntlMessages";
 import QuotationCard from "../../../app/components/NextDeal/QuotationCard";
 import FilesManager from "../../../app/common/FileManager";
-import "../../../routes/Quotations/index.css";
+//import "../../../routes/Quotations/index.css";
 
 import { formatAmount, getAvatar } from "../../../util/util";
 import CustomScrollbars from "../../../util/CustomScrollbars";
@@ -82,10 +82,8 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
       <div className="quotations-header">
         <div className="project-details gx-mr-0">{ProjectDetails()}</div>
       </div>
-        <div>
-        </div>
       <Row gutter={8}>
-        <Col span={colSpan} style={{ backgroundColor: "transparent!important" }}>
+        <Col span={colSpan} className="quotation-column-divider">
           <div style={{ backgroundColor: "#ffffff" }} className="gx-h-100">
           {Header("In progress")}
             <div className="gx-customizer">
@@ -101,7 +99,7 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
           </div>
           </div>
         </Col>
-        <Col span={colSpan} style={{ backgroundColor: "transparent!important" }}>
+        <Col span={colSpan} className="quotation-column-divider">
           <div style={{ backgroundColor: "#ffffff" }} className="gx-h-100">
             {Header("Awarded")}
             <div className="gx-customizer">
@@ -114,7 +112,7 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
           </div>
           </div>
         </Col>
-        <Col span={colSpan} style={{ backgroundColor: "transparent!important" }}>
+        <Col span={colSpan} className="quotation-column-divider">
           <div style={{ backgroundColor: "#ffffff" }} className="gx-h-100">
           {Header("Completed")}
             <div className="gx-customizer">
