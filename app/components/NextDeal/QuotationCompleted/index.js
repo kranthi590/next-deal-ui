@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import {
-    Button, Row, Col, Form, Input,
-    DatePicker, Upload, Card, Divider, InputNumber
+     Row, Col, Form, Input,
+    DatePicker, Card, Divider, InputNumber
 } from "antd";
-import { SaveOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 
 const QuotationCompleted = (props) => {
@@ -18,10 +16,7 @@ const QuotationCompleted = (props) => {
     const initialFormData = {
         netWorth: netWorth,
         paymentCondition: paymentCondition,
-        // includesTax: includesTax,
-        // incoterm: incoterm,
         deliveryDate: moment(deliveryDate),
-        // validityDate: moment(validityDate),
         description: additionalData
     }
     const deliveryDateChangeHandler = (date) => {

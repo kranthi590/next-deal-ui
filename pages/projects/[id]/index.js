@@ -13,6 +13,7 @@ import "../../../routes/Quotations/index.css";
 import { formatAmount, getAvatar } from "../../../util/util";
 import CustomScrollbars from "../../../util/CustomScrollbars";
 import NoDataAvailable from "../../../app/components/NoDataAvailable.js";
+import BreadCrumb from "../../../app/components/Breadcrumb";
 
 const colSpan = 24 / 3;
 
@@ -28,9 +29,9 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
   };
 
   const ProjectDetails = () => {
-    //  project.files[0].status = 'uploading';
     return (
       <>
+      <BreadCrumb navItems={[{ text: "Projects", route: "/projects" }, { text: project.name}]} />
       <Widget>
         <Row>
           <Col span={12}>

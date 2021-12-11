@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import cookie from "cookie";
 import Link from 'next/link';
 import { useRouter } from "next/router";
@@ -14,6 +14,8 @@ import { ResponsesProvider, useResponse } from "../../../../../contexts/response
 import NoDataAvailable from "../../../../../app/components/NoDataAvailable.js";
 import QuotationCompleted from "../../../../../app/components/NextDeal/QuotationCompleted";
 import FilesManager from "../../../../../app/common/FileManager";
+import BreadCrumb from "../../../../../app/components/Breadcrumb";
+
 
 const NewQuoteResponse = (props) => {
   const { projectsList, quotationData, awardedResponses } = props;
@@ -145,13 +147,21 @@ const NewQuoteResponse = (props) => {
     ]
   }
   return (
+    <>
+      <BreadCrumb navItems={[
+        { text: "Projects", route: "/projects" },
+        { text: quotationData.projectId , route: "/projects/" + quotationData.projectId },
+        { text: quotationData.name }]}
+      />
     <div className="quotations">
       <div className="quotations-header">
         <div className="project-details">{ProjectDetails()}
-          <ProjectProgressTabs tabsConfig={projectDetailsTabs} enableHash/>
+            <ProjectProgressTabs tabsConfig={projectDetailsTabs} enableHash />
         </div>
       </div>
     </div>
+    </>
+
   )
 }
 

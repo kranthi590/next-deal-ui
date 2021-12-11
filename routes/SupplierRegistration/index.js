@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Button, Checkbox, Form, Input, Select, Col, Row, Upload} from "antd";
 import Link from "next/link";
 import {useRouter} from "next/router";
-
+import SweetAlert from "react-bootstrap-sweetalert";
 // Utils
 import IntlMessages from "../../util/IntlMessages";
 import {useAuth} from "../../contexts/use-auth";
@@ -37,7 +37,7 @@ const {Option} = Select;
 const SupplierRegistration = (props) => {
   const router = useRouter();
   const {isLoading} = useAuth();
-
+  const { isAuthenticated, onAletSuccess } = props;
   const {
     fetchRegions,
     fetchCommune,
@@ -57,6 +57,7 @@ const SupplierRegistration = (props) => {
   const [rut, setRut] = useState(null);
   const [isLogoUploaded, setLogoUploaded] = useState(false);
   const [files, setFiles] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     fetchRegions(({regions}) => {
@@ -155,6 +156,16 @@ const SupplierRegistration = (props) => {
 
     return formData;
   };
+  const onAlertConfirmed = () => {
+    setShowAlert(false);
+    if (!isAuthenticated) {
+      router.push("/signup");
+    }
+    if (onAletSuccess) {
+      onAletSuccess();
+    }
+
+  }
 
   const onFinishFailed = (errorInfo) => {
   };
@@ -176,10 +187,10 @@ const SupplierRegistration = (props) => {
             fileType: "supplier_logo",
             supplierId: data.id,
           }, false);
+          setShowAlert(true)
+        } else {
+          setShowAlert(true)
         }
-        setTimeout(() => {
-          router.push("/signup");
-        }, NOTIFICATION_TIMEOUT);
       } catch (e) {
         //handle errors
       }
@@ -743,6 +754,13 @@ const SupplierRegistration = (props) => {
         </div>
       )}
       {error && errorNotification(error, "app.registration.errorMessageTitle")}
+      <SweetAlert
+        confirmBtnText="OK"
+        show={showAlert}
+        success
+        title={"Supplier Registration Successful!!"}
+        onConfirm={onAlertConfirmed}
+      />
     </div>
   );
 };

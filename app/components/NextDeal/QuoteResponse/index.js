@@ -121,9 +121,17 @@ const QuoteResponses = (props) => {
                             },
                         ]}>
                         <Select allowClear placeholder="Incoterm" disabled={awarded}>
-                            <Option value="term1">Term 1</Option>
-                            <Option value="term2">Term 2</Option>
-                            <Option value="term3">Temrm 3</Option>
+                            <Option value="EXW">EXW</Option>
+                            <Option value="FCA">FCA</Option>
+                            <Option value="FAS">FAS</Option>
+                            <Option value="FOB">FOB</Option>
+                            <Option value="CFR">CFR</Option>
+                            <Option value="CIF">CIF</Option>
+                            <Option value="CPT">CPT</Option>
+                            <Option value="CIP">CIP</Option>
+                            <Option value="DAP">DAP</Option>
+                            <Option value="DPU">DPU</Option>
+                            <Option value="DDP">DDP</Option>
                         </Select>
                     </Form.Item>
                 </Col>
