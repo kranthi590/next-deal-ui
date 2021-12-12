@@ -15,6 +15,7 @@ import {
 import {validate, clean} from 'rut.js'
 import FilesManager from "../../app/common/FileManager";
 import { uploadFiles } from '../../util/Api';
+import urlRegx from 'url-regex'
 
 // Components
 import CircularProgress from "../../app/components/CircularProgress";
@@ -128,7 +129,7 @@ const SupplierRegistration = (props) => {
       legalName: business.legalName,
       fantasyName: business.fantasyName,
       rut: business.rut ? clean(business.rut) : business.rut,
-      webSiteUrl: business.webSiteUrl,
+      webSiteUrl: addProdocol(business.webSiteUrl),
       emailId: business.emailId,
       categories: business.categories,
       serviceLocations: data.serviceLocations,
@@ -161,7 +162,13 @@ const SupplierRegistration = (props) => {
       onAletSuccess();
     }
   }
-
+  const addProdocol =(url)=>{
+    if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
+      return url
+   } else {
+      return ("https://"+url)
+   }
+  }
   const onFinishFailed = (errorInfo) => {
   };
 
@@ -335,7 +342,6 @@ const SupplierRegistration = (props) => {
                       placeholder="Please select Region"
                       onChange={businessRegionChangeHandler}
                     >
-                      <Option value=""></Option>
                       {regions &&
                       regions.map((region) => (
                         <Option
@@ -365,7 +371,6 @@ const SupplierRegistration = (props) => {
                       placeholder="Select your service locations"
                       mode="multiple"
                     >
-                      <Option value=""></Option>
                       {regions &&
                       regions.map((region) => (
                         <Option
@@ -391,7 +396,6 @@ const SupplierRegistration = (props) => {
                     ]}
                   >
                     <Select size="large" placeholder="Please select Commune">
-                      <Option value=""></Option>
                       {communes1 &&
                       communes1.map((commune) => (
                         <Option
@@ -409,13 +413,25 @@ const SupplierRegistration = (props) => {
                     name="business_webSiteUrl"
                     label="Web URL"
                     rules={[
-                      {required: false},
-                      {type: "url", warningOnly: true},
+                      // {required: false},
+                      // {type: "url", warningOnly: true},
+                      {
+                        required:false,
+                        message: "Please input valid URL!",
+                        validator(_,value,cb){
+                          let tempUrl= addProdocol(value);
+                          if(!value||urlRegx().test(tempUrl)){
+                            return Promise.resolve();
+                          }else{
+                            return Promise.reject();
+                          }
+                        }
+                      }
                     ]}
                   >
                     <Input
                       addonBefore="https://"
-                      size="large" placeholder="https://nextdeal.cl"/>
+                      size="large" placeholder="nextdeal.cl"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -504,7 +520,6 @@ const SupplierRegistration = (props) => {
                       mode="multiple"
                       placeholder="Please select your categories"
                     >
-                      <Option value=""></Option>
                       <Option value="6">Alimentación</Option>
                       <Option value="19">Artículos de oficina</Option>
                       <Option value="10">Bodegaje</Option>
@@ -581,7 +596,6 @@ const SupplierRegistration = (props) => {
                         placeholder="Please select Region"
                         onChange={billingRegionChangeHandler}
                       >
-                        <Option value=""></Option>
                         {regions &&
                         regions.map((region) => (
                           <Option
@@ -597,7 +611,6 @@ const SupplierRegistration = (props) => {
                   <Col sm={12} xs={24}>
                     <FormItem label="Commune" name="billing_communeId">
                       <Select size="large" placeholder="Please select Commune">
-                        <Option value=""></Option>
                         {communes2 &&
                         communes2.map((commune) => (
                           <Option

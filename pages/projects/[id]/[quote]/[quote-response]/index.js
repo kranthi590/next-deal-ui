@@ -80,15 +80,10 @@ const NewQuoteResponse = (props) => {
                       </a>
                     </Link>
                     </h3>
-                  <p className="gx-text-grey gx-mb-1">{quotationData.description}</p>
-                </div>
-                <div className="gx-featured-content-right">
-                  <div>
+                  {/* <p className="gx-text-grey gx-mb-1">{quotationData.description}</p> */}
                     <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
-                      ${formatAmount(`${quotationData.estimatedBudget}`)}
+                      ${formatAmount(`${quotationData.estimatedBudget}`)} <span className="gx-text-grey gx-fs-sm gx-text-uppercase">{quotationData.currency}</span>
                     </h2>
-                    <p className="gx-text-grey gx-fs-sm gx-text-uppercase">{quotationData.currency}</p>
-                  </div>
                 </div>
               </div>
             </div>

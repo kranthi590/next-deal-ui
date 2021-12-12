@@ -232,7 +232,6 @@ const NewQuote = (props) => {
               ]}
             >
               <Select placeholder="Select Currency">
-                <Option value=""></Option>
                 <Option value="clp">CLP</Option>
                 <Option value="uf">UF</Option>
               </Select>
@@ -263,7 +262,6 @@ const NewQuote = (props) => {
                 placeholder="Select your suppliers!!"
                 mode="multiple"
               >
-                <Option value=""></Option>
                 {suppliers &&
                 suppliers.map((supplier) => (
                   <Option
@@ -275,7 +273,7 @@ const NewQuote = (props) => {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item>
+            <Form.Item className="gx-d-flex gx-justify-content-center">
               <Divider>OR</Divider>
               <p className="gx-text-center"><Button type="link" onClick={() => setVisible(true)}>Add a Supplier</Button>
               </p>
@@ -316,6 +314,7 @@ const NewQuote = (props) => {
         width={'auto'}
         bodyStyle={{'padding': '0'}}
           okButtonProps={{style:{display:"none"}}}
+          destroyOnClose={true}
       >
           <SupplierRegistrationPage showLoginLink={false} isBuyer={true}
           isAuthenticated={true} onAletSuccess={reloadSuppliers}/>
