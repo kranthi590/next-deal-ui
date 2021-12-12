@@ -49,7 +49,7 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
                   <p className="gx-text-grey gx-mb-1">{project.additionalData}</p>
                   <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
                       ${formatAmount(`${project.estimatedBudget}`)}
-                    <p className="gx-text-grey gx-fs-sm gx-text-uppercase">{project.currency}</p>
+                    <span className="gx-text-grey gx-fs-sm gx-text-uppercase"> {project.currency}</span>
                   </h2>
                   </div>
                 </div>
@@ -91,7 +91,7 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
               <div className="gx-p-2">
             {inProgress &&
             inProgress.map((item) => (
-                      <QuotationCard key={item.id} data={item} />
+                      <QuotationCard key={item.id} data={item} activeTab={1}/>
             ))}
                 {(inProgress.length === 0) && (<NoDataAvailable />)}
               </div>
@@ -105,7 +105,7 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
             <div className="gx-customizer">
               <CustomScrollbars>
               <div className="gx-p-2">
-                {awarded && awarded.map((item) => <QuotationCard key={item.id} data={item} />)}
+                {awarded && awarded.map((item) => <QuotationCard key={item.id} data={item} activeTab={2} />)}
                 {(awarded.length === 0) && (<NoDataAvailable />)}
               </div>
           </CustomScrollbars>
@@ -118,7 +118,7 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
             <div className="gx-customizer">
               <CustomScrollbars>
               <div className="gx-p-2">
-                  {completed && completed.map((item) => <QuotationCard key={item.id} data={item} />)}
+                  {completed && completed.map((item) => <QuotationCard key={item.id} data={item}  activeTab={3}/>)}
                 {(completed.length === 0) && (<NoDataAvailable />)}
               </div>
             </CustomScrollbars>

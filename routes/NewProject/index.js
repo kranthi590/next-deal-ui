@@ -191,7 +191,6 @@ const NewProject = (props) => {
               ]}
             >
               <Select placeholder="Select Currency">
-                <Option value=""></Option>
                 <Option value="clp">CLP</Option>
                 <Option value="uf">UF</Option>
               </Select>
