@@ -8,12 +8,9 @@ import IntlMessages from "../../util/IntlMessages";
 import {useAuth} from "../../contexts/use-auth";
 import {useRegistration} from "../../contexts/business-registration";
 import {
-  errorNotification,
-  NOTIFICATION_TIMEOUT,
-  successNotification,
   extractData,
   isValidObject,
-  getPhonePrefix,
+  getPhonePrefix, errorNotification,
 } from "../../util/util";
 import {validate, clean} from 'rut.js'
 import FilesManager from "../../app/common/FileManager";
@@ -28,7 +25,6 @@ import Rut from "../../shared/Rut";
 
 // Styles
 import "../../styles/form-page.css";
-import {UploadOutlined} from "@ant-design/icons";
 
 const FormItem = Form.Item;
 const {TextArea} = Input;
@@ -164,7 +160,6 @@ const SupplierRegistration = (props) => {
     if (onAletSuccess) {
       onAletSuccess();
     }
-
   }
 
   const onFinishFailed = (errorInfo) => {
@@ -174,14 +169,6 @@ const SupplierRegistration = (props) => {
     getFormData(values)
     registerSupplier(getFormData(values), async (data) => {
       try {
-        // if (data && isLogoUploaded) {
-        //   const formData = new FormData();
-        //   formData.append("logo", values['business_logo'].file.originFileObj);
-        //   formData.append("supplierId", data.id);
-        //   uploadSupplierLogo(formData, (data) => {
-        //   })
-        //   return;
-        // }
         if (files.length > 0) {
           await uploadFiles(files, {
             fileType: "supplier_logo",
@@ -191,8 +178,8 @@ const SupplierRegistration = (props) => {
         } else {
           setShowAlert(true)
         }
-      } catch (e) {
-        //handle errors
+      } catch (error) {
+        errorNotification(error.message, "app.registration.errorMessageTitle")
       }
     });
   };
@@ -757,9 +744,13 @@ const SupplierRegistration = (props) => {
         confirmBtnText="OK"
         show={showAlert}
         success
-        title={"Supplier Registration Successful!!"}
+        title={"Welcome To Next Deal!!"}
         onConfirm={onAlertConfirmed}
-      />
+      >
+        <div>
+        Thank you for signing up. This welcome email lines up with the company’s brand image and inspires you to the next trip.
+        </div>
+      </SweetAlert>
     </div>
   );
 };

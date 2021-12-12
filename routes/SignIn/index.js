@@ -17,7 +17,7 @@ import "../../styles/form-page.css";
 import { errorNotification } from "../../util/util";
 
 const SignIn = (props) => {
-  const { isLoading, userLogin, error } = useAuth();
+  const { isLoading, userLogin} = useAuth();
 
   const onFinishFailed = (errorInfo) => {};
 

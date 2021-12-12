@@ -54,7 +54,7 @@ const SignUp = (props) => {
       successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
       }, NOTIFICATION_TIMEOUT);
-      router.push("/user/signin");
+      router.push("/signin");
     });
   };
 
@@ -68,7 +68,7 @@ const SignUp = (props) => {
               <div className="heading-wrapper">
                 <h1>Sign Up to {getSubDomain(isClient ? window.location.hostname: 'www.nextdeal.dev')}</h1>
                 <p>
-                  <Link href="/user/signin">
+                  <Link href="/signin">
                     <a>
                       <IntlMessages id="app.userAuth.login" />
                     </a>
@@ -86,7 +86,7 @@ const SignUp = (props) => {
                 <FormItem
                   label="First Name"
                   rules={[
-                    { required: true, message: "Please input your username!" },
+                    { required: true, message: "Please input your first name!" },
                   ]}
                   name="firstName"
                 >
@@ -98,7 +98,7 @@ const SignUp = (props) => {
                 <FormItem
                   label="Last Name"
                   rules={[
-                    { required: true, message: "Please input your username!" },
+                    { required: true, message: "Please input your last name!" },
                   ]}
                   name="lastName"
                 >

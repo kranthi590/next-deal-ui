@@ -43,11 +43,9 @@ const QuoteResponses = (props) => {
 
     const deliveryDateChangeHandler = (date) => {
         setCDeliveryDate(moment(date).valueOf());
-        // setDeliveryDate(getDateInMilliseconds(date));
     };
     const validityDateChangeHandler = (date) => {
         setCValidityDate(moment(date).valueOf());
-        // setValidityDate(getDateInMilliseconds(date));
     };
     const onFinishFailed = (errorInfo) => {
     };
@@ -66,7 +64,6 @@ const QuoteResponses = (props) => {
         return formData;
     };
     const onFinish = (values) => {
-        // on finish
         if (newQuote !== true) {
             onSave(null, id);
         } else {
@@ -74,6 +71,15 @@ const QuoteResponses = (props) => {
             onSave({ ...formValues, supplierId: id, currency: "clp", includesTax: formValues.includesTax ? true : false },);
         }
     };
+
+  const disabledStartDate = (value) => {
+    return moment().add(-1, 'days')  >= value;
+  }
+
+  const disabledEndDate = (value) =>{
+    const formData = form;
+    return value < formData.getFieldValue('deliveryDate') || moment() >= value;
+  };
 
     return (<Card title={fantasyName ? fantasyName : supplier.fantasyName} className="ant-card-bordered gx-card-widget">
         <Divider />
@@ -96,7 +102,7 @@ const QuoteResponses = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: 'Please input networth!',
                             },
                         ]}>
                         <InputNumber
@@ -117,7 +123,7 @@ const QuoteResponses = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: 'Please input incoterm!',
                             },
                         ]}>
                         <Select allowClear placeholder="Incoterm" disabled={awarded}>
@@ -137,14 +143,14 @@ const QuoteResponses = (props) => {
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
+                      label="Delivery Date"
                         name="deliveryDate"
-                        label="Delivery Date"
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: 'Please input delivery date!',
                             },
                         ]}>
                         <DatePicker
@@ -152,20 +158,20 @@ const QuoteResponses = (props) => {
                             placeholder="Delivery Date(With a purchase order confirm)"
                             disabled={awarded}
                             onChange={deliveryDateChangeHandler}
-                            disabledDate={d => !d || d.isBefore(new Date())}
+                            disabledDate={disabledStartDate}
                         />
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="validityDate"
-                        label="Validity Date"
+                      label="Validity Date"
+                      name="validityDate"
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: 'Please input validity date!',
                             },
                         ]}>
                         <DatePicker
@@ -173,7 +179,7 @@ const QuoteResponses = (props) => {
                             placeholder="Validity Date"
                             disabled={awarded}
                             onChange={validityDateChangeHandler}
-                            disabledDate={d => !d || d.isBefore(new Date())}
+                            disabledDate={disabledEndDate}
                         />
                     </Form.Item>
                 </Col>
@@ -186,7 +192,7 @@ const QuoteResponses = (props) => {
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: 'Please input payment conditions!',
                             },
                         ]}>
                         <Input.TextArea placeholder="Payment Conditions" disabled={awarded} />
