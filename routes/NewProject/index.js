@@ -22,6 +22,7 @@ import {
 } from "../../util/util";
 import {useRouter} from "next/router";
 import BreadCrumb from "../../app/components/BreadCrumb";
+import moment from 'moment';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -46,7 +47,7 @@ const stringRule = {
   message: <IntlMessages id="app.project.create.validations" />,
 };
 
-const NewProject = () => {
+const NewProject = (props) => {
   const router = useRouter();
   const [estimatedBudget, setEstimatedBudget] = useState(0);
   const [startDate, setStartDate] = useState(null);
@@ -95,6 +96,16 @@ const NewProject = () => {
         });
   };
 
+  const disabledStartDate = (value) => {
+    const formData = form;
+      return moment().add(-1, 'days')  >= value || value > formData.getFieldValue('expectedEndDate');
+  }
+
+  const disabledEndDate = (value) =>{
+    const formData = form;
+    return  value < formData.getFieldValue('startDate') || moment() >= value;
+  };
+
   return (
     <>
       <BreadCrumb navItems={[{ text: "Projects", route: "/projects" }, { text: "Create Project" }]} />
@@ -138,7 +149,7 @@ const NewProject = () => {
                 className="gx-w-100"
                 placeholder="Start Date"
                 onChange={startDateChangeHandler}
-                disabledDate={d => !d || d.isBefore(new Date())}
+                disabledDate={disabledStartDate}
               />
             </Form.Item>
             <Form.Item
@@ -146,17 +157,7 @@ const NewProject = () => {
               label={<IntlMessages id="app.project.field.enddate" />}
               rules={[
                 {
-                  required: !!startDate,
-                  validator: (_, value) => {
-                    if (startDate && !value) {
-                      return Promise.reject(
-                        <IntlMessages id="app.project.create.validations" />
-                      );
-                    } else if (startDate > getDateInMilliseconds(value)) {
-                      return Promise.reject("Please select valid end date");
-                    }
-                    return Promise.resolve();
-                  },
+                  required: !!startDate
                 },
               ]}
             >
@@ -164,7 +165,7 @@ const NewProject = () => {
                 className="gx-w-100"
                 placeholder="End Date"
                 onChange={endDateChangeHandler}
-                disabledDate={d => !d || d.isBefore(startDate?new Date(startDate):new Date())}
+                disabledDate={disabledEndDate}
               />
             </Form.Item>
             <Form.Item

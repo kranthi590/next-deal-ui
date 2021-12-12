@@ -2,9 +2,9 @@ import React from "react";
 import Link from "next/link";
 
 const links = [
-  { url: "/about", label: "About" },
-  { url: "/support", label: "Support" },
-  { url: "/purchase", label: "Purchase" },
+  { url: "https://nextdeal.dev/about-us", label: "About" },
+  { url: "https://nextdeal.dev/terms", label: "Terms" },
+  { url: "https://nextdeal.dev/contact-us", label: "Contact" },
 ];
 
 const FooterComponent = () => (

@@ -112,7 +112,7 @@ const BuyerRegistration = (props) => {
       successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
         if (data) {
-          window.location.href = `https://${data.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/app/user/register`;
+          window.location.href = `https://${data.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/app/signup`;
         }
       }, NOTIFICATION_TIMEOUT);
     });
@@ -142,7 +142,7 @@ const BuyerRegistration = (props) => {
             <div className="heading-wrapper">
               <h1>Business Registration</h1>
               <p>
-                <Link href="/user/signin">
+                <Link href="/signin">
                   <a>
                     <IntlMessages id="app.userAuth.login"/>
                   </a>
