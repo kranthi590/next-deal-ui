@@ -171,8 +171,8 @@ const SupplierRegistration = (props) => {
       try {
         if (files.length > 0) {
           await uploadFiles(files, {
-            fileType: "supplier_logo",
-            supplierId: data.id,
+            assetRelation: "supplier_logo",
+            assetRelationId: data.id,
           }, false);
           setShowAlert(true)
         } else {
