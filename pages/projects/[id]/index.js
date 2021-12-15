@@ -8,7 +8,6 @@ import Widget from "../../../app/components/Widget";
 import IntlMessages from "../../../util/IntlMessages";
 import QuotationCard from "../../../app/components/NextDeal/QuotationCard";
 import FilesManager from "../../../app/common/FileManager";
-//import "../../../routes/Quotations/index.css";
 
 import { formatAmount, getAvatar } from "../../../util/util";
 import CustomScrollbars from "../../../util/CustomScrollbars";

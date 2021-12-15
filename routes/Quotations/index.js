@@ -6,7 +6,6 @@ import Widget from "../../app/components/Widget/index";
 
 import IntlMessages from "../../util/IntlMessages";
 
-//import "./index.css";
 import QuotationCard from "../../app/components/NextDeal/QuotationCard";
 
 const colSpan = 24 / 3;
