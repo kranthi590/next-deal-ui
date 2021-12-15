@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Widget from "../../Widget";
 import QuotationDrawer from "../QuotationDrawer";
-//import "../../../../routes/Quotations/index.css";
 import Link from 'next/link';
 import { useRouter } from "next/router";
 const QuotationCard = ({ data, activeTab }) => {

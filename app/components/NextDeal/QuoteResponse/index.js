@@ -4,7 +4,6 @@ import {
     DatePicker, Upload, Card, Divider, InputNumber
 } from "antd";
 import { SaveOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-//import "./index.css"
 import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 

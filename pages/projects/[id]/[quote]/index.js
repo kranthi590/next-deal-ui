@@ -17,7 +17,6 @@ import IntlMessages from "../../../../util/IntlMessages";
 import {RegistrationProvider, useRegistration} from '../../../../contexts/business-registration';
 import {ProjectProvider, useProject} from "../../../../contexts/projects";
 import {
-  errorNotification,
   getDateInMilliseconds, successNotification,
 } from "../../../../util/util";
 import SupplierRegistrationPage from "../../../supplier-registration";
