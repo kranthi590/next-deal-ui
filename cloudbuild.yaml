@@ -3,6 +3,6 @@ steps:
   args:
   - build
   - "--tag=gcr.io/${_GCP_PROJECT_ID}/${_SERVICE_NAME}"
-  - "--file=./Dockerfile.dev"
+  - "--file=dev.Dockerfile"
 images:
 - 'gcr.io/${_GCP_PROJECT_ID}/${_SERVICE_NAME}'
