@@ -3,6 +3,5 @@ steps:
   args:
   - build
   - "--file=./dev.Dockerfile"
-  - "--tag=gcr.io/next-deal-326621/nextdealapp"
 images:
 - 'gcr.io/next-deal-326621/nextdealapp'
