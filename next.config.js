@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({path: '.env'});
 const withPlugins = require('next-compose-plugins');
 const withCSS = require('@zeit/next-css');
 
