@@ -18,7 +18,7 @@ deploy-dev:
     - gcloud config set project ${GCP_PROJECT_ID}
     - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
   script:
-    - gcloud builds submit --config cloudbuild.yaml \ --substitutions _GCP_PROJECT_ID=${GCP_PROJECT_ID},_SERVICE_NAME=${SERVICE_NAME}
+    - gcloud builds submit --config cloudbuild.yaml \
     - gcloud run deploy ${SERVICE_NAME}-dev --image gcr.io/${GCP_PROJECT_ID}/${SERVICE_NAME} --service-account=${GCP_SERVICE_ACCOUNT_APP} --region=us-central1 --platform managed --allow-unauthenticated --set-env-vars="NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST},NEXT_PUBLIC_APP_HOST=${NEXT_PUBLIC_APP_HOST},NEXT_PUBLIC_LOCALE_LANG=${NEXT_PUBLIC_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_LANG=${NEXT_PUBLIC_DEFAULT_LOCALE_LANG},NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX=${NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX},NODE_TLS_REJECT_UNAUTHORIZED=${NODE_TLS_REJECT_UNAUTHORIZED}" --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
 
 deploy-staging:
