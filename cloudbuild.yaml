@@ -2,7 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args:
   - build
-  - "--tag=gcr.io/${GCP_PROJECT_ID}/${SERVICE_NAME}"
+  - "--tag=gcr.io/${_GCP_PROJECT_ID}/${_SERVICE_NAME}"
   - "--file=./Dockerfile.dev"
 images:
-- 'gcr.io/${GCP_PROJECT_ID}/${SERVICE_NAME}'
+- 'gcr.io/${_GCP_PROJECT_ID}/${_SERVICE_NAME}'
