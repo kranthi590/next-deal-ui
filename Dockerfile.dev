@@ -5,6 +5,12 @@ RUN mkdir -p /usr/src/app
 
 #Sets an environment variable
 ENV PORT 8080
+ENV NEXT_PUBLIC_API_HOST=https://service.nextdeal.dev/
+ENV NEXT_PUBLIC_LOCALE_LANG=es
+ENV NEXT_PUBLIC_DEFAULT_LOCALE_LANG=es
+ENV NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX=56
+ENV NEXT_PUBLIC_APP_HOST=.nextdeal.dev
+
 
 #Sets the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD commands
 WORKDIR /usr/src/app
