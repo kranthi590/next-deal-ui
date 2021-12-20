@@ -1,7 +1,6 @@
 steps:
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/nextdealapp:$COMMIT_SHA', '.']
+ # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args:
-  - build
-  - "--file=./dev.Dockerfile"
-images:
-- 'gcr.io/next-deal-326621/nextdealapp'
+  args: ['push', 'gcr.io/$PROJECT_ID/nextdealapp:$COMMIT_SHA']
