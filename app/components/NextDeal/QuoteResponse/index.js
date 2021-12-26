@@ -4,7 +4,6 @@ import {
     DatePicker, Upload, Card, Divider, InputNumber
 } from "antd";
 import { SaveOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
-import { getDateInMilliseconds } from "../../../../util/util";
 import moment from "moment";
 
 const QuoteResponses = (props) => {
@@ -30,7 +29,7 @@ const QuoteResponses = (props) => {
             netWorth: null,
             includesTax: false,
             paymentCondition: null,
-            incoterm: null,
+            incoterm: "NO_APLICA",
             deliveryDate: null,
             validityDate: null,
             description: null
@@ -115,33 +114,6 @@ const QuoteResponses = (props) => {
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="incoterm"
-                        label="Incoterm"
-                        labelCol={{ span: 24 }}
-                        wrapperCol={{ span: 24 }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input incoterm!',
-                            },
-                        ]}>
-                        <Select allowClear placeholder="Incoterm" disabled={awarded}>
-                            <Option value="EXW">EXW</Option>
-                            <Option value="FCA">FCA</Option>
-                            <Option value="FAS">FAS</Option>
-                            <Option value="FOB">FOB</Option>
-                            <Option value="CFR">CFR</Option>
-                            <Option value="CIF">CIF</Option>
-                            <Option value="CPT">CPT</Option>
-                            <Option value="CIP">CIP</Option>
-                            <Option value="DAP">DAP</Option>
-                            <Option value="DPU">DPU</Option>
-                            <Option value="DDP">DDP</Option>
-                        </Select>
-                    </Form.Item>
-                </Col>
-                <Col xl={6} xs={24}>
-                    <Form.Item
                       label="Delivery Date"
                         name="deliveryDate"
                         labelCol={{ span: 24 }}
@@ -194,7 +166,16 @@ const QuoteResponses = (props) => {
                                 message: 'Please input payment conditions!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" disabled={awarded} />
+                        <Select allowClear placeholder="Payment Conditions" disabled={awarded}>
+                            <Option value="al-contado">al contado</Option>
+                            <Option value="7">7 días</Option>
+                            <Option value="15">15 días</Option>
+                            <Option value="30">30 días</Option>
+                            <Option value="45">45 días</Option>
+                            <Option value="60">60 días</Option>
+                            <Option value="90">90 días</Option>
+                            <Option value="otro">otro</Option>
+                        </Select>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
@@ -216,6 +197,34 @@ const QuoteResponses = (props) => {
                         <Checkbox disabled={awarded}>
                             Incl.IVA
                         </Checkbox>
+                    </Form.Item>
+                </Col>
+                <Col xl={6} xs={24}>
+                    <Form.Item
+                        name="incoterm"
+                        label="Incoterm"
+                        labelCol={{ span: 24 }}
+                        wrapperCol={{ span: 24 }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input incoterm!',
+                            },
+                        ]}>
+                        <Select allowClear placeholder="Incoterm" disabled={awarded}>
+                            <Option value="NO_APLICA">No Aplica</Option>
+                            <Option value="EXW">EXW</Option>
+                            <Option value="FCA">FCA</Option>
+                            <Option value="FAS">FAS</Option>
+                            <Option value="FOB">FOB</Option>
+                            <Option value="CFR">CFR</Option>
+                            <Option value="CIF">CIF</Option>
+                            <Option value="CPT">CPT</Option>
+                            <Option value="CIP">CIP</Option>
+                            <Option value="DAP">DAP</Option>
+                            <Option value="DPU">DPU</Option>
+                            <Option value="DDP">DDP</Option>
+                        </Select>
                     </Form.Item>
                 </Col>
                 {

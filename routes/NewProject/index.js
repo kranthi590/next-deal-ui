@@ -98,7 +98,7 @@ const NewProject = (props) => {
 
   const disabledStartDate = (value) => {
     const formData = form;
-      return moment().add(-1, 'days')  >= value || value > formData.getFieldValue('expectedEndDate');
+      return value > formData.getFieldValue('expectedEndDate');
   }
 
   const disabledEndDate = (value) =>{
@@ -193,6 +193,7 @@ const NewProject = (props) => {
               <Select placeholder="Select Currency">
                 <Option value="clp">CLP</Option>
                 <Option value="uf">UF</Option>
+                <Option value="usd">USD</Option>
               </Select>
             </Form.Item>
             <Form.Item

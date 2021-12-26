@@ -23,6 +23,7 @@ import WidgetHeader from "../../app/components/WidgetHeader";
 import Aside from "../../app/components/Aside";
 import Footer from "../../app/components/Footer";
 import Rut from "../../shared/Rut";
+import {isEmpty} from "lodash";
 
 // Styles
 import "../../styles/form-page.css";
@@ -129,7 +130,6 @@ const SupplierRegistration = (props) => {
       legalName: business.legalName,
       fantasyName: business.fantasyName,
       rut: business.rut ? clean(business.rut) : business.rut,
-      webSiteUrl: addProdocol(business.webSiteUrl),
       emailId: business.emailId,
       categories: business.categories,
       serviceLocations: data.serviceLocations,
@@ -140,6 +140,10 @@ const SupplierRegistration = (props) => {
       logoUrl:
         "https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg",
     };
+
+    if (!isEmpty(business.webSiteUrl)) {
+      formData.webSiteUrl = addProdocol(business.webSiteUrl);
+    }
 
     if (sameAsBusiness) {
       formData.billingAddress = businessAddress;
@@ -186,6 +190,7 @@ const SupplierRegistration = (props) => {
           setShowAlert(true)
         }
       } catch (error) {
+        console.log(error);
         errorNotification(error.message, "app.registration.errorMessageTitle")
       }
     });
@@ -413,17 +418,17 @@ const SupplierRegistration = (props) => {
                     name="business_webSiteUrl"
                     label="Web URL"
                     rules={[
-                      // {required: false},
-                      // {type: "url", warningOnly: true},
+                      { required: false },
                       {
-                        required:false,
-                        message: "Please input valid URL!",
                         validator(_,value,cb){
+                          if (!value) {
+                            return Promise.resolve();
+                          }
                           let tempUrl= addProdocol(value);
-                          if(!value||urlRegx().test(tempUrl)){
+                          if (urlRegx().test(tempUrl)) {
                             return Promise.resolve();
                           }else{
-                            return Promise.reject();
+                            return Promise.reject(new Error('Please input valid URL!'));
                           }
                         }
                       }

@@ -1,7 +1,7 @@
 import React, {useState, useContext, createContext} from "react";
 import {httpClient, setAuthToken} from "../util/Api";
 import {Cookies} from "react-cookie";
-import {errorNotification} from "../util/util";
+import {errorNotification, handleErrorNotification} from "../util/util";
 
 const registrationContext = createContext({});
 
@@ -91,7 +91,11 @@ const useProviderRegistration = () => {
         }
       })
       .catch(function (error) {
+        if(error.response && error.response.data && error.response.data.errors && error.response.data.errors.length){
+          handleErrorNotification(error.response.data.errors);
+        }else{
         errorNotification(error.message, "app.registration.errorMessageTitle")
+        }
         fetchError(error.message);
       });
   };
@@ -130,7 +134,11 @@ const useProviderRegistration = () => {
           }
         })
         .catch(function (error) {
+          if(error.response&&error.response.data&&error.response.data.errors&&error.response.data.errors.length){
+            handleErrorNotification(error.response.data.errors);
+          }else{
           errorNotification(error.message, "app.registration.errorMessageTitle")
+          }
           fetchError(error.message);
         });
     }

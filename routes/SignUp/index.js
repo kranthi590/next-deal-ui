@@ -130,7 +130,10 @@ const SignUp = (props) => {
                     {
                       required: true,
                       message: "Please input your password!",
-                    },
+                    },{
+                      min:6,
+                      message:"Password length must be atleast 6 characters"
+                    }
                   ]}
                   hasFeedback
                 >

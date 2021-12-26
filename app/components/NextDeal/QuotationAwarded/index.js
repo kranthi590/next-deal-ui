@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {
     Button, Row, Col, Form, Input,
-    DatePicker, Card, Divider, InputNumber
+    DatePicker, Card, Divider, InputNumber,Select
 } from "antd";
 import { SaveOutlined} from '@ant-design/icons';
 import moment from "moment";
@@ -127,7 +127,16 @@ const QuoteAwarded = (props) => {
                                 message: 'Input something!',
                             },
                         ]}>
-                        <Input.TextArea placeholder="Payment Conditions" disabled />
+                        <Select allowClear placeholder="Payment Conditions" disabled>
+                            <Option value="al-contado">al contado</Option>
+                            <Option value="7">7 días</Option>
+                            <Option value="15">15 días</Option>
+                            <Option value="30">30 días</Option>
+                            <Option value="45">45 días</Option>
+                            <Option value="60">60 días</Option>
+                            <Option value="90">90 días</Option>
+                            <Option value="otro">otro</Option>
+                        </Select>
                     </Form.Item>
                 </Col>
                 <Col xl={6} xs={24}>
