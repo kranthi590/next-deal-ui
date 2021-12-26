@@ -1,20 +1,22 @@
-import React, {useEffect, useState} from "react";
-import {Button, Checkbox, Form, Input, Select, Col, Row, Tooltip} from "antd";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
-import {useRouter} from "next/router";
-import {isEmpty} from "lodash";
+import { useRouter } from "next/router";
+import { isEmpty } from "lodash";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 // Utils
 import IntlMessages from "../../util/IntlMessages";
-import {useAuth} from "../../contexts/use-auth";
-import {useRegistration} from "../../contexts/business-registration";
+import { useAuth } from "../../contexts/use-auth";
+import { useRegistration } from "../../contexts/business-registration";
 import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
   getPhonePrefix, sanitizeString,
 } from "../../util/util";
+import urlRegx from 'url-regex'
 
 // Components
 import CircularProgress from "../../app/components/CircularProgress";
@@ -43,7 +45,8 @@ const BuyerRegistration = (props) => {
   const [iAccept, setIAccept] = useState(false);
   const [domainName, setDomainName] = useState('');
   const [rut, setRut] = useState(null)
-
+  const [newSubDomain,setNewSubDomain] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     fetchRegions(({regions}) => {
@@ -104,17 +107,27 @@ const BuyerRegistration = (props) => {
     return formData;
   };
 
+  const addProdocol = (url) => {
+    if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
+      return url
+    } else {
+      return ("https://" + url)
+    }
+  }
   const onFinishFailed = (errorInfo) => {
   };
+  const onAlertConfirmed = () => {
+    window.location.href = `https://${newSubDomain}${process.env.NEXT_PUBLIC_APP_HOST}/app/signup`;
+  }
 
   const onFinish = (values) => {
     registerBuyer(getFormData(values), (data) => {
       successNotification("app.registration.detailsSaveSuccessMessage");
-      setTimeout(() => {
+      debugger
         if (data) {
-          window.location.href = `https://${data.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/app/signup`;
+        setNewSubDomain(data.subDomainName);
+        setShowAlert(true);
         }
-      }, NOTIFICATION_TIMEOUT);
     });
   };
 
@@ -317,7 +330,6 @@ const BuyerRegistration = (props) => {
                       placeholder="Please select Region"
                       onChange={regionChangeHandler}
                     >
-                      <Option value=""></Option>
                       {regions &&
                       regions.map((region) => (
                         <Option
@@ -342,7 +354,6 @@ const BuyerRegistration = (props) => {
                     ]}
                   >
                     <Select size="large" placeholder="Please select Commune">
-                      <Option value=""></Option>
                       {communes &&
                       communes.map((commune) => (
                         <Option
@@ -360,8 +371,22 @@ const BuyerRegistration = (props) => {
                     name="webSiteUrl"
                     label="Web URL"
                     rules={[
-                      {required: false},
-                      {type: "url", warningOnly: true},
+                      {
+                        required: false,
+                      },
+                      {
+                        validator(_, value, cb) {
+                          if (!value) {
+                            return Promise.resolve();
+                          }
+                          let tempUrl = addProdocol(value);
+                          if (urlRegx().test(tempUrl)) {
+                            return Promise.resolve();
+                          } else {
+                            return Promise.reject(new Error('Please input valid URL!'));
+                          }
+                        }
+                      }
                     ]}
                   >
                     <Input
@@ -454,6 +479,17 @@ const BuyerRegistration = (props) => {
           <CircularProgress/>
         </div>
       )}
+      <SweetAlert
+        confirmBtnText="OK"
+        show={showAlert}
+        success
+        title={"Welcome To Next Deal!!"}
+        onConfirm={onAlertConfirmed}
+      >
+        <div>
+          Thank you for signing up. This welcome email lines up with the company’s brand image and inspires you to the next trip.
+        </div>
+      </SweetAlert>
     </div>
   );
 };

@@ -233,6 +233,7 @@ const NewQuote = (props) => {
               <Select placeholder="Select Currency">
                 <Option value="clp">CLP</Option>
                 <Option value="uf">UF</Option>
+                <Option value="usd">USD</Option>
               </Select>
             </Form.Item>
             <Form.Item
