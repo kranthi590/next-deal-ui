@@ -123,7 +123,6 @@ const BuyerRegistration = (props) => {
   const onFinish = (values) => {
     registerBuyer(getFormData(values), (data) => {
       successNotification("app.registration.detailsSaveSuccessMessage");
-      debugger
         if (data) {
         setNewSubDomain(data.subDomainName);
         setShowAlert(true);

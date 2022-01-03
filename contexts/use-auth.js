@@ -63,7 +63,6 @@ const useProvideAuth = () => {
             path: "/",
             domain: process.env.NEXT_PUBLIC_APP_HOST,
           });
-          debugger
           window.location.href = `http://${data.user.buyer.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/app`;
           if (callbackFun) callbackFun();
         } else {

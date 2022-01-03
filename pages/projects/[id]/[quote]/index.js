@@ -107,7 +107,6 @@ const NewQuote = (props) => {
   const onSave = (values) => {
     const projectId = projectInfo && projectInfo.id
     createQuotation(projectId, getFormData(values), async (data) => {
-      debugger
       if (files.length > 0) {
         await uploadFiles(files, {
           assetRelation: "quotation_request",
