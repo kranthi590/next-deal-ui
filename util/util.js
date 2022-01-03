@@ -62,7 +62,6 @@ export const errorNotification = (message = "", titleId) => {
 
 export const handleErrorNotification = (errorArr) => {
   console.log(errorArr)
-  debugger
   errorArr.map(err => {
     const errorExists = validationErrors.includes(err.errorCode);
     NotificationManager.error(
