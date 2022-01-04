@@ -97,11 +97,34 @@ const useProviderResponses = () => {
       });
   };
 
+  const deAwardQuotation = (id, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    // implement deaward api
+    // httpClient
+    //   .post(`quotations/${id}/deaward`, data, {
+    //     headers: headers
+    //   })
+    //   .then(({ data }) => {
+    //     if (data) {
+    //       fetchSuccess();
+    //       if (callbackFun) callbackFun(data.data);
+    //     } else {
+    //       fetchError(data.error);
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     fetchError(error.message);
+    //   });
+  };
+
   return {
     isLoading,
     error,
     createResponses,
     createAward,
-    completeQuotation
+    completeQuotation,
+    deAwardQuotation
   };
 };

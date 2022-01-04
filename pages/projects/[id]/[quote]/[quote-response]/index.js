@@ -19,7 +19,7 @@ import BreadCrumb from "../../../../../app/components/BreadCrumb";
 
 const NewQuoteResponse = (props) => {
   const { projectsList, quotationData, awardedResponses } = props;
-  const { createResponses, createAward, completeQuotation } = useResponse();
+  const { createResponses, createAward, completeQuotation,deAwardQuotation } = useResponse();
   const router = useRouter();
   const projectId = router.query.quote;
   let awarded = false, completed = false;
@@ -54,6 +54,16 @@ const NewQuoteResponse = (props) => {
       successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
         window.location.hash = "3";
+        window.location.reload();
+      }, 1000);
+    });
+  }
+
+  const onDeawardQuotation = (qid) => {
+    deAwardQuotation(qid, (data) => {
+      successNotification("app.registration.detailsSaveSuccessMessage");
+      setTimeout(() => {
+        window.location.hash = "1";
         window.location.reload();
       }, 1000);
     });
@@ -115,7 +125,9 @@ const NewQuoteResponse = (props) => {
       <>
         {(awardedResponses.length === 0) && <NoDataAvailable />}
         {
-          awardedResponses.map(item => (<QuotationAwarded formData={item} key={item.id} onSave={onCompleteQuotation} completed={completed} />))
+          awardedResponses.map(item => (<QuotationAwarded formData={item} key={item.id} onSave={onCompleteQuotation} completed={completed}
+            onDeaward={() => { onDeawardQuotation(item.id) }}
+          />))
         }
       </>
     )

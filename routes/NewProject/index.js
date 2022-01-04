@@ -103,7 +103,7 @@ const NewProject = (props) => {
 
   const disabledEndDate = (value) =>{
     const formData = form;
-    return  value < formData.getFieldValue('startDate') || moment() >= value;
+    return  value < formData.getFieldValue('startDate');
   };
 
   return (
