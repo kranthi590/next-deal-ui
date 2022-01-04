@@ -3,11 +3,11 @@ import {
     Button, Row, Col, Form, Input,
     DatePicker, Card, Divider, InputNumber,Select
 } from "antd";
-import { SaveOutlined} from '@ant-design/icons';
+import { SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import moment from "moment";
 
 const QuoteAwarded = (props) => {
-    const { onSave, completed } = props;
+    const { onSave, completed,onDeaward } = props;
     const { id, netWorth, paymentCondition, deliveryDate, supplier, additionalData } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
@@ -155,9 +155,9 @@ const QuoteAwarded = (props) => {
                             <Form.Item wrapperCol={{ span: 24 }}>
                                 <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="gx-mb-0">Confirm Receiption</Button>
                             </Form.Item>
-                           {/* <Form.Item wrapperCol={{ span: 24 }}>
-                                <Button type="primary" htmlType="submit" icon={<DeleteOutlined />} className="gx-mb-0">Deaward</Button>
-                            </Form.Item>*/}
+                            <Form.Item wrapperCol={{ span: 24 }}>
+                                <Button type="primary" icon={<UndoOutlined />} className="gx-mb-0" onClick={onDeaward}>Deaward</Button>
+                            </Form.Item>
                         </Col>
                     )
                 }

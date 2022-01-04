@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip } from "antd";
+import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip, Modal } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -47,6 +47,7 @@ const BuyerRegistration = (props) => {
   const [rut, setRut] = useState(null)
   const [newSubDomain,setNewSubDomain] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const [isTermsVisible,setIsTermsVisible] = useState(false);
 
   useEffect(() => {
     fetchRegions(({regions}) => {
@@ -122,7 +123,6 @@ const BuyerRegistration = (props) => {
 
   const onFinish = (values) => {
     registerBuyer(getFormData(values), (data) => {
-      successNotification("app.registration.detailsSaveSuccessMessage");
         if (data) {
         setNewSubDomain(data.subDomainName);
         setShowAlert(true);
@@ -144,6 +144,13 @@ const BuyerRegistration = (props) => {
   const onChange = async (value) => {
     setRut(value);
   }
+
+  const showTerms = () => {
+    setIsTermsVisible(true);
+  };
+  const handleCancelTerms = () => {
+    setIsTermsVisible(false);
+  };
 
   return (
     <div className="gx-app-login-wrap registration-container">
@@ -449,7 +456,7 @@ const BuyerRegistration = (props) => {
                     <Checkbox onChange={() => setIAccept(!iAccept)}>
                       <IntlMessages id="appModule.iAccept"/>
                     </Checkbox>
-                    <span className="gx-signup-form-forgot gx-link">
+                    <span className="gx-signup-form-forgot gx-link" onClick={showTerms}>
                   <IntlMessages id="appModule.termAndCondition"/>
                 </span>
                   </Form.Item>
@@ -489,6 +496,13 @@ const BuyerRegistration = (props) => {
           Thank you for signing up. This welcome email lines up with the company’s brand image and inspires you to the next trip.
         </div>
       </SweetAlert>
+      <Modal title="Term and condition" visible={isTermsVisible} onCancel={handleCancelTerms} footer={null}>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        </p>
+      </Modal>
     </div>
   );
 };
