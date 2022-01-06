@@ -4,10 +4,11 @@ import {
     DatePicker, Card, Divider, InputNumber,Select
 } from "antd";
 import moment from "moment";
+import IntlMessages from "../../../../util/IntlMessages";
 
 const QuotationCompleted = (props) => {
     const { onSave } = props;
-    const { id, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, additionalData } = props.formData;
+    const { id, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, comments } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
     const [cvalidityDate, setCValidityDate] = useState(null);
@@ -17,7 +18,7 @@ const QuotationCompleted = (props) => {
         netWorth: netWorth,
         paymentCondition: paymentCondition,
         deliveryDate: moment(deliveryDate),
-        description: additionalData
+        comments: comments
     }
     const deliveryDateChangeHandler = (date) => {
         setCDeliveryDate(moment(date).valueOf());
@@ -61,13 +62,13 @@ const QuotationCompleted = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="netWorth"
-                        label="Net Worth"
+                        label={<IntlMessages id="app.quotationresponses.field.netWorth" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: <IntlMessages id="app.quotationresponses.field.netWorth.error.required" />,
                             },
                         ]}>
                         <InputNumber
@@ -82,13 +83,13 @@ const QuotationCompleted = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="deliveryDate"
-                        label="Delivery Date"
+                        label={<IntlMessages id="app.quotationresponses.field.deliveryDate" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: <IntlMessages id="app.quotationresponses.field.deliveryDate.error.required" />,
                             },
                         ]}>
                         <DatePicker
@@ -102,13 +103,13 @@ const QuotationCompleted = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="paymentCondition"
-                        label="Payment Conditions"
+                        label={<IntlMessages id="app.quotationresponses.field.paymentCondition" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: <IntlMessages id="app.quotationresponses.field.paymentCondition.error.required" />,
                             },
                         ]}>
                         <Select allowClear placeholder="Payment Conditions" disabled>
@@ -125,8 +126,8 @@ const QuotationCompleted = (props) => {
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="description"
-                        label="Comments"
+                        name="comments"
+                        label={<IntlMessages id="app.quotationresponses.field.description" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                     >

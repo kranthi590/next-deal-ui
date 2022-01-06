@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, createContext } from "react";
 import { httpClient, setAuthToken } from "../util/Api";
 import { Cookies } from "react-cookie";
 import { removeData, setData } from "../util/localStorage";
-import {errorNotification} from "../util/util";
+import {errorNotification, handleErrorNotification} from "../util/util";
 
 const authContext = createContext({});
 
@@ -70,7 +70,7 @@ const useProvideAuth = () => {
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        handleErrorNotification(error);
         fetchError(error.message);
       });
   };
@@ -91,7 +91,7 @@ const useProvideAuth = () => {
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        handleErrorNotification(error);
         fetchError(error.message);
       });
   };

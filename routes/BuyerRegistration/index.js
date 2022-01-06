@@ -133,7 +133,7 @@ const BuyerRegistration = (props) => {
   const prefixSelector = (name) => (
     <Form.Item name={name} noStyle>
       <Select
-        style={{width: 70}}
+        style={{ width: 70 }}
         defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
       >
         <Option value="56">+56</Option>
@@ -159,7 +159,7 @@ const BuyerRegistration = (props) => {
         <div className="form-container">
           <div className="gx-app-login-content registration-form">
             <div className="heading-wrapper">
-              <h1>Business Registration</h1>
+              <h1><IntlMessages id="app.buyerregistration.page_title" /></h1>
               <p>
                 <Link href="/signin">
                   <a>
@@ -184,16 +184,16 @@ const BuyerRegistration = (props) => {
             >
               <Row gutter={24} className="bottom-divider">
                 <Col xs={24}>
-                  <WidgetHeader title="Business Information"/>
+                  <WidgetHeader title={<IntlMessages id="app.buyerregistration.form_title" />} />
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="fantasyName"
-                    label="Fantasy Name"
+                    label={<IntlMessages id="app.buyerregistration.field.fantasyName" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please input your fantasy name !",
+                        message: <IntlMessages id="app.buyerregistration.field.fantasyName.error.required" />,
                       },
                     ]}
                   >
@@ -210,8 +210,8 @@ const BuyerRegistration = (props) => {
                     id="subDomainName"
                     label={
                       <span>
-                        Domain Name&nbsp;
-                        <Tooltip title="Domain name should be alpha numeric">
+                        <IntlMessages id="app.buyerregistration.field.fantasyName" />&nbsp;
+                        <Tooltip title={<IntlMessages id="app.buyerregistration.field.subDomainName.tooltip" />}>
                           <QuestionCircleOutlined/>
                         </Tooltip>
                         &nbsp;
@@ -224,11 +224,11 @@ const BuyerRegistration = (props) => {
                         validator: (_, value) => {
                           if (!value) {
                             return Promise.reject(
-                              "Please input your domain name!"
+                              <IntlMessages id="app.buyerregistration.field.subDomainName.error.required" />
                             );
                           } else if (!/^[a-z0-9]+$/i.test(value)) {
                             return Promise.reject(
-                              "Domain name should be alpha numeric"
+                              <IntlMessages id="app.buyerregistration.field.subDomainName.error.srtingtype" />
                             );
                           }
                           return Promise.resolve();
@@ -248,11 +248,11 @@ const BuyerRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="legalName"
-                    label="Business Name"
+                    label={<IntlMessages id="app.buyerregistration.field.legalName" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please input your business name !",
+                        message: <IntlMessages id="app.buyerregistration.field.legalName.error.required" />,
                       },
                     ]}
                   >
@@ -262,14 +262,14 @@ const BuyerRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="rut"
-                    label="RUT"
+                    label={<IntlMessages id="app.buyerregistration.field.rut" />}
                     rules={[
                       {
                         required: true,
                         validator: (_, value) => {
                           if (!validate(value)) {
                             return Promise.reject(
-                              "Please input your valid rut!"
+                              <IntlMessages id="app.buyerregistration.field.rut.error.valid" />
                             );
                           }
                           return Promise.resolve();
@@ -289,11 +289,11 @@ const BuyerRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="addressLine1"
-                    label="Address 1"
+                    label={<IntlMessages id="app.buyerregistration.field.addressLine1" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please input your business address!",
+                        message: <IntlMessages id="app.buyerregistration.field.addressLine1.error.required" />,
                       },
                     ]}
                   >
@@ -306,11 +306,11 @@ const BuyerRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="addressLine2"
-                    label="Address 2"
+                    label={<IntlMessages id="app.buyerregistration.field.addressLine2" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please input your business address!",
+                        message: <IntlMessages id="app.buyerregistration.field.addressLine2.error.required" />,
                       },
                     ]}
                   >
@@ -322,12 +322,12 @@ const BuyerRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Region"
+                    label={<IntlMessages id="app.buyerregistration.field.regionId" />}
                     name="regionId"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your region!",
+                        message: <IntlMessages id="app.buyerregistration.field.regionId.error.required" />,
                       },
                     ]}
                   >
@@ -350,12 +350,12 @@ const BuyerRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Commune"
+                    label={<IntlMessages id="app.buyerregistration.field.communeId" />}
                     name="communeId"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your commune!",
+                        message: <IntlMessages id="app.buyerregistration.field.communeId.error.required" />,
                       },
                     ]}
                   >
@@ -375,7 +375,7 @@ const BuyerRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="webSiteUrl"
-                    label="Web URL"
+                    label={<IntlMessages id="app.buyerregistration.field.webSiteUrl" />}
                     rules={[
                       {
                         required: false,
@@ -389,7 +389,7 @@ const BuyerRegistration = (props) => {
                           if (urlRegx().test(tempUrl)) {
                             return Promise.resolve();
                           } else {
-                            return Promise.reject(new Error('Please input valid URL!'));
+                            return Promise.reject(<IntlMessages id="app.buyerregistration.field.webSiteUrl.error.valid" />);
                           }
                         }
                       }
@@ -402,13 +402,13 @@ const BuyerRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Business Email"
+                    label={<IntlMessages id="app.buyerregistration.field.emailId" />}
                     name="emailId"
                     rules={[
                       {
                         required: true,
                         type: "email",
-                        message: "The input is not valid E-mail!",
+                        message: <IntlMessages id="app.buyerregistration.field.emailId.error.email" />,
                       },
                     ]}
                   >
@@ -417,12 +417,12 @@ const BuyerRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <Form.Item
-                    label="Phone"
+                    label={<IntlMessages id="app.buyerregistration.field.phoneNumber1" />}
                     name="phoneNumber1"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your phone number!",
+                        message: <IntlMessages id="app.buyerregistration.field.phoneNumber1.error.required" />,
                       },
                     ]}
                   >
@@ -435,7 +435,7 @@ const BuyerRegistration = (props) => {
                   </Form.Item>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label="Phone 2" name="phoneNumber2">
+                  <FormItem label={<IntlMessages id="app.buyerregistration.field.phoneNumber2" />} name="phoneNumber2">
                     <Input
                       size="large"
                       placeholder="Phone number"
@@ -450,7 +450,7 @@ const BuyerRegistration = (props) => {
                   <Form.Item
                     name="iAccept"
                     rules={[
-                      {required: !iAccept && true, message: "Please accept!"},
+                      { required: !iAccept && true, message: <IntlMessages id="app.buyerregistration.field.iAccept.error.required" /> },
                     ]}
                   >
                     <Checkbox onChange={() => setIAccept(!iAccept)}>
@@ -489,18 +489,16 @@ const BuyerRegistration = (props) => {
         confirmBtnText="OK"
         show={showAlert}
         success
-        title={"Welcome To Next Deal!!"}
+        title={<IntlMessages id="app.buyerregistration.successmessage.title" />}
         onConfirm={onAlertConfirmed}
       >
         <div>
-          Thank you for signing up. This welcome email lines up with the company’s brand image and inspires you to the next trip.
+        <IntlMessages id="app.buyerregistration.successmessage.content" />
         </div>
       </SweetAlert>
-      <Modal title="Term and condition" visible={isTermsVisible} onCancel={handleCancelTerms} footer={null}>
+      <Modal title={<IntlMessages id="app.buyerregistration.termsmodal.title" />} visible={isTermsVisible} onCancel={handleCancelTerms} footer={null}>
         <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+        <IntlMessages id="app.buyerregistration.termsmodal.content" />
         </p>
       </Modal>
     </div>

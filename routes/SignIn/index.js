@@ -33,7 +33,7 @@ const SignIn = (props) => {
           <div className="gx-app-login-content registration-form">
             <div className="form-wrapper-login">
               <div className="heading-wrapper">
-                <h1>Sign in to Next Deal</h1>
+                <h1><IntlMessages id="app.userAuth.login.page_title" /></h1>
                 <p>
                   <Link href="/signin">
                     <a>
@@ -52,20 +52,20 @@ const SignIn = (props) => {
               >
                 <Form.Item
                   name="emailId"
-                  label="Email"
+                  label={<IntlMessages id="app.userAuth.login.field.emailId" />}
                   rules={[
                     {
                       required: true,
-                      message: "The input is not valid E-mail!",
+                      message: <IntlMessages id="app.userAuth.login.field.emailId.error.required" />,
                     },
                   ]}
                 >
                   <Input className="gx-input-lineheight" placeholder="Email" />
                 </Form.Item>
                 <Form.Item
-                  label="Password"
+                  label={<IntlMessages id="app.userAuth.login.field.password" />}
                   rules={[
-                    { required: true, message: "Please input your Password!" },
+                    { required: true, message: <IntlMessages id="app.userAuth.login.field.password.error.required" /> },
                   ]}
                   name="password"
                 >

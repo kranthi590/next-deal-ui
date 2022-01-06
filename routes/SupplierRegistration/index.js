@@ -178,7 +178,7 @@ const SupplierRegistration = (props) => {
 
   const onFinish = async (values) => {
     getFormData(values)
-    registerSupplier(getFormData(values), async (data) => {
+    registerSupplier(getFormData(values),isAuthenticated, async (data) => {
       try {
         if (files.length > 0) {
           await uploadFiles(files, {
@@ -190,7 +190,6 @@ const SupplierRegistration = (props) => {
           setShowAlert(true)
         }
       } catch (error) {
-        console.log(error);
         errorNotification(error.message, "app.registration.errorMessageTitle")
       }
     });
@@ -216,7 +215,7 @@ const SupplierRegistration = (props) => {
         <div className="form-container">
           <div className="gx-app-login-content registration-form">
             <div className="heading-wrapper">
-              <h1>Supplier Registration</h1>
+              <h1><IntlMessages id="app.supplierregistration.page_title" /></h1>
               {
                 props && props.showLoginLink && (
                   <p>
@@ -240,16 +239,16 @@ const SupplierRegistration = (props) => {
             >
               <Row gutter={24} className="bottom-divider">
                 <Col xs={24}>
-                  <WidgetHeader title="Business Information"/>
+                  <WidgetHeader title={<IntlMessages id="app.supplierregistration.form_title" />} />
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_fantasyName"
-                    label="Fantasy Name"
+                    label={<IntlMessages id="app.supplierregistration.field.business_fantasyName" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please input your Fantasy Name!",
+                        message: <IntlMessages id="app.supplierregistration.field.business_fantasyName.error.required" />,
                       },
                     ]}
                   >
@@ -259,11 +258,11 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_legalName"
-                    label="Business Name"
+                    label={<IntlMessages id="app.supplierregistration.field.business_legalName" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please input your business name !",
+                        message: <IntlMessages id="app.supplierregistration.field.business_legalName.error.required" />,
                       },
                     ]}
                   >
@@ -273,14 +272,14 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_rut"
-                    label="RUT"
+                    label={<IntlMessages id="app.supplierregistration.field.business_rut" />}
                     rules={[
                       {
                         required: true,
                         validator: (_, value) => {
                           if (!validate(value)) {
                             return Promise.reject(
-                              "Please input your valid rut!"
+                              <IntlMessages id="app.supplierregistration.field.business_rut.error.valid" />
                             );
                           }
                           return Promise.resolve();
@@ -300,11 +299,11 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_addressLine1"
-                    label="Address 1"
+                    label={<IntlMessages id="app.supplierregistration.field.business_addressLine1" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please input your business address!",
+                        message: <IntlMessages id="app.supplierregistration.field.business_addressLine1.error.required" />,
                       },
                     ]}
                   >
@@ -317,11 +316,11 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_addressLine2"
-                    label="Address 2"
+                    label={<IntlMessages id="app.supplierregistration.field.business_addressLine2" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please input your business address!",
+                        message: <IntlMessages id="app.supplierregistration.field.business_addressLine2.error.required" />,
                       },
                     ]}
                   >
@@ -333,12 +332,12 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Region"
+                    label={<IntlMessages id="app.supplierregistration.field.business_regionId" />}
                     name="business_regionId"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your region!",
+                        message: <IntlMessages id="app.supplierregistration.field.business_regionId.error.required" />,
                       },
                     ]}
                   >
@@ -361,12 +360,12 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Service Locations"
+                    label={<IntlMessages id="app.supplierregistration.field.serviceLocations" />}
                     name="serviceLocations"
                     rules={[
                       {
                         required: true,
-                        message: "Please select your service locations!",
+                        message: <IntlMessages id="app.supplierregistration.field.serviceLocations.error.required" />,
                         type: "array",
                       },
                     ]}
@@ -391,12 +390,12 @@ const SupplierRegistration = (props) => {
 
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Commune"
+                    label={<IntlMessages id="app.supplierregistration.field.business_communeId" />}
                     name="business_communeId"
                     rules={[
                       {
                         required: true,
-                        message: "Please input your commune!",
+                        message: <IntlMessages id="app.supplierregistration.field.business_communeId.error.required" />,
                       },
                     ]}
                   >
@@ -416,7 +415,7 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_webSiteUrl"
-                    label="Web URL"
+                    label={<IntlMessages id="app.supplierregistration.field.business_webSiteUrl" />}
                     rules={[
                       { required: false },
                       {
@@ -428,7 +427,7 @@ const SupplierRegistration = (props) => {
                           if (urlRegx().test(tempUrl)) {
                             return Promise.resolve();
                           }else{
-                            return Promise.reject(new Error('Please input valid URL!'));
+                            return Promise.reject(<IntlMessages id="app.supplierregistration.field.business_webSiteUrl.error.required" />);
                           }
                         }
                       }
@@ -442,11 +441,11 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_type"
-                    label="Type"
+                    label={<IntlMessages id="app.supplierregistration.field.business_type" />}
                     rules={[
                       {
                         required: true,
-                        message: "Please select type!",
+                        message: <IntlMessages id="app.supplierregistration.field.business_type.error.required" />,
                       },
                     ]}
                   >
@@ -458,7 +457,7 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Telephone1"
+                    label={<IntlMessages id="app.supplierregistration.field.business_phoneNumber1" />}
                     name="business_phoneNumber1"
                     rules={[
                       {
@@ -466,11 +465,11 @@ const SupplierRegistration = (props) => {
                         validator: (_, value) => {
                           if (!value) {
                             return Promise.reject(
-                              "Please input your telephone!"
+                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />
                             );
                           } else if (isNaN(value)) {
                             return Promise.reject(
-                              "Please input valid telephone!"
+                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />
                             );
                           }
                           return Promise.resolve();
@@ -486,7 +485,8 @@ const SupplierRegistration = (props) => {
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label="Telephone2" name="business_phoneNumber2">
+                  <FormItem label={<IntlMessages id="app.supplierregistration.field.business_phoneNumber2" />}
+                    name="business_phoneNumber2">
                     <Input
                       placeholder="Telephone2"
                       addonBefore={prefixSelector("business_telephone2")}
@@ -495,13 +495,13 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Business Email"
+                    label={<IntlMessages id="app.supplierregistration.field.business_emailId" />}
                     name="business_emailId"
                     rules={[
                       {
                         required: true,
                         type: "email",
-                        message: "The input is not valid E-mail!",
+                        message: <IntlMessages id="app.supplierregistration.field.business_emailId.error.email" />,
                       },
                     ]}
                   >
@@ -510,12 +510,12 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col xs={24}>
                   <Form.Item
-                    label="Category"
+                    label={<IntlMessages id="app.supplierregistration.field.business_categories" />}
                     name="business_categories"
                     rules={[
                       {
                         required: true,
-                        message: "Please select your categories!",
+                        message: <IntlMessages id="app.supplierregistration.field.business_categories.error.required" />,
                         type: "array",
                       },
                     ]}
@@ -557,7 +557,8 @@ const SupplierRegistration = (props) => {
                   </Form.Item>
                 </Col>
                 <Col xs={24}>
-                  <FormItem label="Comments" name="business_supplier_info">
+                  <FormItem label={<IntlMessages id="app.supplierregistration.field.business_supplier_info" />}
+                  name="business_supplier_info">
                     <TextArea placeholder="services offer" autosize/>
                   </FormItem>
                 </Col>
@@ -567,7 +568,7 @@ const SupplierRegistration = (props) => {
                       onChange={businessAddressHandler}
                       checked={sameAsBusiness}
                     >
-                      Billing address same as Business address
+                      <IntlMessages id="app.supplierregistration.field.samebilling_address" />
                     </Checkbox>
                   </Form.Item>
                 </Col>
@@ -576,10 +577,11 @@ const SupplierRegistration = (props) => {
               {!sameAsBusiness && (
                 <Row gutter={24} className="bottom-divider">
                   <Col xs={24}>
-                    <WidgetHeader title="Billing Information"/>
+                    <WidgetHeader title={<IntlMessages id="app.supplierregistration.billing_title" />} />
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Address 1" name="billing_addressLine1">
+                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_addressLine1" />}
+                    name="billing_addressLine1">
                       <Input
                         size="large"
                         placeholder="san pascual"
@@ -587,7 +589,8 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Address 2" name="billing_addressLine2">
+                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_addressLine2" />}
+                    name="billing_addressLine2">
                       <Input
                         size="large"
                         placeholder="las condes"
@@ -595,7 +598,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Region" name="billing_regionId">
+                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_regionId" />} name="billing_regionId">
                       <Select
                         size="large"
                         placeholder="Please select Region"
@@ -614,7 +617,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Commune" name="billing_communeId">
+                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_communeId"/>} name="billing_communeId">
                       <Select size="large" placeholder="Please select Commune">
                         {communes2 &&
                         communes2.map((commune) => (
@@ -629,7 +632,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Telephone1" name="billing_phoneNumber1">
+                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_phoneNumber1" />} name="billing_phoneNumber1">
                       <Input
                         size="large"
                         placeholder="Telephone1"
@@ -638,7 +641,7 @@ const SupplierRegistration = (props) => {
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label="Telephone2" name="billing_phoneNumber2">
+                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_phoneNumber2" />} name="billing_phoneNumber2">
                       <Input
                         size="large"
                         placeholder="Telephone2"
@@ -651,21 +654,21 @@ const SupplierRegistration = (props) => {
 
               <Row gutter={24} style={{marginBottom: 20}}>
                 <Col xs={24}>
-                  <WidgetHeader title="Business Contact in Charge"/>
+                  <WidgetHeader title={<IntlMessages id="app.supplierregistration.business_contact_title" />} />
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label="Name" name="bcontact_name">
+                  <FormItem label={<IntlMessages id="app.supplierregistration.field.bcontact_name" />} name="bcontact_name">
                     <Input size="large" placeholder="Name"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label="Surname" name="bcontact_surname">
+                  <FormItem label={<IntlMessages id="app.supplierregistration.field.bcontact_surname" />} name="bcontact_surname">
                     <Input size="large" placeholder="Surname"/>
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label="Email"
+                    label={<IntlMessages id="app.supplierregistration.field.bcontact_email" />}
                     name="bcontact_email"
                     rules={[
                       {
@@ -679,7 +682,7 @@ const SupplierRegistration = (props) => {
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label="Charge" name="bcontact_charge">
+                  <FormItem label={<IntlMessages id="app.supplierregistration.field.bcontact_charge" />} name="bcontact_charge">
                     <Input size="large" placeholder="Charge"/>
                   </FormItem>
                 </Col>
@@ -692,7 +695,7 @@ const SupplierRegistration = (props) => {
                         name="supplierInfoSharing"
                       >
                         <Checkbox onChange={() => setSupplierInfoShareable(!isSupplierInfoShareable)}>
-                          Do you want to share supplier info with others ?
+                          <IntlMessages id="app.supplierregistration.shareinfo_message" />
                         </Checkbox>
                         <span className="gx-signup-form-forgot gx-link">
                 </span>
@@ -702,7 +705,7 @@ const SupplierRegistration = (props) => {
                 )}
               <Row gutter={24} style={{ marginBottom: 20 }}>
                 <Col xs={24}>
-                  <WidgetHeader title="Business Logo"/>
+                  <WidgetHeader title={<IntlMessages id="app.supplierregistration.business_logo_title" />} />
                 </Col>
                 <Col xs={24}>
                   <FilesManager
@@ -723,7 +726,7 @@ const SupplierRegistration = (props) => {
                   <Form.Item
                     name="iAccept"
                     rules={[
-                      {required: !iAccept && true, message: "Should accept agreement!"},
+                      { required: !iAccept && true, message: <IntlMessages id="app.supplierregistration.field.iAccept.error.required" /> },
                     ]}
                   >
                     <Checkbox onChange={() => setIAccept(!iAccept)}>
@@ -762,11 +765,11 @@ const SupplierRegistration = (props) => {
         confirmBtnText="OK"
         show={showAlert}
         success
-        title={"Welcome To Next Deal!!"}
+        title={<IntlMessages id="app.supplierregistration.successmessage.title" />}
         onConfirm={onAlertConfirmed}
       >
         <div>
-        Thank you for signing up. This welcome email lines up with the company’s brand image and inspires you to the next trip.
+          <IntlMessages id="app.supplierregistration.successmessage.content" />
         </div>
       </SweetAlert>
     </div>

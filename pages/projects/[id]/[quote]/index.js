@@ -161,7 +161,7 @@ const NewQuote = (props) => {
           <Col xl={12} xs={24}>
             <Form.Item
               name="projectName"
-              label={'Nombre del Projecto'}
+              label={<IntlMessages id="app.quotation.field.projectName"/>}
               rules={[stringRule]}
             >
               <Input placeholder="Project Name" disabled/>
@@ -246,12 +246,12 @@ const NewQuote = (props) => {
           </Col>
           <Col xl={12} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
-              label="Suppliers"
+              label={<IntlMessages id="app.quotation.suppliers"/>}
               name="suppliers"
               rules={[
                 {
                   required: true,
-                  message: "Please select your suppliers!",
+                  message: <IntlMessages id="app.quotation.suppliers.error.required" />,
                   type: "array",
                 },
               ]}
@@ -273,8 +273,10 @@ const NewQuote = (props) => {
               </Select>
             </Form.Item>
             <Form.Item className="gx-d-flex gx-justify-content-center">
-              <Divider>OR</Divider>
-              <p className="gx-text-center"><Button type="link" onClick={() => setVisible(true)}>Add a Supplier</Button>
+              <Divider><IntlMessages id="app.userAuth.or" /></Divider>
+              <p className="gx-text-center"><Button type="link" onClick={() => setVisible(true)}>
+                <IntlMessages id="app.quotation.addsupplier" />
+                </Button>
               </p>
             </Form.Item>
             <Row gutter={24} style={{ marginBottom: 20 }}>
@@ -305,7 +307,7 @@ const NewQuote = (props) => {
         </Row>
       </Form>
       <Modal
-        title="Supplier Registration"
+        title={<IntlMessages id="app.supplierregistration.page_title" />}
         centered
         visible={visible}
           // onOk={() => setVisible(false)}
