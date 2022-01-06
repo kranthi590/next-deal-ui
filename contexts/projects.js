@@ -1,7 +1,7 @@
 import React, { useState, useContext, createContext } from "react";
 import {httpClient, setAuthToken} from "../util/Api";
 import {Cookies} from "react-cookie";
-import {errorNotification} from "../util/util";
+import {errorNotification, handleErrorNotification} from "../util/util";
 
 const projectContext = createContext({});
 
@@ -55,7 +55,7 @@ const useProviderProject = () => {
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        handleErrorNotification(error);
         fetchError(error.message);
       });
   };

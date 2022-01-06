@@ -82,7 +82,7 @@ const useProviderRegistration = () => {
     httpClient
       .post("buyers", data)
       .then(({data}) => {
-        if (data) {
+        if (data.data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
@@ -91,18 +91,14 @@ const useProviderRegistration = () => {
         }
       })
       .catch(function (error) {
-        if(error.response && error.response.data && error.response.data.errors && error.response.data.errors.length){
-          handleErrorNotification(error.response.data.errors);
-        }else{
-        errorNotification(error.message, "app.registration.errorMessageTitle")
-        }
+        handleErrorNotification(error);
         fetchError(error.message);
       });
   };
 
-  const registerSupplier = (data, callbackFun) => {
+  const registerSupplier = (data,isBuyer, callbackFun) => {
     fetchStart();
-    if (data && !data.isShared){
+    if (data && isBuyer){
       const headers = setAuthToken();
       const cookie = new Cookies()
       const buyerId = cookie.get('buyerId');
@@ -118,7 +114,7 @@ const useProviderRegistration = () => {
           }
         })
         .catch(function (error) {
-          errorNotification(error.message, "app.registration.errorMessageTitle")
+          handleErrorNotification(error);
           fetchError(error.message);
         });
     } else {
@@ -129,16 +125,12 @@ const useProviderRegistration = () => {
             fetchSuccess();
             if (callbackFun) callbackFun(data.data);
           } else {
-            errorNotification(data.error, "app.registration.errorMessageTitle")
+            errorNotification(error.message, "app.registration.errorMessageTitle")
             fetchError(data.error);
           }
         })
         .catch(function (error) {
-          if(error.response&&error.response.data&&error.response.data.errors&&error.response.data.errors.length){
-            handleErrorNotification(error.response.data.errors);
-          }else{
-          errorNotification(error.message, "app.registration.errorMessageTitle")
-          }
+          handleErrorNotification(error);
           fetchError(error.message);
         });
     }

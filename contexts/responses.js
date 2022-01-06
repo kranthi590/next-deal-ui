@@ -53,6 +53,7 @@ const useProviderResponses = () => {
         }
       })
       .catch(function (error) {
+        handleErrorNotification(error);
         fetchError(error.message);
       });
   };
@@ -73,6 +74,7 @@ const useProviderResponses = () => {
         }
       })
       .catch(function (error) {
+        handleErrorNotification(error);
         fetchError(error.message);
       });
   };
@@ -93,6 +95,7 @@ const useProviderResponses = () => {
         }
       })
       .catch(function (error) {
+        handleErrorNotification(error);
         fetchError(error.message);
       });
   };
@@ -115,6 +118,11 @@ const useProviderResponses = () => {
     //     }
     //   })
     //   .catch(function (error) {
+      // if(error.response&&error.response.data&&error.response.data.errors&&error.response.data.errors.length){
+      //   handleErrorNotification(error.response.data.errors);
+      // }else{
+      //   errorNotification(error.message, "app.registration.errorMessageTitle")
+      // }
     //     fetchError(error.message);
     //   });
   };

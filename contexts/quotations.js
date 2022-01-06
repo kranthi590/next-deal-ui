@@ -55,7 +55,7 @@ const useProviderQuotation = () => {
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        handleErrorNotification(error);
         fetchError(error.message);
       });
   };

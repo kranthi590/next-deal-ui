@@ -66,7 +66,7 @@ const SignUp = (props) => {
           <div className="gx-app-login-content registration-form">
             <div className="form-wrapper-login">
               <div className="heading-wrapper">
-                <h1>Sign Up to {getSubDomain(isClient ? window.location.hostname: 'www.nextdeal.dev')}</h1>
+                <h1><IntlMessages id="app.userAuth.signUp.page_title" /> {getSubDomain(isClient ? window.location.hostname: 'www.nextdeal.dev')}</h1>
                 <p>
                   <Link href="/signin">
                     <a>
@@ -84,9 +84,9 @@ const SignUp = (props) => {
                 className="gx-signin-form gx-form-row0"
               >
                 <FormItem
-                  label="First Name"
+                  label={<IntlMessages id="app.userAuth.signUp.field.firstName" />}
                   rules={[
-                    { required: true, message: "Please input your first name!" },
+                    { required: true, message: <IntlMessages id="app.userAuth.signUp.field.firstName.error.required" /> },
                   ]}
                   name="firstName"
                 >
@@ -96,9 +96,9 @@ const SignUp = (props) => {
                   />
                 </FormItem>
                 <FormItem
-                  label="Last Name"
+                  label={<IntlMessages id="app.userAuth.signUp.field.lastName" />}
                   rules={[
-                    { required: true, message: "Please input your last name!" },
+                    { required: true, message: <IntlMessages id="app.userAuth.signUp.field.lastName.error.required" /> },
                   ]}
                   name="lastName"
                 >
@@ -109,30 +109,30 @@ const SignUp = (props) => {
                 </FormItem>
 
                 <FormItem
-                  label="Email"
+                  label={<IntlMessages id="app.userAuth.signUp.field.email" />}
                   name="email"
                   rules={[
                     {
                       required: true,
                       type: "email",
-                      message: "The input is not valid E-mail!",
+                      message: <IntlMessages id="app.userAuth.signUp.field.email.error.required" />,
                     },
                   ]}
-                  help="This email will be your login id"
+                  help={<IntlMessages id="app.userAuth.signUp.field.email.helptext" />}
                 >
                   <Input className="gx-input-lineheight" placeholder="Email" />
                 </FormItem>
                 <Form.Item
-                  label="Password"
+                  label={<IntlMessages id="app.userAuth.signUp.field.password" />}
                   name="password"
                   allowClear
                   rules={[
                     {
                       required: true,
-                      message: "Please input your password!",
+                      message: <IntlMessages id="app.userAuth.signUp.field.password.error.required" />,
                     },{
                       min:6,
-                      message:"Password length must be atleast 6 characters"
+                      message:<IntlMessages id="app.userAuth.signUp.field.password.error.length" />
                     }
                   ]}
                   hasFeedback
@@ -144,7 +144,7 @@ const SignUp = (props) => {
                 </Form.Item>
 
                 <Form.Item
-                  label="Confirm"
+                  label={<IntlMessages id="app.userAuth.signUp.field.confirm"/>}
                   name="confirm"
                   dependencies={["password"]}
                   hasFeedback
@@ -152,7 +152,7 @@ const SignUp = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: "Please confirm your password!",
+                      message: <IntlMessages id="app.userAuth.signUp.field.confirm.error.required"/>,
                     },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
@@ -160,9 +160,7 @@ const SignUp = (props) => {
                           return Promise.resolve();
                         }
                         return Promise.reject(
-                          new Error(
-                            "The two passwords that you entered do not match!"
-                          )
+                          <IntlMessages id="app.userAuth.signUp.field.confirm.error.match"/>
                         );
                       },
                     }),

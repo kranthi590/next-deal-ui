@@ -5,10 +5,11 @@ import {
 } from "antd";
 import { SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import moment from "moment";
+import IntlMessages from "../../../../util/IntlMessages";
 
 const QuoteAwarded = (props) => {
     const { onSave, completed,onDeaward } = props;
-    const { id, netWorth, paymentCondition, deliveryDate, supplier, additionalData } = props.formData;
+    const { id, netWorth, paymentCondition, deliveryDate, supplier, comments } = props.formData;
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
     const [cvalidityDate, setCValidityDate] = useState(null);
@@ -18,7 +19,7 @@ const QuoteAwarded = (props) => {
         netWorth: netWorth,
         paymentCondition: paymentCondition,
         deliveryDate: moment(deliveryDate),
-        description: additionalData
+        comments: comments
     }
     const deliveryDateChangeHandler = (date) => {
         setCDeliveryDate(moment(date).valueOf());
@@ -62,13 +63,13 @@ const QuoteAwarded = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="netWorth"
-                        label="Net Worth"
+                        label={<IntlMessages id="app.quotationresponses.field.netWorth" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: <IntlMessages id="app.quotationresponses.field.netWorth.error.required" />,
                             },
                         ]}>
                         <InputNumber
@@ -83,13 +84,13 @@ const QuoteAwarded = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="deliveryDate"
-                        label="Delivery Date"
+                        label={<IntlMessages id="app.quotationresponses.field.deliveryDate" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: <IntlMessages id="app.quotationresponses.field.deliveryDate.error.required" />,
                             },
                         ]}>
                         <DatePicker
@@ -103,13 +104,13 @@ const QuoteAwarded = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="purchaseOrderNumber"
-                        label="Purchase Order Number"
+                        label={<IntlMessages id="app.quotationresponses.field.purchaseOrderNumber" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: <IntlMessages id="app.quotationresponses.field.purchaseOrderNumber.error.required" />,
                             },
                         ]}>
                         <Input placeholder="Number Of Purchase Order" disabled={completed} />
@@ -118,13 +119,13 @@ const QuoteAwarded = (props) => {
                 <Col xl={6} xs={24}>
                     <Form.Item
                         name="paymentCondition"
-                        label="Payment Conditions"
+                        label={<IntlMessages id="app.quotationresponses.field.paymentCondition" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                         rules={[
                             {
                                 required: true,
-                                message: 'Input something!',
+                                message: <IntlMessages id="app.quotationresponses.field.paymentCondition.error.required" />,
                             },
                         ]}>
                         <Select allowClear placeholder="Payment Conditions" disabled>
@@ -141,8 +142,8 @@ const QuoteAwarded = (props) => {
                 </Col>
                 <Col xl={6} xs={24}>
                     <Form.Item
-                        name="description"
-                        label="Comments"
+                        name="comments"
+                        label={<IntlMessages id="app.quotationresponses.field.description" />}
                         labelCol={{ span: 24 }}
                         wrapperCol={{ span: 24 }}
                     >
@@ -153,10 +154,14 @@ const QuoteAwarded = (props) => {
                     !completed && (
                         <Col xl={18} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
                             <Form.Item wrapperCol={{ span: 24 }}>
-                                <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="gx-mb-0">Confirm Receiption</Button>
+                                <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="gx-mb-0">
+                                    <span><IntlMessages id="app.quotationresponses.button.confirm" /></span>
+                                </Button>
                             </Form.Item>
                             <Form.Item wrapperCol={{ span: 24 }}>
-                                <Button type="primary" icon={<UndoOutlined />} className="gx-mb-0" onClick={onDeaward}>Deaward</Button>
+                                <Button type="primary" icon={<UndoOutlined />} className="gx-mb-0" onClick={onDeaward}>
+                                    <span><IntlMessages id="app.quotationresponses.button.deaward" /></span>
+                                </Button>
                             </Form.Item>
                         </Col>
                     )

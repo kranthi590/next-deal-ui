@@ -15,6 +15,7 @@ import NoDataAvailable from "../../../../../app/components/NoDataAvailable.js";
 import QuotationCompleted from "../../../../../app/components/NextDeal/QuotationCompleted";
 import FilesManager from "../../../../../app/common/FileManager";
 import BreadCrumb from "../../../../../app/components/BreadCrumb";
+import IntlMessages from "../../../../../util/IntlMessages";
 
 
 const NewQuoteResponse = (props) => {
@@ -148,9 +149,9 @@ const NewQuoteResponse = (props) => {
   const projectDetailsTabs = {
     defaultActiveKey: "1",
     tabs: [
-      { key: "1", title: "In Progress", badgeCount: projectsList.length, tabContentComponent: <InProgressForms /> },
-      { key: "2", title: "Awarded", badgeCount: awardedResponses.length, tabContentComponent: <AwardedForms /> },
-      { key: "3", title: "Completed", badgeCount: (completed === true) ? awardedResponses.length : 0, tabContentComponent: <CompletedForms /> },
+      { key: "1", title: <IntlMessages id="app.quotationresponses.button.inprogress" />, badgeCount: projectsList.length, tabContentComponent: <InProgressForms /> },
+      { key: "2", title: <IntlMessages id="app.quotationresponses.button.awarded" />, badgeCount: awardedResponses.length, tabContentComponent: <AwardedForms /> },
+      { key: "3", title: <IntlMessages id="app.quotationresponses.button.completed" />, badgeCount: (completed === true) ? awardedResponses.length : 0, tabContentComponent: <CompletedForms /> },
     ]
   }
   return (

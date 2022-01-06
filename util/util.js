@@ -41,7 +41,8 @@ const validationErrors = [
   "QUOTATION_NOT_AWARDED",
   "QUOTATION_ALREADY_COMPLETED",
   "INVALID_ASSET_RELATION",
-  "INVALID_ASSET_RELATION_ID"
+  "INVALID_ASSET_RELATION_ID",
+  "BUYERS_USERS_LIMIT_EXCEEDED"
 ]
 
 export const successNotification = (messageId) => {
@@ -60,9 +61,9 @@ export const errorNotification = (message = "", titleId) => {
   );
 };
 
-export const handleErrorNotification = (errorArr) => {
-  console.log(errorArr)
-  errorArr.map(err => {
+export const handleErrorNotification = (error) => {
+  if(error.response&&error.response.data&&error.response.data.errors&&error.response.data.errors.length){
+    error.response.data.errors.map(err => {
     const errorExists = validationErrors.includes(err.errorCode);
     NotificationManager.error(
       <IntlMessages
@@ -70,8 +71,10 @@ export const handleErrorNotification = (errorArr) => {
       "",
       NOTIFICATION_TIMEOUT
     );
+    })
+  }else{
+    errorNotification(error.message, "app.registration.errorMessageTitle")
   }
-  )
 }
 
 export const extractData = (key, data) => {
