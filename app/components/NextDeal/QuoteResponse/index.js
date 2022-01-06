@@ -168,12 +168,12 @@ const QuoteResponses = (props) => {
                         ]}>
                         <Select allowClear placeholder="Payment Conditions" disabled={awarded}>
                             <Option value="al-contado">al contado</Option>
-                            <Option value="7">7 días</Option>
-                            <Option value="15">15 días</Option>
-                            <Option value="30">30 días</Option>
-                            <Option value="45">45 días</Option>
-                            <Option value="60">60 días</Option>
-                            <Option value="90">90 días</Option>
+                            <Option value="7-dias">7 días</Option>
+                            <Option value="15-dias">15 días</Option>
+                            <Option value="30-dias">30 días</Option>
+                            <Option value="45-dias">45 días</Option>
+                            <Option value="60-dias">60 días</Option>
+                            <Option value="90-dias">90 días</Option>
                             <Option value="otro">otro</Option>
                         </Select>
                     </Form.Item>
