@@ -133,3 +133,29 @@ export const getAvatar = str => {
   const splitString = stringInfo.splice(0, 2)
   return splitString.join('').toUpperCase();
 }
+
+export function numberToClp(amount,separator = ".",symbol = "$") {
+  let cleanValue = amount.toString().replace(/\D/g, '');
+  let valueConverted = cleanValue ?cleanValue.split("").reverse() : "";
+  if(!cleanValue)return "";
+  const length = valueConverted.length;
+  const divs = length / 3;
+  const sobr = length % 3;
+  let finalValue;
+  let array = [];
+  valueConverted.reduce((previus,current,index)=>{
+    if(index % 3 == 0){
+      array.push(previus.split("").reverse().join(""))
+      return current
+    }
+    return previus+current;
+  })
+  if(sobr){
+    let valSobr = valueConverted.reverse().slice(0,sobr)
+    let point = length < 3 ? '' : separator;
+    finalValue = valSobr.join('')+ point;
+  }else{
+    array.push(valueConverted.reverse().slice(0,3).join(''))
+  }
+  return `${symbol}${finalValue?finalValue:''}${array.reverse().join(separator)}`
+}

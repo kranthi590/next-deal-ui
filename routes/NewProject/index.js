@@ -18,11 +18,11 @@ import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
-  getDateInMilliseconds, getBuyerId,
+  getDateInMilliseconds, getBuyerId, numberToClp,
 } from "../../util/util";
 import {useRouter} from "next/router";
 import BreadCrumb from "../../app/components/BreadCrumb";
-import moment from 'moment';
+import ClpFormatter from "../../shared/CLP";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -106,6 +106,10 @@ const NewProject = (props) => {
     return  value < formData.getFieldValue('startDate');
   };
 
+  const onChange = async (value) => {
+    setEstimatedBudget(value);
+  }
+
   return (
     <>
       <BreadCrumb navItems={[{ text: "Projects", route: "/projects" }, { text: "Create Project" }]} />
@@ -172,13 +176,13 @@ const NewProject = (props) => {
               name="estimatedBudget"
               label={<IntlMessages id="app.project.field.estimatedBudget" />}
             >
-              <InputNumber
+              <ClpFormatter
+                {...props}
                 className="gx-w-100"
-                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                placeholder="Estimated Budget"
-                onChange={(value) => setEstimatedBudget(value)}
-              />
+                value={estimatedBudget}
+                size="large"
+                onChange={onChange}
+                placeholder="1.00.00"/>
             </Form.Item>
             <Form.Item
               label={<IntlMessages id="app.project.field.currency" />}
