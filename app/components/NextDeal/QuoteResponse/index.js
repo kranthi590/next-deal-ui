@@ -3,12 +3,12 @@ import {
     Button, Row, Col, Form, Input, Checkbox, Select,
     DatePicker, Upload, Card, Divider, InputNumber
 } from "antd";
-import { SaveOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
+import { SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import moment from "moment";
 import IntlMessages from "../../../../util/IntlMessages";
 
 const QuoteResponses = (props) => {
-    const { onSave, awarded } = props;
+    const { onSave, awarded,onAbort } = props;
     const { id, fantasyName, newQuote, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, comments } = props.formData;
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
     const [cvalidityDate, setCValidityDate] = useState(null);
@@ -29,7 +29,7 @@ const QuoteResponses = (props) => {
             netWorth: null,
             includesTax: false,
             paymentCondition: null,
-            incoterm: "NODE_TLS_REJECT_UNAUTHORIZED",
+            incoterm: "NO_APLICA",
             deliveryDate: null,
             validityDate: null,
             comments: null
@@ -230,6 +230,11 @@ const QuoteResponses = (props) => {
                 {
                     !awarded && (
                         <Col xl={6} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
+                            {!newQuote&&(<Form.Item wrapperCol={{ span: 24 }}>
+                                <Button type="primary" icon={<CloseOutlined />} className="gx-mb-0" onClick={onAbort}>
+                                    <span><IntlMessages id="app.quotationresponses.button.abort" /></span>
+                                </Button>
+                            </Form.Item>)}
                             <Form.Item wrapperCol={{ span: 24 }}>
                                 <Button type="primary" htmlType="submit" icon={<SaveOutlined />} className="gx-mb-0">
                                     <span>
