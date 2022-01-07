@@ -118,11 +118,30 @@ const useProviderResponses = () => {
     //     }
     //   })
     //   .catch(function (error) {
-      // if(error.response&&error.response.data&&error.response.data.errors&&error.response.data.errors.length){
-      //   handleErrorNotification(error.response.data.errors);
+      // handleErrorNotification(error);
+    //     fetchError(error.message);
+    //   });
+  };
+
+  const abortQuotation = (id, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    // implement deaward api
+    // httpClient
+    //   .post(`quotations/${id}/abort`, data, {
+    //     headers: headers
+    //   })
+    //   .then(({ data }) => {
+    //     if (data) {
+    //       fetchSuccess();
+    //       if (callbackFun) callbackFun(data.data);
       // }else{
-      //   errorNotification(error.message, "app.registration.errorMessageTitle")
+    //       fetchError(data.error);
       // }
+    //   })
+    //   .catch(function (error) {
+      // handleErrorNotification(error);
     //     fetchError(error.message);
     //   });
   };
@@ -133,6 +152,7 @@ const useProviderResponses = () => {
     createResponses,
     createAward,
     completeQuotation,
-    deAwardQuotation
+    deAwardQuotation,
+    abortQuotation
   };
 };

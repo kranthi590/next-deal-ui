@@ -20,7 +20,7 @@ import IntlMessages from "../../../../../util/IntlMessages";
 
 const NewQuoteResponse = (props) => {
   const { projectsList, quotationData, awardedResponses } = props;
-  const { createResponses, createAward, completeQuotation,deAwardQuotation } = useResponse();
+  const { createResponses, createAward, completeQuotation,deAwardQuotation, abortQuotation } = useResponse();
   const router = useRouter();
   const projectId = router.query.quote;
   let awarded = false, completed = false;
@@ -65,6 +65,14 @@ const NewQuoteResponse = (props) => {
       successNotification("app.registration.detailsSaveSuccessMessage");
       setTimeout(() => {
         window.location.hash = "1";
+        window.location.reload();
+      }, 1000);
+    });
+  }
+  const onAbortQuotation = (qid) => {
+    abortQuotation(qid, (data) => {
+      successNotification("app.registration.detailsSaveSuccessMessage");
+      setTimeout(() => {
         window.location.reload();
       }, 1000);
     });
@@ -117,7 +125,8 @@ const NewQuoteResponse = (props) => {
     return (<>
       {(projectsList.length === 0) && <NoDataAvailable />}
       {
-        projectsList.map(item => (<QuoteResponses formData={item} key={item.id} onSave={onSave} awarded={awarded} />))
+        projectsList.map(item => (<QuoteResponses formData={item} key={item.id} onSave={onSave} awarded={awarded}
+          onAbort={() => { onAbortQuotation(item.id) }} />))
       }
     </>)
   }
