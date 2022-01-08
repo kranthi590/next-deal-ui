@@ -5,6 +5,8 @@ import {
 } from "antd";
 import moment from "moment";
 import IntlMessages from "../../../../util/IntlMessages";
+import ClpFormatter from "../../../../shared/CLP";
+import { clpToNumber, numberToClp } from "../../../../util/util";
 
 const QuotationCompleted = (props) => {
     const { onSave } = props;
@@ -12,10 +14,12 @@ const QuotationCompleted = (props) => {
 
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
     const [cvalidityDate, setCValidityDate] = useState(null);
+    const [netValue, setNetValue] = useState(netWorth || null);
+
     const [form] = Form.useForm();
 
     const initialFormData = {
-        netWorth: netWorth,
+        netWorth: numberToClp(netWorth),
         paymentCondition: paymentCondition,
         deliveryDate: moment(deliveryDate),
         comments: comments
@@ -34,6 +38,8 @@ const QuotationCompleted = (props) => {
                 acc = { ...acc, deliveryDate: cdeliveryDate };
             } else if (data[key] && key === "validityDate") {
                 acc = { ...acc, validityDate: cvalidityDate };
+            } else if (data[key] && key === "netWorth") {
+                acc = { ...acc, netWorth: clpToNumber(netValue) };
             } else if (data[key]) {
                 acc = { ...acc, [key]: data[key] };
             }
@@ -47,6 +53,9 @@ const QuotationCompleted = (props) => {
         onSave({ purchaseOrderNumber: values.purchaseOrderNumber }, id);
 
     };
+    const onNetValueChange = async (value) => {
+        setNetValue(value);
+    }
 
     return (<Card title={supplier.fantasyName} className="ant-card-bordered gx-card-widget">
         <Divider />
@@ -71,11 +80,11 @@ const QuotationCompleted = (props) => {
                                 message: <IntlMessages id="app.quotationresponses.field.netWorth.error.required" />,
                             },
                         ]}>
-                        <InputNumber
+                        <ClpFormatter
                             className="gx-w-100"
-                            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                            placeholder="Amount"
+                            value={netValue}
+                            onChange={onNetValueChange}
+                            placeholder="1.00.00"
                             disabled
                         />
                     </Form.Item>
