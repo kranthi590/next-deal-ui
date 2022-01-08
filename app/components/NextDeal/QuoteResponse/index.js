@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Button, Row, Col, Form, Input, Checkbox, Select,
     DatePicker, Upload, Card, Divider, InputNumber
@@ -6,17 +6,19 @@ import {
 import { SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import moment from "moment";
 import IntlMessages from "../../../../util/IntlMessages";
+import ClpFormatter from "../../../../shared/CLP";
+import { clpToNumber, numberToClp } from "../../../../util/util";
 
 const QuoteResponses = (props) => {
     const { onSave, awarded,onAbort } = props;
     const { id, fantasyName, newQuote, netWorth, paymentCondition, includesTax, incoterm, deliveryDate, validityDate, supplier, comments } = props.formData;
     const [cdeliveryDate, setCDeliveryDate] = useState(null);
     const [cvalidityDate, setCValidityDate] = useState(null);
-
+    const [netValue, setNetValue] = useState(netWorth || null);
     let initialFormData = {};
     if (newQuote !== true) {
         initialFormData = {
-            netWorth: netWorth,
+            netWorth: numberToClp(netWorth),
             paymentCondition: paymentCondition,
             includesTax: includesTax,
             incoterm: incoterm,
@@ -29,7 +31,7 @@ const QuoteResponses = (props) => {
             netWorth: null,
             includesTax: false,
             paymentCondition: null,
-            incoterm: "NO_APLICA",
+            incoterm: "NO-APLICA",
             deliveryDate: null,
             validityDate: null,
             comments: null
@@ -53,6 +55,8 @@ const QuoteResponses = (props) => {
                 acc = { ...acc, deliveryDate: cdeliveryDate };
             } else if (data[key] && key === "validityDate") {
                 acc = { ...acc, validityDate: cvalidityDate };
+            } else if (data[key] && key === "netWorth") {
+                acc = { ...acc, netWorth: clpToNumber(netValue) };
             } else if (data[key]) {
                 acc = { ...acc, [key]: data[key] };
             }
@@ -79,6 +83,10 @@ const QuoteResponses = (props) => {
     return value < formData.getFieldValue('deliveryDate') || moment() >= value;
   };
 
+    const onNetValueChange = async (value) => {
+        setNetValue(value);
+    }
+
     return (<Card title={fantasyName ? fantasyName : supplier.fantasyName} className="ant-card-bordered gx-card-widget">
         <Divider />
         <Form
@@ -103,11 +111,11 @@ const QuoteResponses = (props) => {
                                 message: <IntlMessages id="app.quotationresponses.field.netWorth.error.required" />,
                             },
                         ]}>
-                        <InputNumber
+                        <ClpFormatter
                             className="gx-w-100"
-                            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                            placeholder="Net Worth"
+                            value={netValue}
+                            onChange={onNetValueChange}
+                            placeholder="1.00.00"
                             disabled={awarded}
                         />
                     </Form.Item>

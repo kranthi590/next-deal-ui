@@ -18,10 +18,11 @@ import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
-  getDateInMilliseconds, getBuyerId, numberToClp,
+  getDateInMilliseconds, getBuyerId, clpToNumber,
 } from "../../util/util";
 import {useRouter} from "next/router";
 import BreadCrumb from "../../app/components/BreadCrumb";
+import moment from 'moment';
 import ClpFormatter from "../../shared/CLP";
 
 const { TextArea } = Input;
@@ -78,6 +79,8 @@ const NewProject = (props) => {
         acc = { ...acc, startDate };
       } else if (data[key] && key === "expectedEndDate") {
         acc = { ...acc, expectedEndDate };
+      }else if (data[key] && key === "estimatedBudget") {
+        acc = { ...acc, estimatedBudget:clpToNumber(estimatedBudget) };
       } else if (data[key]) {
         acc = { ...acc, [key]: data[key] };
       }
@@ -182,7 +185,8 @@ const NewProject = (props) => {
                 value={estimatedBudget}
                 size="large"
                 onChange={onChange}
-                placeholder="1.00.00"/>
+                placeholder="1.00.00"
+              />
             </Form.Item>
             <Form.Item
               label={<IntlMessages id="app.project.field.currency" />}

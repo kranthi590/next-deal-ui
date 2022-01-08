@@ -159,3 +159,7 @@ export function numberToClp(amount,separator = ".",symbol = "$") {
   }
   return `${symbol}${finalValue?finalValue:''}${array.reverse().join(separator)}`
 }
+
+export function clpToNumber(amountStr){
+  return parseInt(amountStr.replace(/\$|\./g, ''))
+}

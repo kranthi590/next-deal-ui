@@ -17,7 +17,7 @@ import IntlMessages from "../../../../util/IntlMessages";
 import {RegistrationProvider, useRegistration} from '../../../../contexts/business-registration';
 import {ProjectProvider, useProject} from "../../../../contexts/projects";
 import {
-  getDateInMilliseconds, successNotification,
+  getDateInMilliseconds, successNotification,clpToNumber
 } from "../../../../util/util";
 import SupplierRegistrationPage from "../../../supplier-registration";
 import {QuotationProvider, useQuotation} from "../../../../contexts/quotations";
@@ -25,6 +25,7 @@ import FilesManager from "../../../../app/common/FileManager";
 import { uploadFiles } from '../../../../util/Api';
 import BreadCrumb from "../../../../app/components/BreadCrumb";
 import moment from "moment";
+import ClpFormatter from "../../../../shared/CLP";
 
 
 const {TextArea} = Input;
@@ -95,6 +96,8 @@ const NewQuote = (props) => {
         acc = {...acc, startDate};
       } else if (data[key] && key === "expectedEndDate") {
         acc = {...acc, expectedEndDate};
+      }else if (data[key] && key === "estimatedBudget") {
+        acc = {...acc, estimatedBudget:clpToNumber(estimatedBudget)};
       } else if (data[key]) {
         acc = {...acc, [key]: data[key]};
       }
@@ -129,6 +132,9 @@ const NewQuote = (props) => {
     const formData = form;
     return  value < formData.getFieldValue('startDate') || moment() >= value;
   };
+  const onBudgetChange = async (value) => {
+    setEstimatedBudget(value);
+  }
 
   return (
     <>
@@ -211,12 +217,12 @@ const NewQuote = (props) => {
               name="estimatedBudget"
               label={<IntlMessages id="app.project.field.estimatedBudget"/>}
             >
-              <InputNumber
+              <ClpFormatter
                 className="gx-w-100"
-                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                placeholder="Estimated Budget"
-                onChange={(value) => setEstimatedBudget(value)}
+                value={estimatedBudget}
+                size="large"
+                onChange={onBudgetChange}
+                placeholder="1.00.00"
               />
             </Form.Item>
             <Form.Item
