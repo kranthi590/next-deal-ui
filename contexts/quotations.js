@@ -1,17 +1,13 @@
-import React, {useState, useContext, createContext} from "react";
-import {httpClient, setAuthToken} from "../util/Api";
-import {Cookies} from "react-cookie";
-import {errorNotification,handleErrorNotification} from "../util/util";
+import React, { useState, useContext, createContext } from 'react';
+import { httpClient, setAuthToken } from '../util/Api';
+import { Cookies } from 'react-cookie';
+import { errorNotification, handleErrorNotification } from '../util/util';
 
 const quotationContext = createContext({});
 
-export function QuotationProvider({children}) {
+export function QuotationProvider({ children }) {
   const project = useProviderQuotation();
-  return (
-    <quotationContext.Provider value={project}>
-      {children}
-    </quotationContext.Provider>
-  );
+  return <quotationContext.Provider value={project}>{children}</quotationContext.Provider>;
 }
 
 export const useQuotation = () => {
@@ -20,19 +16,19 @@ export const useQuotation = () => {
 
 const useProviderQuotation = () => {
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const fetchStart = () => {
     setLoading(true);
-    setError("");
+    setError('');
   };
 
   const fetchSuccess = () => {
     setLoading(false);
-    setError("");
+    setError('');
   };
 
-  const fetchError = (error) => {
+  const fetchError = error => {
     setLoading(false);
     setError(error);
   };
@@ -40,17 +36,17 @@ const useProviderQuotation = () => {
   const createQuotation = (id, data, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
-    const cookie = new Cookies()
+    const cookie = new Cookies();
     httpClient
-      .post(`projects/${id}/quotations`,  data,{
-        headers: headers
+      .post(`projects/${id}/quotations`, data, {
+        headers: headers,
       })
-      .then(({data}) => {
+      .then(({ data }) => {
         if (data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
-          errorNotification(data.error, "app.registration.errorMessageTitle")
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);
         }
       })
@@ -63,6 +59,6 @@ const useProviderQuotation = () => {
   return {
     isLoading,
     error,
-    createQuotation
+    createQuotation,
   };
 };

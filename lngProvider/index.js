@@ -1,5 +1,5 @@
-import enLang from "./entries/en-US";
-import esLang from "./entries/es_ES";
+import enLang from './entries/en-US';
+import esLang from './entries/es_ES';
 
 const AppLocale = {
   en: enLang,

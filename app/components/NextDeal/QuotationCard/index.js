@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import Widget from "../../Widget";
-import QuotationDrawer from "../QuotationDrawer";
+import React, { useState } from 'react';
+import Widget from '../../Widget';
+import QuotationDrawer from '../QuotationDrawer';
 import Link from 'next/link';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 const QuotationCard = ({ data, activeTab }) => {
   const [isCustomizerOpened, setIsCustomizerOpened] = useState(false);
   let navTo = '';
@@ -18,22 +18,32 @@ const QuotationCard = ({ data, activeTab }) => {
     <>
       <Widget styleName={`gx-card-full gx-card-quote-border gx-mb-3`}>
         <h2 className="h3 gx-mb-2 gx-pt-2 gx-show-hand">
-          <Link href={'/projects/' + [router.query.id] + '/' + [data.id] + '/quote-response'+navTo}
-          >{data.name}</Link></h2>
+          <Link
+            href={'/projects/' + [router.query.id] + '/' + [data.id] + '/quote-response' + navTo}
+          >
+            {data.name}
+          </Link>
+        </h2>
         <div className="gx-currentplan-row gx-card-full">
-          <div className="gx-currentplan-col"><h2
-            className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">{data.quotationsCount}<sub
-              className="gx-fs-md gx-bottom-0">/Responses</sub></h2>
+          <div className="gx-currentplan-col">
+            <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">
+              {data.quotationsCount}
+              <sub className="gx-fs-md gx-bottom-0">/Responses</sub>
+            </h2>
             {/* <p className="gx-mb-1">
               <span className="gx-size-8 gx-bg-dark gx-rounded-xs gx-d-inline-block gx-mr-1" /> Lorem ipsum - 10
             </p> */}
           </div>
           <div className="gx-currentplan-col gx-currentplan-right">
-            <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">{data.suppliersCount}<sub
-              className="gx-fs-md gx-bottom-0">/Suppliers</sub></h2>
+            <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">
+              {data.suppliersCount}
+              <sub className="gx-fs-md gx-bottom-0">/Suppliers</sub>
+            </h2>
             <div className="gx-currentplan-right-content">
-              <span className="gx-text-primary gx-fs-md gx-pointer gx-mts-3 gx-oth-plans-down">Other plans <i
-                className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle" /></span>
+              <span className="gx-text-primary gx-fs-md gx-pointer gx-mts-3 gx-oth-plans-down">
+                Other plans{' '}
+                <i className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle" />
+              </span>
             </div>
           </div>
         </div>

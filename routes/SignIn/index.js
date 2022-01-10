@@ -1,27 +1,27 @@
-import React from "react";
-import { Button, Divider, Form, Input } from "antd";
-import Link from "next/link";
-import { LoginOutlined } from "@ant-design/icons";
+import React from 'react';
+import { Button, Divider, Form, Input } from 'antd';
+import Link from 'next/link';
+import { LoginOutlined } from '@ant-design/icons';
 
 // Utils
-import IntlMessages from "../../util/IntlMessages";
-import { useAuth } from "../../contexts/use-auth";
+import IntlMessages from '../../util/IntlMessages';
+import { useAuth } from '../../contexts/use-auth';
 
 // Components
-import CircularProgress from "../../app/components/CircularProgress";
-import Aside from "../../app/components/Aside";
-import Footer from "../../app/components/Footer";
+import CircularProgress from '../../app/components/CircularProgress';
+import Aside from '../../app/components/Aside';
+import Footer from '../../app/components/Footer';
 
 // Styles
-import "../../styles/form-page.css";
-import { errorNotification } from "../../util/util";
+import '../../styles/form-page.css';
+import { errorNotification } from '../../util/util';
 
-const SignIn = (props) => {
-  const { isLoading, userLogin} = useAuth();
+const SignIn = props => {
+  const { isLoading, userLogin } = useAuth();
 
-  const onFinishFailed = (errorInfo) => {};
+  const onFinishFailed = errorInfo => {};
 
-  const onFinish = (values) => {
+  const onFinish = values => {
     userLogin(values);
   };
 
@@ -33,7 +33,9 @@ const SignIn = (props) => {
           <div className="gx-app-login-content registration-form">
             <div className="form-wrapper-login">
               <div className="heading-wrapper">
-                <h1><IntlMessages id="app.userAuth.login.page_title" /></h1>
+                <h1>
+                  <IntlMessages id="app.userAuth.login.page_title" />
+                </h1>
                 <p>
                   <Link href="/signin">
                     <a>
@@ -56,7 +58,9 @@ const SignIn = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: <IntlMessages id="app.userAuth.login.field.emailId.error.required" />,
+                      message: (
+                        <IntlMessages id="app.userAuth.login.field.emailId.error.required" />
+                      ),
                     },
                   ]}
                 >
@@ -65,15 +69,16 @@ const SignIn = (props) => {
                 <Form.Item
                   label={<IntlMessages id="app.userAuth.login.field.password" />}
                   rules={[
-                    { required: true, message: <IntlMessages id="app.userAuth.login.field.password.error.required" /> },
+                    {
+                      required: true,
+                      message: (
+                        <IntlMessages id="app.userAuth.login.field.password.error.required" />
+                      ),
+                    },
                   ]}
                   name="password"
                 >
-                  <Input
-                    className="gx-input-lineheight"
-                    type="password"
-                    placeholder="Password"
-                  />
+                  <Input className="gx-input-lineheight" type="password" placeholder="Password" />
                 </Form.Item>
                 <Form.Item>
                   <Button
@@ -81,18 +86,14 @@ const SignIn = (props) => {
                     className="gx-mb-0"
                     htmlType="submit"
                     size="large"
-                    icon={
-                      <LoginOutlined
-                        style={{ fontSize: "18px", marginRight: "5px" }}
-                      />
-                    }
+                    icon={<LoginOutlined style={{ fontSize: '18px', marginRight: '5px' }} />}
                   >
                     <IntlMessages id="app.userAuth.login" />
                   </Button>
                   <Divider>
                     <IntlMessages id="app.userAuth.or" />
                   </Divider>
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: 'center' }}>
                     <Link href="/signup">
                       <a>
                         <IntlMessages id="app.userAuth.signUp" />

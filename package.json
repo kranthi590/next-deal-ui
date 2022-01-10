@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 8080",
-    "less": "lessc --js styles/wieldy.less styles/style.css && lessc --js styles/wieldy.less styles/style.min.css --compress -x"
+    "less": "lessc --js styles/wieldy.less styles/style.css && lessc --js styles/wieldy.less styles/style.min.css --compress -x",
+    "prettier": "prettier --write '**/*.{jsx,js,css}'"
   },
   "dependencies": {
     "@ant-design/icons": "^4.1.0",
@@ -25,6 +26,7 @@
     "next": "^9.4.2",
     "next-compose-plugins": "^2.2.1",
     "next-redux-wrapper": "4.0.1",
+    "prettier": "^2.5.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-bootstrap-sweetalert": "^5.2.0",

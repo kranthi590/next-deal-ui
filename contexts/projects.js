@@ -1,17 +1,13 @@
-import React, { useState, useContext, createContext } from "react";
-import {httpClient, setAuthToken} from "../util/Api";
-import {Cookies} from "react-cookie";
-import {errorNotification, handleErrorNotification} from "../util/util";
+import React, { useState, useContext, createContext } from 'react';
+import { httpClient, setAuthToken } from '../util/Api';
+import { Cookies } from 'react-cookie';
+import { errorNotification, handleErrorNotification } from '../util/util';
 
 const projectContext = createContext({});
 
 export function ProjectProvider({ children }) {
   const project = useProviderProject();
-  return (
-    <projectContext.Provider value={project}>
-      {children}
-    </projectContext.Provider>
-  );
+  return <projectContext.Provider value={project}>{children}</projectContext.Provider>;
 }
 
 export const useProject = () => {
@@ -20,19 +16,19 @@ export const useProject = () => {
 
 const useProviderProject = () => {
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const fetchStart = () => {
     setLoading(true);
-    setError("");
+    setError('');
   };
 
   const fetchSuccess = () => {
     setLoading(false);
-    setError("");
+    setError('');
   };
 
-  const fetchError = (error) => {
+  const fetchError = error => {
     setLoading(false);
     setError(error);
   };
@@ -40,12 +36,16 @@ const useProviderProject = () => {
   const newProject = (data, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
-    const cookie = new Cookies()
+    const cookie = new Cookies();
     const buyerId = cookie.get('buyerId');
     httpClient
-      .post(`projects`, {...data}, {
-        headers: headers
-      })
+      .post(
+        `projects`,
+        { ...data },
+        {
+          headers: headers,
+        },
+      )
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
@@ -63,22 +63,22 @@ const useProviderProject = () => {
   const getProjectById = (id, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
-    const cookie = new Cookies()
+    const cookie = new Cookies();
     httpClient
       .get(`projects/${id}`, {
-        headers: headers
+        headers: headers,
       })
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
-          errorNotification(data.error, "app.registration.errorMessageTitle")
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
         fetchError(error.message);
       });
   };
@@ -87,6 +87,6 @@ const useProviderProject = () => {
     isLoading,
     error,
     newProject,
-    getProjectById
+    getProjectById,
   };
 };

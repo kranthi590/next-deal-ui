@@ -1,16 +1,14 @@
-import React, {useState, useContext, createContext} from "react";
-import {httpClient, setAuthToken} from "../util/Api";
-import {Cookies} from "react-cookie";
-import {errorNotification, handleErrorNotification} from "../util/util";
+import React, { useState, useContext, createContext } from 'react';
+import { httpClient, setAuthToken } from '../util/Api';
+import { Cookies } from 'react-cookie';
+import { errorNotification, handleErrorNotification } from '../util/util';
 
 const registrationContext = createContext({});
 
-export function RegistrationProvider({children}) {
+export function RegistrationProvider({ children }) {
   const registration = useProviderRegistration();
   return (
-    <registrationContext.Provider value={registration}>
-      {children}
-    </registrationContext.Provider>
+    <registrationContext.Provider value={registration}>{children}</registrationContext.Provider>
   );
 }
 
@@ -20,59 +18,57 @@ export const useRegistration = () => {
 
 const useProviderRegistration = () => {
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const fetchStart = () => {
     setLoading(true);
-    setError("");
+    setError('');
   };
 
   const fetchSuccess = () => {
     setLoading(false);
-    setError("");
+    setError('');
   };
 
-  const fetchError = (error) => {
+  const fetchError = error => {
     setLoading(false);
     setError(error);
   };
 
-  const fetchRegions = (callbackFun) => {
+  const fetchRegions = callbackFun => {
     fetchStart();
     httpClient
       .get('config/countries/cl/regions')
-      .then(({data}) => {
+      .then(({ data }) => {
         if (data.data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
-          errorNotification(data.error, "app.registration.errorMessageTitle")
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
         fetchError(error.message);
       });
   };
 
-  const fetchCommune = ({regionId}, callbackFun) => {
+  const fetchCommune = ({ regionId }, callbackFun) => {
     fetchStart();
     httpClient
-      .get(
-        `config/countries/cl/regions/${regionId}/comunas`
-      )
-      .then(({data}) => {
+      .get(`config/countries/cl/regions/${regionId}/comunas`)
+      .then(({ data }) => {
         if (data.data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
-          errorNotification(data.error, "app.registration.errorMessageTitle")
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
         fetchError(error.message);
       });
   };
@@ -80,13 +76,13 @@ const useProviderRegistration = () => {
   const registerBuyer = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("buyers", data)
-      .then(({data}) => {
+      .post('buyers', data)
+      .then(({ data }) => {
         if (data.data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
-          errorNotification(data.error, "app.registration.errorMessageTitle")
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);
         }
       })
@@ -96,20 +92,20 @@ const useProviderRegistration = () => {
       });
   };
 
-  const registerSupplier = (data,isBuyer, callbackFun) => {
+  const registerSupplier = (data, isBuyer, callbackFun) => {
     fetchStart();
-    if (data && isBuyer){
+    if (data && isBuyer) {
       const headers = setAuthToken();
-      const cookie = new Cookies()
+      const cookie = new Cookies();
       const buyerId = cookie.get('buyerId');
       httpClient
-        .post(`buyers/${buyerId}/suppliers`, data, {headers})
-        .then(({data}) => {
+        .post(`buyers/${buyerId}/suppliers`, data, { headers })
+        .then(({ data }) => {
           if (data.data) {
             fetchSuccess();
             if (callbackFun) callbackFun(data.data);
           } else {
-            errorNotification(data.error, "app.registration.errorMessageTitle")
+            errorNotification(data.error, 'app.registration.errorMessageTitle');
             fetchError(data.error);
           }
         })
@@ -119,13 +115,13 @@ const useProviderRegistration = () => {
         });
     } else {
       httpClient
-        .post("suppliers", data)
-        .then(({data}) => {
+        .post('suppliers', data)
+        .then(({ data }) => {
           if (data) {
             fetchSuccess();
             if (callbackFun) callbackFun(data.data);
           } else {
-            errorNotification(error.message, "app.registration.errorMessageTitle")
+            errorNotification(error.message, 'app.registration.errorMessageTitle');
             fetchError(data.error);
           }
         })
@@ -139,44 +135,44 @@ const useProviderRegistration = () => {
   const uploadSupplierLogo = (data, callbackFun) => {
     fetchStart();
     httpClient
-      .post("suppliers/files", data, {
+      .post('suppliers/files', data, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       })
-      .then(({data}) => {
+      .then(({ data }) => {
         if (data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
-          errorNotification(data.error, "app.registration.errorMessageTitle")
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
         fetchError(error.message);
       });
   };
 
-  const getBuyerSuppliers = (callbackFun) => {
+  const getBuyerSuppliers = callbackFun => {
     fetchStart();
     const headers = setAuthToken();
-    const cookie = new Cookies()
+    const cookie = new Cookies();
     const buyerId = cookie.get('buyerId');
     httpClient
-      .get(`buyers/${buyerId}/suppliers`, {headers})
-      .then(({data}) => {
+      .get(`buyers/${buyerId}/suppliers`, { headers })
+      .then(({ data }) => {
         if (data.data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
-          errorNotification(data.error, "app.registration.errorMessageTitle")
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);
         }
       })
       .catch(function (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
         fetchError(error.message);
       });
   };
@@ -189,6 +185,6 @@ const useProviderRegistration = () => {
     registerBuyer,
     registerSupplier,
     uploadSupplierLogo,
-    getBuyerSuppliers
+    getBuyerSuppliers,
   };
 };

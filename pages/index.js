@@ -1,8 +1,8 @@
-import React from "react";
-import Dashboard from "../routes/Dashboard";
-import { handleApiErrors, httpClient, setApiContext } from "../util/Api";
+import React from 'react';
+import Dashboard from '../routes/Dashboard';
+import { handleApiErrors, httpClient, setApiContext } from '../util/Api';
 
-const DashboardPage = ({userProfile}) => <Dashboard userProfile={ userProfile}/>;
+const DashboardPage = ({ userProfile }) => <Dashboard userProfile={userProfile} />;
 
 export async function getServerSideProps({ req, res, query }) {
   let userProfile = null;

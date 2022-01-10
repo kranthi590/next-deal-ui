@@ -1,28 +1,17 @@
-import React, { useState } from "react";
-import {
-  Form,
-  Input,
-  Button,
-  Card,
-  Col,
-  Row,
-  Upload,
-  DatePicker,
-  Select,
-  InputNumber,
-} from "antd";
-import { InboxOutlined } from "@ant-design/icons";
-import { useRouter } from "next/router";
+import React, { useState } from 'react';
+import { Form, Input, Button, Card, Col, Row, Upload, DatePicker, Select, InputNumber } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 
 // Uitls
-import IntlMessages from "../../util/IntlMessages";
-import { useProject } from "../../contexts/projects";
+import IntlMessages from '../../util/IntlMessages';
+import { useProject } from '../../contexts/projects';
 import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
   getDateInMilliseconds,
-} from "../../util/util";
+} from '../../util/util';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -57,26 +46,26 @@ const NewProject = () => {
 
   const [form] = Form.useForm();
 
-  const normFile = (e) => {
+  const normFile = e => {
     if (Array.isArray(e)) {
       return e;
     }
     return e && e.fileList;
   };
 
-  const startDateChangeHandler = (date) => {
+  const startDateChangeHandler = date => {
     setStartDate(getDateInMilliseconds(date));
   };
 
-  const endDateChangeHandler = (date) => {
+  const endDateChangeHandler = date => {
     setExpectedEndDate(getDateInMilliseconds(date));
   };
 
-  const getFormData = (data) => {
+  const getFormData = data => {
     const formData = Object.keys(data).reduce((acc, key) => {
-      if (data[key] && key === "startDate") {
+      if (data[key] && key === 'startDate') {
         acc = { ...acc, startDate };
-      } else if (data[key] && key === "expectedEndDate") {
+      } else if (data[key] && key === 'expectedEndDate') {
         acc = { ...acc, expectedEndDate };
       } else if (data[key]) {
         acc = { ...acc, [key]: data[key] };
@@ -87,7 +76,7 @@ const NewProject = () => {
     return formData;
   };
 
-  const onSave = (values) => {
+  const onSave = values => {
     // newProject(getFormData(values), () => {
     //   successNotification("app.registration.detailsSaveSuccessMessage");
     //   setTimeout(() => {
@@ -97,16 +86,8 @@ const NewProject = () => {
   };
 
   return (
-    <Card
-      className="gx-card"
-      title={<IntlMessages id="app.quotation.addquotation" />}
-    >
-      <Form
-        form={form}
-        initialValues={{ remember: true }}
-        onFinish={onSave}
-        {...formLayout}
-      >
+    <Card className="gx-card" title={<IntlMessages id="app.quotation.addquotation" />}>
+      <Form form={form} initialValues={{ remember: true }} onFinish={onSave} {...formLayout}>
         <Row>
           <Col xl={12} xs={24}>
             <Form.Item
@@ -122,10 +103,7 @@ const NewProject = () => {
             >
               <Input placeholder="Quotation Name" />
             </Form.Item>
-            <Form.Item
-              name="startDate"
-              label={<IntlMessages id="app.project.field.startdate" />}
-            >
+            <Form.Item name="startDate" label={<IntlMessages id="app.project.field.startdate" />}>
               <DatePicker
                 className="gx-w-100"
                 placeholder="Start Date"
@@ -140,11 +118,9 @@ const NewProject = () => {
                   required: !!startDate,
                   validator: (_, value) => {
                     if (startDate && !value) {
-                      return Promise.reject(
-                        <IntlMessages id="app.project.create.validations" />
-                      );
+                      return Promise.reject(<IntlMessages id="app.project.create.validations" />);
                     } else if (startDate > getDateInMilliseconds(value)) {
-                      return Promise.reject("Please select valid end date");
+                      return Promise.reject('Please select valid end date');
                     }
                     return Promise.resolve();
                   },
@@ -171,7 +147,7 @@ const NewProject = () => {
               <InputNumber
                 className="gx-w-100"
                 placeholder="Estimated Budget"
-                onChange={(value) => setEstimatedBudget(value)}
+                onChange={value => setEstimatedBudget(value)}
               />
             </Form.Item>
             <Form.Item
@@ -210,26 +186,22 @@ const NewProject = () => {
                   <p className="ant-upload-drag-icon">
                     <InboxOutlined />
                   </p>
-                  <p className="ant-upload-text">
-                    Click or drag file to this area to upload
-                  </p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload.
-                  </p>
+                  <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                  <p className="ant-upload-hint">Support for a single or bulk upload.</p>
                 </Upload.Dragger>
               </Form.Item>
             </Form.Item>
           </Col>
         </Row>
         <Row>
-          <Col span={24} style={{ textAlign: "right" }}>
+          <Col span={24} style={{ textAlign: 'right' }}>
             <Button type="primary" htmlType="submit">
               <IntlMessages id="app.quotation.savequotation" />
             </Button>
           </Col>
         </Row>
       </Form>
-      {error && errorNotification(error, "app.registration.errorMessageTitle")}
+      {error && errorNotification(error, 'app.registration.errorMessageTitle')}
     </Card>
   );
 };

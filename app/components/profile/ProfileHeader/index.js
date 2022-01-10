@@ -1,5 +1,5 @@
-import React from "react";
-import {Avatar} from "antd";
+import React from 'react';
+import { Avatar } from 'antd';
 
 const ProfileHeader = () => {
   return (
@@ -8,7 +8,7 @@ const ProfileHeader = () => {
         <div className="gx-profile-banner-top">
           <div className="gx-profile-banner-top-left">
             <div className="gx-profile-banner-avatar">
-              <Avatar className="gx-size-90" alt="..." src={"https://via.placeholder.com/150"}/>
+              <Avatar className="gx-size-90" alt="..." src={'https://via.placeholder.com/150'} />
             </div>
             <div className="gx-profile-banner-avatar-info">
               <h2 className="gx-mb-2 gx-mb-sm-3 gx-fs-xxl gx-font-weight-light">Kiley Brown</h2>
@@ -19,10 +19,12 @@ const ProfileHeader = () => {
             <ul className="gx-follower-list">
               <li>
                 <span className="gx-follower-title gx-fs-lg gx-font-weight-medium">2k+</span>
-                <span className="gx-fs-sm">Followers</span></li>
+                <span className="gx-fs-sm">Followers</span>
+              </li>
               <li>
                 <span className="gx-follower-title gx-fs-lg gx-font-weight-medium">847</span>
-                <span className="gx-fs-sm">Following</span></li>
+                <span className="gx-fs-sm">Following</span>
+              </li>
               <li>
                 <span className="gx-follower-title gx-fs-lg gx-font-weight-medium">327</span>
                 <span className="gx-fs-sm">Friends</span>
@@ -43,7 +45,9 @@ const ProfileHeader = () => {
                 <span className="gx-link">Photos</span>
               </li>
               <li>
-                <span className="gx-link">Friends <span className="gx-fs-xs">287</span></span>
+                <span className="gx-link">
+                  Friends <span className="gx-fs-xs">287</span>
+                </span>
               </li>
               <li>
                 <span className="gx-link">More</span>
@@ -51,13 +55,15 @@ const ProfileHeader = () => {
             </ul>
           </div>
           <span className="gx-link gx-profile-setting">
-            <i className="icon icon-setting gx-fs-lg gx-mr-2 gx-mr-sm-3 gx-d-inline-flex gx-vertical-align-middle"/>
-            <span className="gx-d-inline-flex gx-vertical-align-middle gx-ml-1 gx-ml-sm-0">Setting</span>
+            <i className="icon icon-setting gx-fs-lg gx-mr-2 gx-mr-sm-3 gx-d-inline-flex gx-vertical-align-middle" />
+            <span className="gx-d-inline-flex gx-vertical-align-middle gx-ml-1 gx-ml-sm-0">
+              Setting
+            </span>
           </span>
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default ProfileHeader;

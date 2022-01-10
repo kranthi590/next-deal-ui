@@ -1,11 +1,10 @@
-import React from "react";
-import {RegistrationProvider} from "../../contexts/business-registration";
-import SupplierRegistration from '../../routes/SupplierRegistration'
+import React from 'react';
+import { RegistrationProvider } from '../../contexts/business-registration';
+import SupplierRegistration from '../../routes/SupplierRegistration';
 
-
-const SupplierRegistrationPage = (props) => (
+const SupplierRegistrationPage = props => (
   <RegistrationProvider>
-    <SupplierRegistration {...props}/>
+    <SupplierRegistration {...props} />
   </RegistrationProvider>
 );
 
