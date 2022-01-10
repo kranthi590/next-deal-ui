@@ -66,6 +66,11 @@ const SidebarContent = () => {
                 <a><i className="icon icon-lising-dbrd"/><span><IntlMessages id="sidebar.project.Projects" /></span></a>
               </Link>
             </Menu.Item>
+            <Menu.Item key="my-suppliers">
+              <Link href="/my-suppliers">
+                <a><i className="icon icon-lising-dbrd"/><span><IntlMessages id="sidebar.suppliers.mySuppliers" /></span></a>
+              </Link>
+            </Menu.Item>
           </Menu>
         </CustomScrollbars>
       </div>
