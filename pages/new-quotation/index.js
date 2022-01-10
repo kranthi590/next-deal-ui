@@ -1,10 +1,10 @@
-import React from "react";
-import NewQuotation from "../../routes/NewQuotation";
-import {RegistrationProvider} from "../../contexts/business-registration";
+import React from 'react';
+import NewQuotation from '../../routes/NewQuotation';
+import { RegistrationProvider } from '../../contexts/business-registration';
 
 const NewNewQuotation = () => (
   <RegistrationProvider>
-    <NewQuotation/>
+    <NewQuotation />
   </RegistrationProvider>
 );
 

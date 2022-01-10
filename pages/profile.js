@@ -1,5 +1,5 @@
-import React from "react";
-import { handleApiErrors, httpClient, setApiContext } from "../util/Api";
+import React from 'react';
+import { handleApiErrors, httpClient, setApiContext } from '../util/Api';
 
 const Card = ({ userProfile }) => (
   <div>
@@ -8,7 +8,7 @@ const Card = ({ userProfile }) => (
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <div className="card">
-      <img src="img.jpg" alt="John" style={{ width: "100%" }} />
+      <img src="img.jpg" alt="John" style={{ width: '100%' }} />
       <h1>
         {userProfile.firstName} {userProfile.lastName}
       </h1>
@@ -32,7 +32,7 @@ export async function getServerSideProps({ req, res, query }) {
     props: {
       userProfile,
       redirect: {
-        destination: "/",
+        destination: '/',
         permanent: false,
       },
     },

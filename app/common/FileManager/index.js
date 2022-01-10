@@ -1,8 +1,8 @@
 import React from 'react';
 import { Upload, Modal, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import {Cookies} from "react-cookie";
-import axios from "axios";
+import { Cookies } from 'react-cookie';
+import axios from 'axios';
 
 const cookie = new Cookies();
 
@@ -21,7 +21,7 @@ export default class PicturesWall extends React.Component {
     previewImage: '',
     previewTitle: '',
     fileList: [],
-    mimeType: ''
+    mimeType: '',
   };
 
   handleCancel = () => this.setState({ previewVisible: false });
@@ -41,7 +41,7 @@ export default class PicturesWall extends React.Component {
 
   handleChange = ({ fileList }) => {
     this.setState({ fileList });
-    this.props.customSubmitHandler && this.props.customSubmitHandler({fileList});
+    this.props.customSubmitHandler && this.props.customSubmitHandler({ fileList });
   };
 
   componentDidMount() {
@@ -53,7 +53,7 @@ export default class PicturesWall extends React.Component {
           status: file.status || 'done',
           url: file.fileUrl,
           type: file.mimeType,
-        }
+        };
       }),
     });
   }
@@ -67,27 +67,21 @@ export default class PicturesWall extends React.Component {
         <div style={{ marginTop: 8 }}>Upload</div>
       </div>
     );
-    let modelBody = (<a className="ant-btn ant-btn-primary gx-mt-2" href={previewImage}
-      target="_blank" download>View in new tab</a>);
+    let modelBody = (
+      <a className="ant-btn ant-btn-primary gx-mt-2" href={previewImage} target="_blank" download>
+        View in new tab
+      </a>
+    );
     if (mimeType === 'application/pdf') {
       modelBody = (
-          <object
-            data={`${previewImage}`}
-            type="application/pdf"
-            width="678"
-            height="678"
-          >
-            <iframe
-              src={`${previewImage}`}
-              width="678"
-              height="678"
-            >
+        <object data={`${previewImage}`} type="application/pdf" width="678" height="678">
+          <iframe src={`${previewImage}`} width="678" height="678">
             <p>This browser does not support PDF!</p>
-            </iframe>
-          </object>
+          </iframe>
+        </object>
       );
     }
-    if (mimeType.includes("image")) {
+    if (mimeType.includes('image')) {
       modelBody = (
         <>
           <img alt="example" style={{ width: '100%' }} src={previewImage} />
@@ -95,8 +89,9 @@ export default class PicturesWall extends React.Component {
         </>
       );
     }
-    const actionUrl = customSubmitHandler ? undefined :
-      `${process.env.NEXT_PUBLIC_API_HOST}api/v1/secureFiles?token=${cookie.get('token')}`;
+    const actionUrl = customSubmitHandler
+      ? undefined
+      : `${process.env.NEXT_PUBLIC_API_HOST}api/v1/secureFiles?token=${cookie.get('token')}`;
 
     return (
       <>
@@ -110,7 +105,7 @@ export default class PicturesWall extends React.Component {
           onPreview={this.handlePreview}
           onChange={this.handleChange}
           showUploadList={{
-            showRemoveIcon: false
+            showRemoveIcon: false,
           }}
           beforeUpload={() => !customSubmitHandler}
           maxCount={maxCount}

@@ -1,17 +1,13 @@
-import React, {useState, useContext, createContext} from "react";
-import {httpClient, setAuthToken} from "../util/Api";
-import {Cookies} from "react-cookie";
-import { handleErrorNotification } from "../util/util";
+import React, { useState, useContext, createContext } from 'react';
+import { httpClient, setAuthToken } from '../util/Api';
+import { Cookies } from 'react-cookie';
+import { handleErrorNotification } from '../util/util';
 
 const responsesContext = createContext({});
 
-export function ResponsesProvider({children}) {
+export function ResponsesProvider({ children }) {
   const project = useProviderResponses();
-  return (
-    <responsesContext.Provider value={project}>
-      {children}
-    </responsesContext.Provider>
-  );
+  return <responsesContext.Provider value={project}>{children}</responsesContext.Provider>;
 }
 
 export const useResponse = () => {
@@ -20,19 +16,19 @@ export const useResponse = () => {
 
 const useProviderResponses = () => {
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const fetchStart = () => {
     setLoading(true);
-    setError("");
+    setError('');
   };
 
   const fetchSuccess = () => {
     setLoading(false);
-    setError("");
+    setError('');
   };
 
-  const fetchError = (error) => {
+  const fetchError = error => {
     setLoading(false);
     setError(error);
   };
@@ -40,12 +36,12 @@ const useProviderResponses = () => {
   const createResponses = (id, data, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
-    const cookie = new Cookies()
+    const cookie = new Cookies();
     httpClient
-      .post(`quotations/${id}/responses`,  data,{
-        headers: headers
+      .post(`quotations/${id}/responses`, data, {
+        headers: headers,
       })
-      .then(({data}) => {
+      .then(({ data }) => {
         if (data) {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
@@ -61,11 +57,15 @@ const useProviderResponses = () => {
   const createAward = (id, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
-    const cookie = new Cookies()
+    const cookie = new Cookies();
     httpClient
-      .post(`quotations/${id}/award`, {}, {
-        headers: headers
-      })
+      .post(
+        `quotations/${id}/award`,
+        {},
+        {
+          headers: headers,
+        },
+      )
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
@@ -82,10 +82,10 @@ const useProviderResponses = () => {
   const completeQuotation = (id, data, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
-    const cookie = new Cookies()
+    const cookie = new Cookies();
     httpClient
       .post(`quotations/${id}/complete`, data, {
-        headers: headers
+        headers: headers,
       })
       .then(({ data }) => {
         if (data) {
@@ -119,7 +119,7 @@ const useProviderResponses = () => {
     //     }
     //   })
     //   .catch(function (error) {
-      // handleErrorNotification(error);
+    // handleErrorNotification(error);
     //     fetchError(error.message);
     //   });
   };
@@ -137,12 +137,12 @@ const useProviderResponses = () => {
     //     if (data) {
     //       fetchSuccess();
     //       if (callbackFun) callbackFun(data.data);
-      // }else{
+    // }else{
     //       fetchError(data.error);
-      // }
+    // }
     //   })
     //   .catch(function (error) {
-      // handleErrorNotification(error);
+    // handleErrorNotification(error);
     //     fetchError(error.message);
     //   });
   };
@@ -154,6 +154,6 @@ const useProviderResponses = () => {
     createAward,
     completeQuotation,
     deAwardQuotation,
-    abortQuotation
+    abortQuotation,
   };
 };

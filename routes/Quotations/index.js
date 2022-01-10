@@ -1,17 +1,17 @@
-import React from "react";
-import { Row, Col, Button } from "antd";
-import Link from "next/link";
+import React from 'react';
+import { Row, Col, Button } from 'antd';
+import Link from 'next/link';
 
-import Widget from "../../app/components/Widget/index";
+import Widget from '../../app/components/Widget/index';
 
-import IntlMessages from "../../util/IntlMessages";
+import IntlMessages from '../../util/IntlMessages';
 
-import QuotationCard from "../../app/components/NextDeal/QuotationCard";
+import QuotationCard from '../../app/components/NextDeal/QuotationCard';
 
 const colSpan = 24 / 3;
 
 const Quotations = () => {
-  const Header = (title) => {
+  const Header = title => {
     return (
       <div className="ant-card-head">
         <div className="ant-card-head-wrapper">
@@ -28,7 +28,7 @@ const Quotations = () => {
           <div className="gx-featured-thumb">
             <img
               className="gx-rounded-lg gx-width-175"
-              src={"https://via.placeholder.com/1100x750"}
+              src={'https://via.placeholder.com/1100x750'}
               alt="..."
             />
           </div>
@@ -39,9 +39,7 @@ const Quotations = () => {
             </div>
             <div className="gx-featured-content-right">
               <div>
-                <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
-                  1934577
-                </h2>
+                <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">1934577</h2>
                 <p className="gx-text-grey gx-fs-sm">sqft</p>
               </div>
             </div>
@@ -66,14 +64,14 @@ const Quotations = () => {
       </div>
       <Row>
         <Col span={colSpan} className="gx-bg-grey customCardHeight">
-          {Header("In progress")}
-          <QuotationCard/>
+          {Header('In progress')}
+          <QuotationCard />
         </Col>
         <Col span={colSpan} className="gx-bg-grey left-border">
-          {Header("Awarded")}
+          {Header('Awarded')}
         </Col>
         <Col span={colSpan} className="gx-bg-grey left-border">
-          {Header("Ended")}
+          {Header('Ended')}
         </Col>
       </Row>
     </div>

@@ -1,8 +1,8 @@
-import React from "react";
-import asyncComponent from "../../util/asyncComponent";
-import {RegistrationProvider} from "../../contexts/business-registration";
+import React from 'react';
+import asyncComponent from '../../util/asyncComponent';
+import { RegistrationProvider } from '../../contexts/business-registration';
 
-import BuyerRegistration from '../../routes/BuyerRegistration'
+import BuyerRegistration from '../../routes/BuyerRegistration';
 
 const BuyerRegistrationPage = () => (
   <RegistrationProvider>

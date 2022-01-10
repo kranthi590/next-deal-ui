@@ -1,23 +1,23 @@
-import React from "react";
-import { Row, Col, Button, Avatar } from "antd";
-import Link from "next/link";
-import { handleApiErrors, httpClient, setApiContext } from "../../../util/Api";
-import cookie from "cookie";
+import React from 'react';
+import { Row, Col, Button, Avatar } from 'antd';
+import Link from 'next/link';
+import { handleApiErrors, httpClient, setApiContext } from '../../../util/Api';
+import cookie from 'cookie';
 
-import Widget from "../../../app/components/Widget";
-import IntlMessages from "../../../util/IntlMessages";
-import QuotationCard from "../../../app/components/NextDeal/QuotationCard";
-import FilesManager from "../../../app/common/FileManager";
+import Widget from '../../../app/components/Widget';
+import IntlMessages from '../../../util/IntlMessages';
+import QuotationCard from '../../../app/components/NextDeal/QuotationCard';
+import FilesManager from '../../../app/common/FileManager';
 
-import { formatAmount, getAvatar } from "../../../util/util";
-import CustomScrollbars from "../../../util/CustomScrollbars";
-import NoDataAvailable from "../../../app/components/NoDataAvailable.js";
-import BreadCrumb from "../../../app/components/BreadCrumb";
+import { formatAmount, getAvatar } from '../../../util/util';
+import CustomScrollbars from '../../../util/CustomScrollbars';
+import NoDataAvailable from '../../../app/components/NoDataAvailable.js';
+import BreadCrumb from '../../../app/components/BreadCrumb';
 
 const colSpan = 24 / 3;
 
 const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [] }) => {
-  const Header = (title) => {
+  const Header = title => {
     return (
       <div className="ant-card-head">
         <div className="ant-card-head-wrapper">
@@ -30,44 +30,47 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
   const ProjectDetails = () => {
     return (
       <>
-      <BreadCrumb navItems={[{ text: "Projects", route: "/projects" }, { text: project.name}]} />
-      <Widget>
-        <Row>
-          <Col span={12}>
+        <BreadCrumb navItems={[{ text: 'Projects', route: '/projects' }, { text: project.name }]} />
+        <Widget>
+          <Row>
+            <Col span={12}>
               <div className="gx-media gx-featured-item">
                 <div className="gx-featured-thumb">
                   <Avatar
                     className="gx-rounded-lg gx-size-100"
                     alt={project.name}
                     style={{ color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '2rem' }}
-                    >{getAvatar(project.name)}</Avatar>
+                  >
+                    {getAvatar(project.name)}
+                  </Avatar>
                 </div>
                 <div className="gx-media-body gx-featured-content">
                   <div className="gx-featured-content-left">
                     <h3 className="gx-mb-2">{project.name}</h3>
-                  <p className="gx-text-grey gx-mb-1">{project.additionalData}</p>
-                  <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
+                    <p className="gx-text-grey gx-mb-1">{project.additionalData}</p>
+                    <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
                       ${formatAmount(`${project.estimatedBudget}`)}
-                    <span className="gx-text-grey gx-fs-sm gx-text-uppercase"> {project.currency}</span>
-                  </h2>
+                      <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
+                        {' '}
+                        {project.currency}
+                      </span>
+                    </h2>
                   </div>
                 </div>
               </div>
-          </Col>
-          <Col span={12}>
-            <FilesManager
+            </Col>
+            <Col span={12}>
+              <FilesManager
                 files={project.files}
                 context={{
-                  assetRelation: "project",
-                  assetRelationId: project.id
+                  assetRelation: 'project',
+                  assetRelationId: project.id,
                 }}
               />
-          </Col>
-        </Row>
-      </Widget>
-        <Link
-          href={'/projects/' + [project.id] + '/new-quote'}
-        >
+            </Col>
+          </Row>
+        </Widget>
+        <Link href={'/projects/' + [project.id] + '/new-quote'}>
           <Button type="primary" className="gx-btn gx-w-100  gx-mb-4">
             <i className="icon icon-add gx-mr-2" />
             <IntlMessages id="app.quotation.addQuotation" />
@@ -83,45 +86,49 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
       </div>
       <Row gutter={8}>
         <Col span={colSpan} className="quotation-column-divider">
-          <div style={{ backgroundColor: "#ffffff" }} className="gx-h-100">
-          {Header("In progress")}
+          <div style={{ backgroundColor: '#ffffff' }} className="gx-h-100">
+            {Header('In progress')}
             <div className="gx-customizer">
               <CustomScrollbars>
-              <div className="gx-p-2">
-            {inProgress &&
-            inProgress.map((item) => (
-                      <QuotationCard key={item.id} data={item} activeTab={1}/>
-            ))}
-                {(inProgress.length === 0) && (<NoDataAvailable />)}
-              </div>
-          </CustomScrollbars>
-          </div>
+                <div className="gx-p-2">
+                  {inProgress &&
+                    inProgress.map(item => (
+                      <QuotationCard key={item.id} data={item} activeTab={1} />
+                    ))}
+                  {inProgress.length === 0 && <NoDataAvailable />}
+                </div>
+              </CustomScrollbars>
+            </div>
           </div>
         </Col>
         <Col span={colSpan} className="quotation-column-divider">
-          <div style={{ backgroundColor: "#ffffff" }} className="gx-h-100">
-            {Header("Awarded")}
+          <div style={{ backgroundColor: '#ffffff' }} className="gx-h-100">
+            {Header('Awarded')}
             <div className="gx-customizer">
               <CustomScrollbars>
-              <div className="gx-p-2">
-                {awarded && awarded.map((item) => <QuotationCard key={item.id} data={item} activeTab={2} />)}
-                {(awarded.length === 0) && (<NoDataAvailable />)}
-              </div>
-          </CustomScrollbars>
-          </div>
+                <div className="gx-p-2">
+                  {awarded &&
+                    awarded.map(item => <QuotationCard key={item.id} data={item} activeTab={2} />)}
+                  {awarded.length === 0 && <NoDataAvailable />}
+                </div>
+              </CustomScrollbars>
+            </div>
           </div>
         </Col>
         <Col span={colSpan} className="quotation-column-divider">
-          <div style={{ backgroundColor: "#ffffff" }} className="gx-h-100">
-          {Header("Completed")}
+          <div style={{ backgroundColor: '#ffffff' }} className="gx-h-100">
+            {Header('Completed')}
             <div className="gx-customizer">
               <CustomScrollbars>
-              <div className="gx-p-2">
-                  {completed && completed.map((item) => <QuotationCard key={item.id} data={item}  activeTab={3}/>)}
-                {(completed.length === 0) && (<NoDataAvailable />)}
-              </div>
-            </CustomScrollbars>
-          </div>
+                <div className="gx-p-2">
+                  {completed &&
+                    completed.map(item => (
+                      <QuotationCard key={item.id} data={item} activeTab={3} />
+                    ))}
+                  {completed.length === 0 && <NoDataAvailable />}
+                </div>
+              </CustomScrollbars>
+            </div>
           </div>
         </Col>
       </Row>
@@ -139,7 +146,7 @@ export async function getServerSideProps(context) {
   let completed = [];
   try {
     const headers = setApiContext(req, res, query);
-    const cookies = cookie.parse(req.headers.cookie || "");
+    const cookies = cookie.parse(req.headers.cookie || '');
     let promises = [
       await httpClient.get(`projects/${query.id}`, {
         headers,
@@ -165,7 +172,7 @@ export async function getServerSideProps(context) {
         inProgress = inProgressData.data.data.rows;
         awarded = awardedData.data.data.rows;
         completed = completedData.data.data.rows;
-      }
+      },
     );
   } catch (error) {
     handleApiErrors(req, res, query, error);
@@ -175,9 +182,7 @@ export async function getServerSideProps(context) {
       project,
       inProgress,
       awarded,
-      completed
+      completed,
     },
   };
 }
-
-

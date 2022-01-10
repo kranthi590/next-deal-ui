@@ -1,25 +1,18 @@
-import React, {Component} from 'react';
-import {Input} from "antd";
-import {numberToClp} from "../../util/util";
+import React, { Component } from 'react';
+import { Input } from 'antd';
+import { numberToClp } from '../../util/util';
 
 class ClpFormatter extends Component {
-  onChange = async (e) => {
+  onChange = async e => {
     let response = await numberToClp(e.target.value);
-    if (response === '-'){
-      response = ''
+    if (response === '-') {
+      response = '';
     }
-    this.props.onChange(response)
-  }
+    this.props.onChange(response);
+  };
   render() {
-    return (
-      <Input
-        {...this.props}
-        onChange={this.onChange}
-        placeholder="1.00.000"
-      />
-    );
+    return <Input {...this.props} onChange={this.onChange} placeholder="1.00.000" />;
   }
 }
-
 
 export default ClpFormatter;

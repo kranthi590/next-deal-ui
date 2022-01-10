@@ -9,28 +9,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 5,
-    description: "Horo is a home grown brand with utmost emphasis on quality goods to users... ",
-  }, {
+    description: 'Horo is a home grown brand with utmost emphasis on quality goods to users... ',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Bizinto 1 Three Pin',
     variant: 'White',
@@ -40,28 +41,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 4,
-    description: "Bizinto is an indirectly manufacture of Power strip in Delhi and supplying...",
-  }, {
+    description: 'Bizinto is an indirectly manufacture of Power strip in Delhi and supplying...',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Samons Flameless',
     variant: 'Black',
@@ -71,28 +73,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 3.3,
-    description: "Now light your cigarette buds with ease by using this USB Rechargeable...",
-  }, {
+    description: 'Now light your cigarette buds with ease by using this USB Rechargeable...',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Sony MDR-ZX110',
     variant: 'White',
@@ -102,28 +105,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 3.5,
-    description: "Experience great sound quality with weight and foldable headphones...",
-  }, {
+    description: 'Experience great sound quality with weight and foldable headphones...',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'iPhone 7',
     variant: 'Black,500Htz',
@@ -133,28 +137,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 4.2,
-    description: "Bluetooth speaker, Karaoke singing, Car Stereo, instrument recording etc... •",
-  }, {
+    description: 'Bluetooth speaker, Karaoke singing, Car Stereo, instrument recording etc... •',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Stonx v2.1',
     variant: 'Black',
@@ -164,28 +169,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 3.1,
-    description: "1 Bluetooth Dongle, 1 Aux Cable, 1 Usb Cable, 1 Manual...",
-  }, {
+    description: '1 Bluetooth Dongle, 1 Aux Cable, 1 Usb Cable, 1 Manual...',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'T-Shirts',
     variant: 'White',
@@ -195,28 +201,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 3.1,
-    description: "1 Bluetooth Dongle, 1 Aux Cable, 1 Usb Cable, 1 Manual...",
-  }, {
+    description: '1 Bluetooth Dongle, 1 Aux Cable, 1 Usb Cable, 1 Manual...',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Led',
     variant: 'Gold ',
@@ -226,28 +233,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 5,
-    description: "Horo is a home grown brand with emphasis on quality goods to our users... ",
-  }, {
+    description: 'Horo is a home grown brand with emphasis on quality goods to our users... ',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'football',
     variant: 'Black',
@@ -257,28 +265,30 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 4,
-    description: "Bizinto is an indirectly manufacture of Power strip in Delhi and supplying in all over india...",
-  }, {
+    description:
+      'Bizinto is an indirectly manufacture of Power strip in Delhi and supplying in all over india...',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'wach',
     variant: 'Black',
@@ -288,28 +298,30 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 3.3,
-    description: "Now light your cigarette buds with ease by using this USB Rechargeable Electronic Flameless Lighter.",
-  }, {
+    description:
+      'Now light your cigarette buds with ease by using this USB Rechargeable Electronic Flameless Lighter.',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'fan',
     variant: 'White,full speed',
@@ -319,28 +331,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 3.5,
-    description: "Experience great sound quality with these light weight and fordable headphones.",
-  }, {
+    description: 'Experience great sound quality with these light weight and fordable headphones.',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Padraig Q7 Handheld',
     variant: 'Black,500Htz',
@@ -350,28 +363,30 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 4.2,
-    description: "Bluetooth speaker, Karaoke singing, Car Stereo, instrument recording, interviews, podcasting, etc. •",
-  }, {
+    description:
+      'Bluetooth speaker, Karaoke singing, Car Stereo, instrument recording, interviews, podcasting, etc. •',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'speaker Car Bluetooth ',
     variant: 'Black',
@@ -381,28 +396,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 3.1,
-    description: "1 Bluetooth Dongle, 1 Aux Cable, 1 Usb Cable, 1 Manual",
-  }, {
+    description: '1 Bluetooth Dongle, 1 Aux Cable, 1 Usb Cable, 1 Manual',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Running Shoes',
     variant: 'Black',
@@ -412,28 +428,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 3.1,
-    description: "1 Bluetooth Dongle, 1 Aux Cable, 1 Usb Cable, 1 Manual",
-  }, {
+    description: '1 Bluetooth Dongle, 1 Aux Cable, 1 Usb Cable, 1 Manual',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Alarm Clock',
     variant: 'Gold ',
@@ -443,28 +460,29 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 5,
-    description: "Horo is a home grown brand with utmost emphasis on quality goods ",
-  }, {
+    description: 'Horo is a home grown brand with utmost emphasis on quality goods ',
+  },
+  {
     thumb: 'https://via.placeholder.com/600x400',
     name: 'Bizinto 1 Three Pin',
     variant: 'White',
@@ -474,27 +492,27 @@ const productData = [
     reviews: [
       {
         rating: 5,
-        count: 3
+        count: 3,
       },
       {
         rating: 4,
-        count: 5
+        count: 5,
       },
       {
         rating: 3,
-        count: 5
+        count: 5,
       },
       {
         rating: 2,
-        count: 0
+        count: 0,
       },
       {
         rating: 1,
-        count: 3
+        count: 3,
       },
     ],
     rating: 4,
-    description: "Bizinto is an indirectly manufacture of Power strip in Delhi and supplying...",
+    description: 'Bizinto is an indirectly manufacture of Power strip in Delhi and supplying...',
   },
 ];
 

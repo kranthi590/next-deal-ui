@@ -1,48 +1,39 @@
-import React, {useEffect, useState} from "react";
-import {Button, Checkbox, Form, Input, Select, Col, Row, Upload} from "antd";
-import Link from "next/link";
-import {useRouter} from "next/router";
-import SweetAlert from "react-bootstrap-sweetalert";
+import React, { useEffect, useState } from 'react';
+import { Button, Checkbox, Form, Input, Select, Col, Row, Upload } from 'antd';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import SweetAlert from 'react-bootstrap-sweetalert';
 // Utils
-import IntlMessages from "../../util/IntlMessages";
-import {useAuth} from "../../contexts/use-auth";
-import {useRegistration} from "../../contexts/business-registration";
-import {
-  extractData,
-  isValidObject,
-  getPhonePrefix, errorNotification,
-} from "../../util/util";
-import {validate, clean} from 'rut.js'
-import FilesManager from "../../app/common/FileManager";
+import IntlMessages from '../../util/IntlMessages';
+import { useAuth } from '../../contexts/use-auth';
+import { useRegistration } from '../../contexts/business-registration';
+import { extractData, isValidObject, getPhonePrefix, errorNotification } from '../../util/util';
+import { validate, clean } from 'rut.js';
+import FilesManager from '../../app/common/FileManager';
 import { uploadFiles } from '../../util/Api';
-import urlRegx from 'url-regex'
+import urlRegx from 'url-regex';
 
 // Components
-import CircularProgress from "../../app/components/CircularProgress";
-import WidgetHeader from "../../app/components/WidgetHeader";
-import Aside from "../../app/components/Aside";
-import Footer from "../../app/components/Footer";
-import Rut from "../../shared/Rut";
-import {isEmpty} from "lodash";
+import CircularProgress from '../../app/components/CircularProgress';
+import WidgetHeader from '../../app/components/WidgetHeader';
+import Aside from '../../app/components/Aside';
+import Footer from '../../app/components/Footer';
+import Rut from '../../shared/Rut';
+import { isEmpty } from 'lodash';
 
 // Styles
-import "../../styles/form-page.css";
+import '../../styles/form-page.css';
 
 const FormItem = Form.Item;
-const {TextArea} = Input;
-const {Option} = Select;
+const { TextArea } = Input;
+const { Option } = Select;
 
-const SupplierRegistration = (props) => {
+const SupplierRegistration = props => {
   const router = useRouter();
-  const {isLoading} = useAuth();
+  const { isLoading } = useAuth();
   const { isAuthenticated, onAletSuccess } = props;
-  const {
-    fetchRegions,
-    fetchCommune,
-    registerSupplier,
-    error,
-    uploadSupplierLogo
-  } = useRegistration();
+  const { fetchRegions, fetchCommune, registerSupplier, error, uploadSupplierLogo } =
+    useRegistration();
 
   const [form] = Form.useForm();
 
@@ -58,28 +49,28 @@ const SupplierRegistration = (props) => {
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
-    fetchRegions(({regions}) => {
+    fetchRegions(({ regions }) => {
       setRegions(regions);
     });
   }, []);
 
-  const businessRegionChangeHandler = (value) => {
+  const businessRegionChangeHandler = value => {
     form.setFieldsValue({
-      business_communeId: "",
+      business_communeId: '',
     });
     setCommunes1([]);
-    fetchCommune({regionId: value}, (data) => {
+    fetchCommune({ regionId: value }, data => {
       const communes = data && data.length > 0 ? data[0] : [];
       setCommunes1(communes);
     });
   };
 
-  const billingRegionChangeHandler = (value) => {
+  const billingRegionChangeHandler = value => {
     form.setFieldsValue({
-      billing_communeId: "",
+      billing_communeId: '',
     });
     setCommunes2([]);
-    fetchCommune({regionId: value}, (data) => {
+    fetchCommune({ regionId: value }, data => {
       const communes = data && data.length > 0 ? data[0] : [];
       setCommunes2(communes);
     });
@@ -89,21 +80,18 @@ const SupplierRegistration = (props) => {
     setSameAsBusiness(!sameAsBusiness);
   };
 
-  const prefixSelector = (name) => (
+  const prefixSelector = name => (
     <Form.Item name={name} noStyle>
-      <Select
-        style={{width: 70}}
-        defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
-      >
+      <Select style={{ width: 70 }} defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}>
         <Option value="56">+56</Option>
       </Select>
     </Form.Item>
   );
 
-  const getFormData = (data) => {
-    const business = extractData("business_", data);
-    const billing = extractData("billing_", data);
-    const contact = extractData("bcontact_", data);
+  const getFormData = data => {
+    const business = extractData('business_', data);
+    const billing = extractData('billing_', data);
+    const contact = extractData('bcontact_', data);
 
     const businessAddress = {
       addressLine1: business.addressLine1,
@@ -136,9 +124,9 @@ const SupplierRegistration = (props) => {
       type: business.type,
 
       isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
-      inchargeRole: "Owner",
+      inchargeRole: 'Owner',
       logoUrl:
-        "https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg",
+        'https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg',
     };
 
     if (!isEmpty(business.webSiteUrl)) {
@@ -160,78 +148,81 @@ const SupplierRegistration = (props) => {
   const onAlertConfirmed = () => {
     setShowAlert(false);
     if (!isAuthenticated) {
-      router.push("/signup");
+      router.push('/signup');
     }
     if (onAletSuccess) {
       onAletSuccess();
     }
-  }
-  const addProdocol =(url)=>{
-    if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
-      return url
-   } else {
-      return ("https://"+url)
-   }
-  }
-  const onFinishFailed = (errorInfo) => {
   };
+  const addProdocol = url => {
+    if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
+      return url;
+    } else {
+      return 'https://' + url;
+    }
+  };
+  const onFinishFailed = errorInfo => {};
 
-  const onFinish = async (values) => {
-    getFormData(values)
-    registerSupplier(getFormData(values),isAuthenticated, async (data) => {
+  const onFinish = async values => {
+    getFormData(values);
+    registerSupplier(getFormData(values), isAuthenticated, async data => {
       try {
         if (files.length > 0) {
-          await uploadFiles(files, {
-            assetRelation: "supplier_logo",
-            assetRelationId: data.id,
-          }, false);
-          setShowAlert(true)
+          await uploadFiles(
+            files,
+            {
+              assetRelation: 'supplier_logo',
+              assetRelationId: data.id,
+            },
+            false,
+          );
+          setShowAlert(true);
         } else {
-          setShowAlert(true)
+          setShowAlert(true);
         }
       } catch (error) {
-        errorNotification(error.message, "app.registration.errorMessageTitle")
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
       }
     });
   };
-  const onChange = async (value) => {
+  const onChange = async value => {
     setRut(value);
-  }
+  };
 
-  const dummyRequest = ({file, onSuccess}) => {
+  const dummyRequest = ({ file, onSuccess }) => {
     setTimeout(() => {
-      onSuccess("ok");
+      onSuccess('ok');
     }, 0);
   };
 
   const handleFileUpload = () => {
-    setLogoUploaded(true)
-  }
+    setLogoUploaded(true);
+  };
 
   return (
     <div className="gx-app-login-wrap registration-container">
-      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount"/>
+      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount" />
       <div className="right-aside">
         <div className="form-container">
           <div className="gx-app-login-content registration-form">
             <div className="heading-wrapper">
-              <h1><IntlMessages id="app.supplierregistration.page_title" /></h1>
-              {
-                props && props.showLoginLink && (
-                  <p>
-                    <Link href="/signin">
-                      <a>
-                        <IntlMessages id="app.userAuth.login"/>
-                      </a>
-                    </Link>
-                  </p>
-                )
-              }
+              <h1>
+                <IntlMessages id="app.supplierregistration.page_title" />
+              </h1>
+              {props && props.showLoginLink && (
+                <p>
+                  <Link href="/signin">
+                    <a>
+                      <IntlMessages id="app.userAuth.login" />
+                    </a>
+                  </Link>
+                </p>
+              )}
             </div>
             <Form
               layout="inline"
               form={form}
-              initialValues={{remember: true}}
+              initialValues={{ remember: true }}
               name="basic"
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
@@ -244,15 +235,19 @@ const SupplierRegistration = (props) => {
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_fantasyName"
-                    label={<IntlMessages id="app.supplierregistration.field.business_fantasyName" />}
+                    label={
+                      <IntlMessages id="app.supplierregistration.field.business_fantasyName" />
+                    }
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.business_fantasyName.error.required" />,
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_fantasyName.error.required" />
+                        ),
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Fantasy Name"/>
+                    <Input size="large" placeholder="Fantasy Name" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -262,11 +257,13 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.business_legalName.error.required" />,
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_legalName.error.required" />
+                        ),
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Business Name"/>
+                    <Input size="large" placeholder="Business Name" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -279,7 +276,7 @@ const SupplierRegistration = (props) => {
                         validator: (_, value) => {
                           if (!validate(value)) {
                             return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.business_rut.error.valid" />
+                              <IntlMessages id="app.supplierregistration.field.business_rut.error.valid" />,
                             );
                           }
                           return Promise.resolve();
@@ -293,41 +290,44 @@ const SupplierRegistration = (props) => {
                       value={rut}
                       size="large"
                       onChange={onChange}
-                      placeholder="RUT"/>
+                      placeholder="RUT"
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_addressLine1"
-                    label={<IntlMessages id="app.supplierregistration.field.business_addressLine1" />}
+                    label={
+                      <IntlMessages id="app.supplierregistration.field.business_addressLine1" />
+                    }
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.business_addressLine1.error.required" />,
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_addressLine1.error.required" />
+                        ),
                       },
                     ]}
                   >
-                    <Input
-                      size="large"
-                      placeholder="san pascual"
-                    />
+                    <Input size="large" placeholder="san pascual" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_addressLine2"
-                    label={<IntlMessages id="app.supplierregistration.field.business_addressLine2" />}
+                    label={
+                      <IntlMessages id="app.supplierregistration.field.business_addressLine2" />
+                    }
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.business_addressLine2.error.required" />,
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_addressLine2.error.required" />
+                        ),
                       },
                     ]}
                   >
-                    <Input
-                      size="large"
-                      placeholder="las condes"
-                    />
+                    <Input size="large" placeholder="las condes" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -337,7 +337,9 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.business_regionId.error.required" />,
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_regionId.error.required" />
+                        ),
                       },
                     ]}
                   >
@@ -347,14 +349,11 @@ const SupplierRegistration = (props) => {
                       onChange={businessRegionChangeHandler}
                     >
                       {regions &&
-                      regions.map((region) => (
-                        <Option
-                          key={region.id + region.name}
-                          value={region.id}
-                        >
-                          {region.name}
-                        </Option>
-                      ))}
+                        regions.map(region => (
+                          <Option key={region.id + region.name} value={region.id}>
+                            {region.name}
+                          </Option>
+                        ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -365,8 +364,10 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.serviceLocations.error.required" />,
-                        type: "array",
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.serviceLocations.error.required" />
+                        ),
+                        type: 'array',
                       },
                     ]}
                   >
@@ -376,14 +377,11 @@ const SupplierRegistration = (props) => {
                       mode="multiple"
                     >
                       {regions &&
-                      regions.map((region) => (
-                        <Option
-                          key={region.id + region.name}
-                          value={region.id}
-                        >
-                          {region.name}
-                        </Option>
-                      ))}
+                        regions.map(region => (
+                          <Option key={region.id + region.name} value={region.id}>
+                            {region.name}
+                          </Option>
+                        ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -395,20 +393,19 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.business_communeId.error.required" />,
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_communeId.error.required" />
+                        ),
                       },
                     ]}
                   >
                     <Select size="large" placeholder="Please select Commune">
                       {communes1 &&
-                      communes1.map((commune) => (
-                        <Option
-                          key={commune.id + commune.name}
-                          value={commune.id}
-                        >
-                          {commune.name}
-                        </Option>
-                      ))}
+                        communes1.map(commune => (
+                          <Option key={commune.id + commune.name} value={commune.id}>
+                            {commune.name}
+                          </Option>
+                        ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -419,23 +416,23 @@ const SupplierRegistration = (props) => {
                     rules={[
                       { required: false },
                       {
-                        validator(_,value,cb){
+                        validator(_, value, cb) {
                           if (!value) {
                             return Promise.resolve();
                           }
-                          let tempUrl= addProdocol(value);
+                          let tempUrl = addProdocol(value);
                           if (urlRegx().test(tempUrl)) {
                             return Promise.resolve();
-                          }else{
-                            return Promise.reject(<IntlMessages id="app.supplierregistration.field.business_webSiteUrl.error.required" />);
+                          } else {
+                            return Promise.reject(
+                              <IntlMessages id="app.supplierregistration.field.business_webSiteUrl.error.required" />,
+                            );
                           }
-                        }
-                      }
+                        },
+                      },
                     ]}
                   >
-                    <Input
-                      addonBefore="https://"
-                      size="large" placeholder="nextdeal.cl"/>
+                    <Input addonBefore="https://" size="large" placeholder="nextdeal.cl" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -445,7 +442,9 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.business_type.error.required" />,
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_type.error.required" />
+                        ),
                       },
                     ]}
                   >
@@ -457,7 +456,9 @@ const SupplierRegistration = (props) => {
                 </Col>
                 <Col sm={12} xs={24}>
                   <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.business_phoneNumber1" />}
+                    label={
+                      <IntlMessages id="app.supplierregistration.field.business_phoneNumber1" />
+                    }
                     name="business_phoneNumber1"
                     rules={[
                       {
@@ -465,11 +466,11 @@ const SupplierRegistration = (props) => {
                         validator: (_, value) => {
                           if (!value) {
                             return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />
+                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
                             );
                           } else if (isNaN(value)) {
                             return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />
+                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
                             );
                           }
                           return Promise.resolve();
@@ -479,17 +480,21 @@ const SupplierRegistration = (props) => {
                   >
                     <Input
                       size="large"
-                      addonBefore={prefixSelector("business_telephone1")}
+                      addonBefore={prefixSelector('business_telephone1')}
                       placeholder="Telephone1"
                     />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label={<IntlMessages id="app.supplierregistration.field.business_phoneNumber2" />}
-                    name="business_phoneNumber2">
+                  <FormItem
+                    label={
+                      <IntlMessages id="app.supplierregistration.field.business_phoneNumber2" />
+                    }
+                    name="business_phoneNumber2"
+                  >
                     <Input
                       placeholder="Telephone2"
-                      addonBefore={prefixSelector("business_telephone2")}
+                      addonBefore={prefixSelector('business_telephone2')}
                     />
                   </FormItem>
                 </Col>
@@ -500,12 +505,14 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        type: "email",
-                        message: <IntlMessages id="app.supplierregistration.field.business_emailId.error.email" />,
+                        type: 'email',
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_emailId.error.email" />
+                        ),
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email"/>
+                    <Input size="large" placeholder="Email" />
                   </FormItem>
                 </Col>
                 <Col xs={24}>
@@ -515,8 +522,10 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.supplierregistration.field.business_categories.error.required" />,
-                        type: "array",
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.business_categories.error.required" />
+                        ),
+                        type: 'array',
                       },
                     ]}
                   >
@@ -544,30 +553,27 @@ const SupplierRegistration = (props) => {
                       <Option value="28">Maquinaria y construcción</Option>
                       <Option value="1">Marketing digital</Option>
                       <Option value="3">Packaging</Option>
-                      <Option value="17">
-                        Productos y regalos corporativos
-                      </Option>
+                      <Option value="17">Productos y regalos corporativos</Option>
                       <Option value="29">Salud y belleza</Option>
-                      <Option value="20">
-                        Servicios de importación y exportación
-                      </Option>
+                      <Option value="20">Servicios de importación y exportación</Option>
                       <Option value="8">Software y programación</Option>
                       <Option value="25">Textil y calzado</Option>
                     </Select>
                   </Form.Item>
                 </Col>
                 <Col xs={24}>
-                  <FormItem label={<IntlMessages id="app.supplierregistration.field.business_supplier_info" />}
-                  name="business_supplier_info">
-                    <TextArea placeholder="services offer" autosize/>
+                  <FormItem
+                    label={
+                      <IntlMessages id="app.supplierregistration.field.business_supplier_info" />
+                    }
+                    name="business_supplier_info"
+                  >
+                    <TextArea placeholder="services offer" autosize />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
                   <Form.Item>
-                    <Checkbox
-                      onChange={businessAddressHandler}
-                      checked={sameAsBusiness}
-                    >
+                    <Checkbox onChange={businessAddressHandler} checked={sameAsBusiness}>
                       <IntlMessages id="app.supplierregistration.field.samebilling_address" />
                     </Checkbox>
                   </Form.Item>
@@ -577,93 +583,115 @@ const SupplierRegistration = (props) => {
               {!sameAsBusiness && (
                 <Row gutter={24} className="bottom-divider">
                   <Col xs={24}>
-                    <WidgetHeader title={<IntlMessages id="app.supplierregistration.billing_title" />} />
+                    <WidgetHeader
+                      title={<IntlMessages id="app.supplierregistration.billing_title" />}
+                    />
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_addressLine1" />}
-                    name="billing_addressLine1">
-                      <Input
-                        size="large"
-                        placeholder="san pascual"
-                      />
+                    <FormItem
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.billing_addressLine1" />
+                      }
+                      name="billing_addressLine1"
+                    >
+                      <Input size="large" placeholder="san pascual" />
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_addressLine2" />}
-                    name="billing_addressLine2">
-                      <Input
-                        size="large"
-                        placeholder="las condes"
-                      />
+                    <FormItem
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.billing_addressLine2" />
+                      }
+                      name="billing_addressLine2"
+                    >
+                      <Input size="large" placeholder="las condes" />
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_regionId" />} name="billing_regionId">
+                    <FormItem
+                      label={<IntlMessages id="app.supplierregistration.field.billing_regionId" />}
+                      name="billing_regionId"
+                    >
                       <Select
                         size="large"
                         placeholder="Please select Region"
                         onChange={billingRegionChangeHandler}
                       >
                         {regions &&
-                        regions.map((region) => (
-                          <Option
-                            key={region.id + region.name}
-                            value={region.id}
-                          >
-                            {region.name}
-                          </Option>
-                        ))}
+                          regions.map(region => (
+                            <Option key={region.id + region.name} value={region.id}>
+                              {region.name}
+                            </Option>
+                          ))}
                       </Select>
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_communeId"/>} name="billing_communeId">
+                    <FormItem
+                      label={<IntlMessages id="app.supplierregistration.field.billing_communeId" />}
+                      name="billing_communeId"
+                    >
                       <Select size="large" placeholder="Please select Commune">
                         {communes2 &&
-                        communes2.map((commune) => (
-                          <Option
-                            key={commune.id + commune.name}
-                            value={commune.id}
-                          >
-                            {commune.name}
-                          </Option>
-                        ))}
+                          communes2.map(commune => (
+                            <Option key={commune.id + commune.name} value={commune.id}>
+                              {commune.name}
+                            </Option>
+                          ))}
                       </Select>
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_phoneNumber1" />} name="billing_phoneNumber1">
+                    <FormItem
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.billing_phoneNumber1" />
+                      }
+                      name="billing_phoneNumber1"
+                    >
                       <Input
                         size="large"
                         placeholder="Telephone1"
-                        addonBefore={prefixSelector("billing_telephone1")}
+                        addonBefore={prefixSelector('billing_telephone1')}
                       />
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem label={<IntlMessages id="app.supplierregistration.field.billing_phoneNumber2" />} name="billing_phoneNumber2">
+                    <FormItem
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.billing_phoneNumber2" />
+                      }
+                      name="billing_phoneNumber2"
+                    >
                       <Input
                         size="large"
                         placeholder="Telephone2"
-                        addonBefore={prefixSelector("billing_telephone2")}
+                        addonBefore={prefixSelector('billing_telephone2')}
                       />
                     </FormItem>
                   </Col>
                 </Row>
               )}
 
-              <Row gutter={24} style={{marginBottom: 20}}>
+              <Row gutter={24} style={{ marginBottom: 20 }}>
                 <Col xs={24}>
-                  <WidgetHeader title={<IntlMessages id="app.supplierregistration.business_contact_title" />} />
+                  <WidgetHeader
+                    title={<IntlMessages id="app.supplierregistration.business_contact_title" />}
+                  />
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label={<IntlMessages id="app.supplierregistration.field.bcontact_name" />} name="bcontact_name">
-                    <Input size="large" placeholder="Name"/>
+                  <FormItem
+                    label={<IntlMessages id="app.supplierregistration.field.bcontact_name" />}
+                    name="bcontact_name"
+                  >
+                    <Input size="large" placeholder="Name" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label={<IntlMessages id="app.supplierregistration.field.bcontact_surname" />} name="bcontact_surname">
-                    <Input size="large" placeholder="Surname"/>
+                  <FormItem
+                    label={<IntlMessages id="app.supplierregistration.field.bcontact_surname" />}
+                    name="bcontact_surname"
+                  >
+                    <Input size="large" placeholder="Surname" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -673,45 +701,50 @@ const SupplierRegistration = (props) => {
                     rules={[
                       {
                         required: false,
-                        type: "email",
+                        type: 'email',
                         warningOnly: true,
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email"/>
+                    <Input size="large" placeholder="Email" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label={<IntlMessages id="app.supplierregistration.field.bcontact_charge" />} name="bcontact_charge">
-                    <Input size="large" placeholder="Charge"/>
+                  <FormItem
+                    label={<IntlMessages id="app.supplierregistration.field.bcontact_charge" />}
+                    name="bcontact_charge"
+                  >
+                    <Input size="large" placeholder="Charge" />
                   </FormItem>
                 </Col>
               </Row>
-              {
-                props.isBuyer && (
-                  <Row style={{width: "100%", justifyContent: "right"}} gutter={24} className="bottom-divider">
-                    <Col>
-                      <Form.Item
-                        name="supplierInfoSharing"
-                      >
-                        <Checkbox onChange={() => setSupplierInfoShareable(!isSupplierInfoShareable)}>
-                          <IntlMessages id="app.supplierregistration.shareinfo_message" />
-                        </Checkbox>
-                        <span className="gx-signup-form-forgot gx-link">
-                </span>
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                )}
+              {props.isBuyer && (
+                <Row
+                  style={{ width: '100%', justifyContent: 'right' }}
+                  gutter={24}
+                  className="bottom-divider"
+                >
+                  <Col>
+                    <Form.Item name="supplierInfoSharing">
+                      <Checkbox onChange={() => setSupplierInfoShareable(!isSupplierInfoShareable)}>
+                        <IntlMessages id="app.supplierregistration.shareinfo_message" />
+                      </Checkbox>
+                      <span className="gx-signup-form-forgot gx-link"></span>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              )}
               <Row gutter={24} style={{ marginBottom: 20 }}>
                 <Col xs={24}>
-                  <WidgetHeader title={<IntlMessages id="app.supplierregistration.business_logo_title" />} />
+                  <WidgetHeader
+                    title={<IntlMessages id="app.supplierregistration.business_logo_title" />}
+                  />
                 </Col>
                 <Col xs={24}>
                   <FilesManager
                     files={files}
                     context={{
-                      assetRelation: "supplier_logo",
+                      assetRelation: 'supplier_logo',
                       //  assetRelationId: quotationData.id
                     }}
                     maxCount={1}
@@ -721,31 +754,32 @@ const SupplierRegistration = (props) => {
                   />
                 </Col>
               </Row>
-              <Row style={{width: "100%", justifyContent: "right"}}>
+              <Row style={{ width: '100%', justifyContent: 'right' }}>
                 <Col>
                   <Form.Item
                     name="iAccept"
                     rules={[
-                      { required: !iAccept && true, message: <IntlMessages id="app.supplierregistration.field.iAccept.error.required" /> },
+                      {
+                        required: !iAccept && true,
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.iAccept.error.required" />
+                        ),
+                      },
                     ]}
                   >
                     <Checkbox onChange={() => setIAccept(!iAccept)}>
-                      <IntlMessages id="appModule.iAccept"/>
+                      <IntlMessages id="appModule.iAccept" />
                     </Checkbox>
                     <span className="gx-signup-form-forgot gx-link">
-                  <IntlMessages id="appModule.termAndCondition"/>
-                </span>
+                      <IntlMessages id="appModule.termAndCondition" />
+                    </span>
                   </Form.Item>
                 </Col>
                 <Col>
                   <FormItem>
                     <div>
-                      <Button
-                        type="primary"
-                        className="gx-mb-0"
-                        htmlType="submit"
-                      >
-                        <IntlMessages id="app.userAuth.signUp"/>
+                      <Button type="primary" className="gx-mb-0" htmlType="submit">
+                        <IntlMessages id="app.userAuth.signUp" />
                       </Button>
                     </div>
                   </FormItem>
@@ -754,11 +788,11 @@ const SupplierRegistration = (props) => {
             </Form>
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
       {isLoading && (
         <div className="gx-loader-view">
-          <CircularProgress/>
+          <CircularProgress />
         </div>
       )}
       <SweetAlert
@@ -778,6 +812,6 @@ const SupplierRegistration = (props) => {
 
 SupplierRegistration.defaultProps = {
   showLoginLink: true,
-  isShared: true
-}
+  isShared: true,
+};
 export default SupplierRegistration;

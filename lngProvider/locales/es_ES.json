@@ -474,6 +474,7 @@
   "app.quotationresponses.field.paymentCondition":"Payment Conditions",
   "app.quotationresponses.field.paymentCondition.error.required":"Please input payment conditions!",
   "app.quotationresponses.field.description":"Comments",
+  "app.quotationresponses.field.description.info":"Please add your latest comments with ,(comma) separator",
   "app.quotationresponses.field.includesTax":"Incl.IVA",
   "app.quotationresponses.field.incoterm":"Incoterm",
   "app.quotationresponses.field.incoterm.error.required":"Please input incoterm!",

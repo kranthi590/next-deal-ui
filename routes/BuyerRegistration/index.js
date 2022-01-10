@@ -1,42 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip, Modal } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { isEmpty } from "lodash";
-import SweetAlert from "react-bootstrap-sweetalert";
+import React, { useEffect, useState } from 'react';
+import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip, Modal } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { isEmpty } from 'lodash';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 // Utils
-import IntlMessages from "../../util/IntlMessages";
-import { useAuth } from "../../contexts/use-auth";
-import { useRegistration } from "../../contexts/business-registration";
+import IntlMessages from '../../util/IntlMessages';
+import { useAuth } from '../../contexts/use-auth';
+import { useRegistration } from '../../contexts/business-registration';
 import {
   errorNotification,
   NOTIFICATION_TIMEOUT,
   successNotification,
-  getPhonePrefix, sanitizeString,
-} from "../../util/util";
-import urlRegx from 'url-regex'
+  getPhonePrefix,
+  sanitizeString,
+} from '../../util/util';
+import urlRegx from 'url-regex';
 
 // Components
-import CircularProgress from "../../app/components/CircularProgress";
-import WidgetHeader from "../../app/components/WidgetHeader";
-import Aside from "../../app/components/Aside";
-import Footer from "../../app/components/Footer";
+import CircularProgress from '../../app/components/CircularProgress';
+import WidgetHeader from '../../app/components/WidgetHeader';
+import Aside from '../../app/components/Aside';
+import Footer from '../../app/components/Footer';
 
 // Styles
-import "../../styles/form-page.css";
-import Rut from "../../shared/Rut";
-import {clean, validate} from "rut.js";
+import '../../styles/form-page.css';
+import Rut from '../../shared/Rut';
+import { clean, validate } from 'rut.js';
 
 const FormItem = Form.Item;
-const {Option} = Select;
+const { Option } = Select;
 
-const BuyerRegistration = (props) => {
+const BuyerRegistration = props => {
   const router = useRouter();
-  const {isLoading} = useAuth();
-  const {fetchRegions, fetchCommune, registerBuyer, error} =
-    useRegistration();
+  const { isLoading } = useAuth();
+  const { fetchRegions, fetchCommune, registerBuyer, error } = useRegistration();
 
   const [form] = Form.useForm();
 
@@ -44,29 +44,29 @@ const BuyerRegistration = (props) => {
   const [communes, setCommunes] = useState([]);
   const [iAccept, setIAccept] = useState(false);
   const [domainName, setDomainName] = useState('');
-  const [rut, setRut] = useState(null)
-  const [newSubDomain,setNewSubDomain] = useState(null);
+  const [rut, setRut] = useState(null);
+  const [newSubDomain, setNewSubDomain] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
-  const [isTermsVisible,setIsTermsVisible] = useState(false);
+  const [isTermsVisible, setIsTermsVisible] = useState(false);
 
   useEffect(() => {
-    fetchRegions(({regions}) => {
+    fetchRegions(({ regions }) => {
       setRegions(regions);
     });
   }, []);
 
-  const regionChangeHandler = (value) => {
+  const regionChangeHandler = value => {
     form.setFieldsValue({
-      communeId: "",
+      communeId: '',
     });
     setCommunes([]);
-    fetchCommune({regionId: value}, (data) => {
+    fetchCommune({ regionId: value }, data => {
       const communes = data && data.length > 0 ? data[0] : [];
       setCommunes(communes);
     });
   };
 
-  const getFormData = (data) => {
+  const getFormData = data => {
     const {
       addressLine1,
       addressLine2,
@@ -93,9 +93,9 @@ const BuyerRegistration = (props) => {
       },
       ...rest,
       emailId,
-      additionalData: "none",
+      additionalData: 'none',
       iAccept,
-      rut: rut ? clean(rut): rut,
+      rut: rut ? clean(rut) : rut,
     };
 
     if (!isEmpty(webSiteUrl)) {
@@ -108,42 +108,38 @@ const BuyerRegistration = (props) => {
     return formData;
   };
 
-  const addProdocol = (url) => {
-    if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0) {
-      return url
+  const addProdocol = url => {
+    if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
+      return url;
     } else {
-      return ("https://" + url)
+      return 'https://' + url;
     }
-  }
-  const onFinishFailed = (errorInfo) => {
   };
+  const onFinishFailed = errorInfo => {};
   const onAlertConfirmed = () => {
     window.location.href = `https://${newSubDomain}${process.env.NEXT_PUBLIC_APP_HOST}/app/signup`;
-  }
+  };
 
-  const onFinish = (values) => {
-    registerBuyer(getFormData(values), (data) => {
-        if (data) {
+  const onFinish = values => {
+    registerBuyer(getFormData(values), data => {
+      if (data) {
         setNewSubDomain(data.subDomainName);
         setShowAlert(true);
-        }
+      }
     });
   };
 
-  const prefixSelector = (name) => (
+  const prefixSelector = name => (
     <Form.Item name={name} noStyle>
-      <Select
-        style={{ width: 70 }}
-        defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}
-      >
+      <Select style={{ width: 70 }} defaultValue={process.env.NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX}>
         <Option value="56">+56</Option>
       </Select>
     </Form.Item>
   );
 
-  const onChange = async (value) => {
+  const onChange = async value => {
     setRut(value);
-  }
+  };
 
   const showTerms = () => {
     setIsTermsVisible(true);
@@ -154,16 +150,18 @@ const BuyerRegistration = (props) => {
 
   return (
     <div className="gx-app-login-wrap registration-container">
-      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount"/>
+      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount" />
       <div className="right-aside">
         <div className="form-container">
           <div className="gx-app-login-content registration-form">
             <div className="heading-wrapper">
-              <h1><IntlMessages id="app.buyerregistration.page_title" /></h1>
+              <h1>
+                <IntlMessages id="app.buyerregistration.page_title" />
+              </h1>
               <p>
                 <Link href="/signin">
                   <a>
-                    <IntlMessages id="app.userAuth.login"/>
+                    <IntlMessages id="app.userAuth.login" />
                   </a>
                 </Link>
               </p>
@@ -177,7 +175,7 @@ const BuyerRegistration = (props) => {
               className="gx-signin-form gx-form-row0"
               fields={[
                 {
-                  name: ["subDomainName"],
+                  name: ['subDomainName'],
                   value: domainName,
                 },
               ]}
@@ -193,14 +191,16 @@ const BuyerRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.buyerregistration.field.fantasyName.error.required" />,
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.fantasyName.error.required" />
+                        ),
                       },
                     ]}
                   >
                     <Input
                       size="large"
                       placeholder="Fantasy Name"
-                      onChange={(e) => setDomainName(sanitizeString(e.target.value))}
+                      onChange={e => setDomainName(sanitizeString(e.target.value))}
                     />
                   </FormItem>
                 </Col>
@@ -210,9 +210,14 @@ const BuyerRegistration = (props) => {
                     id="subDomainName"
                     label={
                       <span>
-                        <IntlMessages id="app.buyerregistration.field.fantasyName" />&nbsp;
-                        <Tooltip title={<IntlMessages id="app.buyerregistration.field.subDomainName.tooltip" />}>
-                          <QuestionCircleOutlined/>
+                        <IntlMessages id="app.buyerregistration.field.fantasyName" />
+                        &nbsp;
+                        <Tooltip
+                          title={
+                            <IntlMessages id="app.buyerregistration.field.subDomainName.tooltip" />
+                          }
+                        >
+                          <QuestionCircleOutlined />
                         </Tooltip>
                         &nbsp;
                         {!!domainName && `${domainName}${process.env.NEXT_PUBLIC_APP_HOST}`}
@@ -224,11 +229,11 @@ const BuyerRegistration = (props) => {
                         validator: (_, value) => {
                           if (!value) {
                             return Promise.reject(
-                              <IntlMessages id="app.buyerregistration.field.subDomainName.error.required" />
+                              <IntlMessages id="app.buyerregistration.field.subDomainName.error.required" />,
                             );
                           } else if (!/^[a-z0-9]+$/i.test(value)) {
                             return Promise.reject(
-                              <IntlMessages id="app.buyerregistration.field.subDomainName.error.srtingtype" />
+                              <IntlMessages id="app.buyerregistration.field.subDomainName.error.srtingtype" />,
                             );
                           }
                           return Promise.resolve();
@@ -241,7 +246,7 @@ const BuyerRegistration = (props) => {
                       placeholder="Domain Name"
                       addonBefore="https://"
                       addonAfter={process.env.NEXT_PUBLIC_APP_HOST}
-                      onChange={(e) => setDomainName(e.target.value)}
+                      onChange={e => setDomainName(e.target.value)}
                     />
                   </FormItem>
                 </Col>
@@ -252,11 +257,13 @@ const BuyerRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.buyerregistration.field.legalName.error.required" />,
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.legalName.error.required" />
+                        ),
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Business Name"/>
+                    <Input size="large" placeholder="Business Name" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -269,7 +276,7 @@ const BuyerRegistration = (props) => {
                         validator: (_, value) => {
                           if (!validate(value)) {
                             return Promise.reject(
-                              <IntlMessages id="app.buyerregistration.field.rut.error.valid" />
+                              <IntlMessages id="app.buyerregistration.field.rut.error.valid" />,
                             );
                           }
                           return Promise.resolve();
@@ -283,7 +290,8 @@ const BuyerRegistration = (props) => {
                       value={rut}
                       size="large"
                       onChange={onChange}
-                      placeholder="RUT"/>
+                      placeholder="RUT"
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -293,14 +301,13 @@ const BuyerRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.buyerregistration.field.addressLine1.error.required" />,
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.addressLine1.error.required" />
+                        ),
                       },
                     ]}
                   >
-                    <Input
-                      size="large"
-                      placeholder="san pascual"
-                    />
+                    <Input size="large" placeholder="san pascual" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -310,14 +317,13 @@ const BuyerRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.buyerregistration.field.addressLine2.error.required" />,
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.addressLine2.error.required" />
+                        ),
                       },
                     ]}
                   >
-                    <Input
-                      size="large"
-                      placeholder="las condes"
-                    />
+                    <Input size="large" placeholder="las condes" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -327,7 +333,9 @@ const BuyerRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.buyerregistration.field.regionId.error.required" />,
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.regionId.error.required" />
+                        ),
                       },
                     ]}
                   >
@@ -337,14 +345,11 @@ const BuyerRegistration = (props) => {
                       onChange={regionChangeHandler}
                     >
                       {regions &&
-                      regions.map((region) => (
-                        <Option
-                          key={region.id + region.name}
-                          value={region.id}
-                        >
-                          {region.name}
-                        </Option>
-                      ))}
+                        regions.map(region => (
+                          <Option key={region.id + region.name} value={region.id}>
+                            {region.name}
+                          </Option>
+                        ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -355,20 +360,19 @@ const BuyerRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.buyerregistration.field.communeId.error.required" />,
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.communeId.error.required" />
+                        ),
                       },
                     ]}
                   >
                     <Select size="large" placeholder="Please select Commune">
                       {communes &&
-                      communes.map((commune) => (
-                        <Option
-                          key={commune.id + commune.name}
-                          value={commune.id}
-                        >
-                          {commune.name}
-                        </Option>
-                      ))}
+                        communes.map(commune => (
+                          <Option key={commune.id + commune.name} value={commune.id}>
+                            {commune.name}
+                          </Option>
+                        ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -389,15 +393,15 @@ const BuyerRegistration = (props) => {
                           if (urlRegx().test(tempUrl)) {
                             return Promise.resolve();
                           } else {
-                            return Promise.reject(<IntlMessages id="app.buyerregistration.field.webSiteUrl.error.valid" />);
+                            return Promise.reject(
+                              <IntlMessages id="app.buyerregistration.field.webSiteUrl.error.valid" />,
+                            );
                           }
-                        }
-                      }
+                        },
+                      },
                     ]}
                   >
-                    <Input
-                      addonBefore="https://"
-                      size="large" placeholder="nextdeal.cl"/>
+                    <Input addonBefore="https://" size="large" placeholder="nextdeal.cl" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -407,12 +411,14 @@ const BuyerRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        type: "email",
-                        message: <IntlMessages id="app.buyerregistration.field.emailId.error.email" />,
+                        type: 'email',
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.emailId.error.email" />
+                        ),
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email"/>
+                    <Input size="large" placeholder="Email" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -422,54 +428,60 @@ const BuyerRegistration = (props) => {
                     rules={[
                       {
                         required: true,
-                        message: <IntlMessages id="app.buyerregistration.field.phoneNumber1.error.required" />,
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.phoneNumber1.error.required" />
+                        ),
                       },
                     ]}
                   >
                     <Input
                       size="large"
                       placeholder="Phone number"
-                      addonBefore={prefixSelector("phone1_prefix")}
-                      style={{width: "100%"}}
+                      addonBefore={prefixSelector('phone1_prefix')}
+                      style={{ width: '100%' }}
                     />
                   </Form.Item>
                 </Col>
                 <Col sm={12} xs={24}>
-                  <FormItem label={<IntlMessages id="app.buyerregistration.field.phoneNumber2" />} name="phoneNumber2">
+                  <FormItem
+                    label={<IntlMessages id="app.buyerregistration.field.phoneNumber2" />}
+                    name="phoneNumber2"
+                  >
                     <Input
                       size="large"
                       placeholder="Phone number"
-                      addonBefore={prefixSelector("phone2_prefix")}
-                      style={{width: "100%"}}
+                      addonBefore={prefixSelector('phone2_prefix')}
+                      style={{ width: '100%' }}
                     />
                   </FormItem>
                 </Col>
               </Row>
-              <Row style={{width: "100%", justifyContent: "right"}}>
+              <Row style={{ width: '100%', justifyContent: 'right' }}>
                 <Col>
                   <Form.Item
                     name="iAccept"
                     rules={[
-                      { required: !iAccept && true, message: <IntlMessages id="app.buyerregistration.field.iAccept.error.required" /> },
+                      {
+                        required: !iAccept && true,
+                        message: (
+                          <IntlMessages id="app.buyerregistration.field.iAccept.error.required" />
+                        ),
+                      },
                     ]}
                   >
                     <Checkbox onChange={() => setIAccept(!iAccept)}>
-                      <IntlMessages id="appModule.iAccept"/>
+                      <IntlMessages id="appModule.iAccept" />
                     </Checkbox>
                     <span className="gx-signup-form-forgot gx-link" onClick={showTerms}>
-                  <IntlMessages id="appModule.termAndCondition"/>
-                </span>
+                      <IntlMessages id="appModule.termAndCondition" />
+                    </span>
                   </Form.Item>
                 </Col>
                 <Col>
                   <FormItem>
                     <div>
-                      <Button
-                        type="primary"
-                        className="gx-mb-0"
-                        htmlType="submit"
-                      >
-                        <IntlMessages id="app.userAuth.signUp"/>
+                      <Button type="primary" className="gx-mb-0" htmlType="submit">
+                        <IntlMessages id="app.userAuth.signUp" />
                       </Button>
                     </div>
                   </FormItem>
@@ -478,11 +490,11 @@ const BuyerRegistration = (props) => {
             </Form>
           </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
       {isLoading && (
         <div className="gx-loader-view">
-          <CircularProgress/>
+          <CircularProgress />
         </div>
       )}
       <SweetAlert
@@ -493,12 +505,17 @@ const BuyerRegistration = (props) => {
         onConfirm={onAlertConfirmed}
       >
         <div>
-        <IntlMessages id="app.buyerregistration.successmessage.content" />
+          <IntlMessages id="app.buyerregistration.successmessage.content" />
         </div>
       </SweetAlert>
-      <Modal title={<IntlMessages id="app.buyerregistration.termsmodal.title" />} visible={isTermsVisible} onCancel={handleCancelTerms} footer={null}>
+      <Modal
+        title={<IntlMessages id="app.buyerregistration.termsmodal.title" />}
+        visible={isTermsVisible}
+        onCancel={handleCancelTerms}
+        footer={null}
+      >
         <p>
-        <IntlMessages id="app.buyerregistration.termsmodal.content" />
+          <IntlMessages id="app.buyerregistration.termsmodal.content" />
         </p>
       </Modal>
     </div>

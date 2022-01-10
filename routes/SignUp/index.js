@@ -1,60 +1,65 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Select, Divider } from "antd";
-import Link from "next/link";
+import React, { useState } from 'react';
+import { Button, Checkbox, Form, Input, Select, Divider } from 'antd';
+import Link from 'next/link';
 
 // Utils
-import IntlMessages from "../../util/IntlMessages";
-import { useAuth } from "../../contexts/use-auth";
+import IntlMessages from '../../util/IntlMessages';
+import { useAuth } from '../../contexts/use-auth';
 
 // Components
-import CircularProgress from "../../app/components/CircularProgress";
-import Aside from "../../app/components/Aside";
-import Footer from "../../app/components/Footer";
+import CircularProgress from '../../app/components/CircularProgress';
+import Aside from '../../app/components/Aside';
+import Footer from '../../app/components/Footer';
 
 // Styles
-import "../../styles/form-page.css";
-import {errorNotification, getSubDomain, isClient, NOTIFICATION_TIMEOUT, successNotification} from "../../util/util";
-import {useRouter} from "next/router";
+import '../../styles/form-page.css';
+import {
+  errorNotification,
+  getSubDomain,
+  isClient,
+  NOTIFICATION_TIMEOUT,
+  successNotification,
+} from '../../util/util';
+import { useRouter } from 'next/router';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
-const SignUp = (props) => {
+const SignUp = props => {
   const router = useRouter();
   const { isLoading, userSignup, getAuthUser, error } = useAuth();
 
   const [iAccept, setIAccept] = useState(false);
 
-  const getFormData = (data) => {
+  const getFormData = data => {
     return {
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password,
       emailId: data.email,
-      additionalData: "none",
-      type: "buyer",
+      additionalData: 'none',
+      type: 'buyer',
       buyerId: 1,
       iAccept,
       contactInfo: {
-        addressLine1: "Dept: 34",
-        addressLine2: "Del Inca 4421",
+        addressLine1: 'Dept: 34',
+        addressLine2: 'Del Inca 4421',
         communeId: 1,
         regionId: 1,
         countryId: 1,
-        phoneNumber1: "+56 935234098",
+        phoneNumber1: '+56 935234098',
         emailId: data.email,
       },
     };
   };
 
-  const onFinishFailed = (errorInfo) => {};
+  const onFinishFailed = errorInfo => {};
 
-  const onFinish = (values) => {
+  const onFinish = values => {
     userSignup(getFormData(values), () => {
-      successNotification("app.registration.detailsSaveSuccessMessage");
-      setTimeout(() => {
-      }, NOTIFICATION_TIMEOUT);
-      router.push("/signin");
+      successNotification('app.registration.detailsSaveSuccessMessage');
+      setTimeout(() => {}, NOTIFICATION_TIMEOUT);
+      router.push('/signin');
     });
   };
 
@@ -66,7 +71,10 @@ const SignUp = (props) => {
           <div className="gx-app-login-content registration-form">
             <div className="form-wrapper-login">
               <div className="heading-wrapper">
-                <h1><IntlMessages id="app.userAuth.signUp.page_title" /> {getSubDomain(isClient ? window.location.hostname: 'www.nextdeal.dev')}</h1>
+                <h1>
+                  <IntlMessages id="app.userAuth.signUp.page_title" />{' '}
+                  {getSubDomain(isClient ? window.location.hostname : 'www.nextdeal.dev')}
+                </h1>
                 <p>
                   <Link href="/signin">
                     <a>
@@ -86,26 +94,30 @@ const SignUp = (props) => {
                 <FormItem
                   label={<IntlMessages id="app.userAuth.signUp.field.firstName" />}
                   rules={[
-                    { required: true, message: <IntlMessages id="app.userAuth.signUp.field.firstName.error.required" /> },
+                    {
+                      required: true,
+                      message: (
+                        <IntlMessages id="app.userAuth.signUp.field.firstName.error.required" />
+                      ),
+                    },
                   ]}
                   name="firstName"
                 >
-                  <Input
-                    className="gx-input-lineheight"
-                    placeholder="First Name"
-                  />
+                  <Input className="gx-input-lineheight" placeholder="First Name" />
                 </FormItem>
                 <FormItem
                   label={<IntlMessages id="app.userAuth.signUp.field.lastName" />}
                   rules={[
-                    { required: true, message: <IntlMessages id="app.userAuth.signUp.field.lastName.error.required" /> },
+                    {
+                      required: true,
+                      message: (
+                        <IntlMessages id="app.userAuth.signUp.field.lastName.error.required" />
+                      ),
+                    },
                   ]}
                   name="lastName"
                 >
-                  <Input
-                    className="gx-input-lineheight"
-                    placeholder="Last Name"
-                  />
+                  <Input className="gx-input-lineheight" placeholder="Last Name" />
                 </FormItem>
 
                 <FormItem
@@ -114,7 +126,7 @@ const SignUp = (props) => {
                   rules={[
                     {
                       required: true,
-                      type: "email",
+                      type: 'email',
                       message: <IntlMessages id="app.userAuth.signUp.field.email.error.required" />,
                     },
                   ]}
@@ -129,47 +141,48 @@ const SignUp = (props) => {
                   rules={[
                     {
                       required: true,
-                      message: <IntlMessages id="app.userAuth.signUp.field.password.error.required" />,
-                    },{
-                      min:6,
-                      message:<IntlMessages id="app.userAuth.signUp.field.password.error.length" />
-                    }
+                      message: (
+                        <IntlMessages id="app.userAuth.signUp.field.password.error.required" />
+                      ),
+                    },
+                    {
+                      min: 6,
+                      message: (
+                        <IntlMessages id="app.userAuth.signUp.field.password.error.length" />
+                      ),
+                    },
                   ]}
                   hasFeedback
                 >
-                  <Input.Password
-                    className="gx-input-lineheight"
-                    placeholder="password"
-                  />
+                  <Input.Password className="gx-input-lineheight" placeholder="password" />
                 </Form.Item>
 
                 <Form.Item
-                  label={<IntlMessages id="app.userAuth.signUp.field.confirm"/>}
+                  label={<IntlMessages id="app.userAuth.signUp.field.confirm" />}
                   name="confirm"
-                  dependencies={["password"]}
+                  dependencies={['password']}
                   hasFeedback
                   allowClear
                   rules={[
                     {
                       required: true,
-                      message: <IntlMessages id="app.userAuth.signUp.field.confirm.error.required"/>,
+                      message: (
+                        <IntlMessages id="app.userAuth.signUp.field.confirm.error.required" />
+                      ),
                     },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
-                        if (!value || getFieldValue("password") === value) {
+                        if (!value || getFieldValue('password') === value) {
                           return Promise.resolve();
                         }
                         return Promise.reject(
-                          <IntlMessages id="app.userAuth.signUp.field.confirm.error.match"/>
+                          <IntlMessages id="app.userAuth.signUp.field.confirm.error.match" />,
                         );
                       },
                     }),
                   ]}
                 >
-                  <Input.Password
-                    className="gx-input-lineheight"
-                    placeholder="re enter password"
-                  />
+                  <Input.Password className="gx-input-lineheight" placeholder="re enter password" />
                 </Form.Item>
 
                 <Form.Item
@@ -177,7 +190,7 @@ const SignUp = (props) => {
                   rules={[
                     {
                       required: !iAccept,
-                      message: "Please accept!",
+                      message: 'Please accept!',
                     },
                   ]}
                 >
@@ -195,7 +208,7 @@ const SignUp = (props) => {
                   <Divider>
                     <IntlMessages id="app.userAuth.or" />
                   </Divider>
-                  <div style={{ textAlign: "center" }}>
+                  <div style={{ textAlign: 'center' }}>
                     <Link href="/signin">
                       <a>
                         <IntlMessages id="app.userAuth.login" />

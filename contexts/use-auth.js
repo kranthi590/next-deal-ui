@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
-import { httpClient, setAuthToken } from "../util/Api";
-import { Cookies } from "react-cookie";
-import { removeData, setData } from "../util/localStorage";
-import {errorNotification, handleErrorNotification} from "../util/util";
+import React, { useState, useEffect, useContext, createContext } from 'react';
+import { httpClient, setAuthToken } from '../util/Api';
+import { Cookies } from 'react-cookie';
+import { removeData, setData } from '../util/localStorage';
+import { errorNotification, handleErrorNotification } from '../util/util';
 
 const authContext = createContext({});
 
@@ -25,19 +25,19 @@ const useProvideAuth = () => {
   const [authUser, setAuthUser] = useState(null);
   const [isLoadingUser, setLoadingUser] = useState(true);
   const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   const fetchStart = () => {
     setLoading(true);
-    setError("");
+    setError('');
   };
 
   const fetchSuccess = () => {
     setLoading(false);
-    setError("");
+    setError('');
   };
 
-  const fetchError = (error) => {
+  const fetchError = error => {
     setLoading(false);
     setError(error);
   };
@@ -46,21 +46,21 @@ const useProvideAuth = () => {
     const cookies = new Cookies();
     fetchStart();
     httpClient
-      .post("users/login", data)
+      .post('users/login', data)
       .then(({ data: { data } }) => {
         if (data) {
           fetchSuccess();
           document.cookie = `token=${data.token}; path=/;domain=${process.env.NEXT_PUBLIC_APP_HOST}`;
-          cookies.set("token", data.token || "", {
-            path: "/",
+          cookies.set('token', data.token || '', {
+            path: '/',
             domain: process.env.NEXT_PUBLIC_APP_HOST,
           });
-          cookies.set("buyerId", data.user.buyerId || "", {
-            path: "/",
+          cookies.set('buyerId', data.user.buyerId || '', {
+            path: '/',
             domain: process.env.NEXT_PUBLIC_APP_HOST,
           });
-          cookies.set("userId", data.user.id || "", {
-            path: "/",
+          cookies.set('userId', data.user.id || '', {
+            path: '/',
             domain: process.env.NEXT_PUBLIC_APP_HOST,
           });
           window.location.href = `http://${data.user.buyer.subDomainName}${process.env.NEXT_PUBLIC_APP_HOST}/app`;
@@ -79,7 +79,7 @@ const useProvideAuth = () => {
     fetchStart();
     const headers = setAuthToken();
     httpClient
-      .post("users", data, {
+      .post('users', data, {
         headers: headers,
       })
       .then(({ data }) => {
@@ -96,29 +96,29 @@ const useProvideAuth = () => {
       });
   };
 
-  const userSignOut = (callbackFun) => {
+  const userSignOut = callbackFun => {
     fetchStart();
     try {
       fetchSuccess();
       const cookies = new Cookies();
-      cookies.remove("token", {
-        path: "/",
+      cookies.remove('token', {
+        path: '/',
         domain: process.env.NEXT_PUBLIC_APP_HOST,
       });
-      cookies.remove("buyerId", {
-        path: "/",
+      cookies.remove('buyerId', {
+        path: '/',
         domain: process.env.NEXT_PUBLIC_APP_HOST,
       });
-      cookies.remove("userId", {
-        path: "/",
+      cookies.remove('userId', {
+        path: '/',
         domain: process.env.NEXT_PUBLIC_APP_HOST,
       });
-      removeData("user");
-      window.location.href = "/app/signin";
+      removeData('user');
+      window.location.href = '/app/signin';
       if (callbackFun) callbackFun();
     } catch (error) {
       setLoadingUser(false);
-      errorNotification(error.message, "app.registration.errorMessageTitle")
+      errorNotification(error.message, 'app.registration.errorMessageTitle');
       fetchError(error.message);
     }
   };
@@ -126,7 +126,7 @@ const useProvideAuth = () => {
   const getAuthUser = () => {
     fetchStart();
     httpClient
-      .post("auth/me")
+      .post('auth/me')
       .then(({ data }) => {
         if (data.user) {
           fetchSuccess();
@@ -136,7 +136,7 @@ const useProvideAuth = () => {
         }
       })
       .catch(function (error) {
-        setAuthToken("");
+        setAuthToken('');
         // httpClient.defaults.headers.common['Authorization'] = '';
         fetchError(error.message);
       });
@@ -156,11 +156,11 @@ const useProvideAuth = () => {
   };
 };
 
-export const isUnRestrictedRoute = (pathname) => {
+export const isUnRestrictedRoute = pathname => {
   return (
-    pathname === "/signin" ||
-    pathname === "/signup" ||
-    pathname === "/buyer-registration" ||
-    pathname === "/supplier-registration"
+    pathname === '/signin' ||
+    pathname === '/signup' ||
+    pathname === '/buyer-registration' ||
+    pathname === '/supplier-registration'
   );
 };

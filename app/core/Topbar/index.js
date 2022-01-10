@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { Layout, Popover } from "antd";
-import Link from "next/link";
+import React, { useState } from 'react';
+import { Layout, Popover } from 'antd';
+import Link from 'next/link';
 
-import CustomScrollbars from "../../../util/CustomScrollbars";
-import languageData from "./languageData";
-import { switchLanguage, toggleCollapsedSideNav } from "../../../redux/actions";
-import SearchBox from "../../components/SearchBox";
-import UserInfo from "../../components/UserInfo";
-import AppNotification from "../../components/AppNotification";
-import MailNotification from "../../components/MailNotification";
+import CustomScrollbars from '../../../util/CustomScrollbars';
+import languageData from './languageData';
+import { switchLanguage, toggleCollapsedSideNav } from '../../../redux/actions';
+import SearchBox from '../../components/SearchBox';
+import UserInfo from '../../components/UserInfo';
+import AppNotification from '../../components/AppNotification';
+import MailNotification from '../../components/MailNotification';
 
 import {
   NAV_STYLE_DRAWER,
   NAV_STYLE_FIXED,
   NAV_STYLE_MINI_SIDEBAR,
   TAB_SIZE,
-} from "../../../constants/ThemeSetting";
-import { useDispatch, useSelector } from "react-redux";
-import UserProfile from "../Sidebar/UserProfile";
+} from '../../../constants/ThemeSetting';
+import { useDispatch, useSelector } from 'react-redux';
+import UserProfile from '../Sidebar/UserProfile';
 
 const { Header } = Layout;
 
@@ -26,13 +26,13 @@ const Topbar = () => {
   const navCollapsed = useSelector(({ settings }) => settings.navCollapsed);
   const navStyle = useSelector(({ settings }) => settings.navStyle);
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
 
   const languageMenu = () => (
     <CustomScrollbars className="gx-popover-lang-scroll">
       <ul className="gx-sub-popover">
-        {languageData.map((language) => (
+        {languageData.map(language => (
           <li
             className="gx-media gx-pointer"
             key={JSON.stringify(language)}
@@ -46,7 +46,7 @@ const Topbar = () => {
     </CustomScrollbars>
   );
 
-  const updateSearchChatUser = (evt) => {
+  const updateSearchChatUser = evt => {
     setSearchText(evt.target.value);
   };
 
@@ -65,11 +65,7 @@ const Topbar = () => {
         </div>
       ) : null}
       <Link href="/">
-        <img
-          alt=""
-          className="gx-d-block gx-d-lg-none gx-pointer"
-          src={"/images/w-logo.jpeg"}
-        />
+        <img alt="" className="gx-d-block gx-d-lg-none gx-pointer" src={'/images/w-logo.jpeg'} />
       </Link>
 
       {/* <SearchBox
@@ -79,7 +75,7 @@ const Topbar = () => {
         value={searchText}
       /> */}
       <ul className="gx-header-notifications gx-ml-auto">
-    {/*    <li className="gx-notify">
+        {/*    <li className="gx-notify">
           <Popover
             overlayClassName="gx-popover-horizantal"
             placement="bottomRight"

@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const AppModuleHeader = (props) => {
+const AppModuleHeader = props => {
   const { placeholder, onChange, value } = props;
 
   return (
@@ -26,6 +26,6 @@ const AppModuleHeader = (props) => {
 export default AppModuleHeader;
 
 AppModuleHeader.defaultProps = {
-  styleName: "",
-  value: "",
+  styleName: '',
+  value: '',
 };

@@ -1,9 +1,9 @@
-import React, { Fragment } from "react";
-import Projects from "../../routes/Projects";
-import { ProjectProvider } from "../../contexts/projects";
-import { handleApiErrors, httpClient, setApiContext } from "../../util/Api";
+import React, { Fragment } from 'react';
+import Projects from '../../routes/Projects';
+import { ProjectProvider } from '../../contexts/projects';
+import { handleApiErrors, httpClient, setApiContext } from '../../util/Api';
 
-const ProjectsPage = (props) => {
+const ProjectsPage = props => {
   return (
     <Fragment>
       <ProjectProvider>

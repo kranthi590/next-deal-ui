@@ -1,8 +1,12 @@
-import React from "react";
+import React from 'react';
 import Icon from '@ant-design/icons';
-import { MailOutlined,MessageOutlined,BellOutlined,UnorderedListOutlined   } from '@ant-design/icons';
+import {
+  MailOutlined,
+  MessageOutlined,
+  BellOutlined,
+  UnorderedListOutlined,
+} from '@ant-design/icons';
 const WelComeCard = () => {
-
   return (
     <div className="gx-wel-ema gx-pt-xl-2">
       <h1 className="gx-mb-3">Welcome Ema!</h1>
@@ -27,7 +31,6 @@ const WelComeCard = () => {
         </li>
       </ul>
     </div>
-
   );
 };
 

@@ -1,8 +1,7 @@
-import React from "react";
-import {Button} from "antd";
+import React from 'react';
+import { Button } from 'antd';
 
-import Widget from "../../components/Widget/index";
-
+import Widget from '../../components/Widget/index';
 
 const SocialMedia = () => {
   const ButtonGroup = Button.Group;
@@ -15,7 +14,9 @@ const SocialMedia = () => {
         <p>Learn from experts. This webinar explains right..</p>
         <h4 className="gx-text-primary gx-mb-3 gx-mb-sm-4">Are You ready to join?</h4>
         <ButtonGroup className="gx-mb-1">
-          <Button className="gx-mb-0" type="primary">Yes</Button>
+          <Button className="gx-mb-0" type="primary">
+            Yes
+          </Button>
           <Button className="gx-btn-warning gx-mb-0">Maybe</Button>
           <Button className="gx-btn-light gx-mb-0">No</Button>
         </ButtonGroup>
