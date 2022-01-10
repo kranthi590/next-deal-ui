@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start -p 8080",
     "less": "lessc --js styles/wieldy.less styles/style.css && lessc --js styles/wieldy.less styles/style.min.css --compress -x",
-    "prettier": "prettier --write '**/*.{jsx,js,css}'"
+    "prettier": "prettier --write '**/*.{jsx,js}'"
   },
   "dependencies": {
     "@ant-design/icons": "^4.1.0",

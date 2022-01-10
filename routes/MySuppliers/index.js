@@ -1,50 +1,27 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Card, Modal, Space, Table, Input, Row, Col } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BreadCrumb from '../../app/components/BreadCrumb';
+import { useRegistration } from '../../contexts/business-registration';
 import SupplierRegistrationPage from '../../pages/supplier-registration';
 import IntlMessages from '../../util/IntlMessages';
-const data = [
-  {
-    fantasyName: 'Sairaj',
-    categories: 'Alimentacion',
-    emailId: 'sairaj.devacc@gmail.com',
-    observation: 'Comments',
-    isShared: true,
-  },
-  {
-    fantasyName: 'Ram',
-    categories: 'Alimentacion',
-    emailId: 'sairaj.devacc@gmail.com',
-    observation: 'Comments',
-    isShared: true,
-  },
-  {
-    fantasyName: 'Steve',
-    categories: 'Alimentacion',
-    emailId: 'sairaj.devacc@gmail.com',
-    observation: 'Comments',
-    isShared: true,
-  },
-  {
-    fantasyName: 'Raj',
-    categories: 'Alimentacion',
-    emailId: 'sairaj.devacc@gmail.com',
-    observation: 'Comments',
-    isShared: true,
-  },
-  {
-    fantasyName: 'John',
-    categories: 'Alimentacion',
-    emailId: 'sairaj.devacc@gmail.com',
-    observation: 'Comments',
-    isShared: true,
-  },
-];
+
 const MySuppliers = props => {
+  const { getMySuppliers } = useRegistration();
   const [visible, setVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
+  const [suppliersList, setSuppliersList] = useState([]);
+
+  const loadMySuppliers = () => {
+    getMySuppliers(data => {
+      setSuppliersList(data);
+    });
+  };
+
+  useEffect(() => {
+    loadMySuppliers();
+  }, []);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -147,9 +124,7 @@ const MySuppliers = props => {
   ];
   const reloadSuppliers = () => {
     setVisible(false);
-    // getBuyerSuppliers((data) => {
-    //   setSuppliers(data);
-    // });
+    loadMySuppliers();
   };
   const showModal = () => {
     setVisible(true);
@@ -157,8 +132,8 @@ const MySuppliers = props => {
   return (
     <>
       <BreadCrumb
-        navItems={[{ text: <IntlMessages id="sidebar.suppliers.mySuppliers" /> }]}
-      ></BreadCrumb>
+  navItems={[{ text: <IntlMessages id="sidebar.suppliers.mySuppliers" /> }]}
+  />
       <Card className="gx-card" title={<IntlMessages id="app.mysuppliers.pageTitle" />}>
         <div align="end" style={{ textAlign: 'right' }}>
           <Button type="primary" onClick={showModal}>
@@ -168,9 +143,9 @@ const MySuppliers = props => {
         </div>
         <Table
           columns={suppliersColumns}
-          dataSource={data}
+          dataSource={suppliersList}
           pagination={{ pageSize: 30 }}
-          scroll={{ y: 240 }}
+          scroll={{ y: 500 }}
         />
       </Card>
       <Modal
