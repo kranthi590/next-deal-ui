@@ -351,6 +351,8 @@
   "app.quotation.suppliers": "Suppliers",
   "app.quotation.suppliers.error.required": "Please select your suppliers!",
   "app.quotation.addsupplier": "Add a Supplier",
+  "sidebar.suppliers.mySuppliers": "My Suppliers",
+  "app.mysuppliers.pageTitle": "My Registered Suppliers",
   "invalid_project_id":"INVALID_PROJECT_ID",
   "invalid_quotation_status":"INVALID_QUOTATION_STATUS",
   "invalid_quotation_id":"INVALID_QUOTATION_ID",
