@@ -77,14 +77,14 @@ const MySuppliers = props => {
 
   const suppliersColumns = [
     {
-      title: 'Business Name',
+      title: <IntlMessages id="app.buyerregistration.field.legalName"/>,
       dataIndex: 'fantasyName',
       key: 'fantasyName',
       // width: '30%',
       ...getColumnSearchProps('fantasyName'),
     },
     {
-      title: 'Category',
+      title: <IntlMessages id="app.supplierregistration.field.business_categories"/>,
       dataIndex: 'categories',
       key: 'categories',
       // width: '30%',
@@ -98,14 +98,14 @@ const MySuppliers = props => {
       ...getColumnSearchProps('emailId'),
     },
     {
-      title: 'Observation',
+      title: <IntlMessages id="app.supplierregistration.field.observacion"/>,
       dataIndex: 'observation',
       key: 'observation',
       // width: '30%',
       ...getColumnSearchProps('observation'),
     },
     {
-      title: 'Share supplier',
+      title: <IntlMessages id="app.supplierregistration.field.isshared"/>,
       dataIndex: 'isShared',
       key: 'isShared',
       render: (text, record) => <Space size="middle">{record.isShared ? 'Yes' : 'No'}</Space>,
