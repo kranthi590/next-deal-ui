@@ -481,5 +481,6 @@
   "app.quotationresponses.button.save":"Guarda",
   "app.quotationresponses.button.award":"Adjudicar",
   "app.quotationresponses.button.confirm":"Confirmar recepción",
-  "app.quotationresponses.button.deaward":"Desadjudicar"
+  "app.quotationresponses.button.deaward":"Desadjudicar",
+  "app.quotationresponses.button.abort":"Abort"
 }
