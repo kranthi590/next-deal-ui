@@ -2,7 +2,7 @@ import React from 'react';
 import cookie from 'cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Avatar, Row, Col } from 'antd';
+import { Avatar, Row, Col, Button } from 'antd';
 
 import Widget from '../../../../../app/components/Widget';
 import { formatAmount, getAvatar, successNotification } from '../../../../../util/util';
@@ -16,6 +16,7 @@ import QuotationCompleted from '../../../../../app/components/NextDeal/Quotation
 import FilesManager from '../../../../../app/common/FileManager';
 import BreadCrumb from '../../../../../app/components/BreadCrumb';
 import IntlMessages from '../../../../../util/IntlMessages';
+import { CloseOutlined } from '@ant-design/icons';
 
 const NewQuoteResponse = props => {
   const { projectsList, quotationData, awardedResponses } = props;
@@ -70,8 +71,8 @@ const NewQuoteResponse = props => {
       }, 1000);
     });
   };
-  const onAbortQuotation = qid => {
-    abortQuotation(qid, data => {
+  const onAbortQuotation = () => {
+    abortQuotation(quotationData.id, data => {
       successNotification('app.registration.detailsSaveSuccessMessage');
       setTimeout(() => {
         window.location.reload();
@@ -112,6 +113,20 @@ const NewQuoteResponse = props => {
                       {quotationData.currency}
                     </span>
                   </h2>
+                  {quotationData.status === 'created' ? (
+                    <Button
+                      type="primary"
+                      icon={<CloseOutlined />}
+                      className="gx-mb-0 gx-mt-1"
+                      onClick={abortQuotation}
+                    >
+                      <span>
+                        <IntlMessages id="app.quotationresponses.button.abort" />
+                      </span>
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
             </div>
@@ -135,15 +150,7 @@ const NewQuoteResponse = props => {
       <>
         {projectsList.length === 0 && <NoDataAvailable />}
         {projectsList.map(item => (
-          <QuoteResponses
-            formData={item}
-            key={item.id}
-            onSave={onSave}
-            awarded={awarded}
-            onAbort={() => {
-              onAbortQuotation(item.id);
-            }}
-          />
+          <QuoteResponses formData={item} key={item.id} onSave={onSave} awarded={awarded} />
         ))}
       </>
     );

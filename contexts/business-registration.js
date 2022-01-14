@@ -177,64 +177,22 @@ const useProviderRegistration = () => {
       });
   };
 
-  const getMySuppliers = callbackFun => {
-    const data = [
-      {
-        fantasyName: 'Sairaj',
-        categories: 'Alimentacion',
-        emailId: 'sairaj.devacc@gmail.com',
-        observation: 'Comments',
-        isShared: true,
-      },
-      {
-        fantasyName: 'Ram',
-        categories: 'Alimentacion',
-        emailId: 'sairaj.devacc@gmail.com',
-        observation: 'Comments',
-        isShared: true,
-      },
-      {
-        fantasyName: 'Steve',
-        categories: 'Alimentacion',
-        emailId: 'sairaj.devacc@gmail.com',
-        observation: 'Comments',
-        isShared: true,
-      },
-      {
-        fantasyName: 'Raj',
-        categories: 'Alimentacion',
-        emailId: 'sairaj.devacc@gmail.com',
-        observation: 'Comments',
-        isShared: true,
-      },
-      {
-        fantasyName: 'John',
-        categories: 'Alimentacion',
-        emailId: 'sairaj.devacc@gmail.com',
-        observation: 'Comments',
-        isShared: true,
-      },
-    ];
-    // fetchStart();
+  const getSupplier = (supplierId, callbackFun) => {
+    fetchStart();
     const headers = setAuthToken();
-    const cookie = new Cookies();
-    const buyerId = cookie.get('buyerId');
-    if (callbackFun) callbackFun(data);
-    // httpClient
-    //   .get(`buyers/${buyerId}/suppliers`, {headers})
-    //   .then(({data}) => {
-    //     if (data.data) {
-    //       fetchSuccess();
-    //       if (callbackFun) callbackFun(data.data);
-    //     } else {
-    //       errorNotification(data.error, "app.registration.errorMessageTitle")
-    //       fetchError(data.error);
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     errorNotification(error.message, "app.registration.errorMessageTitle")
-    //     fetchError(error.message);
-    //   });
+    httpClient
+      .get(`suppliers/${supplierId}`, { headers })
+      .then(({ data }) => {
+        if (data.data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        fetchError(error.message);
+      });
   };
 
   return {
@@ -246,6 +204,6 @@ const useProviderRegistration = () => {
     registerSupplier,
     uploadSupplierLogo,
     getBuyerSuppliers,
-    getMySuppliers,
+    getSupplier,
   };
 };

@@ -47,7 +47,6 @@ const BuyerRegistration = props => {
   const [rut, setRut] = useState(null);
   const [newSubDomain, setNewSubDomain] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
-  const [isTermsVisible, setIsTermsVisible] = useState(false);
 
   useEffect(() => {
     fetchRegions(({ regions }) => {
@@ -139,13 +138,6 @@ const BuyerRegistration = props => {
 
   const onChange = async value => {
     setRut(value);
-  };
-
-  const showTerms = () => {
-    setIsTermsVisible(true);
-  };
-  const handleCancelTerms = () => {
-    setIsTermsVisible(false);
   };
 
   return (
@@ -472,7 +464,7 @@ const BuyerRegistration = props => {
                     <Checkbox onChange={() => setIAccept(!iAccept)}>
                       <IntlMessages id="appModule.iAccept" />
                     </Checkbox>
-                    <span className="gx-signup-form-forgot gx-link" onClick={showTerms}>
+                    <span className="gx-signup-form-forgot gx-link">
                       <IntlMessages id="appModule.termAndCondition" />
                     </span>
                   </Form.Item>
@@ -508,16 +500,6 @@ const BuyerRegistration = props => {
           <IntlMessages id="app.buyerregistration.successmessage.content" />
         </div>
       </SweetAlert>
-      <Modal
-        title={<IntlMessages id="app.buyerregistration.termsmodal.title" />}
-        visible={isTermsVisible}
-        onCancel={handleCancelTerms}
-        footer={null}
-      >
-        <p>
-          <IntlMessages id="app.buyerregistration.termsmodal.content" />
-        </p>
-      </Modal>
     </div>
   );
 };

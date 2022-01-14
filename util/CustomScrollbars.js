@@ -6,6 +6,7 @@ const CustomScrollbars = props => (
     {...props}
     autoHide
     universal
+    renderView={prop => <div {...prop} id={props.sid ? props.sid : null} />}
     renderTrackHorizontal={props => (
       <div {...props} style={{ display: 'none' }} className="track-horizontal" />
     )}
