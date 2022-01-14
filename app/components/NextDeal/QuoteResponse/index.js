@@ -14,7 +14,7 @@ import {
   InputNumber,
   Tooltip,
 } from 'antd';
-import { SaveOutlined, CloseOutlined } from '@ant-design/icons';
+import { SaveOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';
