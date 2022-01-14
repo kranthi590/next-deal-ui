@@ -349,7 +349,9 @@ const SupplierRegistration = props => {
                       placeholder="Please select Region"
                       onChange={businessRegionChangeHandler}
                       filterOption={(input, option) => {
-                        return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        return (
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        );
                       }}
                     >
                       {regions &&
@@ -381,7 +383,9 @@ const SupplierRegistration = props => {
                       placeholder="Select your service locations"
                       mode="multiple"
                       filterOption={(input, option) => {
-                        return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        return (
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        );
                       }}
                     >
                       {regions &&
@@ -412,7 +416,9 @@ const SupplierRegistration = props => {
                       size="large"
                       placeholder="Please select Commune"
                       filterOption={(input, option) => {
-                        return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        return (
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        );
                       }}
                     >
                       {communes1 &&
@@ -424,6 +430,7 @@ const SupplierRegistration = props => {
                     </Select>
                   </FormItem>
                 </Col>
+
                 <Col sm={12} xs={24}>
                   <FormItem
                     name="business_webSiteUrl"

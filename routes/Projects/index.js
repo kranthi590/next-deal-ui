@@ -64,7 +64,7 @@ class Projects extends PureComponent {
     });
   };
 
-  displayProjects = (projects, noContentFoundMessage, loader) => {
+  displayProjects = (projects, noContentFoundMessage, loader, totalCount) => {
     return (
       <div className="gx-module-box-column">
         {projects && projects.length === 0 ? (
@@ -72,8 +72,8 @@ class Projects extends PureComponent {
             {noContentFoundMessage}
           </div>
         ) : (
-          <CustomScrollbars className="gx-module-side-scroll">
-            <Card projects={projects} loader={loader} />
+          <CustomScrollbars className="gx-module-side-scroll" sid="projectsScrollableWrapper">
+            <Card projects={projects} loader={loader} totalCount={totalCount} />
           </CustomScrollbars>
         )}
       </div>
@@ -134,7 +134,7 @@ class Projects extends PureComponent {
 
   render() {
     const { loader, drawerState, alertMessage, showMessage, noContentFoundMessage } = this.state;
-    const { projectsList = [] } = this.props;
+    const { projectsList = [], totalCount = 0 } = this.props;
     return (
       <div className="gx-main-content">
         <div className="gx-app-module">
@@ -162,7 +162,7 @@ class Projects extends PureComponent {
             </div>
 
             <div className="gx-module-box-content cards-wrapper">
-              {this.displayProjects(projectsList, noContentFoundMessage, loader)}
+              {this.displayProjects(projectsList, noContentFoundMessage, loader, totalCount)}
             </div>
           </div>
         </div>

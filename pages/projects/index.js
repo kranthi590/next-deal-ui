@@ -20,7 +20,7 @@ export async function getServerSideProps(context) {
   let projectsList = null;
   try {
     const headers = setApiContext(req, res, query);
-    const response = await httpClient.get(`projects`, {
+    const response = await httpClient.get(`projects?size=10&offset=0`, {
       headers,
     });
     projectsList = response.data.data;
@@ -30,6 +30,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       projectsList: projectsList.rows,
+      totalCount: projectsList.count,
     },
   };
 }

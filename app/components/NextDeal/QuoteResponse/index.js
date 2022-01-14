@@ -14,14 +14,14 @@ import {
   InputNumber,
   Tooltip,
 } from 'antd';
-import { SaveOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';
 import { clpToNumber, numberToClp } from '../../../../util/util';
 
 const QuoteResponses = props => {
-  const { onSave, awarded, onAbort } = props;
+  const { onSave, awarded } = props;
   const {
     id,
     fantasyName,
@@ -294,20 +294,6 @@ const QuoteResponses = props => {
           </Col>
           {!awarded && (
             <Col xl={6} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
-              {!newQuote && (
-                <Form.Item wrapperCol={{ span: 24 }}>
-                  <Button
-                    type="primary"
-                    icon={<CloseOutlined />}
-                    className="gx-mb-0"
-                    onClick={onAbort}
-                  >
-                    <span>
-                      <IntlMessages id="app.quotationresponses.button.abort" />
-                    </span>
-                  </Button>
-                </Form.Item>
-              )}
               <Form.Item wrapperCol={{ span: 24 }}>
                 <Button
                   type="primary"
