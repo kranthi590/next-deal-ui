@@ -1,5 +1,5 @@
-import React from 'react';
-import { Row, Col, Button, Avatar } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Button, Avatar, Divider } from 'antd';
 import Link from 'next/link';
 import { handleApiErrors, httpClient, setApiContext } from '../../../util/Api';
 import cookie from 'cookie';
@@ -13,10 +13,80 @@ import { formatAmount, getAvatar } from '../../../util/util';
 import CustomScrollbars from '../../../util/CustomScrollbars';
 import NoDataAvailable from '../../../app/components/NoDataAvailable.js';
 import BreadCrumb from '../../../app/components/BreadCrumb';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { ResponsesProvider, useResponse } from '../../../contexts/responses';
 
 const colSpan = 24 / 3;
 
-const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [] }) => {
+const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
+  // inprogress
+  const [inprogressQuotationsData, setInprogressQuotationsData] = useState(inProgress.rows || []);
+  const [sizeInprogress, setSizeInprogress] = useState(10);
+  const [hasMoreInprogress, setHasMoreInprogress] = useState(true);
+  const [inProgressCount, setInprogressCount] = useState(inProgress.count || 0);
+  // awarded
+  const [awardedQuotationsData, setAwardedQuotationsData] = useState(awarded.rows || []);
+  const [sizeAwarded, setSizeAwarded] = useState(10);
+  const [hasMoreAwarded, setHasMoreAwarded] = useState(true);
+  const [awardedCount, setAwardedCount] = useState(awarded.count || 0);
+  // completed
+  const [completedQuotationsData, setCompletedQuotationsData] = useState(completed.rows || []);
+  const [sizeCompleted, setSizeCompleted] = useState(10);
+  const [hasMoreCompleted, setHasMoreCompleted] = useState(true);
+  const [completedCount, setCompletedCount] = useState(completed.count || 0);
+
+  const { getQuotationsByPagination } = useResponse();
+  const loadMoreInprogressQuotations = () => {
+    getQuotationsByPagination(
+      project.id,
+      'created',
+      sizeInprogress,
+      inprogressQuotationsData.length,
+      data => {
+        setInprogressCount(data.count);
+        setInprogressQuotationsData(inprogressQuotationsData.concat(data.rows));
+      },
+    );
+  };
+
+  const loadMoreAwardedQuotations = () => {
+    getQuotationsByPagination(
+      project.id,
+      'awarded',
+      sizeAwarded,
+      awardedQuotationsData.length,
+      data => {
+        setAwardedCount(data.count);
+        setAwardedQuotationsData(awardedQuotationsData.concat(data.rows));
+      },
+    );
+  };
+
+  const loadMoreCompletedQuotations = () => {
+    getQuotationsByPagination(
+      project.id,
+      'completed',
+      sizeCompleted,
+      completedQuotationsData.length,
+      data => {
+        setCompletedCount(data.count);
+        setCompletedQuotationsData(completedQuotationsData.concat(data.rows));
+      },
+    );
+  };
+
+  useEffect(() => {
+    if (inProgressCount === inprogressQuotationsData.length) {
+      setHasMoreInprogress(false);
+    }
+    if (awardedCount === awardedQuotationsData.length) {
+      setHasMoreAwarded(false);
+    }
+    if (completedCount === completedQuotationsData.length) {
+      setHasMoreCompleted(false);
+    }
+  }, [inprogressQuotationsData, awardedQuotationsData, completedQuotationsData]);
+
   const Header = title => {
     return (
       <div className="ant-card-head">
@@ -87,46 +157,93 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
       <Row gutter={8}>
         <Col span={colSpan} className="quotation-column-divider">
           <div style={{ backgroundColor: '#ffffff' }} className="gx-h-100">
-            {Header('In progress')}
+            {Header(<IntlMessages id="app.quotationresponses.button.inprogress" />)}
             <div className="gx-customizer">
-              <CustomScrollbars>
-                <div className="gx-p-2">
-                  {inProgress &&
-                    inProgress.map(item => (
-                      <QuotationCard key={item.id} data={item} activeTab={1} />
-                    ))}
-                  {inProgress.length === 0 && <NoDataAvailable />}
-                </div>
+              <CustomScrollbars sid="inprogressQuotations">
+                <InfiniteScroll
+                  dataLength={inprogressQuotationsData.length}
+                  next={loadMoreInprogressQuotations}
+                  scrollableTarget="inprogressQuotations"
+                  hasMore={hasMoreInprogress}
+                  endMessage={
+                    inprogressQuotationsData.length === 0 ? (
+                      <NoDataAvailable />
+                    ) : (
+                      <Divider>
+                        <IntlMessages id="app.common.text.noMoreData" />
+                      </Divider>
+                    )
+                  }
+                >
+                  <div className="gx-p-2">
+                    {inprogressQuotationsData &&
+                      inprogressQuotationsData.map(item => (
+                        <QuotationCard key={item.id} data={item} activeTab={1} />
+                      ))}
+                  </div>
+                </InfiniteScroll>
               </CustomScrollbars>
             </div>
           </div>
         </Col>
         <Col span={colSpan} className="quotation-column-divider">
           <div style={{ backgroundColor: '#ffffff' }} className="gx-h-100">
-            {Header('Awarded')}
+            {Header(<IntlMessages id="app.quotationresponses.button.awarded" />)}
             <div className="gx-customizer">
-              <CustomScrollbars>
-                <div className="gx-p-2">
-                  {awarded &&
-                    awarded.map(item => <QuotationCard key={item.id} data={item} activeTab={2} />)}
-                  {awarded.length === 0 && <NoDataAvailable />}
-                </div>
+              <CustomScrollbars sid="awardedQuotations">
+                <InfiniteScroll
+                  dataLength={awardedQuotationsData.length}
+                  next={loadMoreAwardedQuotations}
+                  scrollableTarget="awardedQuotations"
+                  hasMore={hasMoreAwarded}
+                  endMessage={
+                    awardedQuotationsData.length === 0 ? (
+                      <NoDataAvailable />
+                    ) : (
+                      <Divider>
+                        <IntlMessages id="app.common.text.noMoreData" />
+                      </Divider>
+                    )
+                  }
+                >
+                  <div className="gx-p-2">
+                    {awardedQuotationsData &&
+                      awardedQuotationsData.map(item => (
+                        <QuotationCard key={item.id} data={item} activeTab={2} />
+                      ))}
+                  </div>
+                </InfiniteScroll>
               </CustomScrollbars>
             </div>
           </div>
         </Col>
         <Col span={colSpan} className="quotation-column-divider">
           <div style={{ backgroundColor: '#ffffff' }} className="gx-h-100">
-            {Header('Completed')}
+            {Header(<IntlMessages id="app.quotationresponses.button.completed" />)}
             <div className="gx-customizer">
-              <CustomScrollbars>
-                <div className="gx-p-2">
-                  {completed &&
-                    completed.map(item => (
-                      <QuotationCard key={item.id} data={item} activeTab={3} />
-                    ))}
-                  {completed.length === 0 && <NoDataAvailable />}
-                </div>
+              <CustomScrollbars sid="completedQuotations">
+                <InfiniteScroll
+                  dataLength={completedQuotationsData.length}
+                  next={loadMoreCompletedQuotations}
+                  scrollableTarget="completedQuotations"
+                  hasMore={hasMoreCompleted}
+                  endMessage={
+                    completedQuotationsData.length === 0 ? (
+                      <NoDataAvailable />
+                    ) : (
+                      <Divider>
+                        <IntlMessages id="app.common.text.noMoreData" />
+                      </Divider>
+                    )
+                  }
+                >
+                  <div className="gx-p-2">
+                    {completedQuotationsData &&
+                      completedQuotationsData.map(item => (
+                        <QuotationCard key={item.id} data={item} activeTab={3} />
+                      ))}
+                  </div>
+                </InfiniteScroll>
               </CustomScrollbars>
             </div>
           </div>
@@ -135,6 +252,12 @@ const Quotations = ({ project = {}, inProgress = [], awarded = [], completed = [
     </div>
   );
 };
+
+const Quotations = props => (
+  <ResponsesProvider>
+    <QuotationsList {...props} />
+  </ResponsesProvider>
+);
 
 export default Quotations;
 
@@ -151,13 +274,13 @@ export async function getServerSideProps(context) {
       await httpClient.get(`projects/${query.id}`, {
         headers,
       }),
-      await httpClient.get(`projects/${query.id}/quotations?status=created`, {
+      await httpClient.get(`projects/${query.id}/quotations?status=created&size=10&offset=0`, {
         headers,
       }),
-      await httpClient.get(`projects/${query.id}/quotations?status=awarded`, {
+      await httpClient.get(`projects/${query.id}/quotations?status=awarded&size=10&offset=0`, {
         headers,
       }),
-      await httpClient.get(`projects/${query.id}/quotations?status=completed`, {
+      await httpClient.get(`projects/${query.id}/quotations?status=completed&size=10&offset=0`, {
         headers,
       }),
     ];
@@ -169,9 +292,9 @@ export async function getServerSideProps(context) {
           });
         }
         project = projectData.data.data;
-        inProgress = inProgressData.data.data.rows;
-        awarded = awardedData.data.data.rows;
-        completed = completedData.data.data.rows;
+        inProgress = inProgressData.data.data;
+        awarded = awardedData.data.data;
+        completed = completedData.data.data;
       },
     );
   } catch (error) {

@@ -147,6 +147,29 @@ const useProviderResponses = () => {
     //   });
   };
 
+  const getQuotationsByPagination = (pid, type, size, offset, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    httpClient
+      .get(`projects/${pid}/quotations?status=${type}&size=${size}&offset=${offset}`, {
+        headers: headers,
+      })
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -155,5 +178,6 @@ const useProviderResponses = () => {
     completeQuotation,
     deAwardQuotation,
     abortQuotation,
+    getQuotationsByPagination,
   };
 };

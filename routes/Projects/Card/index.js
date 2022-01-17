@@ -38,7 +38,11 @@ function CardList({ projects, loader, totalCount }) {
       next={loadMoreProjects}
       scrollableTarget="projectsScrollableWrapper"
       hasMore={hasMore}
-      endMessage={<Divider>No more projects to load.</Divider>}
+      endMessage={
+        <Divider>
+          <IntlMessages id="app.project.noProjectsText" />
+        </Divider>
+      }
     >
       <div className="gx-module-list gx-mail-list">
         <Col span={24}>

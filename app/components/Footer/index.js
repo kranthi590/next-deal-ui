@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
+import IntlMessages from '../../../util/IntlMessages';
 
 const links = [
-  { url: 'https://nextdeal.xyz', label: 'Home' },
-  { url: 'https://nextdeal.xyz/about-us', label: 'About' },
-  { url: 'https://nextdeal.xyz/terms', label: 'Terms' },
-  { url: 'https://nextdeal.xyz/contact-us', label: 'Contact' },
+  { url: 'https://nextdeal.xyz', label: <IntlMessages id="app.common.text.home" /> },
+  { url: 'https://nextdeal.xyz/about-us', label: <IntlMessages id="app.common.text.about" /> },
+  { url: 'https://nextdeal.xyz/terms', label: <IntlMessages id="app.common.text.terms" /> },
+  { url: 'https://nextdeal.xyz/contact-us', label: <IntlMessages id="app.common.text.contact" /> },
 ];
 
 const FooterComponent = () => (

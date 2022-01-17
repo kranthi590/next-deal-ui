@@ -143,9 +143,9 @@ const NewQuote = props => {
     <>
       <BreadCrumb
         navItems={[
-          { text: 'Projects', route: '/projects' },
+          { text: <IntlMessages id="sidebar.project.Projects" />, route: '/projects' },
           { text: projectInfo.name, route: '/projects/' + projectInfo.id },
-          { text: 'New Quotation' },
+          { text: <IntlMessages id="app.common.newQuotation" /> },
         ]}
       />
       <Card className="gx-card" title={<IntlMessages id="app.quotation.addquotation" />}>
