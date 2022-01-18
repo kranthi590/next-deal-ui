@@ -108,7 +108,10 @@ const NewProject = props => {
   return (
     <>
       <BreadCrumb
-        navItems={[{ text: 'Projects', route: '/projects' }, { text: 'Create Project' }]}
+        navItems={[
+          { text: <IntlMessages id="sidebar.project.Projects" />, route: '/projects' },
+          { text: <IntlMessages id="app.common.createProject" /> },
+        ]}
       />
       <Card className="gx-card" title={<IntlMessages id="app.project.createNewProject" />}>
         <Form form={form} initialValues={{ remember: true }} onFinish={onSave} {...formLayout}>

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { Badge, Avatar } from 'antd';
 import { getAvatar } from '../../../util/util';
+import IntlMessages from '../../../util/IntlMessages';
 
 const CardsListItem = ({ styleName, data }) => {
   const { status, costCenter, name, managerName, quotationsCount, id } = data;
@@ -34,7 +35,9 @@ const CardsListItem = ({ styleName, data }) => {
               <h1 className="gx-fs-xxl gx-font-weight-semi-bold gx-mb-1 gx-text-orange">
                 {quotationsCount}
               </h1>
-              <p className="gx-mb-0">Quotations {`${quotationsCount > 10 ? 's' : ''}`}</p>
+              <p className="gx-mb-0">
+                <IntlMessages id="app.common.quotations" /> {`${quotationsCount > 10 ? 's' : ''}`}
+              </p>
             </div>
           </div>
         </div>
@@ -42,7 +45,7 @@ const CardsListItem = ({ styleName, data }) => {
           <div className="gx-featured-content-right">
             <p className="gx-text-primary gx-text-truncate gx-mt-auto gx-mb-0 gx-pointer">
               <Link href={'/projects/' + [id]} as={'/projects/' + id}>
-                Check in detail
+                <IntlMessages id="app.common.CheckInDetail" />
               </Link>
               <i className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle" />
             </p>

@@ -1,5 +1,9 @@
 import React from 'react';
-const NoDataAvailable = ({ text = 'No data available', icon = 'icon-exclamation' }) => {
+import IntlMessages from '../../../util/IntlMessages';
+const NoDataAvailable = ({
+  text = <IntlMessages id="app.common.noDataAvailable" />,
+  icon = 'icon-exclamation',
+}) => {
   return (
     <div className="gx-flex-column gx-align-items-center gx-p-2">
       <div className="gx-fs-xlxl">
