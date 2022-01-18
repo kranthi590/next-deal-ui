@@ -23,7 +23,7 @@
     "less": "^3.11.1",
     "lodash": "^4.17.15",
     "moment": "^2.26.0",
-    "next": "^10.2.3",
+    "next": "^9.4.2",
     "next-compose-plugins": "^2.2.1",
     "next-redux-wrapper": "4.0.1",
     "prop-types": "^15.7.2",
@@ -48,7 +48,6 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "prettier": "^2.5.1",
-    "webpack": "^4.44.1"
+    "prettier": "^2.5.1"
   }
 }
