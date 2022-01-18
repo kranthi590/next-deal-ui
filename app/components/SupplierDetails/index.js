@@ -2,6 +2,7 @@ import { Avatar, Row, Col, Card } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useRegistration } from '../../../contexts/business-registration';
 import IntlMessages from '../../../util/IntlMessages';
+import { getAvatar } from '../../../util/util';
 
 const SupplierDetails = props => {
   const {
@@ -108,12 +109,19 @@ const SupplierDetails = props => {
   }, []);
   return (
     <div>
-      <div className="gx-profile-banner">
+      <div className="gx-profile-banner gx-bg-light-blue">
         <div className="gx-profile-container">
           <div className="gx-profile-banner-top">
             <div className="gx-profile-banner-top-left">
               <div className="gx-profile-banner-avatar">
-                <Avatar className="gx-size-90" alt="..." src={logoUrl} />
+                <Avatar
+                  className="gx-size-100"
+                  alt={legalName}
+                  src={logoUrl}
+                  style={{ color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '2rem' }}
+                >
+                  {getAvatar(legalName)}
+                </Avatar>
               </div>
               <div className="gx-profile-banner-avatar-info">
                 <h2 className="gx-mb-2 gx-mb-sm-3 gx-fs-xxl gx-font-weight-light">{legalName}</h2>
