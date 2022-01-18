@@ -165,15 +165,10 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                   next={loadMoreInprogressQuotations}
                   scrollableTarget="inprogressQuotations"
                   hasMore={hasMoreInprogress}
-                  endMessage={
-                    inprogressQuotationsData.length === 0 ? (
-                      <NoDataAvailable />
-                    ) : (
-                      <Divider>
-                        <IntlMessages id="app.common.text.noMoreData" />
-                      </Divider>
-                    )
-                  }
+                  // endMessage={
+                  //   inprogressQuotationsData.length === 0 ? <NoDataAvailable /> :
+                  //     <Divider><IntlMessages id="app.common.text.noMoreData" /></Divider>
+                  // }
                 >
                   <div className="gx-p-2">
                     {inprogressQuotationsData &&
@@ -196,15 +191,10 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                   next={loadMoreAwardedQuotations}
                   scrollableTarget="awardedQuotations"
                   hasMore={hasMoreAwarded}
-                  endMessage={
-                    awardedQuotationsData.length === 0 ? (
-                      <NoDataAvailable />
-                    ) : (
-                      <Divider>
-                        <IntlMessages id="app.common.text.noMoreData" />
-                      </Divider>
-                    )
-                  }
+                  // endMessage={
+                  //   awardedQuotationsData.length === 0 ? <NoDataAvailable /> :
+                  //     <Divider><IntlMessages id="app.common.text.noMoreData" /></Divider>
+                  // }
                 >
                   <div className="gx-p-2">
                     {awardedQuotationsData &&
@@ -227,15 +217,10 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                   next={loadMoreCompletedQuotations}
                   scrollableTarget="completedQuotations"
                   hasMore={hasMoreCompleted}
-                  endMessage={
-                    completedQuotationsData.length === 0 ? (
-                      <NoDataAvailable />
-                    ) : (
-                      <Divider>
-                        <IntlMessages id="app.common.text.noMoreData" />
-                      </Divider>
-                    )
-                  }
+                  // endMessage={
+                  //   completedQuotationsData.length === 0 ? <NoDataAvailable /> :
+                  //     <Divider><IntlMessages id="app.common.text.noMoreData" /></Divider>
+                  // }
                 >
                   <div className="gx-p-2">
                     {completedQuotationsData &&

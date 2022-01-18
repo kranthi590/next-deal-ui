@@ -19,7 +19,7 @@ import IntlMessages from '../../../../../util/IntlMessages';
 import { CloseOutlined } from '@ant-design/icons';
 
 const NewQuoteResponse = props => {
-  const { projectsList, quotationData, awardedResponses } = props;
+  const { projectsList, quotationData, awardedResponses, projectsDetails } = props;
   const { createResponses, createAward, completeQuotation, deAwardQuotation, abortQuotation } =
     useResponse();
   const router = useRouter();
@@ -215,7 +215,7 @@ const NewQuoteResponse = props => {
       <BreadCrumb
         navItems={[
           { text: 'Projects', route: '/projects' },
-          { text: quotationData.projectId, route: '/projects/' + quotationData.projectId },
+          { text: projectsDetails.name, route: '/projects/' + quotationData.projectId },
           { text: quotationData.name },
         ]}
       />
@@ -237,7 +237,7 @@ export async function getServerSideProps(context) {
   let ResponsesList = [];
   let AwardedResponsesList = [];
   let QuotationData = {};
-  let projectsList = null;
+  let projectsDetails = null;
   try {
     const headers = setApiContext(req, res, query);
     const promises = [
@@ -250,9 +250,12 @@ export async function getServerSideProps(context) {
       await httpClient.get(`quotations/${query.quote}`, {
         headers,
       }),
+      await httpClient.get(`projects/${query.id}`, {
+        headers,
+      }),
     ];
     await Promise.all(promises).then(
-      ([assignedForResponsesData, responsesListData, quotationData]) => {
+      ([assignedForResponsesData, responsesListData, quotationData, projectData]) => {
         AssignedForResponses = assignedForResponsesData.data.data.map(item => ({
           ...item,
           newQuote: true,
@@ -265,6 +268,7 @@ export async function getServerSideProps(context) {
           }
         });
         QuotationData = quotationData.data.data;
+        projectsDetails = projectData.data.data;
       },
     );
   } catch (error) {
@@ -282,6 +286,7 @@ export async function getServerSideProps(context) {
       projectsList: [...ResponsesList, ...AssignedForResponses],
       quotationData: QuotationData,
       awardedResponses: AwardedResponsesList,
+      projectsDetails: projectsDetails,
     },
   };
 }

@@ -203,7 +203,7 @@ const MySuppliers = props => {
         />
       </Modal>
       <Modal
-        title="Supplier Details"
+        title={<IntlMessages id="app.common.text.supplierDetails" />}
         centered
         visible={isSupplierModalVisible}
         onCancel={hideSupplierModal}

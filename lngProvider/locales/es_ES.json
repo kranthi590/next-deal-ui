@@ -482,6 +482,7 @@
   "app.quotationresponses.field.incoterm.error.required":"Por favor ingrese incoterm!",
   "app.quotationresponses.field.purchaseOrderNumber":"Número de orden de compra",
   "app.quotationresponses.field.purchaseOrderNumber.error.required":"Por favor ingrese número de orden de compra!",
+  "app.quotationresponses.field.description.info":"Por favor, añada sus últimos comentarios con el separador ,(coma)",
   "app.quotationresponses.button.save":"Guarda",
   "app.quotationresponses.button.award":"Adjudicar",
   "app.quotationresponses.button.confirm":"Confirmar recepción",
@@ -497,9 +498,10 @@
   "app.common.text.home":"Home",
   "app.common.text.about":"About",
   "app.common.text.terms":"Terms",
-  "app.common.text.contact":"Contact",
+  "app.common.text.contact":"Contacto",
   "app.common.text.yes":"Yes",
   "app.common.text.no":"No",
-  "app.common.text.noMoreData":"No more data."
+  "app.common.text.noMoreData":"No more data.",
+  "app.common.text.supplierDetails":"Detalles del proveedor"
 
 }
