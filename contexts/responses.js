@@ -106,22 +106,26 @@ const useProviderResponses = () => {
     const headers = setAuthToken();
     const cookie = new Cookies();
     // implement deaward api
-    // httpClient
-    //   .post(`quotations/${id}/deaward`, data, {
-    //     headers: headers
-    //   })
-    //   .then(({ data }) => {
-    //     if (data) {
-    //       fetchSuccess();
-    //       if (callbackFun) callbackFun(data.data);
-    //     } else {
-    //       fetchError(data.error);
-    //     }
-    //   })
-    //   .catch(function (error) {
-    // handleErrorNotification(error);
-    //     fetchError(error.message);
-    //   });
+    httpClient
+      .post(
+        `quotations/${id}/retain`,
+        {},
+        {
+          headers: headers,
+        },
+      )
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
   };
 
   const abortQuotation = (id, callbackFun) => {

@@ -24,6 +24,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
   const [sizeInprogress, setSizeInprogress] = useState(10);
   const [hasMoreInprogress, setHasMoreInprogress] = useState(true);
   const [inProgressCount, setInprogressCount] = useState(inProgress.count || 0);
+  const [in_ProgressCount, setIn_progressCount] = useState(0);
   // awarded
   const [awardedQuotationsData, setAwardedQuotationsData] = useState(awarded.rows || []);
   const [sizeAwarded, setSizeAwarded] = useState(10);
@@ -37,13 +38,30 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
 
   const { getQuotationsByPagination } = useResponse();
   const loadMoreInprogressQuotations = () => {
+    if (inProgressCount <= inprogressQuotationsData.length) {
+      loadMoreIn_progressQuotations();
+    } else {
+      getQuotationsByPagination(
+        project.id,
+        'created',
+        sizeInprogress,
+        inprogressQuotationsData.length,
+        data => {
+          setInprogressCount(data.count);
+          setInprogressQuotationsData(inprogressQuotationsData.concat(data.rows));
+        },
+      );
+    }
+  };
+
+  const loadMoreIn_progressQuotations = () => {
     getQuotationsByPagination(
       project.id,
-      'created',
+      'in_progress',
       sizeInprogress,
-      inprogressQuotationsData.length,
+      inprogressQuotationsData.length - inProgressCount,
       data => {
-        setInprogressCount(data.count);
+        setIn_progressCount(data.count);
         setInprogressQuotationsData(inprogressQuotationsData.concat(data.rows));
       },
     );
@@ -76,7 +94,10 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
   };
 
   useEffect(() => {
-    if (inProgressCount === inprogressQuotationsData.length) {
+    if (
+      in_ProgressCount > 0 &&
+      inProgressCount + in_ProgressCount === inprogressQuotationsData.length
+    ) {
       setHasMoreInprogress(false);
     }
     if (awardedCount === awardedQuotationsData.length) {
@@ -86,6 +107,12 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
       setHasMoreCompleted(false);
     }
   }, [inprogressQuotationsData, awardedQuotationsData, completedQuotationsData]);
+
+  useEffect(() => {
+    if (inProgressCount < 10) {
+      loadMoreIn_progressQuotations();
+    }
+  }, []);
 
   const Header = title => {
     return (

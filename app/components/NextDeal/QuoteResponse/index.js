@@ -35,9 +35,9 @@ const QuoteResponses = props => {
     supplier,
     comments,
   } = props.formData;
-  const [cdeliveryDate, setCDeliveryDate] = useState(null);
-  const [cvalidityDate, setCValidityDate] = useState(null);
-  const [netValue, setNetValue] = useState(netWorth || null);
+  const [cdeliveryDate, setCDeliveryDate] = useState(moment(deliveryDate).valueOf());
+  const [cvalidityDate, setCValidityDate] = useState(moment(validityDate).valueOf());
+  const [netValue, setNetValue] = useState(netWorth);
   let initialFormData = {};
   if (newQuote !== true) {
     initialFormData = {
@@ -78,7 +78,7 @@ const QuoteResponses = props => {
       } else if (data[key] && key === 'validityDate') {
         acc = { ...acc, validityDate: cvalidityDate };
       } else if (data[key] && key === 'netWorth') {
-        acc = { ...acc, netWorth: clpToNumber(netValue) };
+        acc = { ...acc, netWorth: clpToNumber(data[key]) };
       } else if (data[key]) {
         acc = { ...acc, [key]: data[key] };
       }
@@ -88,17 +88,17 @@ const QuoteResponses = props => {
     return formData;
   };
   const onFinish = values => {
-    if (newQuote !== true) {
-      onSave(null, id);
-    } else {
-      const formValues = getFormData(values);
-      onSave({
-        ...formValues,
-        supplierId: id,
-        currency: 'clp',
-        includesTax: formValues.includesTax ? true : false,
-      });
-    }
+    const formValues = getFormData(values);
+    onSave({
+      ...formValues,
+      supplierId: id,
+      currency: 'clp',
+      includesTax: formValues.includesTax ? true : false,
+    });
+  };
+
+  const awardQuote = () => {
+    onSave(null, id);
   };
 
   const disabledStartDate = value => {
@@ -294,6 +294,22 @@ const QuoteResponses = props => {
           </Col>
           {!awarded && (
             <Col xl={6} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
+              {newQuote ? (
+                <></>
+              ) : (
+                <Form.Item wrapperCol={{ span: 24 }}>
+                  <Button
+                    type="primary"
+                    icon={<SaveOutlined />}
+                    className="gx-mb-0"
+                    onClick={awardQuote}
+                  >
+                    <span>
+                      <IntlMessages id="app.quotationresponses.button.award" />
+                    </span>
+                  </Button>
+                </Form.Item>
+              )}
               <Form.Item wrapperCol={{ span: 24 }}>
                 <Button
                   type="primary"
@@ -302,11 +318,11 @@ const QuoteResponses = props => {
                   className="gx-mb-0"
                 >
                   <span>
-                    {newQuote ? (
-                      <IntlMessages id="app.quotationresponses.button.save" />
+                    <IntlMessages id="app.quotationresponses.button.save" />
+                    {/* {newQuote ? (
                     ) : (
                       <IntlMessages id="app.quotationresponses.button.award" />
-                    )}
+                    )} */}
                   </span>
                 </Button>
               </Form.Item>
