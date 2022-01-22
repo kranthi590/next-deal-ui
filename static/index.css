@@ -99,3 +99,21 @@
 .gx-card-widget .ant-input-number {
   margin-right: 0;
 }
+
+.gx-card-bordered-title{
+  border-bottom: solid 1px #d9d9d9;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  position: relative;
+}
+.gx-card-bordered-title:before {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  z-index: 1;
+  height: 3px;
+  width: 42px;
+  background-color: #038fde;
+}

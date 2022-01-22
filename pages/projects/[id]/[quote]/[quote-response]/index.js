@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cookie from 'cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -17,11 +17,14 @@ import FilesManager from '../../../../../app/common/FileManager';
 import BreadCrumb from '../../../../../app/components/BreadCrumb';
 import IntlMessages from '../../../../../util/IntlMessages';
 import { CloseOutlined } from '@ant-design/icons';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 const NewQuoteResponse = props => {
   const { projectsList, quotationData, awardedResponses, projectsDetails } = props;
   const { createResponses, createAward, completeQuotation, deAwardQuotation, abortQuotation } =
     useResponse();
+  const [showAbortAlert, setShowAbortAlert] = useState(false);
+  const [activeAbortId, setActiveAbortId] = useState();
   const router = useRouter();
   const projectId = router.query.quote;
   let awarded = false,
@@ -62,14 +65,28 @@ const NewQuoteResponse = props => {
     });
   };
 
-  const onDeawardQuotation = qid => {
-    deAwardQuotation(qid, data => {
+  const onAbortConfirmed = () => {
+    deAwardQuotation(activeAbortId, data => {
       successNotification('app.registration.detailsSaveSuccessMessage');
       setTimeout(() => {
+        setShowAbortAlert(false);
         window.location.hash = '1';
         window.location.reload();
       }, 1000);
     });
+  };
+
+  const onDeawardQuotation = qid => {
+    setShowAbortAlert(true);
+    setActiveAbortId(qid);
+    // deAwardQuotation(qid, data => {
+    //   successNotification('app.registration.detailsSaveSuccessMessage');
+    //   setTimeout(() => {
+    //     setShowAbortAlert(false);
+    //     window.location.hash = '1';
+    //     window.location.reload();
+    //   }, 1000);
+    // });
   };
   const onAbortQuotation = () => {
     abortQuotation(quotationData.id, data => {
@@ -227,6 +244,22 @@ const NewQuoteResponse = props => {
           </div>
         </div>
       </div>
+      <SweetAlert
+        confirmBtnText="OK"
+        show={showAbortAlert}
+        warning
+        title={'Confirm'}
+        onConfirm={onAbortConfirmed}
+        cancelBtnText="Cancel"
+        showCancel
+        onCancel={() => {
+          setShowAbortAlert(false);
+        }}
+      >
+        <div>
+          <span>Do you want abort quotation?</span>
+        </div>
+      </SweetAlert>
     </>
   );
 };
