@@ -84,7 +84,17 @@ const BuyerDashboard = ({ userProfile, projectsList }) => {
           </div>
         </div>
       </Card>
-      <Card className="ant-card ant-card-bordered gx-card-widget" title="Quotations Per Project">
+      <Card className="ant-card gx-card-widget">
+        <div class="ant-card-head gx-pt-0">
+          <div class="ant-card-head-wrapper">
+            <div class="ant-card-head-title gx-text-left">
+              <h4 class="gx-card-bordered-title">
+                <i class="icon icon-mail-open gx-mr-3"></i>
+                Quotations Per Project
+              </h4>
+            </div>
+          </div>
+        </div>
         <div>
           <iframe
             src={`https://metrics.nextdeal.dev/d-solo/NNU50zTnk/quotations-per-project?orgId=1&var-Buyer=${buyerId}&var-Project=${selectedProject}&from=1642077315415&to=1642682115415&panelId=10`}
@@ -102,7 +112,17 @@ const BuyerDashboard = ({ userProfile, projectsList }) => {
           </div>
         </div>
       </Card>
-      <Card className="ant-card ant-card-bordered gx-card-widget" title="Suppliers & Quotations">
+      <Card className="ant-card gx-card-widget">
+        <div class="ant-card-head gx-pt-0">
+          <div class="ant-card-head-wrapper">
+            <div class="ant-card-head-title gx-text-left">
+              <h4 class="gx-card-bordered-title">
+                <i class="icon icon-mail-open gx-mr-3"></i>
+                Suppliers & Quotations
+              </h4>
+            </div>
+          </div>
+        </div>
         <div>
           <iframe
             src={`https://metrics.nextdeal.dev/d-solo/lQAafVo7k/suppliers-and-quotations?orgId=1&var-Buyer=${buyerId}&var-Project=${selectedProject}&from=1642077601483&to=1642682401483&panelId=10`}
