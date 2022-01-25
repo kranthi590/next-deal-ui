@@ -59,14 +59,39 @@ const SidebarContent = () => {
             theme={themeType === THEME_TYPE_LITE ? 'lite' : 'dark'}
             mode="inline"
           >
-            <Menu.Item key="dashboard">
-              <Link href="/">
-                <a>
-                  <i className="icon icon-dasbhoard" />
-                  <span>Dashboard</span>
-                </a>
-              </Link>
-            </Menu.Item>
+            <SubMenu
+              key="dashboardgroup"
+              title={
+                <span>
+                  <i className="icon icon-dasbhoard" /> Dashboard
+                </span>
+              }
+            >
+              <Menu.Item key="dashboard">
+                <Link href="/">
+                  <a>
+                    <i className="icon icon-revenue-new" />
+                    <span>Budget</span>
+                  </a>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="quotations-per-project">
+                <Link href="/quotations-per-project">
+                  <a>
+                    <i className="icon icon-pricing-table" />
+                    <span>Quotations</span>
+                  </a>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="suppliers-and-quotations">
+                <Link href="/suppliers-and-quotations">
+                  <a>
+                    <i className="icon icon-auth-screen" />
+                    <span>Suppliers</span>
+                  </a>
+                </Link>
+              </Menu.Item>
+            </SubMenu>
             <Menu.Item key="projects">
               <Link href="/projects">
                 <a>

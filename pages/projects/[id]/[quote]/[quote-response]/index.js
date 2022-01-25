@@ -24,7 +24,8 @@ const NewQuoteResponse = props => {
   const { createResponses, createAward, completeQuotation, deAwardQuotation, abortQuotation } =
     useResponse();
   const [showAbortAlert, setShowAbortAlert] = useState(false);
-  const [activeAbortId, setActiveAbortId] = useState();
+  const [activeAbortId, setActiveAbortId] = useState(null);
+  const [alertInfo, setAlertInfo] = useState({ type: '', confirmText: '' });
   const router = useRouter();
   const projectId = router.query.quote;
   let awarded = false,
@@ -65,37 +66,43 @@ const NewQuoteResponse = props => {
     });
   };
 
-  const onAbortConfirmed = () => {
-    deAwardQuotation(activeAbortId, data => {
-      successNotification('app.registration.detailsSaveSuccessMessage');
-      setTimeout(() => {
-        setShowAbortAlert(false);
-        window.location.hash = '1';
-        window.location.reload();
-      }, 1000);
-    });
+  const onConfirmAlert = () => {
+    if (alertInfo.type === 'deaward') {
+      deAwardQuotation(activeAbortId, data => {
+        successNotification('app.registration.detailsSaveSuccessMessage');
+        setTimeout(() => {
+          setShowAbortAlert(false);
+          setActiveAbortId(null);
+          window.location.hash = '1';
+          window.location.reload();
+        }, 1000);
+      });
+    }
+    if (alertInfo.type === 'abort') {
+      abortQuotation(quotationData.id, data => {
+        successNotification('app.registration.detailsSaveSuccessMessage');
+        setTimeout(() => {
+          window.location.href = `${window.location.origin}/app/projects/${quotationData.projectId}`;
+        }, 1000);
+      });
+    }
   };
 
   const onDeawardQuotation = qid => {
     setShowAbortAlert(true);
+    setAlertInfo({ type: 'deaward', confirmText: 'Do you want to deaward quotation?' });
     setActiveAbortId(qid);
-    // deAwardQuotation(qid, data => {
-    //   successNotification('app.registration.detailsSaveSuccessMessage');
-    //   setTimeout(() => {
-    //     setShowAbortAlert(false);
-    //     window.location.hash = '1';
-    //     window.location.reload();
-    //   }, 1000);
-    // });
   };
   const onAbortQuotation = () => {
-    abortQuotation(quotationData.id, data => {
-      successNotification('app.registration.detailsSaveSuccessMessage');
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    });
+    setShowAbortAlert(true);
+    setAlertInfo({ type: 'abort', confirmText: 'Do you want to abort quotation?' });
   };
+  const onCancelAlert = () => {
+    setShowAbortAlert(false);
+    setActiveAbortId(null);
+    setAlertInfo({ type: '', confirmText: '' });
+  };
+
   const ProjectDetails = () => {
     return (
       <Widget>
@@ -123,19 +130,18 @@ const NewQuoteResponse = props => {
                       </a>
                     </Link>
                   </h3>
-                  {/* <p className="gx-text-grey gx-mb-1">{quotationData.description}</p> */}
                   <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
                     ${formatAmount(`${quotationData.estimatedBudget}`)}{' '}
                     <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
                       {quotationData.currency}
                     </span>
                   </h2>
-                  {quotationData.status === 'created' ? (
+                  {quotationData.status === 'created' || quotationData.status === 'in_progress' ? (
                     <Button
                       type="primary"
                       icon={<CloseOutlined />}
                       className="gx-mb-0 gx-mt-1"
-                      onClick={abortQuotation}
+                      onClick={onAbortQuotation}
                     >
                       <span>
                         <IntlMessages id="app.quotationresponses.button.abort" />
@@ -144,6 +150,9 @@ const NewQuoteResponse = props => {
                   ) : (
                     <></>
                   )}
+                  {quotationData.status === 'aborted' ? (
+                    <p className="gx-text-danger">Quotation aborted</p>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -249,15 +258,13 @@ const NewQuoteResponse = props => {
         show={showAbortAlert}
         warning
         title={'Confirm'}
-        onConfirm={onAbortConfirmed}
+        onConfirm={onConfirmAlert}
         cancelBtnText="Cancel"
         showCancel
-        onCancel={() => {
-          setShowAbortAlert(false);
-        }}
+        onCancel={onCancelAlert}
       >
         <div>
-          <span>Do you want abort quotation?</span>
+          <span>{alertInfo.confirmText}</span>
         </div>
       </SweetAlert>
     </>

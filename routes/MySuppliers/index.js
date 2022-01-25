@@ -1,4 +1,4 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { CloudDownloadOutlined, SearchOutlined, UserAddOutlined } from '@ant-design/icons';
 import {
   Button,
   Card,
@@ -20,15 +20,22 @@ import SupplierDetails from '../../app/components/SupplierDetails';
 import { useRegistration } from '../../contexts/business-registration';
 import SupplierRegistrationPage from '../../pages/supplier-registration';
 import IntlMessages from '../../util/IntlMessages';
+import { Cookies } from 'react-cookie';
 const { Title } = Typography;
 const MySuppliers = props => {
-  const { getMySuppliers, getBuyerSuppliers, getSupplier } = useRegistration();
+  const { getMySuppliers, getBuyerSuppliers, getSupplier, downloadSuppliers } = useRegistration();
   const [visible, setVisible] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const [suppliersList, setSuppliersList] = useState([]);
   const [isSupplierModalVisible, setIsSupplierModalVisible] = useState(false);
   const [supplierDetails, setSupplierDetails] = useState(null);
+  const [buyerId, setBuyerId] = useState(null);
+  const cookie = new Cookies();
+
+  useEffect(() => {
+    setBuyerId(cookie.get('buyerId'));
+  });
 
   const showSupplierModal = () => {
     setIsSupplierModalVisible(true);
@@ -166,6 +173,10 @@ const MySuppliers = props => {
   const showModal = () => {
     setVisible(true);
   };
+
+  const onDownloadXls = () => {
+    downloadSuppliers();
+  };
   return (
     <>
       <BreadCrumb
@@ -173,8 +184,12 @@ const MySuppliers = props => {
       ></BreadCrumb>
       <Card className="gx-card" title={<IntlMessages id="app.mysuppliers.pageTitle" />}>
         <div align="end" style={{ textAlign: 'right' }}>
+          <Button type="primary" onClick={onDownloadXls}>
+            <CloudDownloadOutlined className="gx-mr-2" />
+            Download Xls
+          </Button>
           <Button type="primary" onClick={showModal}>
-            <i className="icon icon-add gx-mr-2" />
+            <UserAddOutlined className="gx-mr-2" />
             <IntlMessages id="app.quotation.addsupplier" />
           </Button>
         </div>
