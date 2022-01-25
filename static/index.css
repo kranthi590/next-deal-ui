@@ -105,6 +105,7 @@
   padding-bottom: 15px;
   margin-bottom: 20px;
   font-size: 16px;
+  line-height: 24px;
   position: relative;
 }
 .gx-card-bordered-title:before {
@@ -116,4 +117,10 @@
   height: 3px;
   width: 42px;
   background-color: #038fde;
+}
+.gx-grp-input .ant-form-item-control-input {
+  min-height: 30px;
+}
+.gx-grp-input .ant-input-group-addon{
+  padding: 0 4px;
 }

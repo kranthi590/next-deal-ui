@@ -132,23 +132,26 @@ const useProviderResponses = () => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies();
-    // implement deaward api
-    // httpClient
-    //   .post(`quotations/${id}/abort`, data, {
-    //     headers: headers
-    //   })
-    //   .then(({ data }) => {
-    //     if (data) {
-    //       fetchSuccess();
-    //       if (callbackFun) callbackFun(data.data);
-    // }else{
-    //       fetchError(data.error);
-    // }
-    //   })
-    //   .catch(function (error) {
-    // handleErrorNotification(error);
-    //     fetchError(error.message);
-    //   });
+    httpClient
+      .post(
+        `quotations/${id}/abort`,
+        {},
+        {
+          headers: headers,
+        },
+      )
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
   };
 
   const getQuotationsByPagination = (pid, type, size, offset, callbackFun) => {

@@ -477,7 +477,7 @@
   "app.quotationresponses.field.paymentCondition":"Condición de pago",
   "app.quotationresponses.field.paymentCondition.error.required":"Por favor ingresar condición de pago!",
   "app.quotationresponses.field.description":"Comentarios",
-  "app.quotationresponses.field.includesTax":"Incluye IVA",
+  "app.quotationresponses.field.includesTax":"Incl. IVA",
   "app.quotationresponses.field.incoterm":"Incoterm",
   "app.quotationresponses.field.incoterm.error.required":"Por favor ingrese incoterm!",
   "app.quotationresponses.field.purchaseOrderNumber":"Número de orden de compra",

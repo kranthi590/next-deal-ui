@@ -2,6 +2,7 @@ import React, { useState, useContext, createContext } from 'react';
 import { httpClient, setAuthToken } from '../util/Api';
 import { Cookies } from 'react-cookie';
 import { errorNotification, handleErrorNotification } from '../util/util';
+import fileDownload from 'js-file-download';
 
 const registrationContext = createContext({});
 
@@ -195,6 +196,23 @@ const useProviderRegistration = () => {
       });
   };
 
+  const downloadSuppliers = () => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    const buyerId = cookie.get('buyerId');
+    httpClient
+      .get(`buyers/${buyerId}/downloadSuppliers`, { headers: { ...headers }, responseType: 'blob' })
+      .then(response => {
+        fileDownload(response.data, 'Suppliers.xlsx');
+        fetchSuccess();
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -205,5 +223,6 @@ const useProviderRegistration = () => {
     uploadSupplierLogo,
     getBuyerSuppliers,
     getSupplier,
+    downloadSuppliers,
   };
 };
