@@ -15,7 +15,6 @@ import { setPathName } from '../../../redux/actions';
 import IntlMessages from '../../../util/IntlMessages';
 
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 const SidebarContent = () => {
   const navStyle = useSelector(({ settings }) => settings.navStyle);
