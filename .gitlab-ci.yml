@@ -4,6 +4,7 @@ variables:
 stages:
   - deploy-dev
   - deploy-staging
+  - deploy-production
 
 image: google/cloud-sdk:alpine
 
@@ -30,4 +31,17 @@ deploy-staging:
   script:
     - gcloud builds submit --config cloudbuild-staging.yaml .
     - gcloud run deploy ${SERVICE_NAME}-staging --image gcr.io/${GCP_PROJECT_ID}/${SERVICE_NAME} --service-account=${GCP_SERVICE_ACCOUNT_APP} --region=us-central1 --platform managed --allow-unauthenticated --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
+  when: manual
+
+deploy-production:
+  environment: production
+  stage: deploy-production
+  only:
+    - main
+  before_script:
+    - gcloud config set project ${GCP_PROJECT_ID}
+    - gcloud auth activate-service-account --key-file ${GCP_SERVICE_ACCOUNT_DEPLOY}
+  script:
+    - gcloud builds submit --config cloudbuild-production.yaml .
+    - gcloud run deploy ${SERVICE_NAME}-production --image gcr.io/${GCP_PROJECT_ID}/${SERVICE_NAME} --service-account=${GCP_SERVICE_ACCOUNT_APP} --region=us-central1 --platform managed --allow-unauthenticated --vpc-connector=${VPC_CONNECTOR} --min-instances=${MIN_INSTANCES} --max-instances=${MAX_INSTANCES} --timeout=50 --ingress=internal-and-cloud-load-balancing
   when: manual
