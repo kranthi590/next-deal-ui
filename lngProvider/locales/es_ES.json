@@ -368,6 +368,7 @@
   "invalid_asset_relation":"Relación inválida",
   "invalid_asset_relation_id":"Relación de nombre invalida",
   "invalid_user_account":"Cuenta de usuario invalida",
+  "account_license_expired": "Tu periodo de prueba de nextdeal ha llegado a su fin. Actualice su cuenta para utilizar las funciones de nextdeal.",
   "er_dup_entry":"Entrada duplicada",
   "er_dup_entry_rut":"RUT duplicada",
   "er_dup_entry_sub_domain":"Sub dominio duplicado",

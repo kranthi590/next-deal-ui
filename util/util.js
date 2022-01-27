@@ -43,6 +43,7 @@ const validationErrors = [
   'INVALID_ASSET_RELATION',
   'INVALID_ASSET_RELATION_ID',
   'BUYERS_USERS_LIMIT_EXCEEDED',
+  'ACCOUNT_LICENSE_EXPIRED',
 ];
 
 export const successNotification = messageId => {
