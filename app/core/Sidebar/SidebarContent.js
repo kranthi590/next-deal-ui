@@ -15,6 +15,7 @@ import { setPathName } from '../../../redux/actions';
 import IntlMessages from '../../../util/IntlMessages';
 
 const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 
 const SidebarContent = () => {
   const navStyle = useSelector(({ settings }) => settings.navStyle);
@@ -62,7 +63,8 @@ const SidebarContent = () => {
               key="dashboardgroup"
               title={
                 <span>
-                  <i className="icon icon-dasbhoard" /> Dashboard
+                  <i className="icon icon-dasbhoard" />
+                  <IntlMessages id="sidebar.menu.dashboard" />
                 </span>
               }
             >
@@ -70,7 +72,9 @@ const SidebarContent = () => {
                 <Link href="/">
                   <a>
                     <i className="icon icon-revenue-new" />
-                    <span>Budget</span>
+                    <span>
+                      <IntlMessages id="sidebar.menu.budget" />
+                    </span>
                   </a>
                 </Link>
               </Menu.Item>
@@ -78,7 +82,9 @@ const SidebarContent = () => {
                 <Link href="/quotations-per-project">
                   <a>
                     <i className="icon icon-pricing-table" />
-                    <span>Quotations</span>
+                    <span>
+                      <IntlMessages id="sidebar.menu.quotations" />
+                    </span>
                   </a>
                 </Link>
               </Menu.Item>
@@ -86,7 +92,9 @@ const SidebarContent = () => {
                 <Link href="/suppliers-and-quotations">
                   <a>
                     <i className="icon icon-auth-screen" />
-                    <span>Suppliers</span>
+                    <span>
+                      <IntlMessages id="sidebar.menu.suppliers" />
+                    </span>
                   </a>
                 </Link>
               </Menu.Item>
