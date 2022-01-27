@@ -332,6 +332,10 @@
   "sidebar.project.addProject": "Agregar proyecto",
   "sidebar.project.filters": "Filtros",
   "sidebar.project.Projects": "Proyectos",
+  "sidebar.menu.dashboard": "Tablero de mandos",
+  "sidebar.menu.budget": "Presupuesto",
+  "sidebar.menu.quotations": "Citas",
+  "sidebar.menu.suppliers": "Proveedores",
   "sidebar.project.saveProject": "Guardar proyecto",
   "sidebar.suppliers.mySuppliers": "Mi Proveedores",
   "app.project.createNewProject": "CREAR PROYECTO",
@@ -383,6 +387,7 @@
   "images_extensions":"Extensión de imagen",
   "invalid_quotation_response_id":"INVALID_QUOTATION_RESPONSE_ID",
   "buyers_users_limit_exceeded":"Limite de usuarios excedida",
+  "purchase_order_number_not_found":"Número de pedido no encontrado",
   "app.buyerregistration.page_title":"Registro de Usuario",
   "app.buyerregistration.form_title":"Información de Usuario",
   "app.buyerregistration.field.fantasyName":"Nombre de Fantasía",
@@ -502,6 +507,11 @@
   "app.common.text.yes":"Yes",
   "app.common.text.no":"No",
   "app.common.text.noMoreData":"No more data.",
-  "app.common.text.supplierDetails":"Detalles del proveedor"
-
+  "app.common.text.supplierDetails":"Detalles del proveedor",
+  "app.common.text.budget": "Presupuesto",
+  "app.common.text.welcome": "Bienvenido",
+  "app.common.text.suppliersNquotations": "Proveedores y presupuestos",
+  "app.common.text.quotationsPerProject": "Presupuestos por proyecto",
+  "app.common.text.selectProject": "Seleccione el proyecto",
+  "app.common.text.download": "Descargar"
 }

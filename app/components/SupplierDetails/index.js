@@ -1,3 +1,4 @@
+import { ClusterOutlined, IdcardOutlined } from '@ant-design/icons';
 import { Avatar, Row, Col, Card } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useRegistration } from '../../../contexts/business-registration';
@@ -157,7 +158,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-important-o gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -170,7 +171,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
+                      <IdcardOutlined className="gx-fs-xxl gx-text-grey" />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -183,7 +184,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-geo-location gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-location gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -198,7 +199,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-geo-location gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-location gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -213,7 +214,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-map-drawing gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -226,7 +227,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-map-directions gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -239,7 +240,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-social gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -282,7 +283,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-feedback gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-select gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -323,7 +324,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-geo-location gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-location gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -338,7 +339,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-geo-location gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-location gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -353,7 +354,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-map-drawing gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
@@ -368,7 +369,7 @@ const SupplierDetails = props => {
                 <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                   <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                     <div className="gx-mr-3">
-                      <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
+                      <i className={`icon icon-social gx-fs-xxl gx-text-grey`} />
                     </div>
                     <div className="gx-media-body">
                       <h6 className="gx-mb-1 gx-text-grey">
