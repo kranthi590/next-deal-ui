@@ -186,7 +186,8 @@ const MySuppliers = props => {
         <div align="end" style={{ textAlign: 'right' }}>
           <Button type="primary" onClick={onDownloadXls}>
             <CloudDownloadOutlined className="gx-mr-2" />
-            Download Xls
+            <IntlMessages id="app.common.text.download" />
+            Xls
           </Button>
           <Button type="primary" onClick={showModal}>
             <UserAddOutlined className="gx-mr-2" />

@@ -135,6 +135,7 @@ const QuoteResponses = props => {
               label={<IntlMessages id="app.quotationresponses.field.netWorth" />}
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
+              className="gx-grp-input"
               rules={[
                 {
                   required: true,
@@ -145,11 +146,17 @@ const QuoteResponses = props => {
               ]}
             >
               <ClpFormatter
-                className="gx-w-100"
                 value={netValue}
                 onChange={onNetValueChange}
                 placeholder="1.00.00"
                 disabled={awarded}
+                addonAfter={
+                  <Form.Item name="includesTax" valuePropName="checked" className="gx-mb-0">
+                    <Checkbox disabled={awarded}>
+                      <IntlMessages id="app.quotationresponses.field.includesTax" />
+                    </Checkbox>
+                  </Form.Item>
+                }
               />
             </Form.Item>
           </Col>
@@ -250,19 +257,6 @@ const QuoteResponses = props => {
           </Col>
           <Col xl={6} xs={24}>
             <Form.Item
-              name="includesTax"
-              valuePropName="checked"
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-              className="gx-pt-4"
-            >
-              <Checkbox disabled={awarded}>
-                <IntlMessages id="app.quotationresponses.field.includesTax" />
-              </Checkbox>
-            </Form.Item>
-          </Col>
-          <Col xl={6} xs={24}>
-            <Form.Item
               name="incoterm"
               label={<IntlMessages id="app.quotationresponses.field.incoterm" />}
               labelCol={{ span: 24 }}
@@ -293,7 +287,7 @@ const QuoteResponses = props => {
             </Form.Item>
           </Col>
           {!awarded && (
-            <Col xl={6} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
+            <Col xl={12} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
               {newQuote ? (
                 <></>
               ) : (
@@ -310,22 +304,22 @@ const QuoteResponses = props => {
                   </Button>
                 </Form.Item>
               )}
-              <Form.Item wrapperCol={{ span: 24 }}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  icon={<SaveOutlined />}
-                  className="gx-mb-0"
-                >
-                  <span>
-                    <IntlMessages id="app.quotationresponses.button.save" />
-                    {/* {newQuote ? (
-                    ) : (
-                      <IntlMessages id="app.quotationresponses.button.award" />
-                    )} */}
-                  </span>
-                </Button>
-              </Form.Item>
+              {newQuote ? (
+                <Form.Item wrapperCol={{ span: 24 }}>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    icon={<SaveOutlined />}
+                    className="gx-mb-0"
+                  >
+                    <span>
+                      <IntlMessages id="app.quotationresponses.button.save" />
+                    </span>
+                  </Button>
+                </Form.Item>
+              ) : (
+                <></>
+              )}
             </Col>
           )}
         </Row>
