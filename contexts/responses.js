@@ -176,6 +176,62 @@ const useProviderResponses = () => {
         fetchError(error.message);
       });
   };
+  const getQuotationsForCalendar = (pid, startdate, enddate, callbackFun) => {
+    const eventsdata = [
+      {
+        id: 0,
+        start: '2022-01-11T00:00:00.000Z',
+        end: '2022-02-25T00:00:00.000Z',
+        quotationName: 'Flooring',
+        supplier: 'Sai raj',
+      },
+      {
+        id: 1,
+        start: '2022-01-02T00:00:00.000Z',
+        end: '2022-02-25T00:00:00.000Z',
+        quotationName: 'Man power',
+        supplier: 'Ram',
+      },
+      {
+        id: 2,
+        start: '2022-01-11T00:00:00.000Z',
+        end: '2022-02-25T00:00:00.000Z',
+        quotationName: 'Carpentry Work',
+        supplier: 'Ram',
+      },
+      {
+        id: 3,
+        start: '2022-02-11T00:00:00.000Z',
+        end: '2022-02-25T00:00:00.000Z',
+        quotationName: 'Fall ceiling',
+        supplier: 'Ram',
+      },
+    ];
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    if (callbackFun) {
+      callbackFun(eventsdata);
+    }
+
+    // httpClient
+    //   .get(`projects/${pid}/quotations`, {
+    //     headers: headers,
+    //   })
+    //   .then(({ data }) => {
+    //     if (data) {
+    //       fetchSuccess();
+    //       if (callbackFun) callbackFun(data.data);
+    //     } else {
+    //       errorNotification(data.error, 'app.registration.errorMessageTitle');
+    //       fetchError(data.error);
+    //     }
+    //   })
+    //   .catch(function (error) {
+    //     handleErrorNotification(error);
+    //     fetchError(error.message);
+    //   });
+  };
 
   return {
     isLoading,
@@ -186,5 +242,6 @@ const useProviderResponses = () => {
     deAwardQuotation,
     abortQuotation,
     getQuotationsByPagination,
+    getQuotationsForCalendar,
   };
 };

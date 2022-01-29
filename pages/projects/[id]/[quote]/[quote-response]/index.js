@@ -90,12 +90,18 @@ const NewQuoteResponse = props => {
 
   const onDeawardQuotation = qid => {
     setShowAbortAlert(true);
-    setAlertInfo({ type: 'deaward', confirmText: 'Do you want to deaward quotation?' });
+    setAlertInfo({
+      type: 'deaward',
+      confirmText: <IntlMessages id="app.common.text.confirmquotationDeaward" />,
+    });
     setActiveAbortId(qid);
   };
   const onAbortQuotation = () => {
     setShowAbortAlert(true);
-    setAlertInfo({ type: 'abort', confirmText: 'Do you want to abort quotation?' });
+    setAlertInfo({
+      type: 'abort',
+      confirmText: <IntlMessages id="app.common.text.confirmQuotationAborted" />,
+    });
   };
   const onCancelAlert = () => {
     setShowAbortAlert(false);
@@ -151,7 +157,9 @@ const NewQuoteResponse = props => {
                     <></>
                   )}
                   {quotationData.status === 'aborted' ? (
-                    <p className="gx-text-danger">Quotation aborted</p>
+                    <p className="gx-text-danger">
+                      <IntlMessages id="app.common.text.quotationAborted" />
+                    </p>
                   ) : null}
                 </div>
               </div>
@@ -254,12 +262,12 @@ const NewQuoteResponse = props => {
         </div>
       </div>
       <SweetAlert
-        confirmBtnText="OK"
+        confirmBtnText={<IntlMessages id="button.ok" />}
         show={showAbortAlert}
         warning
-        title={'Confirm'}
+        title={<IntlMessages id="app.common.text.confirm" />}
         onConfirm={onConfirmAlert}
-        cancelBtnText="Cancel"
+        cancelBtnText={<IntlMessages id="button.cancel" />}
         showCancel
         onCancel={onCancelAlert}
       >

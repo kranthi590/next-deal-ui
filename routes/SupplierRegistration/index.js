@@ -818,7 +818,7 @@ const SupplierRegistration = props => {
         </div>
       )}
       <SweetAlert
-        confirmBtnText="OK"
+        confirmBtnText={<IntlMessages id="button.ok" />}
         show={showAlert}
         success
         title={<IntlMessages id="app.supplierregistration.successmessage.title" />}

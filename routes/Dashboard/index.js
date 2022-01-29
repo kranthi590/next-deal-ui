@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Col, Divider } from 'antd';
+import { Card, Row, Col, Divider } from 'antd';
 import { ProjectProvider } from '../../contexts/projects';
 import { Cookies } from 'react-cookie';
 import NoDataAvailable from '../../app/components/NoDataAvailable.js';
@@ -30,13 +30,11 @@ const BuyerDashboard = ({ userProfile }) => {
         <IntlMessages id="app.common.text.welcome" />, {userProfile.firstName}{' '}
         {userProfile.lastName}
       </div>
-      <div className="gx-mb-2">
-        <Col md={8} offset={16}>
-          <ProjectSelector
-            projectChangeCallback={projectChangeCallback}
-            updateLoader={changeLoadingStatus}
-          />
-        </Col>
+      <div className="gx-my-2">
+        <ProjectSelector
+          projectChangeCallback={projectChangeCallback}
+          updateLoader={changeLoadingStatus}
+        />
       </div>
       <Card className="ant-card gx-card-widget">
         <div className="ant-card-head gx-pt-0">
@@ -54,7 +52,7 @@ const BuyerDashboard = ({ userProfile }) => {
         ) : buyerId && selectedProject ? (
           <div>
             <iframe
-              src={`https://metrics.nextdeal.dev/d-solo/IWqJ14onk/budget?orgId=1&from=1641697206709&to=1642906806711&var-Buyer=${buyerId}&var-Project=${selectedProject}&panelId=10`}
+              src={`${process.env.NEXT_PUBLIC_GRAFANA_HOST}/d-solo/IWqJ14onk/budget?orgId=1&from=1641697206709&to=1642906806711&var-Buyer=${buyerId}&var-Project=${selectedProject}&panelId=10`}
               width="100%"
               height="300"
               frameBorder="0"
@@ -62,7 +60,7 @@ const BuyerDashboard = ({ userProfile }) => {
             <Divider />
             <div>
               <iframe
-                src={`https://metrics.nextdeal.dev/d-solo/IWqJ14onk/budget?orgId=1&from=1641697206709&to=1642906806711&var-Buyer=${buyerId}&var-Project=${selectedProject}&panelId=8`}
+                src={`${process.env.NEXT_PUBLIC_GRAFANA_HOST}/d-solo/IWqJ14onk/budget?orgId=1&from=1641697206709&to=1642906806711&var-Buyer=${buyerId}&var-Project=${selectedProject}&panelId=8`}
                 width="100%"
                 height="300"
                 frameBorder="0"
