@@ -26,12 +26,10 @@ const QuotationsPerProjectDashboard = () => {
   return (
     <React.Fragment>
       <div className="gx-mb-2">
-        <Col md={8} offset={16}>
-          <ProjectSelector
-            projectChangeCallback={projectChangeCallback}
-            updateLoader={changeLoadingStatus}
-          />
-        </Col>
+        <ProjectSelector
+          projectChangeCallback={projectChangeCallback}
+          updateLoader={changeLoadingStatus}
+        />
       </div>
       <Card className="ant-card gx-card-widget">
         <div className="ant-card-head gx-pt-0">
@@ -49,14 +47,14 @@ const QuotationsPerProjectDashboard = () => {
         ) : buyerId && selectedProject ? (
           <div>
             <iframe
-              src={`https://metrics.nextdeal.dev/d-solo/NNU50zTnk/quotations-per-project?orgId=1&var-Buyer=${buyerId}&var-Project=${selectedProject}&from=1642077315415&to=1642682115415&panelId=10`}
+              src={`${process.env.NEXT_PUBLIC_GRAFANA_HOST}/d-solo/NNU50zTnk/quotations-per-project?orgId=1&var-Buyer=${buyerId}&var-Project=${selectedProject}&from=1642077315415&to=1642682115415&panelId=10`}
               width="100%"
               height="300"
               frameBorder="0"
             />
             <div>
               <iframe
-                src={`https://metrics.nextdeal.dev/d-solo/NNU50zTnk/quotations-per-project?orgId=1&var-Buyer=${buyerId}&var-Project=${selectedProject}&from=1642077432089&to=1642682232089&panelId=4`}
+                src={`${process.env.NEXT_PUBLIC_GRAFANA_HOST}/d-solo/NNU50zTnk/quotations-per-project?orgId=1&var-Buyer=${buyerId}&var-Project=${selectedProject}&from=1642077432089&to=1642682232089&panelId=4`}
                 width="100%"
                 height="300"
                 frameBorder="0"

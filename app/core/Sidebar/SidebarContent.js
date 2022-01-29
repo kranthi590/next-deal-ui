@@ -119,6 +119,16 @@ const SidebarContent = () => {
                 </a>
               </Link>
             </Menu.Item>
+            <Menu.Item key="calendar">
+              <Link href="/calendar">
+                <a>
+                  <i className="icon icon-calendar" />
+                  <span>
+                    <IntlMessages id="sidebar.menu.calendar" />
+                  </span>
+                </a>
+              </Link>
+            </Menu.Item>
           </Menu>
         </CustomScrollbars>
       </div>

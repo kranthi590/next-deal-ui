@@ -55,7 +55,7 @@ const SupplierDetails = props => {
   const [communesBusiness, setCommunesBusiness] = useState('');
   const [communesBilling, setCommunesBilling] = useState('');
   const [serviceLocation, setServiceLocation] = useState('');
-
+  let serviceLocationString = '';
   const loadRegionsAndComuna = () => {
     fetchRegions(({ regions }) => {
       regions.map(item => {
@@ -69,12 +69,13 @@ const SupplierDetails = props => {
         }
         if (serviceLocations.some(sl => sl.region_id === item.id)) {
           serviceLocationsLength++;
-          if (serviceLocationsLength < serviceLocations.length) {
-            setServiceLocation(serviceLocation + ', ' + item.name);
+          if (serviceLocationsLength < serviceLocations.length && serviceLocationsLength > 1) {
+            serviceLocationString += ', ' + item.name;
           } else {
-            setServiceLocation(serviceLocation + item.name);
+            serviceLocationString += item.name;
           }
         }
+        setServiceLocation(serviceLocationString);
       });
     });
     fetchCommune({ regionId: businessAddress.regionId }, data => {
@@ -102,7 +103,10 @@ const SupplierDetails = props => {
   categoriesList.forEach(item => {
     if (categories.some(categorie => categorie.category_id === item.value)) {
       categorieslength++;
-      selectedCategories += categorieslength < categories.length ? ', ' + item.text : item.text;
+      selectedCategories +=
+        categorieslength < categories.length && categorieslength !== 1
+          ? ', ' + item.text
+          : item.text;
     }
   });
   useEffect(() => {
@@ -427,7 +431,10 @@ const SupplierDetails = props => {
                   </span>
                   <p className="gx-mb-0">
                     {businessAddress.emailId ? (
-                      <a className="gx-link" href={`mailto:${businessAddress.emailId}`}>
+                      <a
+                        className="gx-link gx-text-break"
+                        href={`mailto:${businessAddress.emailId}`}
+                      >
                         {businessAddress.emailId}
                       </a>
                     ) : (
@@ -446,7 +453,7 @@ const SupplierDetails = props => {
                   </span>
                   <p className="gx-mb-0">
                     {webSiteUrl ? (
-                      <a className="gx-link" href={webSiteUrl} target="_blank">
+                      <a className="gx-link gx-text-break" href={webSiteUrl} target="_blank">
                         {webSiteUrl}
                       </a>
                     ) : (
@@ -465,7 +472,10 @@ const SupplierDetails = props => {
                   </span>
                   <p className="gx-mb-0">
                     {businessAddress.phoneNumber1 ? (
-                      <a className="gx-link" href={`tel:${businessAddress.phoneNumber1}`}>
+                      <a
+                        className="gx-link gx-text-break"
+                        href={`tel:${businessAddress.phoneNumber1}`}
+                      >
                         {businessAddress.phoneNumber1}
                       </a>
                     ) : (
@@ -484,7 +494,10 @@ const SupplierDetails = props => {
                   </span>
                   <p className="gx-mb-0">
                     {businessAddress.phoneNumber2 ? (
-                      <a className="gx-link" href={`tel:${businessAddress.phoneNumber2}`}>
+                      <a
+                        className="gx-link gx-text-break"
+                        href={`tel:${businessAddress.phoneNumber2}`}
+                      >
                         {businessAddress.phoneNumber2}
                       </a>
                     ) : (
@@ -531,7 +544,7 @@ const SupplierDetails = props => {
                   </span>
                   <p className="gx-mb-0">
                     {emailId ? (
-                      <a className="gx-link" href={`mailto:${emailId}`}>
+                      <a className="gx-link gx-text-break" href={`mailto:${emailId}`}>
                         {emailId}
                       </a>
                     ) : (

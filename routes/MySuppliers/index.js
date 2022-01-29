@@ -1,4 +1,9 @@
-import { CloudDownloadOutlined, SearchOutlined, UserAddOutlined } from '@ant-design/icons';
+import {
+  CloudDownloadOutlined,
+  CloudUploadOutlined,
+  SearchOutlined,
+  UserAddOutlined,
+} from '@ant-design/icons';
 import {
   Button,
   Card,
@@ -177,6 +182,7 @@ const MySuppliers = props => {
   const onDownloadXls = () => {
     downloadSuppliers();
   };
+  const onUploadXls = () => {};
   return (
     <>
       <BreadCrumb
@@ -184,6 +190,11 @@ const MySuppliers = props => {
       ></BreadCrumb>
       <Card className="gx-card" title={<IntlMessages id="app.mysuppliers.pageTitle" />}>
         <div align="end" style={{ textAlign: 'right' }}>
+          <Button type="primary" onClick={onUploadXls}>
+            <CloudUploadOutlined className="gx-mr-2" />
+            <IntlMessages id="app.common.text.upload" />
+            Xls
+          </Button>
           <Button type="primary" onClick={onDownloadXls}>
             <CloudDownloadOutlined className="gx-mr-2" />
             <IntlMessages id="app.common.text.download" />

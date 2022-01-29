@@ -225,6 +225,8 @@
   "button.show": "Mostrar",
   "button.search": "Busque en",
   "button.reset": "Reiniciar",
+  "button.cancel": "Cancelar",
+  "button.ok": "Ok",
   "pricingTable.basic": "BÁSICO",
   "pricingTable.circle": "Circulo",
   "pricingTable.classic": "Clásico",
@@ -336,6 +338,7 @@
   "sidebar.menu.budget": "Presupuesto",
   "sidebar.menu.quotations": "Citas",
   "sidebar.menu.suppliers": "Proveedores",
+  "sidebar.menu.calendar": "Calendario",
   "sidebar.project.saveProject": "Guardar proyecto",
   "sidebar.suppliers.mySuppliers": "Mi Proveedores",
   "app.project.createNewProject": "CREAR PROYECTO",
@@ -514,5 +517,10 @@
   "app.common.text.suppliersNquotations": "Proveedores y presupuestos",
   "app.common.text.quotationsPerProject": "Presupuestos por proyecto",
   "app.common.text.selectProject": "Seleccione el proyecto",
-  "app.common.text.download": "Descargar"
+  "app.common.text.download": "Descargar",
+  "app.common.text.upload": "Subir a",
+  "app.common.text.quotationAborted": "Cita abortada",
+  "app.common.text.confirmquotationDeaward": "Do you want to deaward quotation?",
+  "app.common.text.confirmQuotationAborted": "Do you want to abort quotation?",
+  "app.common.text.confirm":"Confirmar"
 }

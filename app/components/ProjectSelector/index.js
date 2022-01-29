@@ -19,12 +19,14 @@ const ProjectSelector = ({ projectChangeCallback, updateLoader }) => {
     setSelectedProject(value);
   };
   useEffect(() => {
-    getProjectsByPagination(20, 0, data => {
+    getProjectsByPagination(50, 0, data => {
       setAllProjects(data.rows);
       if (data.rows.length) {
         setSelectedProject(data.rows[0].id);
       }
-      updateLoader(false);
+      if (updateLoader) {
+        updateLoader(false);
+      }
     });
   }, []);
 
@@ -41,6 +43,9 @@ const ProjectSelector = ({ projectChangeCallback, updateLoader }) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         name="metricsSelectionForm"
+        layout="horizontal"
+        labelWrap
+        labelAlign="right"
         fields={[
           {
             name: ['project'],
@@ -48,7 +53,12 @@ const ProjectSelector = ({ projectChangeCallback, updateLoader }) => {
           },
         ]}
       >
-        <Form.Item name="project" label={<IntlMessages id="app.common.text.selectProject" />}>
+        <Form.Item
+          name="project"
+          label={<IntlMessages id="app.common.text.selectProject" />}
+          labelCol={{ xs: { span: 24 }, sm: { span: 10, push: 4 }, md: { span: 8, push: 8 } }}
+          wrapperCol={{ xs: { span: 24 }, sm: { span: 10, push: 4 }, md: { span: 8, push: 8 } }}
+        >
           <Select placeholder="Select Projects" onSelect={handleProjectChanged}>
             {/* <Option value="" ><IntlMessages id="app.common.text.selectProject" /></Option> */}
             {allProjects &&
