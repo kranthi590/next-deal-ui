@@ -18,9 +18,10 @@ import BreadCrumb from '../../../../../app/components/BreadCrumb';
 import IntlMessages from '../../../../../util/IntlMessages';
 import { CloseOutlined } from '@ant-design/icons';
 import SweetAlert from 'react-bootstrap-sweetalert';
+import QuotationTimeline from '../../../../../app/components/NextDeal/QuotationTimeline';
 
 const NewQuoteResponse = props => {
-  const { projectsList, quotationData, awardedResponses, projectsDetails } = props;
+  const { projectsList, quotationData, awardedResponses, projectsDetails, activitiesList } = props;
   const { createResponses, createAward, completeQuotation, deAwardQuotation, abortQuotation } =
     useResponse();
   const [showAbortAlert, setShowAbortAlert] = useState(false);
@@ -258,6 +259,7 @@ const NewQuoteResponse = props => {
           <div className="project-details">
             {ProjectDetails()}
             <ProjectProgressTabs tabsConfig={projectDetailsTabs} enableHash />
+            {/*<QuotationTimeline activities={activitiesList} />*/}
           </div>
         </div>
       </div>
@@ -283,7 +285,8 @@ export async function getServerSideProps(context) {
   const { req, res, query } = context;
   let AssignedForResponses = [];
   let ResponsesList = [];
-  let AwardedResponsesList = [];
+  let AwardedResponsesList = [],
+    activitiesList = [];
   let QuotationData = {};
   let projectsDetails = null;
   try {
@@ -301,9 +304,18 @@ export async function getServerSideProps(context) {
       await httpClient.get(`projects/${query.id}`, {
         headers,
       }),
+      await httpClient.get(`activities/${query.quote}`, {
+        headers,
+      }),
     ];
     await Promise.all(promises).then(
-      ([assignedForResponsesData, responsesListData, quotationData, projectData]) => {
+      ([
+        assignedForResponsesData,
+        responsesListData,
+        quotationData,
+        projectData,
+        activitiesData,
+      ]) => {
         AssignedForResponses = assignedForResponsesData.data.data.map(item => ({
           ...item,
           newQuote: true,
@@ -317,6 +329,7 @@ export async function getServerSideProps(context) {
         });
         QuotationData = quotationData.data.data;
         projectsDetails = projectData.data.data;
+        activitiesList = activitiesData.data.data;
       },
     );
   } catch (error) {
@@ -335,6 +348,7 @@ export async function getServerSideProps(context) {
       quotationData: QuotationData,
       awardedResponses: AwardedResponsesList,
       projectsDetails: projectsDetails,
+      activitiesList: activitiesList,
     },
   };
 }

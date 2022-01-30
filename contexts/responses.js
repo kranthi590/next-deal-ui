@@ -2,6 +2,7 @@ import React, { useState, useContext, createContext } from 'react';
 import { httpClient, setAuthToken } from '../util/Api';
 import { Cookies } from 'react-cookie';
 import { handleErrorNotification } from '../util/util';
+import moment from 'moment';
 
 const responsesContext = createContext({});
 
@@ -180,29 +181,29 @@ const useProviderResponses = () => {
     const eventsdata = [
       {
         id: 0,
-        start: '2022-01-11T00:00:00.000Z',
-        end: '2022-02-25T00:00:00.000Z',
+        start: moment('2022-01-11T00:00:00.000Z').toDate(),
+        end: moment('2022-01-22T00:00:00.000Z').toDate(),
         quotationName: 'Flooring',
         supplier: 'Sai raj',
       },
       {
         id: 1,
-        start: '2022-01-02T00:00:00.000Z',
-        end: '2022-02-25T00:00:00.000Z',
+        start: moment('2022-02-02T00:00:00.000Z').toDate(),
+        end: moment('2022-04-25T00:00:00.000Z').toDate(),
         quotationName: 'Man power',
         supplier: 'Ram',
       },
       {
         id: 2,
-        start: '2022-01-11T00:00:00.000Z',
-        end: '2022-02-25T00:00:00.000Z',
+        start: moment('2022-03-11T00:00:00.000Z').toDate(),
+        end: moment('2022-05-25T00:00:00.000Z').toDate(),
         quotationName: 'Carpentry Work',
         supplier: 'Ram',
       },
       {
         id: 3,
-        start: '2022-02-11T00:00:00.000Z',
-        end: '2022-02-25T00:00:00.000Z',
+        start: moment('2022-02-11T00:00:00.000Z').toDate(),
+        end: moment('2022-04-25T00:00:00.000Z').toDate(),
         quotationName: 'Fall ceiling',
         supplier: 'Ram',
       },

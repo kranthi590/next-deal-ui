@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ProjectSelector from '../../app/components/NextDeal/ProjectSelector';
+import ProjectSelector from '../../app/components/ProjectSelector';
 import { ProjectProvider } from '../../contexts/projects';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import { Card } from 'antd';
 import { ResponsesProvider, useResponse } from '../../contexts/responses';
