@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import withRedux from 'next-redux-wrapper';
+//import '../public/vendors/react-notification/react-notifications.css';
 import 'antd/dist/antd.css';
 
 import '../public/vendors/style';

@@ -11,7 +11,7 @@ import FilesManager from '../../../app/common/FileManager';
 
 import { formatAmount, getAvatar } from '../../../util/util';
 import CustomScrollbars from '../../../util/CustomScrollbars';
-import NoDataAvailable from '../../../app/components/NoDataAvailable.js';
+import NoDataAvailable from '../../../app/components/NextDeal/NoDataAvailable.js';
 import BreadCrumb from '../../../app/components/BreadCrumb';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ResponsesProvider, useResponse } from '../../../contexts/responses';

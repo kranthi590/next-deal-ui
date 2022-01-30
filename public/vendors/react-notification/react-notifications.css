@@ -1,11 +1,11 @@
 @charset "UTF-8";
 @font-face {
   font-family: Notification;
-  src: url(fonts/notification.eot?s3g3t9);
-  src: url(fonts/notification.eot?#iefixs3g3t9) format('embedded-opentype'),
-    url(fonts/notification.woff?s3g3t9) format('woff'),
-    url(fonts/notification.ttf?s3g3t9) format('truetype'),
-    url(fonts/notification.svg?s3g3t9#notification) format('svg');
+  src: url(./fonts/fonts/notification.eot?s3g3t9);
+  src: url(./fonts/notification.eot?#iefixs3g3t9) format('embedded-opentype'),
+    url(./fonts/notification.woff?s3g3t9) format('woff'),
+    url(./fonts/notification.ttf?s3g3t9) format('truetype'),
+    url(./fonts/notification.svg?s3g3t9#notification) format('svg');
   font-weight: 400;
   font-style: normal;
 }
@@ -108,7 +108,7 @@
 }
 
 .notification-success:before {
-  content: '';
+  content: '' !important;
 }
 
 .notification-warning {
@@ -116,7 +116,7 @@
 }
 
 .notification-warning:before {
-  content: '';
+  content: '' !important;
 }
 
 .notification-error {
@@ -124,5 +124,5 @@
 }
 
 .notification-error:before {
-  content: '';
+  content: '' !important;
 }
