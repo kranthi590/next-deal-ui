@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Select } from 'antd';
-import { useProject } from '../../../contexts/projects';
-import IntlMessages from '../../../util/IntlMessages';
+import { useProject } from '../../../../contexts/projects';
+import IntlMessages from '../../../../util/IntlMessages';
 
 const { Option } = Select;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import IntlMessages from '../../../util/IntlMessages';
+import IntlMessages from '../../../../util/IntlMessages';
 const NoDataAvailable = ({
   text = <IntlMessages id="app.common.noDataAvailable" />,
   icon = 'icon-exclamation',

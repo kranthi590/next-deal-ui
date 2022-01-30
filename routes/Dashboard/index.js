@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, Divider } from 'antd';
 import { ProjectProvider } from '../../contexts/projects';
 import { Cookies } from 'react-cookie';
-import NoDataAvailable from '../../app/components/NoDataAvailable.js';
-import ProjectSelector from '../../app/components/ProjectSelector';
+import NoDataAvailable from '../../app/components/NextDeal/NoDataAvailable.js';
+import ProjectSelector from '../../app/components/NextDeal/ProjectSelector';
 import IntlMessages from '../../util/IntlMessages';
 import ChartSkeleton from '../../app/components/ChartSkeleton/index.js';
 

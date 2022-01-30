@@ -21,7 +21,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import BreadCrumb from '../../app/components/BreadCrumb';
 import WidgetHeader from '../../app/components/WidgetHeader';
-import SupplierDetails from '../../app/components/SupplierDetails';
+import SupplierDetails from '../../app/components/NextDeal/SupplierDetails';
 import { useRegistration } from '../../contexts/business-registration';
 import SupplierRegistrationPage from '../../pages/supplier-registration';
 import IntlMessages from '../../util/IntlMessages';

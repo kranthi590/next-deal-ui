@@ -9,6 +9,7 @@ class MyDocument extends Document {
           <link rel="stylesheet" href="/app/vendors/gaxon/styles.css" />
           <link rel="stylesheet" href="/app/vendors/flag/sprite-flags-24x24.css" />
           <link rel="stylesheet" href="/app/vendors/noir-pro/styles.css" />
+          <link rel="stylesheet" href="/app/vendors/react-notification/react-notifications.css" />
         </Head>
         <body>
           <Main />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Col } from 'antd';
 import { ProjectProvider } from '../../contexts/projects';
 import { Cookies } from 'react-cookie';
-import NoDataAvailable from '../../app/components/NoDataAvailable.js';
+import NoDataAvailable from '../../app/components/NextDeal/NoDataAvailable.js';
 import IntlMessages from '../../util/IntlMessages';
 
 const SuppliersAndQuotationsDashboard = () => {

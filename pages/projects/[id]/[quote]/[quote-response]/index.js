@@ -11,7 +11,7 @@ import QuoteResponses from '../../../../../app/components/NextDeal/QuoteResponse
 import QuotationAwarded from '../../../../../app/components/NextDeal/QuotationAwarded';
 import { handleApiErrors, httpClient, setApiContext } from '../../../../../util/Api';
 import { ResponsesProvider, useResponse } from '../../../../../contexts/responses';
-import NoDataAvailable from '../../../../../app/components/NoDataAvailable.js';
+import NoDataAvailable from '../../../../../app/components/NextDeal/NoDataAvailable.js';
 import QuotationCompleted from '../../../../../app/components/NextDeal/QuotationCompleted';
 import FilesManager from '../../../../../app/common/FileManager';
 import BreadCrumb from '../../../../../app/components/BreadCrumb';

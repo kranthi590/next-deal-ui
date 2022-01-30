@@ -1,9 +1,9 @@
 import { ClusterOutlined, IdcardOutlined } from '@ant-design/icons';
 import { Avatar, Row, Col, Card } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { useRegistration } from '../../../contexts/business-registration';
-import IntlMessages from '../../../util/IntlMessages';
-import { getAvatar } from '../../../util/util';
+import { useRegistration } from '../../../../contexts/business-registration';
+import IntlMessages from '../../../../util/IntlMessages';
+import { getAvatar } from '../../../../util/util';
 
 const SupplierDetails = props => {
   const {

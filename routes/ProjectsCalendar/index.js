@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ProjectSelector from '../../app/components/ProjectSelector';
+import ProjectSelector from '../../app/components/NextDeal/ProjectSelector';
 import { ProjectProvider } from '../../contexts/projects';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';

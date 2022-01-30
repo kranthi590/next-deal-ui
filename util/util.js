@@ -5,7 +5,7 @@ import IntlMessages from './IntlMessages';
 import moment from 'moment';
 import { getData } from './localStorage';
 
-export const NOTIFICATION_TIMEOUT = 4000;
+export const NOTIFICATION_TIMEOUT = 6000;
 
 const validationErrors = [
   'INVALID_PROJECT_ID',
