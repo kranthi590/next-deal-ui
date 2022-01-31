@@ -801,7 +801,7 @@ const SupplierRegistration = props => {
                   <FormItem>
                     <div>
                       <Button type="primary" className="gx-mb-0" htmlType="submit">
-                        <IntlMessages id="app.userAuth.signUp" />
+                        <IntlMessages id="app.supplierregistration.field.register.button" />
                       </Button>
                     </div>
                   </FormItem>

@@ -61,16 +61,17 @@ const QuotationTimeline = ({ activities }) => {
     <React.Fragment>
       <Card>
         <Timeline>
-          {activities.map(item => {
-            const currentEventData = timelineData[item.activityType];
-            return (
-              <TimelineEvent
-                icon={currentEventData.icon}
-                title={item.activityText || currentEventData.title}
-                color={currentEventData.color}
-              />
-            );
-          })}
+          {activities &&
+            activities.map(item => {
+              const currentEventData = timelineData[item.activityType];
+              return (
+                <TimelineEvent
+                  icon={currentEventData.icon}
+                  title={item.activityText || currentEventData.title}
+                  color={currentEventData.color}
+                />
+              );
+            })}
         </Timeline>
       </Card>
     </React.Fragment>
