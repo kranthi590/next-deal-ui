@@ -177,7 +177,7 @@ const useProviderResponses = () => {
         fetchError(error.message);
       });
   };
-  const getQuotationsForCalendar = (pid, startdate, enddate, callbackFun) => {
+  const getQuotationsForCalendar = async (pid, startdate, enddate, callbackFun) => {
     const eventsdata = [
       {
         id: 0,
@@ -211,27 +211,25 @@ const useProviderResponses = () => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies();
-    if (callbackFun) {
-      callbackFun(eventsdata);
+    try {
+      const promises = [
+        await httpClient.get(`calender/validityDates?startDate=${startdate}&endDate=${enddate}`, {
+          headers,
+        }),
+        await httpClient.get(`calender/validityDates?startDate=${startdate}&endDate=${enddate}`, {
+          headers,
+        }),
+      ];
+      await Promise.all(promises).then(([deliveryDates, validityDates]) => {
+        fetchSuccess();
+        if (callbackFun) {
+          callbackFun([...deliveryDates.data.data, ...validityDates.data.data]);
+        }
+      });
+    } catch (error) {
+      handleErrorNotification(error);
+      fetchError(error.message);
     }
-
-    // httpClient
-    //   .get(`projects/${pid}/quotations`, {
-    //     headers: headers,
-    //   })
-    //   .then(({ data }) => {
-    //     if (data) {
-    //       fetchSuccess();
-    //       if (callbackFun) callbackFun(data.data);
-    //     } else {
-    //       errorNotification(data.error, 'app.registration.errorMessageTitle');
-    //       fetchError(data.error);
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     handleErrorNotification(error);
-    //     fetchError(error.message);
-    //   });
   };
 
   const addNewActivity = (data, callbackFun) => {

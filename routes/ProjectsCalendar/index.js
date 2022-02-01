@@ -12,6 +12,8 @@ const ProjectsCalendarWrapper = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
+  const [quotationStatus, setQuotationStatus] = useState('awarded');
+  const [quotationsByPid, setQuotationsByPid] = useState([]);
   const monthStart = moment().startOf('month');
   const monthEnd = moment().endOf('month');
   const projectChangeCallback = projectId => {
@@ -19,22 +21,58 @@ const ProjectsCalendarWrapper = () => {
   };
 
   const updateCalendarData = (start, end) => {
-    getQuotationsForCalendar(selectedProject, start, end, data => {
-      setEvents(data);
-    });
+    getQuotationsForCalendar(
+      selectedProject,
+      moment(start).format('YYYY-MM-DD'),
+      moment(end).format('YYYY-MM-DD'),
+      data => {
+        const newCalendarData = data.filter(item => item.quotation.project.id === selectedProject);
+        const updatedCalendarData = newCalendarData.map(item => {
+          const quoteendDate = item.deliveryDate || item.validityDate;
+          return {
+            id: item.id,
+            start: moment(start).toDate(),
+            end:
+              moment(end).diff(moment(quoteendDate), 'days') > 1
+                ? moment(end).toDate()
+                : moment(quoteendDate).toDate(),
+            quotationName: item.quotation.name,
+            supplier: item.supplier.fantasyName,
+            isAwarded: item.isAwarded,
+          };
+        });
+        setQuotationsByPid(updatedCalendarData);
+      },
+    );
   };
+
+  useEffect(() => {
+    let updatedEvents = [];
+    switch (quotationStatus) {
+      case 'awarded':
+        updatedEvents = quotationsByPid.filter(item => item.isAwarded);
+        break;
+      case 'unawarded':
+        updatedEvents = quotationsByPid.filter(item => !item.isAwarded);
+        break;
+      default:
+        updatedEvents = quotationsByPid;
+        break;
+    }
+    setEvents(updatedEvents);
+  }, [quotationStatus, quotationsByPid]);
 
   const onRangeChange = data => {
     updateCalendarData(data.start, data.end);
   };
 
   useEffect(() => {
-    updateCalendarData(monthStart, monthEnd);
+    // updateCalendarData(data.start, data.end)
   }, [selectedProject]);
 
   useEffect(() => {
     updateCalendarData(monthStart, monthEnd);
-  }, [selectedProject]);
+  }, []);
 
   return (
     <React.Fragment>
@@ -43,6 +81,7 @@ const ProjectsCalendarWrapper = () => {
         <Calendar
           localizer={localizer}
           events={events}
+          views={['month', 'week']}
           onRangeChange={onRangeChange}
           titleAccessor={event => event.quotationName + ' - ' + event.supplier}
           popup={true}

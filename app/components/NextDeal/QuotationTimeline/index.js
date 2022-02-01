@@ -18,7 +18,7 @@ const timelineData = {
   QUOTATION_CREATED: {
     icon: FormOutlined,
     title: 'Created',
-    color: '#003366',
+    color: '#038fdd',
   },
   QUOTATION_RESPONSE_CREATED: {
     icon: SolutionOutlined,
@@ -26,34 +26,34 @@ const timelineData = {
     color: '#003366',
   },
   QUOTATION_AWARDED: {
-    icon: AuditOutlined,
+    icon: FileProtectOutlined,
     title: 'Awarded',
     color: '#f70',
   },
   QUOTATION_RETAINED: {
-    icon: FileProtectOutlined,
+    icon: FileSyncOutlined,
     title: 'Retained',
-    color: '#003366',
+    color: '#FDE3CF',
   },
   QUOTATION_RECEPTION_CONFIRMED: {
-    icon: ExceptionOutlined,
+    icon: AuditOutlined,
     title: 'Confirmed',
-    color: '#003366',
+    color: '#13c2c28f',
   },
   QUOTATION_COMPLETED: {
     icon: FileDoneOutlined,
     title: 'Completed',
-    color: '#f70',
+    color: '#13C2C2',
   },
   QUOTATION_ABORTED: {
-    icon: ExceptionOutlined,
+    icon: FileExclamationOutlined,
     title: 'Aborted',
     color: '#F44336',
   },
   CUSTOM: {
     icon: EditOutlined,
     title: 'Custom',
-    color: '#003366',
+    color: '#05488b',
   },
 };
 
