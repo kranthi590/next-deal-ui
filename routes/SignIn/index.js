@@ -36,13 +36,6 @@ const SignIn = props => {
                 <h1>
                   <IntlMessages id="app.userAuth.login.page_title" />
                 </h1>
-                <p>
-                  <Link href="/signin">
-                    <a>
-                      <IntlMessages id="app.userAuth.login" />
-                    </a>
-                  </Link>
-                </p>
               </div>
               <Form
                 initialValues={{ remember: true }}
@@ -78,7 +71,7 @@ const SignIn = props => {
                   ]}
                   name="password"
                 >
-                  <Input className="gx-input-lineheight" type="password" placeholder="Password" />
+                  <Input.Password className="gx-input-lineheight" placeholder="Password" />
                 </Form.Item>
                 <Form.Item>
                   <Button

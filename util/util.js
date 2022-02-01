@@ -45,6 +45,7 @@ const validationErrors = [
   'BUYERS_USERS_LIMIT_EXCEEDED',
   'PURCHASE_ORDER_NUMBER_NOT_FOUND',
   'ACCOUNT_LICENSE_EXPIRED',
+  'QUOTATION_NOT_FOUND',
 ];
 
 export const successNotification = messageId => {

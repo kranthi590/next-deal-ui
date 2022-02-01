@@ -392,6 +392,7 @@
   "invalid_quotation_response_id":"INVALID_QUOTATION_RESPONSE_ID",
   "buyers_users_limit_exceeded":"Limite de usuarios excedida",
   "purchase_order_number_not_found":"Número de pedido no encontrado",
+  "quotation_not_found":"QUOTATION_NOT_FOUND",
   "app.buyerregistration.page_title":"Registro de Usuario",
   "app.buyerregistration.form_title":"Información de Usuario",
   "app.buyerregistration.field.fantasyName":"Nombre de Fantasía",
