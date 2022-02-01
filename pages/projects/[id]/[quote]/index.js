@@ -128,7 +128,7 @@ const NewQuote = props => {
 
   const disabledStartDate = value => {
     const formData = form;
-    return moment().add(-1, 'days') >= value || value > formData.getFieldValue('expectedEndDate');
+    return value > formData.getFieldValue('expectedEndDate');
   };
 
   const disabledEndDate = value => {

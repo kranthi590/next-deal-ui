@@ -131,3 +131,9 @@
   word-break: break-all;
   word-break: break-word;
 }
+.MuiGrid-root.Timeline-container-2{
+  width: 0;
+}
+.Timeline-container-2.MuiTypography-h6{
+  font-size: 1rem;
+}
