@@ -22,11 +22,19 @@ import QuotationTimeline from '../../../../../app/components/NextDeal/QuotationT
 
 const NewQuoteResponse = props => {
   const { projectsList, quotationData, awardedResponses, projectsDetails, activitiesList } = props;
-  const { createResponses, createAward, completeQuotation, deAwardQuotation, abortQuotation } =
-    useResponse();
+  const {
+    createResponses,
+    createAward,
+    completeQuotation,
+    deAwardQuotation,
+    abortQuotation,
+    addNewActivity,
+    getActivities,
+  } = useResponse();
   const [showAbortAlert, setShowAbortAlert] = useState(false);
   const [activeAbortId, setActiveAbortId] = useState(null);
   const [alertInfo, setAlertInfo] = useState({ type: '', confirmText: '' });
+  const [quotationActivities, setQuotationActivities] = useState(activitiesList);
   const router = useRouter();
   const projectId = router.query.quote;
   let awarded = false,
@@ -108,6 +116,15 @@ const NewQuoteResponse = props => {
     setShowAbortAlert(false);
     setActiveAbortId(null);
     setAlertInfo({ type: '', confirmText: '' });
+  };
+
+  const onSaveActivity = values => {
+    addNewActivity({ ...values, quotationRequestId: quotationData.id }, data => {
+      successNotification('app.registration.detailsSaveSuccessMessage');
+      getActivities(quotationData.id, data => {
+        setQuotationActivities(data);
+      });
+    });
   };
 
   const ProjectDetails = () => {
@@ -259,7 +276,7 @@ const NewQuoteResponse = props => {
           <div className="project-details">
             {ProjectDetails()}
             <ProjectProgressTabs tabsConfig={projectDetailsTabs} enableHash />
-            {/*<QuotationTimeline activities={activitiesList} />*/}
+            <QuotationTimeline activities={quotationActivities} onSaveActivity={onSaveActivity} />
           </div>
         </div>
       </div>

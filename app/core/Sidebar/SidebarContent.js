@@ -13,6 +13,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { setPathName } from '../../../redux/actions';
 import IntlMessages from '../../../util/IntlMessages';
+import { TeamOutlined } from '@ant-design/icons';
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -112,7 +113,7 @@ const SidebarContent = () => {
             <Menu.Item key="my-suppliers">
               <Link href="/my-suppliers">
                 <a>
-                  <i className="icon icon-lising-dbrd" />
+                  <i className="icon icon-product-list" />
                   <span>
                     <IntlMessages id="sidebar.suppliers.mySuppliers" />
                   </span>
