@@ -471,8 +471,8 @@ const SupplierRegistration = props => {
                     ]}
                   >
                     <Select size="large" placeholder="Please select type">
-                      <Option value="supplier">Emprendedor</Option>
-                      <Option value="buyer">Pyme</Option>
+                      <Option value="Emprendedor">Emprendedor</Option>
+                      <Option value="Pyme">Pyme</Option>
                     </Select>
                   </FormItem>
                 </Col>
