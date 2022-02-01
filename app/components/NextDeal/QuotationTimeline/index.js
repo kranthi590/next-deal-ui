@@ -12,7 +12,7 @@ import {
   SolutionOutlined,
 } from '@ant-design/icons';
 import { Button, Card, Row, Col, Form, Input, Popover } from 'antd';
-import IntlMessages from '../../../util/IntlMessages';
+import IntlMessages from '../../../../util/IntlMessages';
 
 const timelineData = {
   QUOTATION_CREATED: {
