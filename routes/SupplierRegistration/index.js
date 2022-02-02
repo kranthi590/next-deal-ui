@@ -209,15 +209,6 @@ const SupplierRegistration = props => {
               <h1>
                 <IntlMessages id="app.supplierregistration.page_title" />
               </h1>
-              {props && props.showLoginLink && (
-                <p>
-                  <Link href="/signin">
-                    <a>
-                      <IntlMessages id="app.userAuth.login" />
-                    </a>
-                  </Link>
-                </p>
-              )}
             </div>
             <Form
               layout="inline"

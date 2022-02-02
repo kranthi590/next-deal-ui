@@ -45,19 +45,21 @@ const SignIn = props => {
                 onFinishFailed={onFinishFailed}
                 className="gx-signin-form gx-form-row0"
               >
+
                 <Form.Item
                   name="emailId"
                   label={<IntlMessages id="app.userAuth.login.field.emailId" />}
                   rules={[
                     {
                       required: true,
+                      type: 'email',
                       message: (
                         <IntlMessages id="app.userAuth.login.field.emailId.error.required" />
                       ),
                     },
                   ]}
                 >
-                  <Input className="gx-input-lineheight" placeholder="Email" />
+                  <Input className="gx-input-lineheight" placeholder="Email" /> 
                 </Form.Item>
                 <Form.Item
                   label={<IntlMessages id="app.userAuth.login.field.password" />}
@@ -71,7 +73,7 @@ const SignIn = props => {
                   ]}
                   name="password"
                 >
-                  <Input.Password className="gx-input-lineheight" placeholder="Password" />
+                  <Input.Password className="gx-input-lineheight" placeholder="Contraseña" />
                 </Form.Item>
                 <Form.Item>
                   <Button
