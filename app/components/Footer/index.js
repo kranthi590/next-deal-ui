@@ -3,10 +3,10 @@ import Link from 'next/link';
 import IntlMessages from '../../../util/IntlMessages';
 
 const links = [
-  { url: '${process.env.NEXT_PUBLIC_WEB_HOST}', label: <IntlMessages id="app.common.text.home" /> },
-  { url: '${process.env.NEXT_PUBLIC_WEB_HOST}/about-us', label: <IntlMessages id="app.common.text.about" /> },
-  { url: '${process.env.NEXT_PUBLIC_WEB_HOST}/privacy-policy', label: <IntlMessages id="app.common.text.privacyPolicy" /> },
-  { url: '${process.env.NEXT_PUBLIC_WEB_HOST}/contact-us', label: <IntlMessages id="app.common.text.contact" /> },
+  { url: `https://${process.env.NEXT_PUBLIC_WEB_HOST}`, label: <IntlMessages id="app.common.text.home" /> },
+  { url: `https://${process.env.NEXT_PUBLIC_WEB_HOST}/about-us`, label: <IntlMessages id="app.common.text.about" /> },
+  { url: `https://${process.env.NEXT_PUBLIC_WEB_HOST}/privacy-policy`, label: <IntlMessages id="app.common.text.privacyPolicy" /> },
+  { url: `https://${process.env.NEXT_PUBLIC_WEB_HOST}/contact-us`, label: <IntlMessages id="app.common.text.contact" /> },
 ];
 
 const FooterComponent = () => (

@@ -148,7 +148,7 @@ const SupplierRegistration = props => {
   const onAlertConfirmed = () => {
     setShowAlert(false);
     if (!isAuthenticated) {
-      router.push('/signup');
+      router.push(`https://${process.env.NEXT_PUBLIC_WEB_HOST}`);
     }
     if (onAletSuccess) {
       onAletSuccess();
