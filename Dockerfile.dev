@@ -12,6 +12,7 @@ ENV NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX=56
 ENV NEXT_PUBLIC_APP_HOST=.nextdeal.dev
 ENV NODE_ENV=development
 ENV NEXT_PUBLIC_GRAFANA_HOST=https://metrics.nextdeal.dev
+ENV NEXT_PUBLIC_WEB_HOST=wwww.nextdeal.dev
 
 #Sets the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD commands
 WORKDIR /usr/src/app

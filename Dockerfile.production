@@ -11,6 +11,8 @@ ENV NEXT_PUBLIC_DEFAULT_LOCALE_LANG=es
 ENV NEXT_PUBLIC_DEFAULT_LOCALE_PREFIX=56
 ENV NEXT_PUBLIC_APP_HOST=.nextdeal.cl
 ENV NODE_ENV=production
+ENV NEXT_PUBLIC_GRAFANA_HOST=https://metrics.nextdeal.cl
+ENV NEXT_PUBLIC_WEB_HOST=wwww.nextdeal.cl
 
 
 #Sets the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD commands
