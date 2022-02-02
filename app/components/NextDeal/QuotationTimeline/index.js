@@ -130,14 +130,16 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
                 />
               );
             })}
-            <Card
-              className="gx-h-100 gx-m-2 gx-d-flex gx-justify-content-center gx-align-items-center"
-              style={{ width: '225px' }}
-            >
-              <Popover content={<AddCustomActivityForm />} title="Add Activity">
-                <Button type="primary" size="large" shape="circle" icon={<FileAddOutlined />} />
-              </Popover>
-            </Card>
+            <div className="gx-h-100 gx-p-2 gx-d-flex gx-justify-content-center gx-align-items-center">
+              <Card
+                className="gx-h-100 gx-m-2 gx-d-flex gx-justify-content-center gx-align-items-center"
+                style={{ width: '225px' }}
+              >
+                <Popover content={<AddCustomActivityForm />} title="Add Activity">
+                  <Button type="primary" size="large" shape="circle" icon={<FileAddOutlined />} />
+                </Popover>
+              </Card>
+            </div>
           </Timeline>
         </div>
       </Card>

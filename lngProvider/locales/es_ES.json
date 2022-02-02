@@ -393,6 +393,7 @@
   "buyers_users_limit_exceeded":"Limite de usuarios excedida",
   "purchase_order_number_not_found":"Número de pedido no encontrado",
   "quotation_not_found":"QUOTATION_NOT_FOUND",
+  "invalid_account_credentials":"No se ha podido iniciar la sesión. Por favor, verifique sus credenciales e inténtelo de nuevo.",
   "app.buyerregistration.page_title":"Registro de Usuario",
   "app.buyerregistration.form_title":"Información de Usuario",
   "app.buyerregistration.field.fantasyName":"Nombre de Fantasía",
