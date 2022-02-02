@@ -75,13 +75,6 @@ const SignUp = props => {
                   <IntlMessages id="app.userAuth.signUp.page_title" />{' '}
                   {getSubDomain(isClient ? window.location.hostname : 'www.nextdeal.dev')}
                 </h1>
-                <p>
-                  <Link href="/signin">
-                    <a>
-                      <IntlMessages id="app.userAuth.login" />
-                    </a>
-                  </Link>
-                </p>
               </div>
               <Form
                 initialValues={{ remember: true }}
