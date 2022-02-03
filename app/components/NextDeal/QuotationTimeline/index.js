@@ -3,7 +3,6 @@ import { Timeline, TimelineEvent } from '@mailtop/horizontal-timeline';
 import {
   AuditOutlined,
   EditOutlined,
-  ExceptionOutlined,
   FileSyncOutlined,
   FileAddOutlined,
   FileDoneOutlined,
@@ -19,42 +18,42 @@ import IntlMessages from '../../../../util/IntlMessages';
 const timelineData = {
   QUOTATION_CREATED: {
     icon: FormOutlined,
-    title: 'Created',
+    title: <IntlMessages id="app.common.text.created" />,
     color: '#038fdd',
   },
   QUOTATION_RESPONSE_CREATED: {
     icon: SolutionOutlined,
-    title: 'Response Created',
+    title: <IntlMessages id="app.common.text.responseCreated" />,
     color: '#003366',
   },
   QUOTATION_AWARDED: {
     icon: FileProtectOutlined,
-    title: 'Awarded',
+    title: <IntlMessages id="app.quotationresponses.button.awarded" />,
     color: '#f70',
   },
   QUOTATION_RETAINED: {
     icon: FileSyncOutlined,
-    title: 'Retained',
+    title: <IntlMessages id="app.common.text.retained" />,
     color: '#FDE3CF',
   },
   QUOTATION_RECEPTION_CONFIRMED: {
     icon: AuditOutlined,
-    title: 'Confirmed',
+    title: <IntlMessages id="app.common.text.confirmed" />,
     color: '#13c2c28f',
   },
   QUOTATION_COMPLETED: {
     icon: FileDoneOutlined,
-    title: 'Completed',
+    title: <IntlMessages id="app.quotationresponses.button.completed" />,
     color: '#13C2C2',
   },
   QUOTATION_ABORTED: {
     icon: FileExclamationOutlined,
-    title: 'Aborted',
+    title: <IntlMessages id="app.common.text.aborted" />,
     color: '#F44336',
   },
   CUSTOM: {
     icon: EditOutlined,
-    title: 'Custom',
+    title: <IntlMessages id="app.common.text.custom" />,
     color: '#05488b',
   },
 };
@@ -83,7 +82,7 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
               <Form.Item
                 name="activityText"
                 placeholder="Activity text"
-                label={'Activity text'}
+                label={<IntlMessages id="app.activityform.field.activityText" />}
                 rules={[
                   {
                     required: true,
@@ -125,7 +124,7 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
               return (
                 <TimelineEvent
                   icon={currentEventData.icon}
-                  title={item.activityText || currentEventData.title}
+                  title={<span>{item.activityText || currentEventData.title}</span>}
                   color={currentEventData.color}
                 />
               );
@@ -135,7 +134,10 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
                 className="gx-h-100 gx-m-2 gx-d-flex gx-justify-content-center gx-align-items-center"
                 style={{ width: '225px' }}
               >
-                <Popover content={<AddCustomActivityForm />} title="Add Activity">
+                <Popover
+                  content={<AddCustomActivityForm />}
+                  title={<IntlMessages id="app.activityform.title" />}
+                >
                   <Button type="primary" size="large" shape="circle" icon={<FileAddOutlined />} />
                 </Popover>
               </Card>

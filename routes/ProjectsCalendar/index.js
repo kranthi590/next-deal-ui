@@ -5,6 +5,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import { Card, List, Popover } from 'antd';
 import { ResponsesProvider, useResponse } from '../../contexts/responses';
+import IntlMessages from '../../util/IntlMessages';
 const localizer = momentLocalizer(moment);
 
 const EventComponent = evtData => {
@@ -12,15 +13,25 @@ const EventComponent = evtData => {
     return (
       <div className="gx-px-1 gx-py-2" style={{ maxWidth: '200px' }}>
         <div>
-          <h6>Project</h6>
+          <h6>
+            <IntlMessages id="app.common.text.Project" />
+          </h6>
           <p className="gx-text-muted">{evtData.event.project}</p>
         </div>
         <div>
-          <h6>Supplier</h6>
+          <h6>
+            <IntlMessages id="app.common.text.supplier" />
+          </h6>
           <p className="gx-text-muted">{evtData.event.supplier}</p>
         </div>
         <div>
-          <h6>{evtData.event.deliveryDate ? 'Delivery Date' : 'Validity Date'}</h6>
+          <h6>
+            {evtData.event.deliveryDate ? (
+              <IntlMessages id="app.common.text.deliveryDate" />
+            ) : (
+              <IntlMessages id="app.common.text.validityDate" />
+            )}
+          </h6>
           <p className="gx-text-muted">{moment(evtData.event.start).format('MMM Do YY')}</p>
         </div>
       </div>
@@ -43,8 +54,8 @@ const ProjectsCalendarWrapper = () => {
   const [allProjectQuotes, setAllProjectQuotes] = useState([]);
   const [quotationStatus, setQuotationStatus] = useState('awarded');
   const [quotationsByPid, setQuotationsByPid] = useState([]);
-  const monthStart = moment().startOf('month');
-  const monthEnd = moment().endOf('month');
+  const monthStart = moment().startOf('month').subtract(7, 'day');
+  const monthEnd = moment().endOf('month').add(7, 'day');
   const projectChangeCallback = projectId => {
     setSelectedProject(projectId);
   };
@@ -63,6 +74,16 @@ const ProjectsCalendarWrapper = () => {
     );
   };
 
+  const eventStyleGetter = (event, start, end, isSelected) => {
+    var backgroundColor = event.validityDate ? '#f70' : '#003366';
+    var style = {
+      backgroundColor: backgroundColor,
+    };
+    return {
+      style: style,
+    };
+  };
+
   useEffect(() => {
     const newCalendarData = allProjectQuotes.filter(
       item => item.quotation.project.id === selectedProject,
@@ -78,7 +99,6 @@ const ProjectsCalendarWrapper = () => {
         isAwarded: item.isAwarded,
         allDay: true,
         project: item.quotation.project.name,
-        // isDeliveryDate: item.deliveryDate ? true : false
         deliveryDate: item.deliveryDate,
         validityDate: item.validityDate,
       };
@@ -133,6 +153,7 @@ const ProjectsCalendarWrapper = () => {
           components={{
             event: EventComponent,
           }}
+          eventPropGetter={eventStyleGetter}
         />
       </Card>
     </React.Fragment>

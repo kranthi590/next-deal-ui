@@ -495,6 +495,9 @@
   "app.quotationresponses.field.purchaseOrderNumber":"Número de orden de compra",
   "app.quotationresponses.field.purchaseOrderNumber.error.required":"Por favor ingrese número de orden de compra!",
   "app.quotationresponses.field.description.info":"Por favor, añada sus últimos comentarios con el separador ,(coma)",
+  "app.activityform.title":"Añadir actividad",
+  "app.activityform.field.activityText":"Nombre de la actividad",
+  "app.activityform.field.activityText.error.required":"El nombre de la actividad es obligatorio",
   "app.quotationresponses.button.save":"Guarda",
   "app.quotationresponses.button.award":"Adjudicar",
   "app.quotationresponses.button.confirm":"Confirmar recepción",
@@ -525,5 +528,16 @@
   "app.common.text.quotationAborted": "Cita abortada",
   "app.common.text.confirmquotationDeaward": "¿Estas seguro de desadjudicar cotizacion?",
   "app.common.text.confirmQuotationAborted": "¿Estas seguro de abortar cotizacion?",
-  "app.common.text.confirm":"Confirmar"
+  "app.common.text.confirm":"Confirmar",
+  "app.common.text.Project": "Proyecto",
+  "app.common.text.supplier":"Proveedor",
+  "app.common.text.deliveryDate":"Fecha de entrega",
+  "app.common.text.validityDate":"Fecha de validez",
+  "app.common.text.created":"Creado",
+  "app.common.text.responseCreated":"Respuesta Creada",
+  "app.common.text.retained":"Retenida",
+  "app.common.text.confirmed":"Confirmado",
+  "app.common.text.aborted":"Abortado",
+  "app.common.text.custom":"Personalizado"
+
 }
