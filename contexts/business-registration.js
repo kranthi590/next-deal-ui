@@ -162,11 +162,11 @@ const useProviderRegistration = () => {
     const cookie = new Cookies();
     const buyerId = cookie.get('buyerId');
     httpClient
-      .get(`buyers/${buyerId}/suppliers`, { headers })
+      .get(`buyers/${buyerId}/suppliers?offset=0&size=50`, { headers })
       .then(({ data }) => {
         if (data.data) {
           fetchSuccess();
-          if (callbackFun) callbackFun(data.data);
+          if (callbackFun) callbackFun(data.data.rows);
         } else {
           errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);

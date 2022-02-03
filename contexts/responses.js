@@ -178,42 +178,12 @@ const useProviderResponses = () => {
       });
   };
   const getQuotationsForCalendar = async (pid, startdate, enddate, callbackFun) => {
-    const eventsdata = [
-      {
-        id: 0,
-        start: moment('2022-01-11T00:00:00.000Z').toDate(),
-        end: moment('2022-01-22T00:00:00.000Z').toDate(),
-        quotationName: 'Flooring',
-        supplier: 'Sai raj',
-      },
-      {
-        id: 1,
-        start: moment('2022-02-02T00:00:00.000Z').toDate(),
-        end: moment('2022-04-25T00:00:00.000Z').toDate(),
-        quotationName: 'Man power',
-        supplier: 'Ram',
-      },
-      {
-        id: 2,
-        start: moment('2022-03-11T00:00:00.000Z').toDate(),
-        end: moment('2022-05-25T00:00:00.000Z').toDate(),
-        quotationName: 'Carpentry Work',
-        supplier: 'Ram',
-      },
-      {
-        id: 3,
-        start: moment('2022-02-11T00:00:00.000Z').toDate(),
-        end: moment('2022-04-25T00:00:00.000Z').toDate(),
-        quotationName: 'Fall ceiling',
-        supplier: 'Ram',
-      },
-    ];
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies();
     try {
       const promises = [
-        await httpClient.get(`calender/validityDates?startDate=${startdate}&endDate=${enddate}`, {
+        await httpClient.get(`calender/deliveryDates?startDate=${startdate}&endDate=${enddate}`, {
           headers,
         }),
         await httpClient.get(`calender/validityDates?startDate=${startdate}&endDate=${enddate}`, {
