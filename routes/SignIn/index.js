@@ -27,7 +27,7 @@ const SignIn = props => {
 
   return (
     <div className="gx-app-login-wrap registration-container">
-      <Aside heading="app.userAuth.welcome" content="app.userAuth.login" />
+      <Aside heading="app.userAuth.welcome" content="app.userAuth.login" url={`https://${process.env.NEXT_PUBLIC_WEB_HOST}`}/>
       <div className="right-aside sign-in">
         <div className="form-container">
           <div className="gx-app-login-content registration-form">

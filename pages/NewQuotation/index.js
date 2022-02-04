@@ -151,7 +151,7 @@ const NewProject = () => {
               />
             </Form.Item>
             <Form.Item
-              label={<IntlMessages id="app.quotation.field.supplier" />}
+              label={<IntlMessages id="app.quotation.field.currency" />}
               name="supplier"
               rules={[
                 {
