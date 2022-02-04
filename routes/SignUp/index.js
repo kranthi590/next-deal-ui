@@ -191,7 +191,11 @@ const SignUp = props => {
                     <IntlMessages id="appModule.iAccept" />
                   </Checkbox>
                   <span className="gx-signup-form-forgot gx-link">
-                    <IntlMessages id="appModule.termAndCondition" />
+                    <Link href={`https://${process.env.NEXT_PUBLIC_APP_HOST + '/terms-of-use'}`}>
+                      <a target="_blank">
+                        <IntlMessages id="appModule.termAndCondition" />
+                      </a>
+                    </Link>
                   </span>
                 </Form.Item>
                 <FormItem>

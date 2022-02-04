@@ -46,6 +46,7 @@ const validationErrors = [
   'PURCHASE_ORDER_NUMBER_NOT_FOUND',
   'ACCOUNT_LICENSE_EXPIRED',
   'QUOTATION_NOT_FOUND',
+  'INVALID_ACCOUNT_CREDENTIALS',
 ];
 
 export const successNotification = messageId => {
@@ -69,6 +70,7 @@ export const handleErrorNotification = error => {
   ) {
     error.response.data.errors.map(err => {
       const errorExists = validationErrors.includes(err.errorCode);
+      console.log('INVALID_ACCOUNT_CREDENTIALS', errorExists);
       NotificationManager.error(
         <IntlMessages
           id={errorExists ? err.errorCode.toLowerCase() : 'app.registration.errorMessageTitle'}
