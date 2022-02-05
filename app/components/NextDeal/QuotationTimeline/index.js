@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Card, Row, Col, Form, Input, Popover } from 'antd';
 import IntlMessages from '../../../../util/IntlMessages';
+import moment from 'moment';
 
 const timelineData = {
   QUOTATION_CREATED: {
@@ -114,6 +115,7 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
       </div>
     );
   };
+
   return (
     <React.Fragment>
       <Card className="gx-card">
@@ -124,7 +126,21 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
               return (
                 <TimelineEvent
                   icon={currentEventData.icon}
-                  title={<span>{item.activityText || currentEventData.title}</span>}
+                  title={
+                    <div>
+                      <span>{item.activityText || currentEventData.title}</span>
+                      {item.createdAt ? (
+                        <>
+                          <br />
+                          <span className="gx-text-muted">
+                            {moment(item.createdAt).format('MMM Do YY')}
+                          </span>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  }
                   color={currentEventData.color}
                 />
               );

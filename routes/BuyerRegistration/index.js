@@ -142,7 +142,11 @@ const BuyerRegistration = props => {
 
   return (
     <div className="gx-app-login-wrap registration-container">
-      <Aside heading="app.userAuth.welcome" content="app.userAuth.getAccount" url={`https://${process.env.NEXT_PUBLIC_WEB_HOST}`}/>
+      <Aside
+        heading="app.userAuth.welcome"
+        content="app.userAuth.getAccount"
+        url={`https://${process.env.NEXT_PUBLIC_WEB_HOST}`}
+      />
       <div className="right-aside">
         <div className="form-container">
           <div className="gx-app-login-content registration-form">

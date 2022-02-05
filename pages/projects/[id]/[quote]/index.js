@@ -70,14 +70,14 @@ const NewQuote = props => {
       setProjectInfo(data);
     });
     getBuyerSuppliers(data => {
-      setSuppliers(data);
+      setSuppliers(data.rows);
     });
   }, []);
 
   const reloadSuppliers = () => {
     setVisible(false);
     getBuyerSuppliers(data => {
-      setSuppliers(data);
+      setSuppliers(data.rows);
     });
   };
 

@@ -51,7 +51,7 @@ const NewProject = () => {
   useEffect(() => {
     getBuyerSuppliers(data => {
       console.log('suppliers', data);
-      setSuppliers(data);
+      setSuppliers(data.rows);
     });
   }, []);
 

@@ -36,6 +36,8 @@ const MySuppliers = props => {
   const [isSupplierModalVisible, setIsSupplierModalVisible] = useState(false);
   const [supplierDetails, setSupplierDetails] = useState(null);
   const [buyerId, setBuyerId] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
   const cookie = new Cookies();
 
   useEffect(() => {
@@ -50,14 +52,21 @@ const MySuppliers = props => {
     setSupplierDetails(null);
   };
 
-  const loadMySuppliers = () => {
-    getBuyerSuppliers(data => {
-      setSuppliersList(data);
-    });
+  const loadMySuppliers = page => {
+    setLoading(true);
+    getBuyerSuppliers(
+      data => {
+        setSuppliersList(data.rows);
+        setTotalPages(data.count);
+        setLoading(false);
+      },
+      (page - 1) * 20,
+      20,
+    );
   };
 
   useEffect(() => {
-    loadMySuppliers();
+    loadMySuppliers(1);
   }, []);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -182,6 +191,7 @@ const MySuppliers = props => {
   const onDownloadXls = () => {
     downloadSuppliers();
   };
+
   const onUploadXls = () => {};
   return (
     <>
@@ -206,10 +216,15 @@ const MySuppliers = props => {
           </Button>
         </div>
         <Table
+          loading={loading}
           columns={suppliersColumns}
           dataSource={suppliersList}
-          pagination={{ pageSize: 30 }}
           scroll={{ y: 500 }}
+          pagination={{
+            pageSize: 20,
+            total: totalPages,
+            onChange: loadMySuppliers,
+          }}
         />
       </Card>
       <Modal

@@ -39,8 +39,8 @@ const EventComponent = evtData => {
   };
   return (
     <Popover content={<PopupContent />} title={evtData.title}>
-      <div className="gx-h-100">
-        <p>{evtData.title}</p>
+      <div className="gx-h-100 gx-w-100 gx-position-absolute gx-p-1">
+        <span>{evtData.title}</span>
       </div>
     </Popover>
   );
@@ -78,6 +78,7 @@ const ProjectsCalendarWrapper = () => {
     var backgroundColor = event.validityDate ? '#f70' : '#003366';
     var style = {
       backgroundColor: backgroundColor,
+      position: 'relative',
     };
     return {
       style: style,
