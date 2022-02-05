@@ -1,16 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Row,
-  Col,
-  Form,
-  Input,
-  DatePicker,
-  Card,
-  Divider,
-  InputNumber,
-  Select,
-} from 'antd';
+import { Button, Row, Col, Form, Input, DatePicker, Card, Divider, Select } from 'antd';
 import { SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
@@ -188,11 +177,14 @@ const QuoteAwarded = props => {
         </Row>
         <Row gutter={2}>
           <Col xl={24} xs={24}>
-            <Form.Item labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
-            style={{
-              height: '130px',
-              overflow: 'scroll'
-            }}>
+            <Form.Item
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+              style={{
+                height: '130px',
+                overflow: 'scroll',
+              }}
+            >
               <FilesManager
                 files={files}
                 context={{

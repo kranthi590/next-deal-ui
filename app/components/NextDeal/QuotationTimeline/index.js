@@ -17,8 +17,6 @@ import moment from 'moment';
 import CustomTimeLineEvent from '../../NextDeal/CustomTimeLineEvent';
 import Scrollbars from 'react-custom-scrollbars';
 
-const test = { color: '#038fdd' };
-
 const timelineData = {
   QUOTATION_CREATED: {
     icon: FormOutlined,
@@ -66,7 +64,6 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
   const [form] = Form.useForm();
   const initialFormData = { activityText: '' };
   const onFinish = values => {
-    // on finish
     onSaveActivity({ activityText: values.activityText });
   };
   const onFinishFailed = errorInfo => {};

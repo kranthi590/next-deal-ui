@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Row,
@@ -8,13 +8,11 @@ import {
   Checkbox,
   Select,
   DatePicker,
-  Upload,
   Card,
   Divider,
-  InputNumber,
   Tooltip,
 } from 'antd';
-import { SaveOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { SaveOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';

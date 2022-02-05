@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Checkbox, Form, Input, Select, Divider } from 'antd';
+import { Button, Checkbox, Form, Input, Divider } from 'antd';
 import Link from 'next/link';
 
 // Utils
@@ -13,17 +13,10 @@ import Footer from '../../app/components/Footer';
 
 // Styles
 import '../../styles/form-page.css';
-import {
-  errorNotification,
-  getSubDomain,
-  isClient,
-  NOTIFICATION_TIMEOUT,
-  successNotification,
-} from '../../util/util';
+import { getSubDomain, isClient, NOTIFICATION_TIMEOUT, successNotification } from '../../util/util';
 import { useRouter } from 'next/router';
 
 const FormItem = Form.Item;
-const { Option } = Select;
 
 const SignUp = props => {
   const router = useRouter();

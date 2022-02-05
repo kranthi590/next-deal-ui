@@ -1,4 +1,4 @@
-import { ClusterOutlined, IdcardOutlined } from '@ant-design/icons';
+import { IdcardOutlined } from '@ant-design/icons';
 import { Avatar, Row, Col, Card } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { useRegistration } from '../../../../contexts/business-registration';

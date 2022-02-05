@@ -6,12 +6,7 @@ import { useRouter } from 'next/router';
 // Uitls
 import IntlMessages from '../../util/IntlMessages';
 import { useProject } from '../../contexts/projects';
-import {
-  errorNotification,
-  NOTIFICATION_TIMEOUT,
-  successNotification,
-  getDateInMilliseconds,
-} from '../../util/util';
+import { errorNotification, getDateInMilliseconds } from '../../util/util';
 import { useRegistration } from '../../contexts/business-registration';
 
 const { TextArea } = Input;

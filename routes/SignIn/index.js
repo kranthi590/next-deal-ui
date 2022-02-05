@@ -14,7 +14,6 @@ import Footer from '../../app/components/Footer';
 
 // Styles
 import '../../styles/form-page.css';
-import { errorNotification } from '../../util/util';
 
 const SignIn = props => {
   const { isLoading, userLogin } = useAuth();

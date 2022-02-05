@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Drawer, Form, Radio, Switch } from 'antd';
+import React from 'react';
+import { Drawer } from 'antd';
 import CustomScrollbars from '../../../../util/CustomScrollbars';
 
 const QuotationDrawer = props => {
-  /*
-  useEffect(() => {
-
-  }, [])
-*/
-
   const toggleCustomizer = () => {
     props.onClose();
   };

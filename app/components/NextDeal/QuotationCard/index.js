@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import Widget from '../../Widget';
-import QuotationDrawer from '../QuotationDrawer';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 const QuotationCard = ({ data, activeTab }) => {
-  const [isCustomizerOpened, setIsCustomizerOpened] = useState(false);
   let navTo = '';
   if (activeTab) {
     navTo = '#' + activeTab;
   }
 
-  const toggleCustomizer = () => {
-    setIsCustomizerOpened(!isCustomizerOpened);
-  };
   const router = useRouter();
   return (
     <>
@@ -30,9 +25,6 @@ const QuotationCard = ({ data, activeTab }) => {
               {data.quotationsCount}
               <sub className="gx-fs-md gx-bottom-0">/Responses</sub>
             </h2>
-            {/* <p className="gx-mb-1">
-              <span className="gx-size-8 gx-bg-dark gx-rounded-xs gx-d-inline-block gx-mr-1" /> Lorem ipsum - 10
-            </p> */}
           </div>
           <div className="gx-currentplan-col gx-currentplan-right">
             <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">
@@ -48,9 +40,6 @@ const QuotationCard = ({ data, activeTab }) => {
           </div>
         </div>
       </Widget>
-      {/*
-      <QuotationDrawer isCustomizerOpened={isCustomizerOpened} onClose={toggleCustomizer}/>
-*/}
     </>
   );
 };

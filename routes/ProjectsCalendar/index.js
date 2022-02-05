@@ -3,7 +3,7 @@ import ProjectSelector from '../../app/components/NextDeal/ProjectSelector';
 import { ProjectProvider } from '../../contexts/projects';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import { Card, List, Popover } from 'antd';
+import { Card, Popover } from 'antd';
 import { ResponsesProvider, useResponse } from '../../contexts/responses';
 import IntlMessages from '../../util/IntlMessages';
 const localizer = momentLocalizer(moment);
@@ -49,10 +49,9 @@ const EventComponent = evtData => {
 const ProjectsCalendarWrapper = () => {
   const { getQuotationsForCalendar } = useResponse();
   const [selectedProject, setSelectedProject] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
   const [allProjectQuotes, setAllProjectQuotes] = useState([]);
-  const [quotationStatus, setQuotationStatus] = useState('awarded');
+  const [quotationStatus, setQuotationStatus] = useState('all');
   const [quotationsByPid, setQuotationsByPid] = useState([]);
   const monthStart = moment().startOf('month').subtract(7, 'day');
   const monthEnd = moment().endOf('month').add(7, 'day');

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip, Modal } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { isEmpty } from 'lodash';
 import SweetAlert from 'react-bootstrap-sweetalert';
 
@@ -10,13 +9,7 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 import IntlMessages from '../../util/IntlMessages';
 import { useAuth } from '../../contexts/use-auth';
 import { useRegistration } from '../../contexts/business-registration';
-import {
-  errorNotification,
-  NOTIFICATION_TIMEOUT,
-  successNotification,
-  getPhonePrefix,
-  sanitizeString,
-} from '../../util/util';
+import { getPhonePrefix, sanitizeString } from '../../util/util';
 import urlRegx from 'url-regex';
 
 // Components
@@ -34,7 +27,6 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 const BuyerRegistration = props => {
-  const router = useRouter();
   const { isLoading } = useAuth();
   const { fetchRegions, fetchCommune, registerBuyer, error } = useRegistration();
 
