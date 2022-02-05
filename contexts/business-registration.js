@@ -156,17 +156,17 @@ const useProviderRegistration = () => {
       });
   };
 
-  const getBuyerSuppliers = callbackFun => {
+  const getBuyerSuppliers = (callbackFun, offset = 0, size = 100) => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies();
     const buyerId = cookie.get('buyerId');
     httpClient
-      .get(`buyers/${buyerId}/suppliers?offset=0&size=50`, { headers })
+      .get(`buyers/${buyerId}/suppliers?offset=${offset}&size=${size}`, { headers })
       .then(({ data }) => {
         if (data.data) {
           fetchSuccess();
-          if (callbackFun) callbackFun(data.data.rows);
+          if (callbackFun) callbackFun(data.data);
         } else {
           errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);

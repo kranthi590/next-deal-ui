@@ -9,7 +9,9 @@ const Aside = ({ heading, content, url }) => {
       <div className="heading-wrapper">
         <h1 className="aside-heading">
           <IntlMessages id={heading} />
-          <a class="gx-site-logo" href={url}><img alt="logo2" src="/app/images/logo.png"/></a>
+          <a class="gx-site-logo" href={url}>
+            <img alt="logo2" src="/app/images/logo.png" />
+          </a>
         </h1>
         <p className="aside-text">
           <IntlMessages id={content} />

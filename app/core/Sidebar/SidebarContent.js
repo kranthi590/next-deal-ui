@@ -46,8 +46,8 @@ const SidebarContent = () => {
     dispatch(setPathName(router.pathname));
   }, [router.pathname]);
 
-  const selectedKeys = router.pathname.substr(1) || 'dashboard';
-  const defaultOpenKeys = selectedKeys.split('/')[1];
+  const selectedKeys = router.pathname.substr(1) || '';
+  const defaultOpenKeys = selectedKeys.split('/')[1] || 'dashboardgroup';
 
   return (
     <React.Fragment>
@@ -65,11 +65,13 @@ const SidebarContent = () => {
               title={
                 <span>
                   <i className="icon icon-dasbhoard" />
-                  <IntlMessages id="sidebar.menu.dashboard" />
+                  <span>
+                    <IntlMessages id="sidebar.menu.dashboard" />
+                  </span>
                 </span>
               }
             >
-              <Menu.Item key="dashboard">
+              <Menu.Item key="">
                 <Link href="/">
                   <a>
                     <i className="icon icon-revenue-new" />

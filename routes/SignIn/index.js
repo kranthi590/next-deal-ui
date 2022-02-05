@@ -27,7 +27,11 @@ const SignIn = props => {
 
   return (
     <div className="gx-app-login-wrap registration-container">
-      <Aside heading="app.userAuth.welcome" content="app.userAuth.login" url={`https://${process.env.NEXT_PUBLIC_WEB_HOST}`}/>
+      <Aside
+        heading="app.userAuth.welcome"
+        content="app.userAuth.login"
+        url={`https://${process.env.NEXT_PUBLIC_WEB_HOST}`}
+      />
       <div className="right-aside sign-in">
         <div className="form-container">
           <div className="gx-app-login-content registration-form">
@@ -45,7 +49,6 @@ const SignIn = props => {
                 onFinishFailed={onFinishFailed}
                 className="gx-signin-form gx-form-row0"
               >
-
                 <Form.Item
                   name="emailId"
                   label={<IntlMessages id="app.userAuth.login.field.emailId" />}
@@ -59,7 +62,7 @@ const SignIn = props => {
                     },
                   ]}
                 >
-                  <Input className="gx-input-lineheight" placeholder="Email" /> 
+                  <Input className="gx-input-lineheight" placeholder="Email" />
                 </Form.Item>
                 <Form.Item
                   label={<IntlMessages id="app.userAuth.login.field.password" />}
