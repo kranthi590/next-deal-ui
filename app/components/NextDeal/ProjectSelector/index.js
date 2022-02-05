@@ -14,7 +14,7 @@ const ProjectSelector = ({
   const { getProjectsByPagination } = useProject();
   const [initialFormData, setInitialFormData] = useState({
     project: null,
-    projectStatus: 'awarded',
+    projectStatus: 'all',
   });
   const [allProjects, setAllProjects] = useState([]);
   const [form] = Form.useForm();
@@ -57,7 +57,6 @@ const ProjectSelector = ({
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         name="metricsSelectionForm"
-        // layout="horizontal"
         labelWrap
         labelAlign={showStatus ? 'left' : 'right'}
         fields={[
@@ -94,9 +93,9 @@ const ProjectSelector = ({
                 wrapperCol={colSetInput}
               >
                 <Select placeholder="Project Status" onSelect={handleStatusChanged}>
+                  <Option value="all">All</Option>
                   <Option value="awarded">Awarded</Option>
                   <Option value="unawarded">Un Awarded</Option>
-                  <Option value="all">All</Option>
                 </Select>
               </Form.Item>
             </Col>

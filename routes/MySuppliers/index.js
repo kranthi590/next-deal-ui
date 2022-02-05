@@ -15,27 +15,24 @@ import {
   Col,
   Dropdown,
   Menu,
-  Image,
   Typography,
 } from 'antd';
 import React, { useState, useEffect } from 'react';
 import BreadCrumb from '../../app/components/BreadCrumb';
-import WidgetHeader from '../../app/components/WidgetHeader';
 import SupplierDetails from '../../app/components/NextDeal/SupplierDetails';
 import { useRegistration } from '../../contexts/business-registration';
 import SupplierRegistrationPage from '../../pages/supplier-registration';
 import IntlMessages from '../../util/IntlMessages';
 import { Cookies } from 'react-cookie';
-const { Title } = Typography;
 const MySuppliers = props => {
-  const { getMySuppliers, getBuyerSuppliers, getSupplier, downloadSuppliers } = useRegistration();
+  const { getBuyerSuppliers, getSupplier, downloadSuppliers } = useRegistration();
   const [visible, setVisible] = useState(false);
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
+  const [, setSearchText] = useState('');
+  const [, setSearchedColumn] = useState('');
   const [suppliersList, setSuppliersList] = useState([]);
   const [isSupplierModalVisible, setIsSupplierModalVisible] = useState(false);
   const [supplierDetails, setSupplierDetails] = useState(null);
-  const [buyerId, setBuyerId] = useState(null);
+  const [, setBuyerId] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const cookie = new Cookies();

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Col } from 'antd';
+import { Card } from 'antd';
 import { ProjectProvider } from '../../contexts/projects';
 import { Cookies } from 'react-cookie';
 import NoDataAvailable from '../../app/components/NextDeal/NoDataAvailable.js';

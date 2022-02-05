@@ -7,8 +7,6 @@ import mails from './data/mails';
 import IntlMessages from '../../util/IntlMessages';
 import Card from './Card';
 
-//import "./index.css";
-
 class Projects extends PureComponent {
   ProjectSideBar = () => {
     return (

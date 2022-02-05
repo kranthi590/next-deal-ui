@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Form, Input, Select, Col, Row, Upload } from 'antd';
+import { Button, Checkbox, Form, Input, Select, Col, Row } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -774,7 +774,7 @@ const SupplierRegistration = props => {
                     customSubmitHandler={({ fileList }) => {
                       setFiles(fileList);
                     }}
-                    accept={["image/*"]}
+                    accept={['image/*']}
                   />
                 </Col>
               </Row>
