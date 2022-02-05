@@ -4,6 +4,7 @@ import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';
 import { clpToNumber, numberToClp } from '../../../../util/util';
+import FilesManager from '../../../common/FileManager';
 
 const QuotationCompleted = props => {
   const { onSave } = props;
@@ -17,6 +18,7 @@ const QuotationCompleted = props => {
     validityDate,
     supplier,
     comments,
+    files = [],
   } = props.formData;
 
   const [cdeliveryDate, setCDeliveryDate] = useState(null);
@@ -173,6 +175,27 @@ const QuotationCompleted = props => {
                         <Input placeholder="Number Of Purchase Order" />
                     </Form.Item>
                 </Col> */}
+        </Row>
+        <Row gutter={2}>
+          <Col xl={24} xs={24}>
+            <Form.Item
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+              style={{
+                height: '130px',
+                overflow: 'scroll'
+              }}
+            >
+              <FilesManager
+                files={files}
+                context={{
+                  assetRelation: 'quotation_response',
+                  assetRelationId: id,
+                }}
+                hideButton={true}
+              />
+            </Form.Item>
+          </Col>
         </Row>
       </Form>
     </Card>

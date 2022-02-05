@@ -280,7 +280,13 @@ const NewQuote = props => {
               </Form.Item>
               <Row gutter={24} style={{ marginBottom: 20 }}>
                 <Col xs={24}></Col>
-                <Col xs={24}>
+                <Col
+                  xs={24}
+                  style={{
+                    height: '150px',
+                    overflow: 'scroll',
+                  }}
+                >
                   <FilesManager
                     files={files}
                     context={{

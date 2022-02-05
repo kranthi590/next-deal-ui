@@ -9,7 +9,7 @@ import { formatAmount, getAvatar, successNotification } from '../../../../../uti
 import ProjectProgressTabs from '../../../../../app/components/NextDeal/ProjectProgressTabs';
 import QuoteResponses from '../../../../../app/components/NextDeal/QuoteResponse';
 import QuotationAwarded from '../../../../../app/components/NextDeal/QuotationAwarded';
-import { handleApiErrors, httpClient, setApiContext } from '../../../../../util/Api';
+import { handleApiErrors, httpClient, setApiContext, uploadFiles } from '../../../../../util/Api';
 import { ResponsesProvider, useResponse } from '../../../../../contexts/responses';
 import NoDataAvailable from '../../../../../app/components/NextDeal/NoDataAvailable.js';
 import QuotationCompleted from '../../../../../app/components/NextDeal/QuotationCompleted';
@@ -48,7 +48,19 @@ const NewQuoteResponse = props => {
 
   const onSave = (values, qid) => {
     if (values) {
-      createResponses(projectId, values, data => {
+      const files = values.files;
+      delete values.files;
+      createResponses(projectId, values, async data => {
+        if (files.length > 0) {
+          await uploadFiles(
+            files,
+            {
+              assetRelation: 'quotation_response',
+              assetRelationId: data.id,
+            },
+            true,
+          );
+        }
         successNotification('app.registration.detailsSaveSuccessMessage');
         setTimeout(() => {
           window.location.reload();
@@ -183,7 +195,13 @@ const NewQuoteResponse = props => {
               </div>
             </div>
           </Col>
-          <Col span={12}>
+          <Col
+            span={12}
+            style={{
+              height: '130px',
+              overflow: 'scroll',
+            }}
+          >
             <FilesManager
               files={quotationData.files}
               context={{
@@ -307,6 +325,7 @@ export async function getServerSideProps(context) {
   let QuotationData = {};
   let projectsDetails = null;
   try {
+    const cookies = cookie.parse(req.headers.cookie || '');
     const headers = setApiContext(req, res, query);
     const promises = [
       await httpClient.get(`quotations/${query.quote}/suppliers`, {
@@ -337,6 +356,11 @@ export async function getServerSideProps(context) {
           ...item,
           newQuote: true,
         }));
+        responsesListData.data.data.rows.forEach(({ files }) => {
+          files.forEach(file => {
+            file.fileUrl = `${file.fileUrl}?token=${cookies.token}`;
+          });
+        });
         responsesListData.data.data.rows.map(item => {
           if (item.isAwarded === true) {
             AwardedResponsesList.push(item);

@@ -757,7 +757,13 @@ const SupplierRegistration = props => {
                     title={<IntlMessages id="app.supplierregistration.business_logo_title" />}
                   />
                 </Col>
-                <Col xs={24}>
+                <Col
+                  xs={24}
+                  style={{
+                    height: '150px',
+                    overflow: 'scroll',
+                  }}
+                >
                   <FilesManager
                     files={files}
                     context={{
@@ -768,6 +774,7 @@ const SupplierRegistration = props => {
                     customSubmitHandler={({ fileList }) => {
                       setFiles(fileList);
                     }}
+                    accept="image/*"
                   />
                 </Col>
               </Row>

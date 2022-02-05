@@ -19,6 +19,7 @@ import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';
 import { clpToNumber, numberToClp } from '../../../../util/util';
+import FilesManager from '../../../common/FileManager';
 
 const QuoteResponses = props => {
   const { onSave, awarded } = props;
@@ -34,9 +35,12 @@ const QuoteResponses = props => {
     validityDate,
     supplier,
     comments,
+    files = [],
   } = props.formData;
   const [cdeliveryDate, setCDeliveryDate] = useState(moment(deliveryDate).valueOf());
   const [cvalidityDate, setCValidityDate] = useState(moment(validityDate).valueOf());
+  const [filesList, setFiles] = useState(files);
+
   const [netValue, setNetValue] = useState(netWorth);
   let initialFormData = {};
   if (newQuote !== true) {
@@ -94,6 +98,7 @@ const QuoteResponses = props => {
       supplierId: id,
       currency: 'clp',
       includesTax: formValues.includesTax ? true : false,
+      files: newQuote ? filesList : [],
     });
   };
 
@@ -235,27 +240,7 @@ const QuoteResponses = props => {
               </Select>
             </Form.Item>
           </Col>
-          <Col xl={6} xs={24}>
-            <Form.Item
-              name="comments"
-              label={
-                <span>
-                  <IntlMessages id="app.quotationresponses.field.description" />
-                  &nbsp;
-                  <Tooltip
-                    title={<IntlMessages id="app.quotationresponses.field.description.info" />}
-                  >
-                    <QuestionCircleOutlined />
-                  </Tooltip>
-                </span>
-              }
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-            >
-              <Input.TextArea placeholder="Comments" disabled={awarded}></Input.TextArea>
-            </Form.Item>
-          </Col>
-          <Col xl={6} xs={24}>
+          <Col xl={4} xs={24}>
             <Form.Item
               name="incoterm"
               label={<IntlMessages id="app.quotationresponses.field.incoterm" />}
@@ -286,14 +271,68 @@ const QuoteResponses = props => {
               </Select>
             </Form.Item>
           </Col>
+          <Col xl={8} xs={24}>
+            <Form.Item
+              name="comments"
+              label={
+                <span>
+                  <IntlMessages id="app.quotationresponses.field.description" />
+                  &nbsp;
+                  <Tooltip
+                    title={<IntlMessages id="app.quotationresponses.field.description.info" />}
+                  >
+                    <QuestionCircleOutlined />
+                  </Tooltip>
+                </span>
+              }
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Input.TextArea placeholder="Comments" disabled={awarded}></Input.TextArea>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xl={124}
+            xs={24}
+            style={{
+              height: '130px',
+              overflow: 'scroll',
+            }}
+          >
+            {newQuote ? (
+              <FilesManager
+                files={filesList}
+                context={{
+                  assetRelation: 'quotation_response',
+                  //  assetRelationId: quotationData.id
+                }}
+                customSubmitHandler={({ fileList }) => {
+                  setFiles(fileList);
+                }}
+              />
+            ) : (
+              <FilesManager
+                files={filesList}
+                context={{
+                  assetRelation: 'quotation_response',
+                  assetRelationId: id,
+                }}
+              />
+            )}
+          </Col>
+        </Row>
+        <Row gutter={2} className="gx-mt-4">
           {!awarded && (
-            <Col xl={12} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
+            <Col xl={6} xs={24}>
               {newQuote ? (
                 <></>
               ) : (
-                <Form.Item wrapperCol={{ span: 24 }}>
+                <Form.Item>
                   <Button
                     type="primary"
+                    block
                     icon={<SaveOutlined />}
                     className="gx-mb-0"
                     onClick={awardQuote}
@@ -305,8 +344,9 @@ const QuoteResponses = props => {
                 </Form.Item>
               )}
               {newQuote ? (
-                <Form.Item wrapperCol={{ span: 24 }}>
+                <Form.Item>
                   <Button
+                    block
                     type="primary"
                     htmlType="submit"
                     icon={<SaveOutlined />}

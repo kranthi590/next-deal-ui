@@ -16,10 +16,19 @@ import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import { clpToNumber, numberToClp } from '../../../../util/util';
 import ClpFormatter from '../../../../shared/CLP';
+import FilesManager from '../../../common/FileManager';
 
 const QuoteAwarded = props => {
   const { onSave, completed, onDeaward } = props;
-  const { id, netWorth, paymentCondition, deliveryDate, supplier, comments } = props.formData;
+  const {
+    id,
+    netWorth,
+    paymentCondition,
+    deliveryDate,
+    supplier,
+    comments,
+    files = [],
+  } = props.formData;
   const [cdeliveryDate, setCDeliveryDate] = useState(null);
   const [cvalidityDate, setCValidityDate] = useState(null);
   const [netValue, setNetValue] = useState(netWorth || null);
@@ -176,8 +185,32 @@ const QuoteAwarded = props => {
               <Input.TextArea placeholder="Comments" disabled></Input.TextArea>
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={2}>
+          <Col xl={24} xs={24}>
+            <Form.Item labelCol={{ span: 24 }} wrapperCol={{ span: 24 }}
+            style={{
+              height: '130px',
+              overflow: 'scroll'
+            }}>
+              <FilesManager
+                files={files}
+                context={{
+                  assetRelation: 'quotation_response',
+                  assetRelationId: id,
+                }}
+                hideButton={completed}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={2} className="gx-mt-4">
           {!completed && (
-            <Col xl={18} xs={24} className="gx-d-flex gx-justify-content-end gx-align-items-end">
+            <Col
+              xl={18}
+              xs={24}
+              className="gx-d-flex gx-justify-content-start gx-align-items-start"
+            >
               <Form.Item wrapperCol={{ span: 24 }}>
                 <Button
                   type="primary"

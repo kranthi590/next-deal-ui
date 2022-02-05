@@ -1,5 +1,5 @@
 import React from 'react';
-import { Upload, Modal, Button } from 'antd';
+import { Upload, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
@@ -60,7 +60,7 @@ export default class PicturesWall extends React.Component {
 
   render() {
     const { previewVisible, previewImage, fileList, previewTitle, mimeType } = this.state;
-    const { context, maxCount, customSubmitHandler } = this.props;
+    const { context, maxCount, customSubmitHandler, hideButton = false, accept } = this.props;
     const uploadButton = (
       <div>
         <PlusOutlined />
@@ -84,7 +84,13 @@ export default class PicturesWall extends React.Component {
     if (mimeType.includes('image')) {
       modelBody = (
         <>
-          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+          <img alt="example" style={{
+            display: 'block',
+            maxWidth: 650,
+            maxHeight: 400,
+            width: 'auto',
+            height: 'auto',
+          }} src={previewImage} />
           {modelBody}
         </>
       );
@@ -110,8 +116,9 @@ export default class PicturesWall extends React.Component {
           beforeUpload={() => !customSubmitHandler}
           maxCount={maxCount}
           disabled={maxCount && fileList.length > maxCount}
+          accept={accept || undefined}
         >
-          {uploadButton}
+          {!hideButton && uploadButton}
         </Upload>
         <Modal
           visible={previewVisible}
