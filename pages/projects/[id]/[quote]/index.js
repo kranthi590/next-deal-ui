@@ -321,6 +321,7 @@ const NewQuote = props => {
           destroyOnClose={true}
         >
           <SupplierRegistrationPage
+            isBannerShown={false}
             showLoginLink={false}
             isBuyer={true}
             isAuthenticated={true}
