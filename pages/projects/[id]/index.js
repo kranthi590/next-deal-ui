@@ -156,10 +156,14 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                 </div>
               </div>
             </Col>
-            <Col span={12} style={{
-              height: '150px',
-              overflow: 'scroll'
-            }}>
+            <Col
+              span={12}
+              style={{
+                height: '150px',
+                overflow: 'scroll',
+              }}
+              className="gx-d-flex gx-justify-content-start gx-align-items-start"
+            >
               <FilesManager
                 files={project.files}
                 context={{

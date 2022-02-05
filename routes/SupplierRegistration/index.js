@@ -774,7 +774,7 @@ const SupplierRegistration = props => {
                     customSubmitHandler={({ fileList }) => {
                       setFiles(fileList);
                     }}
-                    accept="image/*"
+                    accept={["image/*"]}
                   />
                 </Col>
               </Row>

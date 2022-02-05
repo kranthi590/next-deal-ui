@@ -41,3 +41,8 @@ body {
 }
 
 /*# sourceMappingURL=loader.css.map */
+
+.ant-upload-list-picture-card-container {
+  width: 101px !important;
+  height: 101px !important;
+}

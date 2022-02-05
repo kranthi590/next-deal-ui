@@ -6,6 +6,20 @@ import axios from 'axios';
 
 const cookie = new Cookies();
 
+const acceptedTypes = [
+  '.doc',
+  '.docx',
+  'application / msword',
+  'application / vnd.openxmlformats - officedocument.wordprocessingml.document',
+  'image/*',
+  '.pdf',
+  '.csv',
+  'application/vnd.ms-excel',
+  'text/plain',
+  '.xlsx',
+  '.xls'
+];
+
 function getBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -60,7 +74,7 @@ export default class PicturesWall extends React.Component {
 
   render() {
     const { previewVisible, previewImage, fileList, previewTitle, mimeType } = this.state;
-    const { context, maxCount, customSubmitHandler, hideButton = false, accept } = this.props;
+    const { context, maxCount, customSubmitHandler, hideButton = false, accept = [] } = this.props;
     const uploadButton = (
       <div>
         <PlusOutlined />
@@ -84,13 +98,17 @@ export default class PicturesWall extends React.Component {
     if (mimeType.includes('image')) {
       modelBody = (
         <>
-          <img alt="example" style={{
-            display: 'block',
-            maxWidth: 650,
-            maxHeight: 400,
-            width: 'auto',
-            height: 'auto',
-          }} src={previewImage} />
+          <img
+            alt="example"
+            style={{
+              display: 'block',
+              maxWidth: 650,
+              maxHeight: 400,
+              width: 'auto',
+              height: 'auto',
+            }}
+            src={previewImage}
+          />
           {modelBody}
         </>
       );
@@ -116,7 +134,7 @@ export default class PicturesWall extends React.Component {
           beforeUpload={() => !customSubmitHandler}
           maxCount={maxCount}
           disabled={maxCount && fileList.length > maxCount}
-          accept={accept || undefined}
+          accept={accept.length > 0 ? accept.join(',') : acceptedTypes.join(',')}
         >
           {!hideButton && uploadButton}
         </Upload>
