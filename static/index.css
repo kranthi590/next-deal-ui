@@ -152,3 +152,28 @@ body {
 .rbc-event.rbc-event-allday{
   padding: 0;
 }
+
+.gx-timeline-event .container {
+  position: relative;
+}
+.gx-timeline-event .icon {
+  position: absolute;
+  top: 18px;
+  left: 71.5px;
+  font-size: 20px;
+  color: #fff;
+}
+.gx-timeline-event .circleContainer {
+  margin-right: 31;
+}
+
+.gx-timeline-event .action:hover {
+  cursor: pointer;
+}
+.gx-timeline-event .tooltip {
+  text-align: center;
+}
+.gx-timeline-event .textContainer {
+  margin-top: -32px;
+  text-align: center;
+}

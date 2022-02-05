@@ -1,5 +1,4 @@
 import React from 'react';
-import { Timeline, TimelineEvent } from '@mailtop/horizontal-timeline';
 import {
   AuditOutlined,
   EditOutlined,
@@ -15,6 +14,10 @@ import {
 import { Button, Card, Row, Col, Form, Input, Popover } from 'antd';
 import IntlMessages from '../../../../util/IntlMessages';
 import moment from 'moment';
+import CustomTimeLineEvent from '../../NextDeal/CustomTimeLineEvent';
+import Scrollbars from 'react-custom-scrollbars';
+
+const test = { color: '#038fdd' };
 
 const timelineData = {
   QUOTATION_CREATED: {
@@ -119,35 +122,40 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
   return (
     <React.Fragment>
       <Card className="gx-card">
-        <div>
-          <Timeline height={200}>
-            {activities.map(item => {
-              const currentEventData = timelineData[item.activityType];
-              return (
-                <TimelineEvent
-                  icon={currentEventData.icon}
-                  title={
-                    <div>
-                      <span>{item.activityText || currentEventData.title}</span>
-                      {item.createdAt ? (
-                        <>
-                          <br />
-                          <span className="gx-text-muted">
-                            {moment(item.createdAt).format('MMM Do YY')}
-                          </span>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  }
-                  color={currentEventData.color}
-                />
-              );
-            })}
-            <div className="gx-h-100 gx-p-2 gx-d-flex gx-justify-content-center gx-align-items-center">
+        <Scrollbars autoHeight universal>
+          <div className="gx-d-flex gx-position-relative gx-mb-2" style={{ width: 0 }}>
+            {activities &&
+              activities.map((item, index) => {
+                const currentEventData = timelineData[item.activityType];
+                return (
+                  <CustomTimeLineEvent
+                    key={index + '-event'}
+                    color={currentEventData.color}
+                    icon={currentEventData.icon}
+                    title={
+                      <div>
+                        <span>{item.activityText || currentEventData.title}</span>
+                        {item.createdAt ? (
+                          <>
+                            <br />
+                            <span className="gx-text-muted">
+                              {moment(item.createdAt).format('MMM Do YY')}
+                            </span>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    }
+                  />
+                );
+              })}
+            <div
+              className="gx-p-2 gx-d-flex gx-justify-content-center gx-align-items-center"
+              style={{ height: '160px!important' }}
+            >
               <Card
-                className="gx-h-100 gx-m-2 gx-d-flex gx-justify-content-center gx-align-items-center"
+                className="gx-h-100 gx-mb-0 gx-d-flex gx-justify-content-center gx-align-items-center"
                 style={{ width: '225px' }}
               >
                 <Popover
@@ -158,8 +166,8 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
                 </Popover>
               </Card>
             </div>
-          </Timeline>
-        </div>
+          </div>
+        </Scrollbars>
       </Card>
     </React.Fragment>
   );
