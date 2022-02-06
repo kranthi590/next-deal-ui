@@ -3,6 +3,7 @@ import { Upload, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
+import IntlMessages from '../../../../util/IntlMessages';
 
 const cookie = new Cookies();
 
@@ -78,19 +79,21 @@ export default class PicturesWall extends React.Component {
     const uploadButton = (
       <div>
         <PlusOutlined />
-        <div style={{ marginTop: 8 }}>Upload</div>
+        <div style={{ marginTop: 8 }}>
+          <IntlMessages id="file.manager.upload" />
+        </div>
       </div>
     );
     let modelBody = (
       <a className="ant-btn ant-btn-primary gx-mt-2" href={previewImage} target="_blank" download>
-        View in new tab
+        <IntlMessages id="file.manager.download" />
       </a>
     );
     if (mimeType === 'application/pdf') {
       modelBody = (
         <object data={`${previewImage}`} type="application/pdf" width="678" height="678">
           <iframe src={`${previewImage}`} width="678" height="678">
-            <p>This browser does not support PDF!</p>
+            <p><IntlMessages id="file.manager.browser.error.pdf" /></p>
           </iframe>
         </object>
       );
