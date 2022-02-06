@@ -159,8 +159,10 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
                   content={<AddCustomActivityForm />}
                   title={<IntlMessages id="app.activityform.title" />}
                 >
-                  <Button type="primary" size="large" shape="circle" icon={<FileAddOutlined />} >
-                    <IntlMessages id="app.activityform.title" />
+                  <Button type="primary" size="large" icon={<FileAddOutlined />}>
+                    <span>
+                      <IntlMessages id="app.activityform.title" />
+                    </span>
                   </Button>
                 </Popover>
               </Card>
