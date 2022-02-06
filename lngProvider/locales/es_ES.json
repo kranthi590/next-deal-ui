@@ -541,7 +541,7 @@
   "app.common.text.aborted":"Abortado",
   "app.common.text.custom":"Personalizado",
   "file.manager.upload":"Subir",
-  "file.manager.download":"Abrir en pestaña nueva o descargar.",
+  "file.manager.download":"Abrir en pestaña nueva o descargar",
   "file.manager.browser.error.pdf":"Este navegador no es compatible con PDF!",
   "calendar.filter.status":"Estado",
   "calendar.filter.option.awarded":"Adjudicadas",

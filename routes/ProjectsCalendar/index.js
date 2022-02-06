@@ -3,9 +3,11 @@ import ProjectSelector from '../../app/components/NextDeal/ProjectSelector';
 import { ProjectProvider } from '../../contexts/projects';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
+import 'moment/locale/es';
 import { Card, Popover } from 'antd';
 import { ResponsesProvider, useResponse } from '../../contexts/responses';
 import IntlMessages from '../../util/IntlMessages';
+
 const localizer = momentLocalizer(moment);
 
 const EventComponent = evtData => {
