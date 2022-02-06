@@ -366,7 +366,7 @@
   "app.quotation.suppliers.error.required": "Por favor selección tus proveedores!",
   "app.quotation.addsupplier": "Crear proveedor",
   "invalid_project_id":"Nombre de projecto inválido",
-  "invalid_quotation_status":"Estatus de cotización inválida",
+  "invalid_quotation_status":"Estado de cotización inválida",
   "invalid_quotation_id":"Nombre de cotización inválido",
   "quotation_already_awarded":"Cotización ya adjudicada",
   "another_quotation_already_awarded":"Otra cotización ya ha sido adjudicada",
@@ -510,7 +510,7 @@
   "app.common.newQuotation":"Nuevo presupuesto",
   "app.common.createProject":"Crear proyecto",
   "app.common.CheckInDetail":"Más detalles",
-  "app.common.quotations":"Quotations",
+  "app.common.quotations":"Cotizaciónes",
   "app.common.text.home":"Inicio",
   "app.common.text.about":"Nosotros",
   "app.common.text.privacyPolicy":"Políticas",
@@ -539,6 +539,13 @@
   "app.common.text.retained":"Retenida",
   "app.common.text.confirmed":"Confirmado",
   "app.common.text.aborted":"Abortado",
-  "app.common.text.custom":"Personalizado"
+  "app.common.text.custom":"Personalizado",
+  "file.manager.upload":"Subir",
+  "file.manager.download":"Abrir en pestaña nueva o descargar.",
+  "file.manager.browser.error.pdf":"Este navegador no es compatible con PDF!",
+  "calendar.filter.status":"Estado",
+  "calendar.filter.option.awarded":"Adjudicadas",
+  "calendar.filter.option.dewarded":"Desadjudicadas",
+  "calendar.filter.option.all":"Todos"
 
 }

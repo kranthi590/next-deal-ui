@@ -88,14 +88,14 @@ const ProjectSelector = ({
             <Col xs={24} sm={12}>
               <Form.Item
                 name="projectStatus"
-                label={'Status'}
+                label={<IntlMessages id="calendar.filter.status" />}
                 labelCol={colSetLabel}
                 wrapperCol={colSetInput}
               >
                 <Select placeholder="Project Status" onSelect={handleStatusChanged}>
-                  <Option value="all">All</Option>
-                  <Option value="awarded">Awarded</Option>
-                  <Option value="unawarded">Un Awarded</Option>
+                  <Option value="all"><IntlMessages id="calendar.filter.option.all" /></Option>
+                  <Option value="awarded"><IntlMessages id="calendar.filter.option.awarded" /></Option>
+                  <Option value="unawarded"><IntlMessages id="calendar.filter.option.dewarded" /></Option>
                 </Select>
               </Form.Item>
             </Col>

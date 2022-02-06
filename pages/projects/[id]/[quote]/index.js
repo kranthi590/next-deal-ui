@@ -224,7 +224,7 @@ const NewQuote = props => {
                 />
               </Form.Item>
               <Form.Item
-                label={<IntlMessages id="app.quotation.field.supplier" />}
+                label={<IntlMessages id="app.quotation.field.currency" />}
                 name="currency"
                 rules={[
                   {
