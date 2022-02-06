@@ -156,6 +156,14 @@ const ProjectsCalendarWrapper = () => {
             event: EventComponent,
           }}
           eventPropGetter={eventStyleGetter}
+          messages={{
+            next: "Siguiente",
+            previous: "Antes",
+            today: "Hoy",
+            month: "Mes",
+            week: "Semana",
+            day: "Día"
+          }}
         />
       </Card>
     </React.Fragment>
