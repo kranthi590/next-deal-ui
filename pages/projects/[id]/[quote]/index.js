@@ -313,11 +313,11 @@ const NewQuote = props => {
           title={<IntlMessages id="app.supplierregistration.page_title" />}
           centered
           visible={visible}
-          // onOk={() => setVisible(false)}
           onCancel={() => setVisible(false)}
-          width={'auto'}
+          width={1000}
           bodyStyle={{ padding: '0' }}
           okButtonProps={{ style: { display: 'none' } }}
+          maskClosable={false}
           destroyOnClose={true}
         >
           <SupplierRegistrationPage
