@@ -3,7 +3,7 @@ import { Upload, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Cookies } from 'react-cookie';
 import axios from 'axios';
-import IntlMessages from '../../../../util/IntlMessages';
+import IntlMessages from '../../../util/IntlMessages';
 
 const cookie = new Cookies();
 
