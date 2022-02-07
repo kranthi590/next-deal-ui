@@ -3,20 +3,9 @@ import {
   CloudUploadOutlined,
   SearchOutlined,
   UserAddOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
-import {
-  Button,
-  Card,
-  Modal,
-  Space,
-  Table,
-  Input,
-  Row,
-  Col,
-  Dropdown,
-  Menu,
-  Typography,
-} from 'antd';
+import { Button, Card, Modal, Space, Table, Input, Row, Col } from 'antd';
 import React, { useState, useEffect } from 'react';
 import BreadCrumb from '../../app/components/BreadCrumb';
 import SupplierDetails from '../../app/components/NextDeal/SupplierDetails';
@@ -76,14 +65,11 @@ const MySuppliers = props => {
     clearFilters();
     setSearchText('');
   };
-  const getColumnSearchProps = dataIndex => ({
+  const getColumnSearchProps = (dataIndex, fieldPlaceholder) => ({
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div style={{ padding: 8 }}>
         <Input
-          // ref={node => {
-          //     this.searchInput = node;
-          // }}
-          placeholder={`Search ${dataIndex}`}
+          placeholder={`Search ${fieldPlaceholder}`}
           value={selectedKeys[0]}
           onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -124,55 +110,48 @@ const MySuppliers = props => {
       setSupplierDetails(data);
     });
   };
-  const handleOnDelete = supplierId => {
-    // alert('delete');
-  };
 
-  const DropdownMenu = ({ supplierId }) => (
-    <Menu>
-      <Menu.Item key="0" onClick={() => handleOnShow(supplierId)}>
-        <IntlMessages id="button.show" />
-      </Menu.Item>
-      <Menu.Item key="1" onClick={() => handleOnDelete(supplierId)}>
-        <IntlMessages id="button.delete" />
-      </Menu.Item>
-    </Menu>
-  );
   const suppliersColumns = [
     {
       title: <IntlMessages id="app.supplierregistration.field.business_fantasyName" />,
       dataIndex: 'fantasyName',
       key: 'fantasyName',
-      ...getColumnSearchProps('fantasyName'),
+      ...getColumnSearchProps('fantasyName', 'Nombre de fantasía'),
     },
     {
       title: <IntlMessages id="app.supplierregistration.field.business_legalName" />,
       dataIndex: 'legalName',
       key: 'legalName',
-      ...getColumnSearchProps('fantasyName'),
+      ...getColumnSearchProps('legalName', 'Nombre de la empresa'),
     },
     {
       title: <IntlMessages id="app.supplierregistration.field.business_emailId" />,
       dataIndex: 'emailId',
       key: 'emailId',
-      ...getColumnSearchProps('emailId'),
+      ...getColumnSearchProps('emailId', 'Email del negocio'),
     },
     {
       title: 'Compartir el proveedor',
       dataIndex: 'isShared',
       key: 'isShared',
-      render: (text, record) => <Space size="middle">{record.isShared ? 'Yes' : 'No'}</Space>,
+      render: (text, record) => (
+        <Space size="middle">
+          {record.isShared ? (
+            <IntlMessages id="app.common.text.yes" />
+          ) : (
+            <IntlMessages id="app.common.text.no" />
+          )}
+        </Space>
+      ),
     },
     {
       title: 'Acciones',
       key: 'Action',
       render: (text, record) => (
-        <div className="gx-w-100 gx-text-center">
-          <Dropdown overlay={<DropdownMenu supplierId={record.id} />} trigger={['click']}>
-            <a onClick={e => e.preventDefault()}>
-              <i className="icon icon-ellipse-h"></i>
-            </a>
-          </Dropdown>
+        <div className="gx-w-100">
+          <a onClick={() => handleOnShow(record.id)}>
+            <EyeOutlined />
+          </a>
         </div>
       ),
     },
@@ -235,6 +214,7 @@ const MySuppliers = props => {
         destroyOnClose={true}
       >
         <SupplierRegistrationPage
+          isBannerShown={false}
           showLoginLink={false}
           isBuyer={true}
           isAuthenticated={true}

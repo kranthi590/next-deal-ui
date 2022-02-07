@@ -10,17 +10,17 @@ const ProjectSelector = ({
   updateLoader,
   showStatus,
   statusChangeCallback,
+  welcomemsg,
 }) => {
   const { getProjectsByPagination } = useProject();
   const [initialFormData, setInitialFormData] = useState({
     project: null,
-    projectStatus: 'all',
+    projectStatus: 'awarded',
   });
   const [allProjects, setAllProjects] = useState([]);
-  const [form] = Form.useForm();
   const [selectedProject, setSelectedProject] = useState(null);
-  const colSetInput = { xs: { span: 24 }, sm: { span: 14 }, md: { span: 14 } };
-  const colSetLabel = { xs: { span: 24 }, sm: { span: 10 }, md: { span: 10 } };
+  const colSetInput = { xs: { span: 24 }, sm: { span: 14 }, md: { span: 16 } };
+  const colSetLabel = { xs: { span: 24 }, sm: { span: 10 }, md: { span: 8 } };
   const onFinish = values => {};
   const onFinishFailed = errorInfo => {};
 
@@ -57,8 +57,6 @@ const ProjectSelector = ({
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         name="metricsSelectionForm"
-        labelWrap
-        labelAlign={showStatus ? 'left' : 'right'}
         fields={[
           {
             name: ['project'],
@@ -67,7 +65,18 @@ const ProjectSelector = ({
         ]}
       >
         <Row>
-          <Col xs={24} sm={{ span: 12, push: showStatus ? 0 : 12 }}>
+          {welcomemsg ? (
+            <Col xs={24} sm={{ span: 12 }}>
+              <Col>
+                <div className="ant-form-item-label">
+                  <label className="ant-form-item-no-colon">{welcomemsg}</label>
+                </div>
+              </Col>
+            </Col>
+          ) : (
+            <></>
+          )}
+          <Col xs={24} sm={{ span: 12, push: showStatus || welcomemsg ? 0 : 12 }}>
             <Form.Item
               name="project"
               label={<IntlMessages id="app.common.text.selectProject" />}
@@ -93,9 +102,15 @@ const ProjectSelector = ({
                 wrapperCol={colSetInput}
               >
                 <Select placeholder="Project Status" onSelect={handleStatusChanged}>
-                  <Option value="all"><IntlMessages id="calendar.filter.option.all" /></Option>
-                  <Option value="awarded"><IntlMessages id="calendar.filter.option.awarded" /></Option>
-                  <Option value="unawarded"><IntlMessages id="calendar.filter.option.dewarded" /></Option>
+                  <Option value="all">
+                    <IntlMessages id="calendar.filter.option.all" />
+                  </Option>
+                  <Option value="awarded">
+                    <IntlMessages id="calendar.filter.option.awarded" />
+                  </Option>
+                  <Option value="unawarded">
+                    <IntlMessages id="calendar.filter.option.dewarded" />
+                  </Option>
                 </Select>
               </Form.Item>
             </Col>
