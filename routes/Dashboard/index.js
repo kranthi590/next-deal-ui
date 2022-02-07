@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Divider } from 'antd';
+import { Card, Row, Col, Divider } from 'antd';
 import { ProjectProvider } from '../../contexts/projects';
 import { Cookies } from 'react-cookie';
 import NoDataAvailable from '../../app/components/NextDeal/NoDataAvailable.js';
@@ -26,14 +26,16 @@ const BuyerDashboard = ({ userProfile }) => {
 
   return (
     <React.Fragment>
-      <div>
-        <IntlMessages id="app.common.text.welcome" />, {userProfile.firstName}{' '}
-        {userProfile.lastName}
-      </div>
       <div className="gx-my-2">
         <ProjectSelector
           projectChangeCallback={projectChangeCallback}
           updateLoader={changeLoadingStatus}
+          welcomemsg={
+            <div>
+              <IntlMessages id="app.common.text.welcome" />, {userProfile.firstName}{' '}
+              {userProfile.lastName}
+            </div>
+          }
         />
       </div>
       <Card className="ant-card gx-card-widget">
