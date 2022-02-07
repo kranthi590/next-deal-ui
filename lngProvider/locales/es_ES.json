@@ -536,7 +536,7 @@
   "app.common.text.validityDate":"Fecha de validez",
   "app.common.text.created":"Creado",
   "app.common.text.responseCreated":"Respuesta Creada",
-  "app.common.text.retained":"Retenida",
+  "app.common.text.retained":"Desadjudicada",
   "app.common.text.confirmed":"Confirmado",
   "app.common.text.aborted":"Abortado",
   "app.common.text.custom":"Personalizado",
