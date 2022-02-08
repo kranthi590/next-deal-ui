@@ -180,7 +180,9 @@ const SignUp = props => {
                   rules={[
                     {
                       required: !iAccept,
-                      message: 'Please accept!',
+                      message: (
+                        <IntlMessages id="app.buyerregistration.field.iAccept.error.required" />
+                      ),
                     },
                   ]}
                 >
