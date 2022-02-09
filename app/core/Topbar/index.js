@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
-import { Layout, Popover } from 'antd';
+import React from 'react';
+import { Layout } from 'antd';
 import Link from 'next/link';
 
-import CustomScrollbars from '../../../util/CustomScrollbars';
-import languageData from './languageData';
-import { switchLanguage, toggleCollapsedSideNav } from '../../../redux/actions';
-import SearchBox from '../../components/SearchBox';
-import UserInfo from '../../components/UserInfo';
-import AppNotification from '../../components/AppNotification';
-import MailNotification from '../../components/MailNotification';
+import { toggleCollapsedSideNav } from '../../../redux/actions';
 
 import {
   NAV_STYLE_DRAWER,
@@ -18,37 +12,17 @@ import {
 } from '../../../constants/ThemeSetting';
 import { useDispatch, useSelector } from 'react-redux';
 import UserProfile from '../Sidebar/UserProfile';
+import { useAuth } from '../../../contexts/use-auth';
+import IntlMessages from '../../../util/IntlMessages';
 
 const { Header } = Layout;
 
 const Topbar = () => {
+  const { authUser } = useAuth();
   const width = useSelector(({ settings }) => settings.width);
   const navCollapsed = useSelector(({ settings }) => settings.navCollapsed);
   const navStyle = useSelector(({ settings }) => settings.navStyle);
-
-  const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
-
-  const languageMenu = () => (
-    <CustomScrollbars className="gx-popover-lang-scroll">
-      <ul className="gx-sub-popover">
-        {languageData.map(language => (
-          <li
-            className="gx-media gx-pointer"
-            key={JSON.stringify(language)}
-            onClick={() => dispatch(switchLanguage(language))}
-          >
-            <i className={`flag flag-24 gx-mr-2 flag-${language.icon}`} />
-            <span className="gx-language-text">{language.name}</span>
-          </li>
-        ))}
-      </ul>
-    </CustomScrollbars>
-  );
-
-  const updateSearchChatUser = evt => {
-    setSearchText(evt.target.value);
-  };
 
   return (
     <Header>
@@ -67,36 +41,20 @@ const Topbar = () => {
       <Link href="/">
         <img alt="" className="gx-d-block gx-d-lg-none gx-pointer" src={'/images/w-logo.jpeg'} />
       </Link>
-
-      {/* <SearchBox
-        styleName="gx-d-none gx-d-lg-block gx-lt-icon-search-bar-lg"
-        placeholder="Search in app..."
-        onChange={updateSearchChatUser}
-        value={searchText}
-      /> */}
+      {authUser ? (
+        <div>
+          <span style={{ fontWeight: 500 }}>
+            <IntlMessages id="app.common.text.welcome" />
+          </span>
+          , {authUser.firstName} {authUser.lastName}
+        </div>
+      ) : (
+        <></>
+      )}
       <ul className="gx-header-notifications gx-ml-auto">
-        {/*    <li className="gx-notify">
-          <Popover
-            overlayClassName="gx-popover-horizantal"
-            placement="bottomRight"
-            content={<AppNotification />}
-            trigger="click"
-          >
-            <span className="gx-pointer gx-d-block">
-              <i className="icon icon-notification" />
-            </span>
-          </Popover>
-        </li>*/}
         <li className="gx-language">
           <UserProfile />
         </li>
-        {/* {width >= TAB_SIZE ? null : (
-          <>
-            <li className="gx-user-nav">
-              <UserInfo />
-            </li>
-          </>
-        )} */}
       </ul>
     </Header>
   );

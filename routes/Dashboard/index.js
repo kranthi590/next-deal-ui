@@ -30,12 +30,6 @@ const BuyerDashboard = ({ userProfile }) => {
         <ProjectSelector
           projectChangeCallback={projectChangeCallback}
           updateLoader={changeLoadingStatus}
-          welcomemsg={
-            <div>
-              <IntlMessages id="app.common.text.welcome" />, {userProfile.firstName}{' '}
-              {userProfile.lastName}
-            </div>
-          }
         />
       </div>
       <Card className="ant-card gx-card-widget">
