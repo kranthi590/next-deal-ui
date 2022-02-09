@@ -140,13 +140,12 @@ const ProjectsCalendarWrapper = () => {
 
   return (
     <React.Fragment>
-      <BreadCrumb navItems={[{ text: <IntlMessages id="sidebar.menu.calendar" /> }]} />
-      <ProjectSelector
-        projectChangeCallback={projectChangeCallback}
-        showStatus={true}
-        statusChangeCallback={statusChangeCallback}
-      />
-      <Card className="gx-card">
+      <Card className="gx-card" title={<IntlMessages id="sidebar.menu.calendar" />}>
+        <ProjectSelector
+          projectChangeCallback={projectChangeCallback}
+          showStatus={true}
+          statusChangeCallback={statusChangeCallback}
+        />
         <Calendar
           localizer={localizer}
           events={events}
