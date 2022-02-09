@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar, Popover } from 'antd';
 import { useAuth } from '../../../contexts/use-auth';
 import { getAvatar } from '../../../util/util';
+import IntlMessages from '../../../util/IntlMessages';
 
 const UserProfile = () => {
   const { userSignOut, authUser } = useAuth();
@@ -12,7 +13,7 @@ const UserProfile = () => {
 
   const userMenuOptions = (
     <ul className="gx-user-popover">
-      <li onClick={() => userSignOut()}>Logout</li>
+      <li onClick={() => userSignOut()}><IntlMessages id="app.common.text.logout" /></li>
     </ul>
   );
   return authUser ? (

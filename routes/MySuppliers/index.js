@@ -171,9 +171,6 @@ const MySuppliers = props => {
   const onUploadXls = () => {};
   return (
     <>
-      <BreadCrumb
-        navItems={[{ text: <IntlMessages id="sidebar.suppliers.mySuppliers" /> }]}
-      ></BreadCrumb>
       <Card className="gx-card" title={<IntlMessages id="app.mysuppliers.pageTitle" />}>
         <div align="end" style={{ textAlign: 'right' }}>
           <Button type="primary" onClick={onUploadXls}>
