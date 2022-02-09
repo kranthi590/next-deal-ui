@@ -31,12 +31,6 @@ const QuotationCard = ({ data, activeTab }) => {
               {data.suppliersCount}
               <sub className="gx-fs-md gx-bottom-0">/Suppliers</sub>
             </h2>
-            <div className="gx-currentplan-right-content">
-              <span className="gx-text-primary gx-fs-md gx-pointer gx-mts-3 gx-oth-plans-down">
-                Other plans{' '}
-                <i className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle" />
-              </span>
-            </div>
           </div>
         </div>
       </Widget>

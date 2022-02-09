@@ -75,7 +75,7 @@ const MySuppliers = props => {
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
         />
-        <Space>
+        {/* <Space>
           <Button
             type="primary"
             onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
@@ -88,7 +88,7 @@ const MySuppliers = props => {
           <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
             <IntlMessages id="button.reset" />
           </Button>
-        </Space>
+        </Space> */}
       </div>
     ),
     filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,

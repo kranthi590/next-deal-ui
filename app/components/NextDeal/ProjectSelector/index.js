@@ -15,7 +15,7 @@ const ProjectSelector = ({
   const { getProjectsByPagination } = useProject();
   const [initialFormData, setInitialFormData] = useState({
     project: null,
-    projectStatus: 'awarded',
+    projectStatus: 'all',
   });
   const [allProjects, setAllProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
