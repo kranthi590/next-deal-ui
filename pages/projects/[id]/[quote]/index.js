@@ -259,7 +259,14 @@ const NewQuote = props => {
                   },
                 ]}
               >
-                <Select size="large" placeholder="Select your suppliers!!" mode="multiple">
+                <Select
+                  size="large"
+                  placeholder="Select your suppliers!!"
+                  mode="multiple"
+                  filterOption={(input, option) => {
+                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                  }}
+                >
                   {suppliers &&
                     suppliers.map(supplier => (
                       <Option key={supplier.id + supplier.legalName} value={supplier.id}>
