@@ -296,12 +296,13 @@ const QuoteResponses = props => {
             xs={24}
             style={{
               height: '130px',
-              overflow: 'scroll',
+              overflowX: 'auto',
             }}
           >
             {newQuote ? (
               <FilesManager
                 files={filesList}
+                hideButton={awarded}
                 context={{
                   assetRelation: 'quotation_response',
                   //  assetRelationId: quotationData.id
@@ -317,6 +318,7 @@ const QuoteResponses = props => {
                   assetRelation: 'quotation_response',
                   assetRelationId: id,
                 }}
+                hideButton={awarded}
               />
             )}
           </Col>

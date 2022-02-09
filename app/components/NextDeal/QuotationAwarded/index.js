@@ -182,7 +182,7 @@ const QuoteAwarded = props => {
               wrapperCol={{ span: 24 }}
               style={{
                 height: '130px',
-                overflow: 'scroll',
+                overflowX: 'auto',
               }}
             >
               <FilesManager

@@ -160,7 +160,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
               span={12}
               style={{
                 height: '150px',
-                overflow: 'scroll',
+                overflowX: 'auto',
               }}
               className="gx-d-flex gx-justify-content-start gx-align-items-start"
             >
