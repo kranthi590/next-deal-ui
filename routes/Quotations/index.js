@@ -57,7 +57,7 @@ const Quotations = () => {
           <Link href="/new-quotation">
             <Button type="primary" className="gx-btn-block">
               <i className="icon icon-add gx-mr-2" />
-              <IntlMessages id="app.quotation.addQuotation" />
+                <IntlMessages id="app.quotation.addquotation"/>
             </Button>
           </Link>
         </div>
