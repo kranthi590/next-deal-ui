@@ -180,7 +180,11 @@ const NewQuote = props => {
               >
                 <Input placeholder="Quotation Name" />
               </Form.Item>
-              <Form.Item name="startDate" label={<IntlMessages id="app.project.field.startdate" />}>
+              <Form.Item
+                name="startDate"
+                label={<IntlMessages id="app.project.field.startdate" />}
+                rules={[stringRule]}
+              >
                 <DatePicker
                   className="gx-w-100"
                   placeholder="Start Date"
@@ -191,11 +195,6 @@ const NewQuote = props => {
               <Form.Item
                 name="expectedEndDate"
                 label={<IntlMessages id="app.project.field.enddate" />}
-                rules={[
-                  {
-                    required: !!startDate,
-                  },
-                ]}
               >
                 <DatePicker
                   className="gx-w-100"

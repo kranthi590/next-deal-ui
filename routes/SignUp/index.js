@@ -120,7 +120,6 @@ const SignUp = props => {
                       message: <IntlMessages id="app.userAuth.signUp.field.email.error.required" />,
                     },
                   ]}
-                  help={<IntlMessages id="app.userAuth.signUp.field.email.helptext" />}
                 >
                   <Input className="gx-input-lineheight" placeholder="Email" />
                 </FormItem>
