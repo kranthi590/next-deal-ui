@@ -284,7 +284,7 @@ const NewQuote = props => {
                   xs={24}
                   style={{
                     height: '150px',
-                    overflow: 'scroll',
+                    overflowX: 'auto',
                   }}
                 >
                   <FilesManager

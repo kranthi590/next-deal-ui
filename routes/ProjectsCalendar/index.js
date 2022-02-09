@@ -7,6 +7,7 @@ import 'moment/locale/es';
 import { Card, Popover } from 'antd';
 import { ResponsesProvider, useResponse } from '../../contexts/responses';
 import IntlMessages from '../../util/IntlMessages';
+import BreadCrumb from '../../app/components/BreadCrumb';
 
 const localizer = momentLocalizer(moment);
 
@@ -139,6 +140,7 @@ const ProjectsCalendarWrapper = () => {
 
   return (
     <React.Fragment>
+      <BreadCrumb navItems={[{ text: <IntlMessages id="sidebar.menu.calendar" /> }]} />
       <ProjectSelector
         projectChangeCallback={projectChangeCallback}
         showStatus={true}
@@ -157,12 +159,12 @@ const ProjectsCalendarWrapper = () => {
           }}
           eventPropGetter={eventStyleGetter}
           messages={{
-            next: "Siguiente",
-            previous: "Antes",
-            today: "Hoy",
-            month: "Mes",
-            week: "Semana",
-            day: "Día"
+            next: 'Siguiente',
+            previous: 'Antes',
+            today: 'Hoy',
+            month: 'Mes',
+            week: 'Semana',
+            day: 'Día',
           }}
         />
       </Card>

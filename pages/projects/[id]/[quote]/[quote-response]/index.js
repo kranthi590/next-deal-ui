@@ -130,8 +130,9 @@ const NewQuoteResponse = props => {
     setAlertInfo({ type: '', confirmText: '' });
   };
 
-  const onSaveActivity = values => {
+  const onSaveActivity = (values, resetForm) => {
     addNewActivity({ ...values, quotationRequestId: quotationData.id }, data => {
+      resetForm();
       successNotification('app.registration.detailsSaveSuccessMessage');
       getActivities(quotationData.id, data => {
         setQuotationActivities(data);
@@ -161,9 +162,7 @@ const NewQuoteResponse = props => {
                       href={'/projects/' + [quotationData.projectId]}
                       as={'/projects/' + quotationData.projectId}
                     >
-                      <a>
-                        {quotationData.name}-{quotationData.code}
-                      </a>
+                      <a>{quotationData.name}</a>
                     </Link>
                   </h3>
                   <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
@@ -199,7 +198,7 @@ const NewQuoteResponse = props => {
             span={12}
             style={{
               height: '130px',
-              overflow: 'scroll',
+              overflowX: 'auto',
             }}
           >
             <FilesManager

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AuditOutlined,
   EditOutlined,
@@ -63,9 +63,24 @@ const timelineData = {
 const QuotationTimeline = ({ activities, onSaveActivity }) => {
   const [form] = Form.useForm();
   const initialFormData = { activityText: '' };
-  const onFinish = values => {
-    onSaveActivity({ activityText: values.activityText });
+  const [showNewActivity, setShowNewActivity] = useState(true);
+
+  const reserForm = () => {
+    form.resetFields();
   };
+
+  const onFinish = values => {
+    onSaveActivity({ activityText: values.activityText }, reserForm);
+  };
+
+  useEffect(() => {
+    activities.map((item, index) => {
+      if (item.activityType === 'QUOTATION_COMPLETED') {
+        setShowNewActivity(false);
+      }
+    });
+  }, [activities]);
+
   const onFinishFailed = errorInfo => {};
 
   const AddCustomActivityForm = () => {
@@ -77,6 +92,7 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
           onFinishFailed={onFinishFailed}
           initialValues={initialFormData}
           layout="vertical"
+          name="addNewActivityForm"
         >
           <Row gutter={2}>
             <Col xs={24}>
@@ -147,31 +163,35 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
                   />
                 );
               })}
-            <div
-              className="gx-p-2 gx-d-flex gx-justify-content-center gx-align-items-center"
-              style={{ height: '160px!important' }}
-            >
-              <Card
-                className="gx-h-100 gx-mb-0 gx-d-flex gx-justify-content-center gx-align-items-center"
-                style={{ width: '225px' }}
+            {showNewActivity ? (
+              <div
+                className="gx-p-2 gx-d-flex gx-justify-content-center gx-align-items-center"
+                style={{ height: '160px!important' }}
               >
-                <Popover
-                  content={<AddCustomActivityForm />}
-                  title={<IntlMessages id="app.activityform.title" />}
+                <Card
+                  className="gx-h-100 gx-mb-0 gx-d-flex gx-justify-content-center gx-align-items-center"
+                  style={{ width: '225px' }}
                 >
-                  <Button
-                    type="primary"
-                    size="large"
-                    icon={<FileAddOutlined />}
-                    className="gx-mb-0"
+                  <Popover
+                    content={<AddCustomActivityForm />}
+                    title={<IntlMessages id="app.activityform.title" />}
                   >
-                    <span>
-                      <IntlMessages id="app.activityform.title" />
-                    </span>
-                  </Button>
-                </Popover>
-              </Card>
-            </div>
+                    <Button
+                      type="primary"
+                      size="large"
+                      icon={<FileAddOutlined />}
+                      className="gx-mb-0"
+                    >
+                      <span>
+                        <IntlMessages id="app.activityform.title" />
+                      </span>
+                    </Button>
+                  </Popover>
+                </Card>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </Scrollbars>
       </Card>
