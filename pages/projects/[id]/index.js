@@ -177,7 +177,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
         <Link href={'/projects/' + [project.id] + '/new-quote'}>
           <Button type="primary" className="gx-btn gx-w-100  gx-mb-4">
             <i className="icon icon-add gx-mr-2" />
-            <IntlMessages id="app.quotation.addQuotation" />
+              <IntlMessages id="app.quotation.addquotation"/>
           </Button>
         </Link>
       </>
