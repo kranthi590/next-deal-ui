@@ -11,10 +11,10 @@ import FilesManager from '../../../app/common/FileManager';
 
 import { formatAmount, getAvatar } from '../../../util/util';
 import CustomScrollbars from '../../../util/CustomScrollbars';
-import NoDataAvailable from '../../../app/components/NextDeal/NoDataAvailable.js';
 import BreadCrumb from '../../../app/components/BreadCrumb';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ResponsesProvider, useResponse } from '../../../contexts/responses';
+import { LoginOutlined, PlusOutlined } from '@ant-design/icons';
 
 const colSpan = 24 / 3;
 
@@ -175,9 +175,9 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
           </Row>
         </Widget>
         <Link href={'/projects/' + [project.id] + '/new-quote'}>
-          <Button type="primary" className="gx-btn gx-w-100  gx-mb-4">
-            <i className="icon icon-add gx-mr-2" />
-              <IntlMessages id="app.quotation.addquotation"/>
+          <Button type="primary" className="gx-btn gx-w-100 gx-mb-4 nd-add-quote">
+            <PlusOutlined style={{ fontSize: '18px', marginRight: '5px' }} />
+            <IntlMessages id="app.quotation.addquotation" />
           </Button>
         </Link>
       </>
@@ -199,10 +199,6 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                   next={loadMoreInprogressQuotations}
                   scrollableTarget="inprogressQuotations"
                   hasMore={hasMoreInprogress}
-                  // endMessage={
-                  //   inprogressQuotationsData.length === 0 ? <NoDataAvailable /> :
-                  //     <Divider><IntlMessages id="app.common.text.noMoreData" /></Divider>
-                  // }
                 >
                   <div className="gx-p-2">
                     {inprogressQuotationsData &&

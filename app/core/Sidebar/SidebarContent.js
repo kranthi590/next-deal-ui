@@ -13,34 +13,14 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { setPathName } from '../../../redux/actions';
 import IntlMessages from '../../../util/IntlMessages';
-import { TeamOutlined } from '@ant-design/icons';
 
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 const SidebarContent = () => {
-  const navStyle = useSelector(({ settings }) => settings.navStyle);
   const themeType = useSelector(({ settings }) => settings.themeType);
 
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const getNoHeaderClass = navStyle => {
-    if (
-      navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR ||
-      navStyle === NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR
-    ) {
-      return 'gx-no-header-notifications';
-    }
-    return '';
-  };
-
-  const getNavStyleSubMenuClass = navStyle => {
-    if (navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR) {
-      return 'gx-no-header-submenu-popup';
-    }
-    return '';
-  };
 
   useEffect(() => {
     dispatch(setPathName(router.pathname));
