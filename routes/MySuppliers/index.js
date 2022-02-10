@@ -131,7 +131,7 @@ const MySuppliers = props => {
       ...getColumnSearchProps('emailId', 'Email del negocio'),
     },
     {
-      title: 'Compartir el proveedor',
+      title: <IntlMessages id="app.supplierregistration.field.isshared" />,
       dataIndex: 'isShared',
       key: 'isShared',
       render: (text, record) => (
