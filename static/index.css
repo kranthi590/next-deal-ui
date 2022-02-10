@@ -164,7 +164,7 @@ body {
   color: #fff;
 }
 .gx-timeline-event .circleContainer {
-  margin-right: 31;
+  margin-right: 31px;
 }
 
 .gx-timeline-event .action:hover {
@@ -177,6 +177,13 @@ body {
   margin-top: -32px;
   text-align: center;
 }
-.gx-btn i{
+.gx-btn i {
   vertical-align: middle;
+}
+.nd-add-quote {
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+  align-content: center;
 }
