@@ -26,6 +26,7 @@ import { uploadFiles } from '../../../../util/Api';
 import BreadCrumb from '../../../../app/components/BreadCrumb';
 import moment from 'moment';
 import ClpFormatter from '../../../../shared/CLP';
+import { FileAddOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -126,15 +127,6 @@ const NewQuote = props => {
     });
   };
 
-  const disabledStartDate = value => {
-    const formData = form;
-    return value > formData.getFieldValue('expectedEndDate');
-  };
-
-  const disabledEndDate = value => {
-    const formData = form;
-    return value < formData.getFieldValue('startDate') || moment() >= value;
-  };
   const onBudgetChange = async value => {
     setEstimatedBudget(value);
   };
@@ -148,7 +140,17 @@ const NewQuote = props => {
           { text: <IntlMessages id="app.common.newQuotation" /> },
         ]}
       />
-      <Card className="gx-card" title={<IntlMessages id="app.quotation.addquotation" />}>
+      <Card className="gx-card gx-card-widget">
+        <div className="ant-card-head gx-pt-0">
+          <div className="ant-card-head-wrapper">
+            <div className="ant-card-head-title gx-text-left">
+              <h4 className="gx-card-bordered-title">
+                <FileAddOutlined className="gx-mr-3" />
+                <IntlMessages id="app.quotation.addquotation" />
+              </h4>
+            </div>
+          </div>
+        </div>
         <Form
           form={form}
           fields={[
@@ -189,7 +191,6 @@ const NewQuote = props => {
                   className="gx-w-100"
                   placeholder="Start Date"
                   onChange={startDateChangeHandler}
-                  disabledDate={disabledStartDate}
                 />
               </Form.Item>
               <Form.Item
@@ -200,7 +201,6 @@ const NewQuote = props => {
                   className="gx-w-100"
                   placeholder="End Date"
                   onChange={endDateChangeHandler}
-                  disabledDate={disabledEndDate}
                 />
               </Form.Item>
               <Form.Item
@@ -325,6 +325,7 @@ const NewQuote = props => {
           okButtonProps={{ style: { display: 'none' } }}
           maskClosable={false}
           destroyOnClose={true}
+          footer={false}
         >
           <SupplierRegistrationPage
             isBannerShown={false}

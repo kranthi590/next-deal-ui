@@ -6,6 +6,7 @@ import CustomScrollbars from '../../util/CustomScrollbars';
 import mails from './data/mails';
 import IntlMessages from '../../util/IntlMessages';
 import Card from './Card';
+import { PlusOutlined } from '@ant-design/icons';
 
 class Projects extends PureComponent {
   ProjectSideBar = () => {
@@ -21,8 +22,8 @@ class Projects extends PureComponent {
           <CustomScrollbars className="gx-module-side-scroll">
             <div className="gx-module-add-task">
               <Link href="/new-project">
-                <Button type="primary" className="gx-btn-block">
-                  <i className="icon icon-add gx-mr-2" />
+                <Button type="primary" className="gx-btn-block nd-add-quote">
+                  <PlusOutlined style={{ fontSize: '18px', marginRight: '5px' }} />
                   <IntlMessages id="sidebar.project.addProject" />
                 </Button>
               </Link>

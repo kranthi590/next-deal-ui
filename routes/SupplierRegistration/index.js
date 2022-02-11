@@ -763,7 +763,7 @@ const SupplierRegistration = props => {
                   xs={24}
                   style={{
                     height: '150px',
-                    overflow: 'scroll',
+                    overflowX: 'auto',
                   }}
                 >
                   <FilesManager
@@ -818,7 +818,7 @@ const SupplierRegistration = props => {
             </Form>
           </div>
         </div>
-        <Footer />
+        {!isAuthenticated ? <Footer /> : <></>}
       </div>
       {isLoading && (
         <div className="gx-loader-view">

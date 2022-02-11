@@ -29,6 +29,7 @@ const QuoteResponses = props => {
     paymentCondition,
     includesTax,
     incoterm,
+    currency,
     deliveryDate,
     validityDate,
     supplier,
@@ -44,6 +45,7 @@ const QuoteResponses = props => {
   if (newQuote !== true) {
     initialFormData = {
       netWorth: numberToClp(netWorth),
+      currency: currency,
       paymentCondition: paymentCondition,
       includesTax: includesTax,
       incoterm: incoterm,
@@ -54,6 +56,7 @@ const QuoteResponses = props => {
   } else {
     initialFormData = {
       netWorth: null,
+      currency: null,
       includesTax: false,
       paymentCondition: null,
       incoterm: 'NO-APLICA',
@@ -94,7 +97,6 @@ const QuoteResponses = props => {
     onSave({
       ...formValues,
       supplierId: id,
-      currency: 'clp',
       includesTax: formValues.includesTax ? true : false,
       files: newQuote ? filesList : [],
     });
@@ -104,19 +106,14 @@ const QuoteResponses = props => {
     onSave(null, id);
   };
 
-  const disabledStartDate = value => {
-    return moment().add(-1, 'days') >= value;
-  };
-
-  const disabledEndDate = value => {
-    const formData = form;
-    return value < formData.getFieldValue('deliveryDate') || moment() >= value;
-  };
-
   const onNetValueChange = async value => {
     setNetValue(value);
   };
 
+  const stringRule = {
+    required: true,
+    message: <IntlMessages id="app.project.create.validations" />,
+  };
   return (
     <Card
       title={fantasyName ? fantasyName : supplier.fantasyName}
@@ -165,6 +162,21 @@ const QuoteResponses = props => {
           </Col>
           <Col xl={6} xs={24}>
             <Form.Item
+              label={<IntlMessages id="app.project.field.currency" />}
+              name="currency"
+              rules={[stringRule]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Select placeholder="Select Currency" disabled={awarded}>
+                <Option value="clp">CLP</Option>
+                <Option value="uf">UF</Option>
+                <Option value="usd">USD</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xl={6} xs={24}>
+            <Form.Item
               label={<IntlMessages id="app.quotationresponses.field.deliveryDate" />}
               name="deliveryDate"
               labelCol={{ span: 24 }}
@@ -183,7 +195,6 @@ const QuoteResponses = props => {
                 placeholder="Delivery Date(With a purchase order confirm)"
                 disabled={awarded}
                 onChange={deliveryDateChangeHandler}
-                disabledDate={disabledStartDate}
               />
             </Form.Item>
           </Col>
@@ -207,7 +218,6 @@ const QuoteResponses = props => {
                 placeholder="Validity Date"
                 disabled={awarded}
                 onChange={validityDateChangeHandler}
-                disabledDate={disabledEndDate}
               />
             </Form.Item>
           </Col>
@@ -238,7 +248,7 @@ const QuoteResponses = props => {
               </Select>
             </Form.Item>
           </Col>
-          <Col xl={4} xs={24}>
+          <Col xl={6} xs={24}>
             <Form.Item
               name="incoterm"
               label={<IntlMessages id="app.quotationresponses.field.incoterm" />}
