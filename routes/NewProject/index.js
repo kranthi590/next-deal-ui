@@ -84,7 +84,7 @@ const NewProject = props => {
   };
 
   const onSave = values => {
-    newProject(getFormData(values), async (data) => {
+    newProject(getFormData(values), async data => {
       if (files.length > 0) {
         await uploadFiles(
           files,
@@ -96,9 +96,9 @@ const NewProject = props => {
         );
       }
       successNotification('app.registration.detailsSaveSuccessMessage');
-        setTimeout(() => {
-          router.push('/projects');
-        }, NOTIFICATION_TIMEOUT);
+      setTimeout(() => {
+        router.push('/projects');
+      }, NOTIFICATION_TIMEOUT);
     });
   };
 
@@ -145,6 +145,7 @@ const NewProject = props => {
               <Form.Item
                 name="costCenter"
                 label={<IntlMessages id="app.project.field.costcenter" />}
+                rules={[stringRule]}
               >
                 <Input placeholder="Cost Center" />
               </Form.Item>
@@ -172,6 +173,7 @@ const NewProject = props => {
               <Form.Item
                 name="estimatedBudget"
                 label={<IntlMessages id="app.project.field.estimatedBudget" />}
+                rules={[stringRule]}
               >
                 <ClpFormatter
                   {...props}
@@ -185,12 +187,7 @@ const NewProject = props => {
               <Form.Item
                 label={<IntlMessages id="app.project.field.currency" />}
                 name="currency"
-                rules={[
-                  {
-                    ...stringRule,
-                    required: !!estimatedBudget,
-                  },
-                ]}
+                rules={[stringRule]}
               >
                 <Select placeholder="Select Currency">
                   <Option value="clp">CLP</Option>

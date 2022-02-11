@@ -74,20 +74,6 @@ const MySuppliers = props => {
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ marginBottom: 8, display: 'block' }}
         />
-        {/* <Space>
-          <Button
-            type="primary"
-            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            <IntlMessages id="button.search" />
-          </Button>
-          <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
-            <IntlMessages id="button.reset" />
-          </Button>
-        </Space> */}
       </div>
     ),
     filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
@@ -116,6 +102,11 @@ const MySuppliers = props => {
       dataIndex: 'fantasyName',
       key: 'fantasyName',
       ...getColumnSearchProps('fantasyName', 'Nombre de fantasía'),
+      render: (text, record) => (
+        <div className="gx-w-100">
+          <a onClick={() => handleOnShow(record.id)}>{record.fantasyName}</a>
+        </div>
+      ),
     },
     {
       title: <IntlMessages id="app.supplierregistration.field.business_legalName" />,
