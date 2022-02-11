@@ -13,6 +13,7 @@ import {
 import { useRouter } from 'next/router';
 import BreadCrumb from '../../app/components/BreadCrumb';
 import ClpFormatter from '../../shared/CLP';
+import { FileAddOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -88,16 +89,6 @@ const NewProject = props => {
     });
   };
 
-  const disabledStartDate = value => {
-    const formData = form;
-    return value > formData.getFieldValue('expectedEndDate');
-  };
-
-  const disabledEndDate = value => {
-    const formData = form;
-    return value < formData.getFieldValue('startDate');
-  };
-
   const onChange = async value => {
     setEstimatedBudget(value);
   };
@@ -110,7 +101,17 @@ const NewProject = props => {
           { text: <IntlMessages id="app.common.createProject" /> },
         ]}
       />
-      <Card className="gx-card" title={<IntlMessages id="app.project.createNewProject" />}>
+      <Card className="gx-card gx-card-widget">
+        <div className="ant-card-head gx-pt-0">
+          <div className="ant-card-head-wrapper">
+            <div className="ant-card-head-title gx-text-left">
+              <h4 className="gx-card-bordered-title">
+                <FileAddOutlined className="gx-mr-3" />
+                <IntlMessages id="app.project.createNewProject" />
+              </h4>
+            </div>
+          </div>
+        </div>
         <Form form={form} initialValues={{ remember: true }} onFinish={onSave} {...formLayout}>
           <Row>
             <Col xl={12} lg={24} md={24} sm={24} xs={24}>
@@ -143,7 +144,6 @@ const NewProject = props => {
                   className="gx-w-100"
                   placeholder="Start Date"
                   onChange={startDateChangeHandler}
-                  disabledDate={disabledStartDate}
                 />
               </Form.Item>
               <Form.Item
@@ -154,7 +154,6 @@ const NewProject = props => {
                   className="gx-w-100"
                   placeholder="End Date"
                   onChange={endDateChangeHandler}
-                  disabledDate={disabledEndDate}
                 />
               </Form.Item>
               <Form.Item

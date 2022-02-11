@@ -11,6 +11,7 @@ const QuotationCompleted = props => {
   const {
     id,
     netWorth,
+    currency,
     paymentCondition,
     includesTax,
     incoterm,
@@ -29,6 +30,7 @@ const QuotationCompleted = props => {
 
   const initialFormData = {
     netWorth: numberToClp(netWorth),
+    currency: currency,
     paymentCondition: paymentCondition,
     deliveryDate: moment(deliveryDate),
     comments: comments,
@@ -98,6 +100,25 @@ const QuotationCompleted = props => {
                 placeholder="1.00.00"
                 disabled
               />
+            </Form.Item>
+          </Col>
+          <Col xl={6} xs={24}>
+            <Form.Item
+              label={<IntlMessages id="app.project.field.currency" />}
+              name="currency"
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+            >
+              <Select placeholder="Select Currency" disabled>
+                <Option value="clp">CLP</Option>
+                <Option value="uf">UF</Option>
+                <Option value="usd">USD</Option>
+              </Select>
             </Form.Item>
           </Col>
           <Col xl={6} xs={24}>

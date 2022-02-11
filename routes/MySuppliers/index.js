@@ -7,7 +7,6 @@ import {
 } from '@ant-design/icons';
 import { Button, Card, Modal, Space, Table, Input, Row, Col } from 'antd';
 import React, { useState, useEffect } from 'react';
-import BreadCrumb from '../../app/components/BreadCrumb';
 import SupplierDetails from '../../app/components/NextDeal/SupplierDetails';
 import { useRegistration } from '../../contexts/business-registration';
 import SupplierRegistrationPage from '../../pages/supplier-registration';
@@ -171,7 +170,17 @@ const MySuppliers = props => {
   const onUploadXls = () => {};
   return (
     <>
-      <Card className="gx-card" title={<IntlMessages id="app.mysuppliers.pageTitle" />}>
+      <Card className="gx-card gx-card-widget">
+        <div className="ant-card-head gx-pt-0">
+          <div className="ant-card-head-wrapper">
+            <div className="ant-card-head-title gx-text-left">
+              <h4 className="gx-card-bordered-title">
+                <i className="icon icon-product-list gx-mr-3" />
+                <IntlMessages id="sidebar.suppliers.mySuppliers" />
+              </h4>
+            </div>
+          </div>
+        </div>
         <div align="end" style={{ textAlign: 'right' }}>
           <Button type="primary" onClick={onUploadXls}>
             <CloudUploadOutlined className="gx-mr-2" />
