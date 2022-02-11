@@ -14,6 +14,8 @@ import { useRouter } from 'next/router';
 import BreadCrumb from '../../app/components/BreadCrumb';
 import ClpFormatter from '../../shared/CLP';
 import { FileAddOutlined } from '@ant-design/icons';
+import FilesManager from '../../app/common/FileManager';
+import { uploadFiles } from '../../util/Api';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -43,6 +45,7 @@ const NewProject = props => {
   const [estimatedBudget, setEstimatedBudget] = useState(0);
   const [startDate, setStartDate] = useState(null);
   const [expectedEndDate, setExpectedEndDate] = useState(null);
+  const [files, setFiles] = useState([]);
 
   const { error, newProject } = useProject();
 
@@ -81,11 +84,21 @@ const NewProject = props => {
   };
 
   const onSave = values => {
-    newProject(getFormData(values), () => {
+    newProject(getFormData(values), async (data) => {
+      if (files.length > 0) {
+        await uploadFiles(
+          files,
+          {
+            assetRelation: 'project',
+            assetRelationId: data.id,
+          },
+          true,
+        );
+      }
       successNotification('app.registration.detailsSaveSuccessMessage');
-      setTimeout(() => {
-        router.push('/projects');
-      }, NOTIFICATION_TIMEOUT);
+        setTimeout(() => {
+          router.push('/projects');
+        }, NOTIFICATION_TIMEOUT);
     });
   };
 
@@ -192,6 +205,23 @@ const NewProject = props => {
               >
                 <TextArea placeholder="Description" rows={8} />
               </Form.Item>
+            </Col>
+            <Col
+              span={12}
+              style={{
+                height: '130px',
+                overflowX: 'auto',
+              }}
+            >
+              <FilesManager
+                files={files}
+                context={{
+                  assetRelation: 'project',
+                }}
+                customSubmitHandler={({ fileList }) => {
+                  setFiles(fileList);
+                }}
+              />
             </Col>
           </Row>
           <Row>
