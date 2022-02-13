@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRegistration } from '../../../../contexts/business-registration';
 import IntlMessages from '../../../../util/IntlMessages';
 import { getAvatar } from '../../../../util/util';
+import { format } from 'rut.js';
 
 const SupplierDetails = props => {
   const {
@@ -130,9 +131,7 @@ const SupplierDetails = props => {
               </div>
               <div className="gx-profile-banner-avatar-info">
                 <h2 className="gx-mb-2 gx-mb-sm-3 gx-fs-xxl gx-font-weight-light">{legalName}</h2>
-                {businessAddress.addressLine1 ? (
-                  <p className="gx-mb-0 gx-fs-lg">{businessAddress.addressLine1}</p>
-                ) : null}
+                {fantasyName ? <p className="gx-mb-0 gx-fs-lg">{fantasyName}</p> : null}
               </div>
             </div>
           </div>
@@ -181,7 +180,7 @@ const SupplierDetails = props => {
                       <h6 className="gx-mb-1 gx-text-grey">
                         {<IntlMessages id="app.supplierregistration.field.business_rut" />}
                       </h6>
-                      <p className="gx-mb-0">{rut ? rut : '-'}</p>
+                      <p className="gx-mb-0">{rut ? format(rut) : '-'}</p>
                     </div>
                   </div>
                 </Col>
@@ -393,7 +392,16 @@ const SupplierDetails = props => {
                         <IntlMessages id="app.supplierregistration.field.billing_phoneNumber1" />
                       </h6>
                       <p className="gx-mb-0">
-                        {billingAddress.phoneNumber1 ? billingAddress.phoneNumber1 : '-'}
+                        {businessAddress.phoneNumber1 ? (
+                          <a
+                            className="gx-link gx-text-break"
+                            href={`tel:${businessAddress.phoneNumber1}`}
+                          >
+                            {businessAddress.phoneNumber1}
+                          </a>
+                        ) : (
+                          '-'
+                        )}
                       </p>
                     </div>
                   </div>
@@ -408,7 +416,16 @@ const SupplierDetails = props => {
                         <IntlMessages id="app.supplierregistration.field.billing_phoneNumber2" />
                       </h6>
                       <p className="gx-mb-0">
-                        {billingAddress.phoneNumber2 ? billingAddress.phoneNumber2 : '-'}
+                        {businessAddress.phoneNumber2 ? (
+                          <a
+                            className="gx-link gx-text-break"
+                            href={`tel:${businessAddress.phoneNumber2}`}
+                          >
+                            {businessAddress.phoneNumber2}
+                          </a>
+                        ) : (
+                          '-'
+                        )}
                       </p>
                     </div>
                   </div>
@@ -523,17 +540,6 @@ const SupplierDetails = props => {
                   <p className="gx-mb-0">{inchargeFullName ? inchargeFullName : '-'}</p>
                 </div>
               </div>
-              {/* <div className="gx-media gx-align-items-center gx-flex-nowrap gx-pro-contact-list">
-                <div className="gx-mr-3">
-                  <i className={`icon icon-wall gx-fs-xxl gx-text-grey`} />
-                </div>
-                <div className="gx-media-body">
-                  <span className="gx-mb-0 gx-text-grey gx-fs-sm">
-                    <IntlMessages id="app.supplierregistration.field.bcontact_surname" />
-                  </span>
-                  <p className="gx-mb-0">{}</p>
-                </div>
-              </div> */}
               <div className="gx-media gx-align-items-center gx-flex-nowrap gx-pro-contact-list">
                 <div className="gx-mr-3">
                   <i className={`icon icon-email gx-fs-xxl gx-text-grey`} />

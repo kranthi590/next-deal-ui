@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Widget from '../../Widget';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,9 +9,9 @@ const QuotationCard = ({ data, activeTab }) => {
   }
 
   const router = useRouter();
-  return (
-    <>
-      <Widget styleName={`gx-card-full gx-card-quote-border gx-mb-3`}>
+  const MyButton = React.forwardRef(({ onClick, href }, ref) => {
+    return (
+      <a href={href} onClick={onClick} ref={ref}>
         <h2 className="h3 gx-mb-2 gx-pt-2 gx-show-hand">
           <Link
             href={'/projects/' + [router.query.id] + '/' + [data.id] + '/quote-response' + navTo}
@@ -33,6 +33,15 @@ const QuotationCard = ({ data, activeTab }) => {
             </h2>
           </div>
         </div>
+      </a>
+    );
+  });
+  return (
+    <>
+      <Widget styleName={`gx-card-full gx-card-quote-border gx-mb-3`}>
+        <Link href={'/projects/' + [router.query.id] + '/' + [data.id] + '/quote-response' + navTo}>
+          <MyButton />
+        </Link>
       </Widget>
     </>
   );

@@ -328,9 +328,15 @@ const BuyerRegistration = props => {
                     ]}
                   >
                     <Select
+                      showSearch
                       size="large"
                       placeholder="Please select Region"
                       onChange={regionChangeHandler}
+                      filterOption={(input, option) => {
+                        return (
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        );
+                      }}
                     >
                       {regions &&
                         regions.map(region => (
@@ -354,7 +360,16 @@ const BuyerRegistration = props => {
                       },
                     ]}
                   >
-                    <Select size="large" placeholder="Please select Commune">
+                    <Select
+                      showSearch
+                      size="large"
+                      placeholder="Please select Commune"
+                      filterOption={(input, option) => {
+                        return (
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        );
+                      }}
+                    >
                       {communes &&
                         communes.map(commune => (
                           <Option key={commune.id + commune.name} value={commune.id}>
