@@ -147,6 +147,7 @@ const NewProject = () => {
             <Form.Item
               name="estimatedBudget"
               label={<IntlMessages id="app.project.field.estimatedBudget" />}
+              rules={[stringRule]}
             >
               <InputNumber
                 className="gx-w-100"
@@ -157,12 +158,7 @@ const NewProject = () => {
             <Form.Item
               label={<IntlMessages id="app.quotation.field.currency" />}
               name="supplier"
-              rules={[
-                {
-                  ...stringRule,
-                  required: !!estimatedBudget,
-                },
-              ]}
+              rules={[stringRule]}
             >
               <Select placeholder="Select Currency">
                 <Option value=""></Option>

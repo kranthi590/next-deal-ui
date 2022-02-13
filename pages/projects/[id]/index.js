@@ -127,7 +127,12 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
   const ProjectDetails = () => {
     return (
       <>
-        <BreadCrumb navItems={[{ text: 'Projects', route: '/projects' }, { text: project.name }]} />
+        <BreadCrumb
+          navItems={[
+            { text: <IntlMessages id="sidebar.project.Projects" />, route: '/projects' },
+            { text: project.name },
+          ]}
+        />
         <Widget>
           <Row>
             <Col span={12}>
