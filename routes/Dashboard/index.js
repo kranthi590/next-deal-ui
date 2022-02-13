@@ -26,12 +26,6 @@ const BuyerDashboard = ({ userProfile }) => {
 
   return (
     <React.Fragment>
-      <div className="gx-my-2">
-        <ProjectSelector
-          projectChangeCallback={projectChangeCallback}
-          updateLoader={changeLoadingStatus}
-        />
-      </div>
       <Card className="ant-card gx-card-widget">
         <div className="ant-card-head gx-pt-0">
           <div className="ant-card-head-wrapper">
@@ -41,6 +35,12 @@ const BuyerDashboard = ({ userProfile }) => {
                 <IntlMessages id="app.common.text.budget" />
               </h4>
             </div>
+          </div>
+          <div className="gx-my-2">
+            <ProjectSelector
+              projectChangeCallback={projectChangeCallback}
+              updateLoader={changeLoadingStatus}
+            />
           </div>
         </div>
         {loading ? (

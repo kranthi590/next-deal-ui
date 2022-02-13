@@ -7,7 +7,6 @@ import 'moment/locale/es';
 import { Card, Popover } from 'antd';
 import { ResponsesProvider, useResponse } from '../../contexts/responses';
 import IntlMessages from '../../util/IntlMessages';
-import BreadCrumb from '../../app/components/BreadCrumb';
 
 const localizer = momentLocalizer(moment);
 
@@ -77,8 +76,8 @@ const ProjectsCalendarWrapper = () => {
   };
 
   const eventStyleGetter = (event, start, end, isSelected) => {
-    var backgroundColor = event.validityDate ? '#f70' : '#003366';
-    var style = {
+    const backgroundColor = event.validityDate ? '#f70' : '#003366';
+    const style = {
       backgroundColor: backgroundColor,
       position: 'relative',
     };
