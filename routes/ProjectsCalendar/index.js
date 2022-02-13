@@ -140,7 +140,17 @@ const ProjectsCalendarWrapper = () => {
 
   return (
     <React.Fragment>
-      <Card className="gx-card" title={<IntlMessages id="sidebar.menu.calendar" />}>
+      <Card className="gx-card">
+        <div className="ant-card-head gx-pt-0">
+          <div className="ant-card-head-wrapper">
+            <div className="ant-card-head-title gx-text-left gx-pt-0">
+              <h4 className="gx-card-bordered-title">
+                <i className="icon icon-product-list gx-mr-3" />
+                <IntlMessages id="sidebar.menu.calendar" />
+              </h4>
+            </div>
+          </div>
+        </div>
         <ProjectSelector
           projectChangeCallback={projectChangeCallback}
           showStatus={true}

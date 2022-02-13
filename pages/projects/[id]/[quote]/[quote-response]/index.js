@@ -283,7 +283,7 @@ const NewQuoteResponse = props => {
     <>
       <BreadCrumb
         navItems={[
-          { text: 'Projects', route: '/projects' },
+          { text: <IntlMessages id="sidebar.project.Projects" />, route: '/projects' },
           { text: projectsDetails.name, route: '/projects/' + quotationData.projectId },
           { text: quotationData.name },
         ]}

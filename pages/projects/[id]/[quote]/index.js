@@ -213,6 +213,7 @@ const NewQuote = props => {
               <Form.Item
                 name="estimatedBudget"
                 label={<IntlMessages id="app.project.field.estimatedBudget" />}
+                rules={[stringRule]}
               >
                 <ClpFormatter
                   className="gx-w-100"
@@ -225,12 +226,7 @@ const NewQuote = props => {
               <Form.Item
                 label={<IntlMessages id="app.quotation.field.currency" />}
                 name="currency"
-                rules={[
-                  {
-                    ...stringRule,
-                    required: !!estimatedBudget,
-                  },
-                ]}
+                rules={[stringRule]}
               >
                 <Select placeholder="Select Currency">
                   <Option value="clp">CLP</Option>

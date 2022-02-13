@@ -47,7 +47,7 @@ const NewProject = props => {
   const [expectedEndDate, setExpectedEndDate] = useState(null);
   const [files, setFiles] = useState([]);
 
-  const { error, newProject } = useProject();
+  const { newProject } = useProject();
 
   const [form] = Form.useForm();
 
@@ -127,7 +127,7 @@ const NewProject = props => {
         </div>
         <Form form={form} initialValues={{ remember: true }} onFinish={onSave} {...formLayout}>
           <Row>
-            <Col xl={12} lg={24} md={24} sm={24} xs={24}>
+            <Col xl={14} lg={24} md={24} sm={24} xs={24}>
               <Form.Item
                 name="name"
                 label={<IntlMessages id="app.project.field.projectname" />}
@@ -145,7 +145,6 @@ const NewProject = props => {
               <Form.Item
                 name="costCenter"
                 label={<IntlMessages id="app.project.field.costcenter" />}
-                rules={[stringRule]}
               >
                 <Input placeholder="Cost Center" />
               </Form.Item>
@@ -204,7 +203,7 @@ const NewProject = props => {
               </Form.Item>
             </Col>
             <Col
-              span={12}
+              span={10}
               style={{
                 height: '130px',
                 overflowX: 'auto',
