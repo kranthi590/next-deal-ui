@@ -26,7 +26,7 @@ const FooterComponent = () => (
     {links &&
       links.map((link, index) => (
         <Link key={index} href={link.url}>
-          <a>{link.label}</a>
+          <a target="_blank">{link.label}</a>
         </Link>
       ))}
   </div>
