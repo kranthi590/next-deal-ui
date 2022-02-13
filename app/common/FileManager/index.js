@@ -2,7 +2,6 @@ import React from 'react';
 import { Upload, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Cookies } from 'react-cookie';
-import axios from 'axios';
 import IntlMessages from '../../../util/IntlMessages';
 
 const cookie = new Cookies();
@@ -18,7 +17,7 @@ const acceptedTypes = [
   'application/vnd.ms-excel',
   'text/plain',
   '.xlsx',
-  '.xls'
+  '.xls',
 ];
 
 function getBase64(file) {
@@ -93,7 +92,9 @@ export default class PicturesWall extends React.Component {
       modelBody = (
         <object data={`${previewImage}`} type="application/pdf" width="678" height="678">
           <iframe src={`${previewImage}`} width="678" height="678">
-            <p><IntlMessages id="file.manager.browser.error.pdf" /></p>
+            <p>
+              <IntlMessages id="file.manager.browser.error.pdf" />
+            </p>
           </iframe>
         </object>
       );
