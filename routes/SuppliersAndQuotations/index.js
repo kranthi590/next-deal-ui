@@ -4,6 +4,7 @@ import { ProjectProvider } from '../../contexts/projects';
 import { Cookies } from 'react-cookie';
 import NoDataAvailable from '../../app/components/NextDeal/NoDataAvailable.js';
 import IntlMessages from '../../util/IntlMessages';
+import ProjectSelector from '../../app/components/NextDeal/ProjectSelector';
 
 const SuppliersAndQuotationsDashboard = () => {
   const [buyerId, setBuyerId] = useState(null);

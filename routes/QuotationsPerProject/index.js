@@ -25,12 +25,6 @@ const QuotationsPerProjectDashboard = () => {
 
   return (
     <React.Fragment>
-      <div className="gx-mb-2">
-        <ProjectSelector
-          projectChangeCallback={projectChangeCallback}
-          updateLoader={changeLoadingStatus}
-        />
-      </div>
       <Card className="ant-card gx-card-widget">
         <div className="ant-card-head gx-pt-0">
           <div className="ant-card-head-wrapper">
@@ -40,6 +34,12 @@ const QuotationsPerProjectDashboard = () => {
                 <IntlMessages id="app.common.text.quotationsPerProject" />
               </h4>
             </div>
+          </div>
+          <div className="gx-mb-2">
+            <ProjectSelector
+              projectChangeCallback={projectChangeCallback}
+              updateLoader={changeLoadingStatus}
+            />
           </div>
         </div>
         {loading ? (
