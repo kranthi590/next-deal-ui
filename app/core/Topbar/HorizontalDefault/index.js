@@ -93,7 +93,7 @@ const HorizontalDefault = () => {
               <img
                 alt=""
                 className="gx-d-block gx-d-lg-none gx-pointer gx-w-logo"
-                src={'/images/w-logo.png'}
+                src={'/images/w-nd-logo.png'}
               />
             </Link>
             <Link href="/">
