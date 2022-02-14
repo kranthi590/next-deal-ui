@@ -48,11 +48,11 @@ const SidebarLogo = () => {
       <Link href="/">
         <a className="gx-site-logo">
           {navStyle === NAV_STYLE_NO_HEADER_MINI_SIDEBAR && width >= TAB_SIZE ? (
-            <img alt="lo" src={'/images/w-logo.png'} />
+            <img alt="lo" src={'/images/w-nd-logo.png'} />
           ) : themeType === THEME_TYPE_LITE ? (
             <img alt="logo1" src={'/app/images/logo-white.png'} />
           ) : (
-            <img alt="logo2" src={'/app/images/logo.png'} />
+            <img alt="logo2" src={'/app/images/nd-logo.png'} />
           )}
         </a>
       </Link>

@@ -10,7 +10,7 @@ const Aside = ({ heading, content, url }) => {
         <h1 className="aside-heading">
           <IntlMessages id={heading} />
           <a class="gx-site-logo" href={url}>
-            <img alt="logo2" src="/app/images/logo.png" />
+            <img alt="logo2" src="/app/images/nd-logo.png" />
           </a>
         </h1>
         <p className="aside-text">
