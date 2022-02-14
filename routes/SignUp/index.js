@@ -35,12 +35,12 @@ const SignUp = props => {
       buyerId: 1,
       iAccept,
       contactInfo: {
-        addressLine1: 'Dept: 34',
-        addressLine2: 'Del Inca 4421',
+        addressLine1: 'NA',
+        addressLine2: 'NA',
         communeId: 1,
         regionId: 1,
         countryId: 1,
-        phoneNumber1: '+56 935234098',
+        phoneNumber1: 'NA',
         emailId: data.email,
       },
     };
