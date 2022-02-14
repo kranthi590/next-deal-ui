@@ -103,7 +103,7 @@ const NewQuote = props => {
       }
       return acc;
     }, {});
-
+    formData.comments = formData.description;
     return formData;
   };
 
