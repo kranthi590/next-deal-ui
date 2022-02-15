@@ -125,8 +125,6 @@ const SupplierRegistration = props => {
 
       isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
       inchargeRole: 'Owner',
-      logoUrl:
-        'https://previews.123rf.com/images/trustle/trustle1509/trustle150900041/45658560-abstract-web-icon-and-logo-sample-vector-illusration.jpg',
     };
 
     if (!isEmpty(business.webSiteUrl)) {
@@ -770,7 +768,6 @@ const SupplierRegistration = props => {
                     files={files}
                     context={{
                       assetRelation: 'supplier_logo',
-                      //  assetRelationId: quotationData.id
                     }}
                     maxCount={1}
                     customSubmitHandler={({ fileList }) => {

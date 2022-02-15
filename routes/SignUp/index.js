@@ -20,7 +20,7 @@ const FormItem = Form.Item;
 
 const SignUp = props => {
   const router = useRouter();
-  const { isLoading, userSignup, getAuthUser, error } = useAuth();
+  const { isLoading, userSignup } = useAuth();
 
   const [iAccept, setIAccept] = useState(false);
 
@@ -32,14 +32,13 @@ const SignUp = props => {
       emailId: data.email,
       additionalData: 'none',
       type: 'buyer',
-      buyerId: 1,
       iAccept,
       contactInfo: {
         addressLine1: 'NA',
         addressLine2: 'NA',
-        communeId: 1,
-        regionId: 1,
-        countryId: 1,
+        communeId: 0,
+        regionId: 0,
+        countryId: 0,
         phoneNumber1: 'NA',
         emailId: data.email,
       },

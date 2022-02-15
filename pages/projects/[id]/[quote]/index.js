@@ -1,17 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Form,
-  Input,
-  Button,
-  Card,
-  Col,
-  Row,
-  DatePicker,
-  Select,
-  InputNumber,
-  Divider,
-  Modal,
-} from 'antd';
+import { Form, Input, Button, Card, Col, Row, DatePicker, Select, Divider, Modal } from 'antd';
 import { useRouter } from 'next/router';
 
 // Utils
@@ -54,7 +42,7 @@ const stringRule = {
 const NewQuote = props => {
   const { getBuyerSuppliers } = useRegistration();
   const { createQuotation } = useQuotation();
-  const { error, getProjectById } = useProject();
+  const { getProjectById } = useProject();
   const [estimatedBudget, setEstimatedBudget] = useState(0);
   const [startDate, setStartDate] = useState(null);
   const [expectedEndDate, setExpectedEndDate] = useState(null);
@@ -293,7 +281,6 @@ const NewQuote = props => {
                     files={files}
                     context={{
                       assetRelation: 'quotation_request',
-                      //  assetRelationId: project.id
                     }}
                     customSubmitHandler={({ fileList }) => {
                       setFiles(fileList);

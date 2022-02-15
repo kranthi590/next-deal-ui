@@ -420,7 +420,7 @@
   "app.buyerregistration.field.webSiteUrl.error.valid":"Por favor ingresa una página Web válida!",
   "app.buyerregistration.field.emailId":"Email de la empresa",
   "app.buyerregistration.field.emailId.error.email":"Por favor ingresa un email válido!",
-  "app.buyerregistration.field.phoneNumber1":"Teléfonon 1",
+  "app.buyerregistration.field.phoneNumber1":"teléfono 1",
   "app.buyerregistration.field.phoneNumber1.error.required":"Por favor ingresa el número de teléfono!",
   "app.buyerregistration.field.phoneNumber2":"Teléfono 2",
   "app.buyerregistration.field.iAccept.error.required":"Por favor acepte los términos y condiciones antes de continuar!",
