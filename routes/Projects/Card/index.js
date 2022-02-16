@@ -9,15 +9,37 @@ import CardsListItem from './CardsListItem';
 import IntlMessages from '../../../util/IntlMessages';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useProject } from '../../../contexts/projects';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import { successNotification } from '../../../util/util';
 
 function CardList({ projects, loader, totalCount }) {
-  const { getProjectsByPagination } = useProject();
+  const { getProjectsByPagination, deleteProject } = useProject();
   const [projectsList, setProjectsList] = useState(projects);
   const [size, setSize] = useState(10);
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(projects.length);
   const [projectsCount, setProjectsCount] = useState(totalCount);
   const [showLoading, setSetShowLoading] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  const onDeleteClick = pid => {
+    setSelectedProject(pid);
+    setShowDeleteAlert(true);
+  };
+
+  const onDeleteConfirmed = () => {
+    deleteProject(selectedProject.id, data => {
+      successNotification('app.registration.detailsSaveSuccessMessage');
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    });
+  };
+  const onDeleteCancel = () => {
+    setShowDeleteAlert(false);
+    setSelectedProject(null);
+  };
 
   const loadMoreProjects = () => {
     setSetShowLoading(true);
@@ -52,7 +74,12 @@ function CardList({ projects, loader, totalCount }) {
           {!loader &&
             projectsList &&
             projectsList.map((data, index) => (
-              <CardsListItem key={index} data={data} styleName="gx-card-list" />
+              <CardsListItem
+                key={index}
+                data={data}
+                styleName="gx-card-list"
+                onDeleteClick={onDeleteClick}
+              />
             ))}
           {(loader || showLoading) &&
             Array(10)
@@ -62,6 +89,22 @@ function CardList({ projects, loader, totalCount }) {
               ))}
         </Col>
       </div>
+      <SweetAlert
+        confirmBtnText={<IntlMessages id="button.delete" />}
+        cancelBtnText={<IntlMessages id="button.cancel" />}
+        show={showDeleteAlert}
+        success
+        title={selectedProject ? selectedProject.name : ''}
+        onConfirm={onDeleteConfirmed}
+        onCancel={onDeleteCancel}
+        showCancel
+        type="warning"
+        customClass="gx-sweetalert-wrapper"
+      >
+        <div>
+          <IntlMessages id="app.common.text.confirmDeleteProject" />
+        </div>
+      </SweetAlert>
     </InfiniteScroll>
   );
 }

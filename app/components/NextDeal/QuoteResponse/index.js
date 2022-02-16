@@ -12,7 +12,7 @@ import {
   Divider,
   Tooltip,
 } from 'antd';
-import { SaveOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { SaveOutlined, QuestionCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';
@@ -20,7 +20,7 @@ import { clpToNumber, numberToClp } from '../../../../util/util';
 import FilesManager from '../../../common/FileManager';
 
 const QuoteResponses = props => {
-  const { onSave, awarded } = props;
+  const { onSave, awarded, onDeleteResponse } = props;
   const {
     id,
     fantasyName,
@@ -103,7 +103,8 @@ const QuoteResponses = props => {
   };
 
   const awardQuote = () => {
-    onSave(null, id);
+    const formData = form.getFieldsValue();
+    onSave({ comments: formData.comments }, id);
   };
 
   const onNetValueChange = async value => {
@@ -149,10 +150,10 @@ const QuoteResponses = props => {
                 value={netValue}
                 onChange={onNetValueChange}
                 placeholder="1.00.00"
-                disabled={awarded}
+                disabled={awarded || !newQuote}
                 addonAfter={
                   <Form.Item name="includesTax" valuePropName="checked" className="gx-mb-0">
-                    <Checkbox disabled={awarded}>
+                    <Checkbox disabled={awarded || !newQuote}>
                       <IntlMessages id="app.quotationresponses.field.includesTax" />
                     </Checkbox>
                   </Form.Item>
@@ -168,7 +169,7 @@ const QuoteResponses = props => {
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
-              <Select placeholder="Select Currency" disabled={awarded}>
+              <Select placeholder="Select Currency" disabled={awarded || !newQuote}>
                 <Option value="clp">CLP</Option>
                 <Option value="uf">UF</Option>
                 <Option value="usd">USD</Option>
@@ -193,7 +194,7 @@ const QuoteResponses = props => {
               <DatePicker
                 style={{ width: '100%' }}
                 placeholder="Delivery Date(With a purchase order confirm)"
-                disabled={awarded}
+                disabled={awarded || !newQuote}
                 onChange={deliveryDateChangeHandler}
               />
             </Form.Item>
@@ -216,7 +217,7 @@ const QuoteResponses = props => {
               <DatePicker
                 style={{ width: '100%' }}
                 placeholder="Validity Date"
-                disabled={awarded}
+                disabled={awarded || !newQuote}
                 onChange={validityDateChangeHandler}
               />
             </Form.Item>
@@ -236,7 +237,7 @@ const QuoteResponses = props => {
                 },
               ]}
             >
-              <Select allowClear placeholder="Payment Conditions" disabled={awarded}>
+              <Select allowClear placeholder="Payment Conditions" disabled={awarded || !newQuote}>
                 <Option value="al-contado">al contado</Option>
                 <Option value="7-dias">7 días</Option>
                 <Option value="15-dias">15 días</Option>
@@ -263,7 +264,7 @@ const QuoteResponses = props => {
                 },
               ]}
             >
-              <Select allowClear placeholder="Incoterm" disabled={awarded}>
+              <Select allowClear placeholder="Incoterm" disabled={awarded || !newQuote}>
                 <Option value="NO_APLICA">No Aplica</Option>
                 <Option value="EXW">EXW</Option>
                 <Option value="FCA">FCA</Option>
@@ -333,45 +334,61 @@ const QuoteResponses = props => {
             )}
           </Col>
         </Row>
-        <Row gutter={2} className="gx-mt-4">
-          {!awarded && (
-            <Col xl={6} xs={24}>
-              {newQuote ? (
-                <></>
-              ) : (
-                <Form.Item>
-                  <Button
-                    type="primary"
-                    block
-                    icon={<SaveOutlined />}
-                    className="gx-mb-0"
-                    onClick={awardQuote}
-                  >
-                    <span>
-                      <IntlMessages id="app.quotationresponses.button.award" />
-                    </span>
-                  </Button>
-                </Form.Item>
+        <Row className="gx-mt-4">
+          <Col xl={24} xs={24}>
+            <Form.Item>
+              {!awarded && (
+                <>
+                  {newQuote ? (
+                    <></>
+                  ) : (
+                    <Button
+                      type="primary"
+                      icon={<SaveOutlined />}
+                      className="gx-mb-0"
+                      onClick={awardQuote}
+                    >
+                      <span>
+                        <IntlMessages id="app.quotationresponses.button.award" />
+                      </span>
+                    </Button>
+                  )}
+                  {newQuote ? (
+                    <>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        icon={<SaveOutlined />}
+                        className="gx-mb-0"
+                      >
+                        <span>
+                          <IntlMessages id="app.quotationresponses.button.save" />
+                        </span>
+                      </Button>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                  {!awarded ? (
+                    <Button
+                      type="primary"
+                      icon={<DeleteOutlined />}
+                      className="gx-mb-0"
+                      onClick={() => {
+                        onDeleteResponse(id);
+                      }}
+                    >
+                      <span>
+                        <IntlMessages id="button.delete" />
+                      </span>
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                </>
               )}
-              {newQuote ? (
-                <Form.Item>
-                  <Button
-                    block
-                    type="primary"
-                    htmlType="submit"
-                    icon={<SaveOutlined />}
-                    className="gx-mb-0"
-                  >
-                    <span>
-                      <IntlMessages id="app.quotationresponses.button.save" />
-                    </span>
-                  </Button>
-                </Form.Item>
-              ) : (
-                <></>
-              )}
-            </Col>
-          )}
+            </Form.Item>
+          </Col>
         </Row>
       </Form>
     </Card>

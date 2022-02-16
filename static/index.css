@@ -192,3 +192,6 @@ body {
   line-height: 24px;
   vertical-align: middle;
 }
+.gx-module-sidenav{
+  z-index: 2;
+}

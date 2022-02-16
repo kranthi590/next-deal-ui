@@ -56,7 +56,7 @@ const QuoteAwarded = props => {
   };
   const onFinish = values => {
     // on finish
-    onSave({ purchaseOrderNumber: values.purchaseOrderNumber }, id);
+    onSave({ purchaseOrderNumber: values.purchaseOrderNumber, comments: values.comments }, id);
   };
   const onNetValueChange = async value => {
     setNetValue(value);
@@ -192,7 +192,7 @@ const QuoteAwarded = props => {
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
-              <Input.TextArea placeholder="Comments" disabled></Input.TextArea>
+              <Input.TextArea placeholder="Comments" disabled={completed}></Input.TextArea>
             </Form.Item>
           </Col>
         </Row>
