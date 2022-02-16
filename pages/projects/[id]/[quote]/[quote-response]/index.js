@@ -30,11 +30,13 @@ const NewQuoteResponse = props => {
     abortQuotation,
     addNewActivity,
     getActivities,
+    deleteQuotationResponse,
   } = useResponse();
   const [showAbortAlert, setShowAbortAlert] = useState(false);
   const [activeAbortId, setActiveAbortId] = useState(null);
   const [alertInfo, setAlertInfo] = useState({ type: '', confirmText: '' });
   const [quotationActivities, setQuotationActivities] = useState(activitiesList);
+  const [selectedResponseId, setSelectedResponseId] = useState(null);
   const router = useRouter();
   const projectId = router.query.quote;
   let awarded = false,
@@ -47,7 +49,7 @@ const NewQuoteResponse = props => {
   }
 
   const onSave = (values, qid) => {
-    if (values) {
+    if (!qid) {
       const files = values.files;
       delete values.files;
       createResponses(projectId, values, async data => {
@@ -68,7 +70,7 @@ const NewQuoteResponse = props => {
       });
     }
     if (qid) {
-      createAward(qid, data => {
+      createAward(qid, values, data => {
         successNotification('app.registration.detailsSaveSuccessMessage');
         setTimeout(() => {
           window.location.hash = '2';
@@ -77,6 +79,16 @@ const NewQuoteResponse = props => {
       });
     }
   };
+
+  const onDeleteResponse = deleteId => {
+    setShowAbortAlert(true);
+    setAlertInfo({
+      type: 'delete',
+      confirmText: <IntlMessages id="app.common.text.confirmDeleteQuotationResponse" />,
+    });
+    setSelectedResponseId(deleteId);
+  };
+
   const onCompleteQuotation = (values, qid) => {
     completeQuotation(qid, values, data => {
       successNotification('app.registration.detailsSaveSuccessMessage');
@@ -107,6 +119,15 @@ const NewQuoteResponse = props => {
         }, 1000);
       });
     }
+    if (alertInfo.type === 'delete') {
+      console.log(selectedResponseId);
+      deleteQuotationResponse(selectedResponseId, data => {
+        successNotification('app.registration.detailsSaveSuccessMessage');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      });
+    }
   };
 
   const onDeawardQuotation = qid => {
@@ -127,6 +148,7 @@ const NewQuoteResponse = props => {
   const onCancelAlert = () => {
     setShowAbortAlert(false);
     setActiveAbortId(null);
+    setSelectedResponseId(null);
     setAlertInfo({ type: '', confirmText: '' });
   };
 
@@ -219,7 +241,13 @@ const NewQuoteResponse = props => {
       <>
         {projectsList.length === 0 && <NoDataAvailable />}
         {projectsList.map(item => (
-          <QuoteResponses formData={item} key={item.id} onSave={onSave} awarded={awarded} />
+          <QuoteResponses
+            formData={item}
+            key={item.id}
+            onSave={onSave}
+            awarded={awarded}
+            onDeleteResponse={onDeleteResponse}
+          />
         ))}
       </>
     );
@@ -283,7 +311,7 @@ const NewQuoteResponse = props => {
     <>
       <BreadCrumb
         navItems={[
-          { text: <IntlMessages id="sidebar.project.Projects" />, route: '/projects' },
+          { text: 'Projects', route: '/projects' },
           { text: projectsDetails.name, route: '/projects/' + quotationData.projectId },
           { text: quotationData.name },
         ]}

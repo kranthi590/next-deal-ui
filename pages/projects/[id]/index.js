@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, Avatar, Divider } from 'antd';
+import { Row, Col, Button, Avatar } from 'antd';
 import Link from 'next/link';
 import { handleApiErrors, httpClient, setApiContext } from '../../../util/Api';
 import cookie from 'cookie';
@@ -14,7 +14,7 @@ import CustomScrollbars from '../../../util/CustomScrollbars';
 import BreadCrumb from '../../../app/components/BreadCrumb';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ResponsesProvider, useResponse } from '../../../contexts/responses';
-import { LoginOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 
 const colSpan = 24 / 3;
 
@@ -226,10 +226,6 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                   next={loadMoreAwardedQuotations}
                   scrollableTarget="awardedQuotations"
                   hasMore={hasMoreAwarded}
-                  // endMessage={
-                  //   awardedQuotationsData.length === 0 ? <NoDataAvailable /> :
-                  //     <Divider><IntlMessages id="app.common.text.noMoreData" /></Divider>
-                  // }
                 >
                   <div className="gx-p-2">
                     {awardedQuotationsData &&
@@ -252,10 +248,6 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                   next={loadMoreCompletedQuotations}
                   scrollableTarget="completedQuotations"
                   hasMore={hasMoreCompleted}
-                  // endMessage={
-                  //   completedQuotationsData.length === 0 ? <NoDataAvailable /> :
-                  //     <Divider><IntlMessages id="app.common.text.noMoreData" /></Divider>
-                  // }
                 >
                   <div className="gx-p-2">
                     {completedQuotationsData &&

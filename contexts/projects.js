@@ -106,11 +106,35 @@ const useProviderProject = () => {
       });
   };
 
+  const deleteProject = (pid, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    httpClient
+      .delete(`projects/${pid}`, {
+        headers: headers,
+      })
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
     newProject,
     getProjectById,
     getProjectsByPagination,
+    deleteProject,
   };
 };

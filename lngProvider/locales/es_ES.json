@@ -548,6 +548,9 @@
   "calendar.filter.status":"Estado",
   "calendar.filter.option.awarded":"Adjudicadas",
   "calendar.filter.option.dewarded":"Desadjudicadas",
-  "calendar.filter.option.all":"Todos"
-
+  "calendar.filter.option.all":"Todos",
+  "app.common.text.confirmDeleteProject": "Are you sure you want to delete the project?",
+  "app.common.text.confirmDeleteQuotationResponse": "Are you sure you want to delete the quotation response?",
+  "app.api.error.400Msg": "Request failed with status code 400",
+  "app.api.error.500Msg": "Request failed with status code 500"
 }

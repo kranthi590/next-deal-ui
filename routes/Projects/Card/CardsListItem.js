@@ -3,8 +3,9 @@ import React from 'react';
 import { Badge, Avatar } from 'antd';
 import { getAvatar } from '../../../util/util';
 import IntlMessages from '../../../util/IntlMessages';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
-const CardsListItem = ({ styleName, data }) => {
+const CardsListItem = ({ styleName, data, onDeleteClick }) => {
   const { status, costCenter, name, managerName, quotationsCount, id } = data;
   return (
     <Badge.Ribbon text={status} color="cyan" placement="start" style={{ top: 0 }}>
@@ -43,14 +44,34 @@ const CardsListItem = ({ styleName, data }) => {
         </div>
         <div className="gx-card-list-footer">
           <div className="gx-featured-content-right">
-            <p className="gx-text-primary gx-text-truncate gx-mt-auto gx-mb-0 gx-pointer">
+            <div>
+              <span className="gx-p-2">
+                <a>
+                  <Link href={'/projects/' + [id]} as={'/projects/' + id}>
+                    <span>
+                      <EyeOutlined />
+                    </span>
+                  </Link>
+                </a>
+              </span>
+              <span className="gx-p-2">
+                <a
+                  onClick={() => {
+                    onDeleteClick({ id, name });
+                  }}
+                >
+                  <DeleteOutlined />
+                </a>
+              </span>
+            </div>
+            {/* <p className="gx-text-primary gx-text-truncate gx-mt-auto gx-mb-0 gx-pointer">
               <Link href={'/projects/' + [id]} as={'/projects/' + id}>
                 <span>
                   <IntlMessages id="app.common.CheckInDetail" />
                   <i className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle" />
                 </span>
               </Link>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

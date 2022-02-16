@@ -80,7 +80,19 @@ export const handleErrorNotification = error => {
       );
     });
   } else {
-    errorNotification(error.message, 'app.registration.errorMessageTitle');
+    let notificationMsg = '';
+    switch (error.response.status) {
+      case 500:
+        notificationMsg = <IntlMessages id="app.api.error.500Msg" />;
+        break;
+      case 400:
+        notificationMsg = <IntlMessages id="app.api.error.400Msg" />;
+        break;
+      default:
+        notificationMsg = error.message;
+        break;
+    }
+    NotificationManager.error(notificationMsg, '', NOTIFICATION_TIMEOUT);
   }
 };
 

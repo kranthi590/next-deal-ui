@@ -55,18 +55,14 @@ const useProviderResponses = () => {
         fetchError(error.message);
       });
   };
-  const createAward = (id, callbackFun) => {
+  const createAward = (id, data, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies();
     httpClient
-      .post(
-        `quotations/${id}/award`,
-        {},
-        {
-          headers: headers,
-        },
-      )
+      .post(`quotations/${id}/award`, data, {
+        headers: headers,
+      })
       .then(({ data }) => {
         if (data) {
           fetchSuccess();
@@ -248,6 +244,28 @@ const useProviderResponses = () => {
       });
   };
 
+  const deleteQuotationResponse = (qid, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    httpClient
+      .delete(`quotations/response/${qid}`, {
+        headers: headers,
+      })
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -260,5 +278,6 @@ const useProviderResponses = () => {
     getQuotationsForCalendar,
     addNewActivity,
     getActivities,
+    deleteQuotationResponse,
   };
 };
