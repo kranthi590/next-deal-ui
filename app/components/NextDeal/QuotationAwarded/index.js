@@ -6,6 +6,7 @@ import IntlMessages from '../../../../util/IntlMessages';
 import { clpToNumber, numberToClp } from '../../../../util/util';
 import ClpFormatter from '../../../../shared/CLP';
 import FilesManager from '../../../common/FileManager';
+import { CURRENCY } from '../../../../util/appConstants';
 
 const QuoteAwarded = props => {
   const { onSave, completed, onDeaward } = props;
@@ -111,9 +112,11 @@ const QuoteAwarded = props => {
               ]}
             >
               <Select placeholder="Select Currency" disabled>
-                <Option value="clp">CLP</Option>
-                <Option value="uf">UF</Option>
-                <Option value="usd">USD</Option>
+                {Object.keys(CURRENCY).map(item => (
+                  <Option key={item} value={CURRENCY[item].toLowerCase()}>
+                    {CURRENCY[item]}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>

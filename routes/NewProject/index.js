@@ -16,6 +16,7 @@ import ClpFormatter from '../../shared/CLP';
 import { FileAddOutlined } from '@ant-design/icons';
 import FilesManager from '../../app/common/FileManager';
 import { uploadFiles } from '../../util/Api';
+import { CURRENCY } from '../../util/appConstants';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -189,9 +190,11 @@ const NewProject = props => {
                 rules={[stringRule]}
               >
                 <Select placeholder="Select Currency">
-                  <Option value="clp">CLP</Option>
-                  <Option value="uf">UF</Option>
-                  <Option value="usd">USD</Option>
+                  {Object.keys(CURRENCY).map(item => (
+                    <Option key={item} value={CURRENCY[item].toLowerCase()}>
+                      {CURRENCY[item]}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
               <Form.Item

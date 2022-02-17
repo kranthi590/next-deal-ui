@@ -18,6 +18,7 @@ import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';
 import { clpToNumber, numberToClp } from '../../../../util/util';
 import FilesManager from '../../../common/FileManager';
+import { CURRENCY } from '../../../../util/appConstants';
 
 const QuoteResponses = props => {
   const { onSave, awarded, onDeleteResponse } = props;
@@ -170,9 +171,11 @@ const QuoteResponses = props => {
               wrapperCol={{ span: 24 }}
             >
               <Select placeholder="Select Currency" disabled={awarded || !newQuote}>
-                <Option value="clp">CLP</Option>
-                <Option value="uf">UF</Option>
-                <Option value="usd">USD</Option>
+                {Object.keys(CURRENCY).map(item => (
+                  <Option key={item} value={CURRENCY[item].toLowerCase()}>
+                    {CURRENCY[item]}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>

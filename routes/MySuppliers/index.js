@@ -37,7 +37,7 @@ const MySuppliers = props => {
     setSupplierDetails(null);
   };
 
-  const loadMySuppliers = page => {
+  const loadMySuppliers = (page = 1) => {
     setLoading(true);
     getBuyerSuppliers(
       data => {
@@ -148,7 +148,7 @@ const MySuppliers = props => {
   ];
   const reloadSuppliers = () => {
     setVisible(false);
-    loadMySuppliers();
+    loadMySuppliers(1);
   };
   const showModal = () => {
     setVisible(true);
@@ -209,6 +209,7 @@ const MySuppliers = props => {
         bodyStyle={{ padding: '0' }}
         okButtonProps={{ style: { display: 'none' } }}
         destroyOnClose={true}
+        maskClosable={false}
       >
         <SupplierRegistrationPage
           isBannerShown={false}
@@ -227,6 +228,7 @@ const MySuppliers = props => {
         footer={null}
         destroyOnClose={true}
         width={1000}
+        maskClosable={false}
       >
         <div className="gx-main-content-wrapper">
           {supplierDetails ? (

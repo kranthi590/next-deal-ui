@@ -266,6 +266,28 @@ const useProviderResponses = () => {
       });
   };
 
+  const deleteQuotation = (id, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    httpClient
+      .delete(`quotations/${id}`, {
+        headers: headers,
+      })
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -279,5 +301,6 @@ const useProviderResponses = () => {
     addNewActivity,
     getActivities,
     deleteQuotationResponse,
+    deleteQuotation,
   };
 };

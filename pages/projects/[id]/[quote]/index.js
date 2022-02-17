@@ -15,6 +15,7 @@ import BreadCrumb from '../../../../app/components/BreadCrumb';
 import moment from 'moment';
 import ClpFormatter from '../../../../shared/CLP';
 import { FileAddOutlined } from '@ant-design/icons';
+import { CURRENCY } from '../../../../util/appConstants';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -118,7 +119,6 @@ const NewQuote = props => {
   const onBudgetChange = async value => {
     setEstimatedBudget(value);
   };
-
   return (
     <>
       <BreadCrumb
@@ -148,7 +148,7 @@ const NewQuote = props => {
             },
             {
               name: ['costCenter'],
-              value: projectInfo.costCenter,
+              value: projectInfo.costCenter ? projectInfo.costCenter : 'NA',
             },
           ]}
           onFinish={onSave}
@@ -217,9 +217,11 @@ const NewQuote = props => {
                 rules={[stringRule]}
               >
                 <Select placeholder="Select Currency">
-                  <Option value="clp">CLP</Option>
-                  <Option value="uf">UF</Option>
-                  <Option value="usd">USD</Option>
+                  {Object.keys(CURRENCY).map(item => (
+                    <Option key={item} value={CURRENCY[item].toLowerCase()}>
+                      {CURRENCY[item]}
+                    </Option>
+                  ))}
                 </Select>
               </Form.Item>
               <Form.Item
