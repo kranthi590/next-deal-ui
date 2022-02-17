@@ -22,7 +22,10 @@ const SupplierDetails = props => {
     inchargeRole,
     isShared,
     serviceLocations,
+    logo,
+    comments,
   } = props.supplierDetails;
+
   let categoriesList = [
     { value: 6, text: 'Alimentación' },
     { value: 19, text: 'Artículos de oficina' },
@@ -123,7 +126,7 @@ const SupplierDetails = props => {
                 <Avatar
                   className="gx-size-100"
                   alt={legalName}
-                  src={logoUrl}
+                  src={logo && logo[0] ? logo[0].fileUrl : ''}
                   style={{ color: '#f56a00', backgroundColor: '#fde3cf', fontSize: '2rem' }}
                 >
                   {getAvatar(legalName)}
@@ -277,9 +280,7 @@ const SupplierDetails = props => {
                           <IntlMessages id="app.supplierregistration.field.business_supplier_info" />
                         }
                       </h6>
-                      <p className="gx-mb-0">
-                        {businessAddress.additionalData ? businessAddress.additionalData : '-'}
-                      </p>
+                      <p className="gx-mb-0">{comments ? comments : '-'}</p>
                     </div>
                   </div>
                 </Col>

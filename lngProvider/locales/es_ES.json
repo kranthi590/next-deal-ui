@@ -530,6 +530,7 @@
   "app.common.text.quotationAborted": "Cita abortada",
   "app.common.text.confirmquotationDeaward": "¿Estas seguro de desadjudicar cotizacion?",
   "app.common.text.confirmQuotationAborted": "¿Estas seguro de abortar cotizacion?",
+  "app.common.text.confirmQuotationDelete": "¿Estás seguro de que quieres borrar la cita?",
   "app.common.text.confirm":"Confirmar",
   "app.common.text.Project": "Proyecto",
   "app.common.text.supplier":"Proveedor",

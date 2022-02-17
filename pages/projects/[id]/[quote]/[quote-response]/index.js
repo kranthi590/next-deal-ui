@@ -16,7 +16,7 @@ import QuotationCompleted from '../../../../../app/components/NextDeal/Quotation
 import FilesManager from '../../../../../app/common/FileManager';
 import BreadCrumb from '../../../../../app/components/BreadCrumb';
 import IntlMessages from '../../../../../util/IntlMessages';
-import { CloseOutlined } from '@ant-design/icons';
+import { CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import QuotationTimeline from '../../../../../app/components/NextDeal/QuotationTimeline';
 
@@ -31,6 +31,7 @@ const NewQuoteResponse = props => {
     addNewActivity,
     getActivities,
     deleteQuotationResponse,
+    deleteQuotation,
   } = useResponse();
   const [showAbortAlert, setShowAbortAlert] = useState(false);
   const [activeAbortId, setActiveAbortId] = useState(null);
@@ -120,11 +121,18 @@ const NewQuoteResponse = props => {
       });
     }
     if (alertInfo.type === 'delete') {
-      console.log(selectedResponseId);
       deleteQuotationResponse(selectedResponseId, data => {
         successNotification('app.registration.detailsSaveSuccessMessage');
         setTimeout(() => {
           window.location.reload();
+        }, 1000);
+      });
+    }
+    if (alertInfo.type === 'deleteQuotation') {
+      deleteQuotation(quotationData.id, data => {
+        successNotification('app.registration.detailsSaveSuccessMessage');
+        setTimeout(() => {
+          window.location.href = `${window.location.origin}/app/projects/${quotationData.projectId}`;
         }, 1000);
       });
     }
@@ -143,6 +151,13 @@ const NewQuoteResponse = props => {
     setAlertInfo({
       type: 'abort',
       confirmText: <IntlMessages id="app.common.text.confirmQuotationAborted" />,
+    });
+  };
+  const onDeleteQuotation = () => {
+    setShowAbortAlert(true);
+    setAlertInfo({
+      type: 'deleteQuotation',
+      confirmText: <IntlMessages id="app.common.text.confirmQuotationDelete" />,
     });
   };
   const onCancelAlert = () => {
@@ -202,6 +217,20 @@ const NewQuoteResponse = props => {
                     >
                       <span>
                         <IntlMessages id="app.quotationresponses.button.abort" />
+                      </span>
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
+                  {quotationData.status === 'created' || quotationData.status === 'in_progress' ? (
+                    <Button
+                      type="primary"
+                      icon={<DeleteOutlined />}
+                      className="gx-mb-0 gx-mt-1"
+                      onClick={onDeleteQuotation}
+                    >
+                      <span>
+                        <IntlMessages id="button.delete" />
                       </span>
                     </Button>
                   ) : (

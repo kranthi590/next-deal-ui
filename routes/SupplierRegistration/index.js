@@ -100,6 +100,7 @@ const SupplierRegistration = props => {
       regionId: business.regionId,
       emailId: business.emailId,
       phoneNumber1: getPhonePrefix(business.telephone1) + business.phoneNumber1,
+      phoneNumber2: getPhonePrefix(business.telephone2) + business.phoneNumber2,
       countryId: 1,
     };
 
@@ -110,6 +111,7 @@ const SupplierRegistration = props => {
       regionId: billing.regionId,
       emailId: billing.emailId,
       phoneNumber1: getPhonePrefix(billing.telephone1) + billing.phoneNumber1,
+      phoneNumber2: getPhonePrefix(billing.telephone2) + billing.phoneNumber2,
       countryId: 1,
     };
 
@@ -126,6 +128,9 @@ const SupplierRegistration = props => {
       isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
       inchargeRole: 'Owner',
     };
+    if (business.supplier_info) {
+      formData.comments = business.supplier_info;
+    }
 
     if (!isEmpty(business.webSiteUrl)) {
       formData.webSiteUrl = addProdocol(business.webSiteUrl);
@@ -162,7 +167,6 @@ const SupplierRegistration = props => {
   const onFinishFailed = errorInfo => {};
 
   const onFinish = async values => {
-    getFormData(values);
     registerSupplier(getFormData(values), isAuthenticated, async data => {
       try {
         if (files.length > 0) {
@@ -550,6 +554,11 @@ const SupplierRegistration = props => {
                       size="large"
                       mode="multiple"
                       placeholder="Please select your categories"
+                      filterOption={(input, option) => {
+                        return (
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        );
+                      }}
                     >
                       <Option value="6">Alimentación</Option>
                       <Option value="19">Artículos de oficina</Option>
