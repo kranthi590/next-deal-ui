@@ -16,7 +16,6 @@ const SupplierDetails = props => {
     rut,
     type,
     categories,
-    billingAddress,
     inchargeFullName,
     emailId,
     inchargeRole,
@@ -25,6 +24,9 @@ const SupplierDetails = props => {
     logo,
     comments,
   } = props.supplierDetails;
+  const billingAddress = props.supplierDetails.billingAddress
+    ? props.supplierDetails.billingAddress
+    : {};
 
   let categoriesList = [
     { value: 6, text: 'Alimentación' },
@@ -66,7 +68,7 @@ const SupplierDetails = props => {
         if (item.id === businessAddress.regionId) {
           setBusinessRegion(item.name);
         }
-        if (billingAddress.regionId) {
+        if (billingAddress && billingAddress.regionId) {
           if (item.id === billingAddress.regionId) {
             setBusinessRegionBilling(item.name);
           }
@@ -91,7 +93,7 @@ const SupplierDetails = props => {
         }
       });
     });
-    if (billingAddress.regionId) {
+    if (billingAddress && billingAddress.regionId) {
       fetchCommune({ regionId: billingAddress.regionId }, data => {
         const communes = data && data.length > 0 ? data[0] : [];
         communes.some(com => {
