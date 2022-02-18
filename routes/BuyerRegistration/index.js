@@ -22,6 +22,7 @@ import Footer from '../../app/components/Footer';
 import '../../styles/form-page.css';
 import Rut from '../../shared/Rut';
 import { clean, validate } from 'rut.js';
+import { TODO_CHILE } from '../../util/appConstants';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -339,11 +340,13 @@ const BuyerRegistration = props => {
                       }}
                     >
                       {regions &&
-                        regions.map(region => (
-                          <Option key={region.id + region.name} value={region.id}>
-                            {region.name}
-                          </Option>
-                        ))}
+                        regions
+                          .filter(r => r.name !== TODO_CHILE)
+                          .map(region => (
+                            <Option key={region.id + region.name} value={region.id}>
+                              {region.name}
+                            </Option>
+                          ))}
                     </Select>
                   </FormItem>
                 </Col>

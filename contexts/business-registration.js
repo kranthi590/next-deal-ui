@@ -213,6 +213,27 @@ const useProviderRegistration = () => {
       });
   };
 
+  const getNextDealSuppliers = (offset = 0, size = 100, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    httpClient
+      .get(`suppliers?offset=${offset}&size=${size}`, { headers })
+      .then(({ data }) => {
+        if (data.data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -224,5 +245,6 @@ const useProviderRegistration = () => {
     getBuyerSuppliers,
     getSupplier,
     downloadSuppliers,
+    getNextDealSuppliers,
   };
 };
