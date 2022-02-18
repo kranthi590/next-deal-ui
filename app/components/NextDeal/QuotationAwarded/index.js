@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Row, Col, Form, Input, DatePicker, Card, Divider, Select } from 'antd';
-import { SaveOutlined, UndoOutlined } from '@ant-design/icons';
+import { Button, Row, Col, Form, Input, DatePicker, Card, Divider, Select, Tooltip } from 'antd';
+import { QuestionCircleOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import { clpToNumber, numberToClp } from '../../../../util/util';
@@ -191,7 +191,17 @@ const QuoteAwarded = props => {
           <Col xl={6} xs={24}>
             <Form.Item
               name="comments"
-              label={<IntlMessages id="app.quotationresponses.field.description" />}
+              label={
+                <span>
+                  <IntlMessages id="app.quotationresponses.field.description" />
+                  &nbsp;
+                  <Tooltip
+                    title={<IntlMessages id="app.quotationresponses.field.description.info" />}
+                  >
+                    <QuestionCircleOutlined />
+                  </Tooltip>
+                </span>
+              }
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
