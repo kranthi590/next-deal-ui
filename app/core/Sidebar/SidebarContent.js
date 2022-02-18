@@ -102,6 +102,16 @@ const SidebarContent = () => {
                 </a>
               </Link>
             </Menu.Item>
+            <Menu.Item key="nextdeal-suppliers">
+              <Link href="/nextdeal-suppliers">
+                <a>
+                  <i className="icon icon-product-list" />
+                  <span>
+                    <IntlMessages id="sidebar.suppliers.suppliersNextDeal" />
+                  </span>
+                </a>
+              </Link>
+            </Menu.Item>
             <Menu.Item key="calendar">
               <Link href="/calendar">
                 <a>

@@ -194,6 +194,7 @@ const MySuppliers = props => {
           dataSource={suppliersList}
           scroll={{ y: 500 }}
           pagination={{
+            showSizeChanger: false,
             pageSize: 20,
             total: totalPages,
             onChange: loadMySuppliers,

@@ -23,6 +23,7 @@ import { isEmpty } from 'lodash';
 
 // Styles
 import '../../styles/form-page.css';
+import { TODO_CHILE } from '../../util/appConstants';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -354,11 +355,13 @@ const SupplierRegistration = props => {
                       }}
                     >
                       {regions &&
-                        regions.map(region => (
-                          <Option key={region.id + region.name} value={region.id}>
-                            {region.name}
-                          </Option>
-                        ))}
+                        regions
+                          .filter(r => r.name !== TODO_CHILE)
+                          .map(region => (
+                            <Option key={region.id + region.name} value={region.id}>
+                              {region.name}
+                            </Option>
+                          ))}
                     </Select>
                   </FormItem>
                 </Col>
@@ -644,11 +647,13 @@ const SupplierRegistration = props => {
                         onChange={billingRegionChangeHandler}
                       >
                         {regions &&
-                          regions.map(region => (
-                            <Option key={region.id + region.name} value={region.id}>
-                              {region.name}
-                            </Option>
-                          ))}
+                          regions
+                            .filter(r => r.name !== TODO_CHILE)
+                            .map(region => (
+                              <Option key={region.id + region.name} value={region.id}>
+                                {region.name}
+                              </Option>
+                            ))}
                       </Select>
                     </FormItem>
                   </Col>

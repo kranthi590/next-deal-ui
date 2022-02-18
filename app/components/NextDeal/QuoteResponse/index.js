@@ -372,7 +372,7 @@ const QuoteResponses = props => {
                   ) : (
                     <></>
                   )}
-                  {!awarded ? (
+                  {!awarded && !newQuote ? (
                     <Button
                       type="primary"
                       icon={<DeleteOutlined />}
