@@ -41,13 +41,14 @@ const stringRule = {
 };
 
 const NewQuote = props => {
-  const { getBuyerSuppliers } = useRegistration();
+  const { getBuyerSuppliers, getNextDealSuppliers } = useRegistration();
   const { createQuotation } = useQuotation();
   const { getProjectById } = useProject();
   const [estimatedBudget, setEstimatedBudget] = useState(0);
   const [startDate, setStartDate] = useState(null);
   const [expectedEndDate, setExpectedEndDate] = useState(null);
   const [suppliers, setSuppliers] = useState([]);
+  const [sharedSuppliers, setSharedSuppliers] = useState([]);
   const [visible, setVisible] = useState(false);
   const [projectInfo, setProjectInfo] = useState({});
   const [form] = Form.useForm();
@@ -62,12 +63,18 @@ const NewQuote = props => {
     getBuyerSuppliers(data => {
       setSuppliers(data.rows);
     });
+    getNextDealSuppliers(0, 200, data => {
+      setSharedSuppliers(data.rows);
+    });
   }, []);
 
   const reloadSuppliers = () => {
     setVisible(false);
     getBuyerSuppliers(data => {
       setSuppliers(data.rows);
+    });
+    getNextDealSuppliers(0, 200, data => {
+      setSharedSuppliers(data.rows);
     });
   };
 
@@ -93,6 +100,8 @@ const NewQuote = props => {
       return acc;
     }, {});
     formData.comments = formData.description;
+    formData.suppliers = formData.suppliers.concat(formData.sharedSuppliers);
+    delete formData.sharedSuppliers;
     return formData;
   };
 
@@ -269,6 +278,29 @@ const NewQuote = props => {
                     <IntlMessages id="app.quotation.addsupplier" />
                   </Button>
                 </p>
+                <Divider>
+                  <IntlMessages id="app.userAuth.or" />
+                </Divider>
+              </Form.Item>
+              <Form.Item
+                label={<IntlMessages id="sidebar.suppliers.suppliersNextDeal" />}
+                name="sharedSuppliers"
+              >
+                <Select
+                  size="large"
+                  placeholder="Select your suppliers!!"
+                  mode="multiple"
+                  filterOption={(input, option) => {
+                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                  }}
+                >
+                  {sharedSuppliers &&
+                    sharedSuppliers.map(supplier => (
+                      <Option key={supplier.id + supplier.legalName} value={supplier.id}>
+                        {supplier.legalName}
+                      </Option>
+                    ))}
+                </Select>
               </Form.Item>
               <Row gutter={24} style={{ marginBottom: 20 }}>
                 <Col xs={24}></Col>

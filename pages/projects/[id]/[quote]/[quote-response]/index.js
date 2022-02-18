@@ -286,17 +286,18 @@ const NewQuoteResponse = props => {
     return (
       <>
         {awardedResponses.length === 0 && <NoDataAvailable />}
-        {awardedResponses.map(item => (
-          <QuotationAwarded
-            formData={item}
-            key={item.id}
-            onSave={onCompleteQuotation}
-            completed={completed}
-            onDeaward={() => {
-              onDeawardQuotation(item.id);
-            }}
-          />
-        ))}
+        {awardedResponses &&
+          awardedResponses.map(item => (
+            <QuotationAwarded
+              formData={item}
+              key={item.id}
+              onSave={onCompleteQuotation}
+              completed={completed}
+              onDeaward={() => {
+                onDeawardQuotation(item.id);
+              }}
+            />
+          ))}
       </>
     );
   };
