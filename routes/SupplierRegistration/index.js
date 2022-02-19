@@ -327,7 +327,7 @@ const SupplierRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="las condes" />
+                    <Input size="large" placeholder="1234" />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -633,7 +633,7 @@ const SupplierRegistration = props => {
                       }
                       name="billing_addressLine2"
                     >
-                      <Input size="large" placeholder="las condes" />
+                      <Input size="large" placeholder="1234" />
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
