@@ -531,7 +531,7 @@
   "app.common.text.quotationAborted": "Cita abortada",
   "app.common.text.confirmquotationDeaward": "¿Estas seguro de desadjudicar cotizacion?",
   "app.common.text.confirmQuotationAborted": "¿Estas seguro de abortar cotizacion?",
-  "app.common.text.confirmQuotationDelete": "¿Estás seguro de que quieres borrar la cita?",
+  "app.common.text.confirmQuotationDelete": "¿Estas seguro de que desea eliminar la cotizacion?",
   "app.common.text.confirm":"Confirmar",
   "app.common.text.Project": "Proyecto",
   "app.common.text.supplier":"Proveedor",
@@ -551,8 +551,8 @@
   "calendar.filter.option.awarded":"Adjudicadas",
   "calendar.filter.option.dewarded":"Desadjudicadas",
   "calendar.filter.option.all":"Todos",
-  "app.common.text.confirmDeleteProject": "Are you sure you want to delete the project?",
-  "app.common.text.confirmDeleteQuotationResponse": "Are you sure you want to delete the quotation response?",
-  "app.api.error.400Msg": "Request failed with status code 400",
-  "app.api.error.500Msg": "Request failed with status code 500"
+  "app.common.text.confirmDeleteProject": "¿Estas seguro de que desea eliminar el proyecto?",
+  "app.common.text.confirmDeleteQuotationResponse": "¿Estas seguro de que desea eliminar la respuesta de la cotizacion?",
+  "app.api.error.400Msg": "Error 400",
+  "app.api.error.500Msg": "Error 500"
 }
