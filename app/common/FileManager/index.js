@@ -44,7 +44,6 @@ export default class PicturesWall extends React.Component {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
-
     this.setState({
       previewImage: file.url || file.preview,
       previewVisible: true,
@@ -53,7 +52,12 @@ export default class PicturesWall extends React.Component {
     });
   };
 
-  handleChange = ({ fileList }) => {
+  handleChange = ({ fileList}) => {
+    fileList.forEach((file) => {
+      if (!file.url && file.response) {
+        file.url = file.response.data[0].fileUrl;
+      }
+    });
     this.setState({ fileList });
     this.props.customSubmitHandler && this.props.customSubmitHandler({ fileList });
   };
