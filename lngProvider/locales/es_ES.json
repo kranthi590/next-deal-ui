@@ -469,7 +469,7 @@
   "app.supplierregistration.field.billing_communeId":"Comuna",
   "app.supplierregistration.field.billing_phoneNumber1":"Teléfono 1",
   "app.supplierregistration.field.billing_phoneNumber2":"Teléfono 2",
-  "app.supplierregistration.business_contact_title":"información de contacto",
+  "app.supplierregistration.business_contact_title":"Información de contacto",
   "app.supplierregistration.field.bcontact_name":"Nombre",
   "app.supplierregistration.field.bcontact_surname":"Apellido",
   "app.supplierregistration.field.bcontact_email":"Email",

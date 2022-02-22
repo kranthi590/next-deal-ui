@@ -770,11 +770,16 @@ const SupplierRegistration = props => {
                     name="bcontact_email"
                     rules={[
                       {
-                        required: true,
+                        required: false,
                         type: 'email',
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.bcontact_email.error.email" />
-                        ),
+                        validator: (_, value) => {
+                          if (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+                            return Promise.reject(
+                              <IntlMessages id="app.supplierregistration.field.bcontact_email.error.email" />,
+                            );
+                          }
+                          return Promise.resolve();
+                        },
                       },
                     ]}
                   >
