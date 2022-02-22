@@ -434,9 +434,18 @@ const BuyerRegistration = props => {
                     rules={[
                       {
                         required: true,
-                        message: (
-                          <IntlMessages id="app.buyerregistration.field.phoneNumber1.error.required" />
-                        ),
+                        validator: (_, value) => {
+                          if (!value) {
+                            return Promise.reject(
+                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                            );
+                          } else if (isNaN(value)) {
+                            return Promise.reject(
+                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                            );
+                          }
+                          return Promise.resolve();
+                        },
                       },
                     ]}
                   >
@@ -452,6 +461,19 @@ const BuyerRegistration = props => {
                   <FormItem
                     label={<IntlMessages id="app.buyerregistration.field.phoneNumber2" />}
                     name="phoneNumber2"
+                    rules={[
+                      {
+                        required: false,
+                        validator: (_, value) => {
+                          if (value && isNaN(value)) {
+                            return Promise.reject(
+                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
                   >
                     <Input
                       size="large"

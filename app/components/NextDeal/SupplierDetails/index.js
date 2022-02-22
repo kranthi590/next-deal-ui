@@ -267,7 +267,7 @@ const SupplierDetails = props => {
                       <h6 className="gx-mb-1 gx-text-grey">
                         {<IntlMessages id="app.supplierregistration.field.business_type" />}
                       </h6>
-                      <p className="gx-mb-0">{type === 'supplier' ? 'Emprendedor' : 'Pyme'}</p>
+                      <p className="gx-mb-0">{type}</p>
                     </div>
                   </div>
                 </Col>

@@ -199,6 +199,7 @@ const QuoteResponses = props => {
                 placeholder="Delivery Date(With a purchase order confirm)"
                 disabled={awarded || !newQuote}
                 onChange={deliveryDateChangeHandler}
+                format="DD/MM/YYYY"
               />
             </Form.Item>
           </Col>
@@ -222,6 +223,7 @@ const QuoteResponses = props => {
                 placeholder="Validity Date"
                 disabled={awarded || !newQuote}
                 onChange={validityDateChangeHandler}
+                format="DD/MM/YYYY"
               />
             </Form.Item>
           </Col>

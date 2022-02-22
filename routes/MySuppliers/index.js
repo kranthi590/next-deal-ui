@@ -210,6 +210,7 @@ const MySuppliers = props => {
         bodyStyle={{ padding: '0' }}
         okButtonProps={{ style: { display: 'none' } }}
         destroyOnClose={true}
+        width={1000}
         maskClosable={false}
       >
         <SupplierRegistrationPage
