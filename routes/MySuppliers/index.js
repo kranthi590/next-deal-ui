@@ -206,12 +206,12 @@ const MySuppliers = props => {
         centered
         visible={visible}
         onCancel={() => setVisible(false)}
-        width={'auto'}
         bodyStyle={{ padding: '0' }}
         okButtonProps={{ style: { display: 'none' } }}
         destroyOnClose={true}
         width={1000}
         maskClosable={false}
+        footer={false}
       >
         <SupplierRegistrationPage
           isBannerShown={false}
