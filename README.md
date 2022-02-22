@@ -1,4 +1,4 @@
-# Next Deal
+# NextDeal
 Encuentra los productos, servicios y proveedores ideales para desarrollar y hacer crecer tu negocio, simple y rápido.
 
 ## Run Locally

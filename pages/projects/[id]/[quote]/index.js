@@ -207,7 +207,6 @@ const NewQuote = props => {
               <Form.Item
                 name="costCenter"
                 label={<IntlMessages id="app.project.field.costcenter" />}
-                rules={[stringRule]}
               >
                 <Input placeholder="Cost Center" disabled />
               </Form.Item>
@@ -292,7 +291,7 @@ const NewQuote = props => {
               >
                 <Select
                   size="large"
-                  placeholder="Select your suppliers!!"
+                  placeholder="Select NextDeal suppliers!!"
                   mode="multiple"
                   filterOption={(input, option) => {
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;

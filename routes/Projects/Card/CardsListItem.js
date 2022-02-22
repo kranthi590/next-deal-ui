@@ -15,7 +15,7 @@ const CardsListItem = ({ styleName, data, onDeleteClick }) => {
           size={40}
           style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
         >
-          {getAvatar(name || 'Next Deal')}
+          {getAvatar(name || 'NextDeal')}
         </Avatar>
         <div className="gx-description">
           <div className="gx-flex-row">
