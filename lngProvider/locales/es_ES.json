@@ -473,6 +473,7 @@
   "app.supplierregistration.field.bcontact_name":"Nombre",
   "app.supplierregistration.field.bcontact_surname":"Apellido",
   "app.supplierregistration.field.bcontact_email":"Email",
+  "app.supplierregistration.field.bcontact_email.error.email":"Por favor ingresa un email válido!",
   "app.supplierregistration.field.bcontact_charge":"Cargo",
   "app.supplierregistration.field.register.button":"Registrar Proveedor",
   "app.supplierregistration.shareinfo_message":"Quieres compartir la información de tus proveedores con otros?",

@@ -772,6 +772,9 @@ const SupplierRegistration = props => {
                       {
                         required: true,
                         type: 'email',
+                        message: (
+                          <IntlMessages id="app.supplierregistration.field.bcontact_email.error.email" />
+                        ),
                       },
                     ]}
                   >
