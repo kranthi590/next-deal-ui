@@ -553,6 +553,6 @@
   "calendar.filter.option.all":"Todos",
   "app.common.text.confirmDeleteProject": "¿Estas seguro de que desea eliminar el proyecto?",
   "app.common.text.confirmDeleteQuotationResponse": "¿Estas seguro de que desea eliminar la respuesta de la cotizacion?",
-  "app.api.error.400Msg": "Error 400",
-  "app.api.error.500Msg": "Error 500"
+  "app.api.error.400Msg": "Se ha producido un error inesperado!",
+  "app.api.error.500Msg": "Se ha producido un error inesperado!"
 }

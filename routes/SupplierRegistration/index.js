@@ -770,9 +770,8 @@ const SupplierRegistration = props => {
                     name="bcontact_email"
                     rules={[
                       {
-                        required: false,
+                        required: true,
                         type: 'email',
-                        warningOnly: true,
                       },
                     ]}
                   >
