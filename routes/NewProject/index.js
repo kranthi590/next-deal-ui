@@ -158,6 +158,7 @@ const NewProject = props => {
                   className="gx-w-100"
                   placeholder="Start Date"
                   onChange={startDateChangeHandler}
+                  format="DD/MM/YYYY"
                 />
               </Form.Item>
               <Form.Item
@@ -168,6 +169,7 @@ const NewProject = props => {
                   className="gx-w-100"
                   placeholder="End Date"
                   onChange={endDateChangeHandler}
+                  format="DD/MM/YYYY"
                 />
               </Form.Item>
               <Form.Item

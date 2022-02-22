@@ -15,6 +15,7 @@ const QuoteAwarded = props => {
     netWorth,
     currency,
     paymentCondition,
+    purchaseOrderNumber,
     deliveryDate,
     supplier,
     comments,
@@ -28,6 +29,7 @@ const QuoteAwarded = props => {
   const initialFormData = {
     netWorth: numberToClp(netWorth),
     currency: currency,
+    purchaseOrderNumber: purchaseOrderNumber,
     paymentCondition: paymentCondition,
     deliveryDate: moment(deliveryDate),
     comments: comments,
@@ -140,6 +142,7 @@ const QuoteAwarded = props => {
                 placeholder="Delivery Date"
                 onChange={deliveryDateChangeHandler}
                 disabled
+                format="DD/MM/YYYY"
               />
             </Form.Item>
           </Col>

@@ -13,6 +13,7 @@ const QuotationCompleted = props => {
     id,
     netWorth,
     currency,
+    purchaseOrderNumber,
     paymentCondition,
     includesTax,
     incoterm,
@@ -32,6 +33,7 @@ const QuotationCompleted = props => {
   const initialFormData = {
     netWorth: numberToClp(netWorth),
     currency: currency,
+    purchaseOrderNumber: purchaseOrderNumber,
     paymentCondition: paymentCondition,
     deliveryDate: moment(deliveryDate),
     comments: comments,
@@ -144,7 +146,26 @@ const QuotationCompleted = props => {
                 placeholder="Delivery Date"
                 disabled
                 onChange={deliveryDateChangeHandler}
+                format="DD/MM/YYYY"
               />
+            </Form.Item>
+          </Col>
+          <Col xl={6} xs={24}>
+            <Form.Item
+              name="purchaseOrderNumber"
+              label={<IntlMessages id="app.quotationresponses.field.purchaseOrderNumber" />}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+              rules={[
+                {
+                  required: true,
+                  message: (
+                    <IntlMessages id="app.quotationresponses.field.purchaseOrderNumber.error.required" />
+                  ),
+                },
+              ]}
+            >
+              <Input placeholder="Number Of Purchase Order" disabled />
             </Form.Item>
           </Col>
           <Col xl={6} xs={24}>

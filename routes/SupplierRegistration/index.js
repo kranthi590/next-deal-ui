@@ -127,7 +127,7 @@ const SupplierRegistration = props => {
       type: business.type,
 
       isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
-      inchargeRole: 'Owner',
+      inchargeRole: contact.charge,
     };
     if (business.supplier_info) {
       formData.comments = business.supplier_info;
@@ -515,6 +515,19 @@ const SupplierRegistration = props => {
                       <IntlMessages id="app.supplierregistration.field.business_phoneNumber2" />
                     }
                     name="business_phoneNumber2"
+                    rules={[
+                      {
+                        required: false,
+                        validator: (_, value) => {
+                          if (value && isNaN(value)) {
+                            return Promise.reject(
+                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      },
+                    ]}
                   >
                     <Input
                       placeholder="Telephone2"
@@ -678,6 +691,19 @@ const SupplierRegistration = props => {
                         <IntlMessages id="app.supplierregistration.field.billing_phoneNumber1" />
                       }
                       name="billing_phoneNumber1"
+                      rules={[
+                        {
+                          required: false,
+                          validator: (_, value) => {
+                            if (value && isNaN(value)) {
+                              return Promise.reject(
+                                <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
                     >
                       <Input
                         size="large"
@@ -692,6 +718,19 @@ const SupplierRegistration = props => {
                         <IntlMessages id="app.supplierregistration.field.billing_phoneNumber2" />
                       }
                       name="billing_phoneNumber2"
+                      rules={[
+                        {
+                          required: false,
+                          validator: (_, value) => {
+                            if (value && isNaN(value)) {
+                              return Promise.reject(
+                                <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
                     >
                       <Input
                         size="large"

@@ -213,7 +213,7 @@ const useProviderRegistration = () => {
       });
   };
 
-  const getNextDealSuppliers = (offset = 0, size = 100, callbackFun) => {
+  const getNextDealSuppliers = (offset = 0, size = 200, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies();

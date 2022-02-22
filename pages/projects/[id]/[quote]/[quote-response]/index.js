@@ -22,7 +22,6 @@ import QuotationTimeline from '../../../../../app/components/NextDeal/QuotationT
 
 const NewQuoteResponse = props => {
   const { projectsList, quotationData, awardedResponses, projectsDetails, activitiesList } = props;
-  console.log(projectsList);
   const {
     createResponses,
     createAward,

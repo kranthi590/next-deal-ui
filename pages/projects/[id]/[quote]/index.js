@@ -100,7 +100,9 @@ const NewQuote = props => {
       return acc;
     }, {});
     formData.comments = formData.description;
-    formData.suppliers = formData.suppliers.concat(formData.sharedSuppliers);
+    if (formData.sharedSuppliers && formData.sharedSuppliers.length) {
+      formData.suppliers = formData.suppliers.concat(formData.sharedSuppliers);
+    }
     delete formData.sharedSuppliers;
     return formData;
   };
@@ -188,6 +190,7 @@ const NewQuote = props => {
                   className="gx-w-100"
                   placeholder="Start Date"
                   onChange={startDateChangeHandler}
+                  format="DD/MM/YYYY"
                 />
               </Form.Item>
               <Form.Item
@@ -198,6 +201,7 @@ const NewQuote = props => {
                   className="gx-w-100"
                   placeholder="End Date"
                   onChange={endDateChangeHandler}
+                  format="DD/MM/YYYY"
                 />
               </Form.Item>
               <Form.Item
