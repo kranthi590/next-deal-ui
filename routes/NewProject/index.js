@@ -17,6 +17,7 @@ import { FileAddOutlined } from '@ant-design/icons';
 import FilesManager from '../../app/common/FileManager';
 import { uploadFiles } from '../../util/Api';
 import { CURRENCY } from '../../util/appConstants';
+import { useIntl } from 'react-intl';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -51,7 +52,7 @@ const NewProject = props => {
   const { newProject } = useProject();
 
   const [form] = Form.useForm();
-
+  const intl = useIntl();
   const normFile = e => {
     if (Array.isArray(e)) {
       return e;
@@ -134,20 +135,20 @@ const NewProject = props => {
                 label={<IntlMessages id="app.project.field.projectname" />}
                 rules={[stringRule]}
               >
-                <Input placeholder="Project Name" />
+                <Input placeholder={intl.formatMessage({ id: 'app.project.field.projectname' })} />
               </Form.Item>
               <Form.Item
                 name="managerName"
                 label={<IntlMessages id="app.project.field.manager" />}
                 rules={[stringRule]}
               >
-                <Input placeholder="Manager" />
+                <Input placeholder={intl.formatMessage({ id: 'app.project.field.manager' })} />
               </Form.Item>
               <Form.Item
                 name="costCenter"
                 label={<IntlMessages id="app.project.field.costcenter" />}
               >
-                <Input placeholder="Cost Center" />
+                <Input placeholder={intl.formatMessage({ id: 'app.project.field.costcenter' })} />
               </Form.Item>
               <Form.Item
                 name="startDate"
@@ -156,7 +157,7 @@ const NewProject = props => {
               >
                 <DatePicker
                   className="gx-w-100"
-                  placeholder="Start Date"
+                  placeholder={intl.formatMessage({ id: 'app.project.field.startdate' })}
                   onChange={startDateChangeHandler}
                   format="DD/MM/YYYY"
                 />
@@ -167,7 +168,7 @@ const NewProject = props => {
               >
                 <DatePicker
                   className="gx-w-100"
-                  placeholder="End Date"
+                  placeholder={intl.formatMessage({ id: 'app.project.field.enddate' })}
                   onChange={endDateChangeHandler}
                   format="DD/MM/YYYY"
                 />
@@ -191,7 +192,7 @@ const NewProject = props => {
                 name="currency"
                 rules={[stringRule]}
               >
-                <Select placeholder="Select Currency">
+                <Select placeholder={intl.formatMessage({ id: 'app.project.field.currency' })}>
                   {Object.keys(CURRENCY).map(item => (
                     <Option key={item} value={CURRENCY[item].toLowerCase()}>
                       {CURRENCY[item]}
@@ -204,7 +205,10 @@ const NewProject = props => {
                 label={<IntlMessages id="app.project.field.description" />}
                 rules={[stringRule]}
               >
-                <TextArea placeholder="Description" rows={8} />
+                <TextArea
+                  placeholder={intl.formatMessage({ id: 'app.project.field.description' })}
+                  rows={8}
+                />
               </Form.Item>
             </Col>
             <Col

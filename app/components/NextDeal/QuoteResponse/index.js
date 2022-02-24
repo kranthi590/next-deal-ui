@@ -19,6 +19,7 @@ import ClpFormatter from '../../../../shared/CLP';
 import { clpToNumber, numberToClp } from '../../../../util/util';
 import FilesManager from '../../../common/FileManager';
 import { CURRENCY } from '../../../../util/appConstants';
+import { useIntl } from 'react-intl';
 
 const QuoteResponses = props => {
   const { onSave, awarded, onDeleteResponse } = props;
@@ -40,6 +41,7 @@ const QuoteResponses = props => {
   const [cdeliveryDate, setCDeliveryDate] = useState(moment(deliveryDate).valueOf());
   const [cvalidityDate, setCValidityDate] = useState(moment(validityDate).valueOf());
   const [filesList, setFiles] = useState(files);
+  const intl = useIntl();
 
   const [netValue, setNetValue] = useState(netWorth);
   let initialFormData = {};
@@ -170,7 +172,10 @@ const QuoteResponses = props => {
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
-              <Select placeholder="Select Currency" disabled={awarded || !newQuote}>
+              <Select
+                placeholder={intl.formatMessage({ id: 'app.project.field.currency' })}
+                disabled={awarded || !newQuote}
+              >
                 {Object.keys(CURRENCY).map(item => (
                   <Option key={item} value={CURRENCY[item].toLowerCase()}>
                     {CURRENCY[item]}
@@ -196,7 +201,9 @@ const QuoteResponses = props => {
             >
               <DatePicker
                 style={{ width: '100%' }}
-                placeholder="Delivery Date(With a purchase order confirm)"
+                placeholder={intl.formatMessage({
+                  id: 'app.quotationresponses.field.deliveryDateWithPO',
+                })}
                 disabled={awarded || !newQuote}
                 onChange={deliveryDateChangeHandler}
                 format="DD/MM/YYYY"
@@ -220,7 +227,9 @@ const QuoteResponses = props => {
             >
               <DatePicker
                 style={{ width: '100%' }}
-                placeholder="Validity Date"
+                placeholder={intl.formatMessage({
+                  id: 'app.quotationresponses.field.validityDate',
+                })}
                 disabled={awarded || !newQuote}
                 onChange={validityDateChangeHandler}
                 format="DD/MM/YYYY"
@@ -242,7 +251,13 @@ const QuoteResponses = props => {
                 },
               ]}
             >
-              <Select allowClear placeholder="Payment Conditions" disabled={awarded || !newQuote}>
+              <Select
+                allowClear
+                placeholder={intl.formatMessage({
+                  id: 'app.quotationresponses.field.paymentCondition',
+                })}
+                disabled={awarded || !newQuote}
+              >
                 <Option value="al-contado">al contado</Option>
                 <Option value="7-dias">7 días</Option>
                 <Option value="15-dias">15 días</Option>
@@ -269,7 +284,11 @@ const QuoteResponses = props => {
                 },
               ]}
             >
-              <Select allowClear placeholder="Incoterm" disabled={awarded || !newQuote}>
+              <Select
+                allowClear
+                placeholder={intl.formatMessage({ id: 'app.quotationresponses.field.incoterm' })}
+                disabled={awarded || !newQuote}
+              >
                 <Option value="NO_APLICA">No Aplica</Option>
                 <Option value="EXW">EXW</Option>
                 <Option value="FCA">FCA</Option>
@@ -302,7 +321,10 @@ const QuoteResponses = props => {
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
-              <Input.TextArea placeholder="Comments" disabled={awarded}></Input.TextArea>
+              <Input.TextArea
+                placeholder={intl.formatMessage({ id: 'app.quotationresponses.field.description' })}
+                disabled={awarded}
+              ></Input.TextArea>
             </Form.Item>
           </Col>
         </Row>

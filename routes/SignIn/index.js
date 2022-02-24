@@ -14,10 +14,11 @@ import Footer from '../../app/components/Footer';
 
 // Styles
 import '../../styles/form-page.css';
+import { useIntl } from 'react-intl';
 
 const SignIn = props => {
   const { isLoading, userLogin } = useAuth();
-
+  const intl = useIntl();
   const onFinishFailed = errorInfo => {};
 
   const onFinish = values => {
@@ -61,7 +62,10 @@ const SignIn = props => {
                     },
                   ]}
                 >
-                  <Input className="gx-input-lineheight" placeholder="Email" />
+                  <Input
+                    className="gx-input-lineheight"
+                    placeholder={intl.formatMessage({ id: 'app.userAuth.login.field.emailId' })}
+                  />
                 </Form.Item>
                 <Form.Item
                   label={<IntlMessages id="app.userAuth.login.field.password" />}
@@ -75,7 +79,10 @@ const SignIn = props => {
                   ]}
                   name="password"
                 >
-                  <Input.Password className="gx-input-lineheight" placeholder="Contraseña" />
+                  <Input.Password
+                    className="gx-input-lineheight"
+                    placeholder={intl.formatMessage({ id: 'app.userAuth.login.field.password' })}
+                  />
                 </Form.Item>
                 <Form.Item>
                   <Button
