@@ -497,7 +497,7 @@
   "app.quotationresponses.field.netWorth":"Neto",
   "app.quotationresponses.field.netWorth.error.required":"Por favor ingresar valor neto!",
   "app.quotationresponses.field.deliveryDate":"Fecha de despacho",
-  "app.quotationresponses.field.deliveryDateWithPO":"Delivery Date(With a purchase order confirm)",
+  "app.quotationresponses.field.deliveryDateWithPO":"Fecha de despacho",
   "app.quotationresponses.field.deliveryDate.error.required":"Por favor ingresar fecha de despacho!",
   "app.quotationresponses.field.validityDate":"Fecha de vigencia",
   "app.quotationresponses.field.validityDate.error.required":"Por favor ingresar fecha de vigencia!",
