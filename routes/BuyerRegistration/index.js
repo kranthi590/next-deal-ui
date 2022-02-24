@@ -331,7 +331,7 @@ const BuyerRegistration = props => {
                     <Input
                       size="large"
                       placeholder={intl.formatMessage({
-                        id: 'app.buyerregistration.field.addressLine2',
+                        id: 'app.buyerregistration.field.addressLine2_placeholder',
                       })}
                     />
                   </FormItem>

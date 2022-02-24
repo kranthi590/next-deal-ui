@@ -348,7 +348,7 @@ const SupplierRegistration = props => {
                     <Input
                       size="large"
                       placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_addressLine2',
+                        id: 'app.supplierregistration.field.business_addressLine2_placeholder',
                       })}
                     />
                   </FormItem>
@@ -704,7 +704,7 @@ const SupplierRegistration = props => {
                       <Input
                         size="large"
                         placeholder={intl.formatMessage({
-                          id: 'app.supplierregistration.field.billing_addressLine2',
+                          id: 'app.supplierregistration.field.billing_addressLine2_placeholder',
                         })}
                       />
                     </FormItem>

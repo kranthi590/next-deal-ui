@@ -307,7 +307,7 @@ const NewQuote = props => {
               >
                 <Select
                   size="large"
-                  placeholder={intl.formatMessage({ id: 'app.quotation.selectYourSuppliers' })}
+                  placeholder={intl.formatMessage({ id: 'app.quotation.selectNDSuppliers' })}
                   mode="multiple"
                   filterOption={(input, option) => {
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
