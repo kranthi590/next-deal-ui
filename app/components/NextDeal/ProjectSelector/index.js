@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Col, Form, Row, Select } from 'antd';
 import { useProject } from '../../../../contexts/projects';
 import IntlMessages from '../../../../util/IntlMessages';
+import { useIntl } from 'react-intl';
 
 const { Option } = Select;
 
@@ -17,6 +18,7 @@ const ProjectSelector = ({
     project: null,
     projectStatus: 'all',
   });
+  const intl = useIntl();
   const [allProjects, setAllProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const colSetInput = { xs: { span: 24 }, sm: { span: 14 }, md: { span: 16 } };
@@ -83,7 +85,10 @@ const ProjectSelector = ({
               labelCol={colSetLabel}
               wrapperCol={colSetInput}
             >
-              <Select placeholder="Select Projects" onSelect={handleProjectChanged}>
+              <Select
+                placeholder={intl.formatMessage({ id: 'app.common.text.selectProject' })}
+                onSelect={handleProjectChanged}
+              >
                 {allProjects &&
                   allProjects.map(item => (
                     <Option key={item.id} value={item.id}>
@@ -101,7 +106,10 @@ const ProjectSelector = ({
                 labelCol={colSetLabel}
                 wrapperCol={colSetInput}
               >
-                <Select placeholder="Project Status" onSelect={handleStatusChanged}>
+                <Select
+                  placeholder={intl.formatMessage({ id: 'calendar.filter.status' })}
+                  onSelect={handleStatusChanged}
+                >
                   <Option value="all">
                     <IntlMessages id="calendar.filter.option.all" />
                   </Option>

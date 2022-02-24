@@ -16,6 +16,7 @@ import moment from 'moment';
 import ClpFormatter from '../../../../shared/CLP';
 import { FileAddOutlined } from '@ant-design/icons';
 import { CURRENCY } from '../../../../util/appConstants';
+import { useIntl } from 'react-intl';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -54,28 +55,31 @@ const NewQuote = props => {
   const [form] = Form.useForm();
   const router = useRouter();
   const [files, setFiles] = useState([]);
+  const intl = useIntl();
+
+  const loadSuppliers = () => {
+    getBuyerSuppliers(data => {
+      setSuppliers(data.rows);
+      getNextDealSuppliers(0, 200, nextdealSuppliers => {
+        const updatedSharedSuppliers = nextdealSuppliers.rows.filter(
+          item => !data.rows.some(supplier => supplier.id === item.id),
+        );
+        setSharedSuppliers(updatedSharedSuppliers);
+      });
+    });
+  };
 
   useEffect(() => {
     const projectId = router.query.id;
     getProjectById(projectId, data => {
       setProjectInfo(data);
     });
-    getBuyerSuppliers(data => {
-      setSuppliers(data.rows);
-    });
-    getNextDealSuppliers(0, 200, data => {
-      setSharedSuppliers(data.rows);
-    });
+    loadSuppliers();
   }, []);
 
   const reloadSuppliers = () => {
     setVisible(false);
-    getBuyerSuppliers(data => {
-      setSuppliers(data.rows);
-    });
-    getNextDealSuppliers(0, 200, data => {
-      setSharedSuppliers(data.rows);
-    });
+    loadSuppliers();
   };
 
   const startDateChangeHandler = date => {
@@ -172,14 +176,19 @@ const NewQuote = props => {
                 label={<IntlMessages id="app.quotation.field.projectName" />}
                 rules={[stringRule]}
               >
-                <Input placeholder="Project Name" disabled />
+                <Input
+                  placeholder={intl.formatMessage({ id: 'app.project.field.projectName' })}
+                  disabled
+                />
               </Form.Item>
               <Form.Item
                 name="name"
                 label={<IntlMessages id="app.quotation.field.quotationname" />}
                 rules={[stringRule]}
               >
-                <Input placeholder="Quotation Name" />
+                <Input
+                  placeholder={intl.formatMessage({ id: 'app.quotation.field.quotationname' })}
+                />
               </Form.Item>
               <Form.Item
                 name="startDate"
@@ -188,7 +197,7 @@ const NewQuote = props => {
               >
                 <DatePicker
                   className="gx-w-100"
-                  placeholder="Start Date"
+                  placeholder={intl.formatMessage({ id: 'app.project.field.startdate' })}
                   onChange={startDateChangeHandler}
                   format="DD/MM/YYYY"
                 />
@@ -199,7 +208,7 @@ const NewQuote = props => {
               >
                 <DatePicker
                   className="gx-w-100"
-                  placeholder="End Date"
+                  placeholder={intl.formatMessage({ id: 'app.project.field.enddate' })}
                   onChange={endDateChangeHandler}
                   format="DD/MM/YYYY"
                 />
@@ -207,8 +216,12 @@ const NewQuote = props => {
               <Form.Item
                 name="costCenter"
                 label={<IntlMessages id="app.project.field.costcenter" />}
+                rules={[stringRule]}
               >
-                <Input placeholder="Cost Center" disabled />
+                <Input
+                  placeholder={intl.formatMessage({ id: 'app.project.field.costcenter' })}
+                  disabled
+                />
               </Form.Item>
               <Form.Item
                 name="estimatedBudget"
@@ -228,7 +241,7 @@ const NewQuote = props => {
                 name="currency"
                 rules={[stringRule]}
               >
-                <Select placeholder="Select Currency">
+                <Select placeholder={intl.formatMessage({ id: 'app.quotation.field.currency' })}>
                   {Object.keys(CURRENCY).map(item => (
                     <Option key={item} value={CURRENCY[item].toLowerCase()}>
                       {CURRENCY[item]}
@@ -241,7 +254,10 @@ const NewQuote = props => {
                 label={<IntlMessages id="app.project.field.description" />}
                 rules={[stringRule]}
               >
-                <TextArea placeholder="Description" rows={8} />
+                <TextArea
+                  placeholder={intl.formatMessage({ id: 'app.project.field.description' })}
+                  rows={8}
+                />
               </Form.Item>
             </Col>
             <Col xl={12} lg={24} md={24} sm={24} xs={24}>
@@ -258,7 +274,7 @@ const NewQuote = props => {
               >
                 <Select
                   size="large"
-                  placeholder="Select your suppliers!!"
+                  placeholder={intl.formatMessage({ id: 'app.quotation.selectYourSuppliers' })}
                   mode="multiple"
                   filterOption={(input, option) => {
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -291,7 +307,7 @@ const NewQuote = props => {
               >
                 <Select
                   size="large"
-                  placeholder="Select NextDeal suppliers!!"
+                  placeholder={intl.formatMessage({ id: 'app.quotation.selectYourSuppliers' })}
                   mode="multiple"
                   filterOption={(input, option) => {
                     return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;

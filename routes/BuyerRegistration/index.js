@@ -23,6 +23,7 @@ import '../../styles/form-page.css';
 import Rut from '../../shared/Rut';
 import { clean, validate } from 'rut.js';
 import { TODO_CHILE } from '../../util/appConstants';
+import { useIntl } from 'react-intl';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -40,6 +41,7 @@ const BuyerRegistration = props => {
   const [rut, setRut] = useState(null);
   const [newSubDomain, setNewSubDomain] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const intl = useIntl();
 
   useEffect(() => {
     fetchRegions(({ regions }) => {
@@ -188,7 +190,9 @@ const BuyerRegistration = props => {
                   >
                     <Input
                       size="large"
-                      placeholder="Fantasy Name"
+                      placeholder={intl.formatMessage({
+                        id: 'app.buyerregistration.field.fantasyName',
+                      })}
                       onChange={e => setDomainName(sanitizeString(e.target.value))}
                     />
                   </FormItem>
@@ -199,7 +203,7 @@ const BuyerRegistration = props => {
                     id="subDomainName"
                     label={
                       <span>
-                        <IntlMessages id="app.buyerregistration.field.fantasyName" />
+                        <IntlMessages id="app.buyerregistration.field.subDomainName" />
                         &nbsp;
                         <Tooltip
                           title={
@@ -232,7 +236,9 @@ const BuyerRegistration = props => {
                   >
                     <Input
                       size="large"
-                      placeholder="Domain Name"
+                      placeholder={intl.formatMessage({
+                        id: 'app.buyerregistration.field.subDomainName',
+                      })}
                       addonBefore="https://"
                       addonAfter={process.env.NEXT_PUBLIC_APP_HOST}
                       onChange={e => setDomainName(e.target.value)}
@@ -252,7 +258,12 @@ const BuyerRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Business Name" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.buyerregistration.field.legalName',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -279,7 +290,7 @@ const BuyerRegistration = props => {
                       value={rut}
                       size="large"
                       onChange={onChange}
-                      placeholder="RUT"
+                      placeholder={intl.formatMessage({ id: 'app.buyerregistration.field.rut' })}
                     />
                   </FormItem>
                 </Col>
@@ -296,7 +307,12 @@ const BuyerRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="san pascual" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.buyerregistration.field.addressLine1',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -312,7 +328,12 @@ const BuyerRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="1234" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.buyerregistration.field.addressLine2',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -331,7 +352,9 @@ const BuyerRegistration = props => {
                     <Select
                       showSearch
                       size="large"
-                      placeholder="Please select Region"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_regionId.PleaseSelectRegion',
+                      })}
                       onChange={regionChangeHandler}
                       filterOption={(input, option) => {
                         return (
@@ -366,7 +389,9 @@ const BuyerRegistration = props => {
                     <Select
                       showSearch
                       size="large"
-                      placeholder="Please select Commune"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_communeId.pleaseSelectCommune',
+                      })}
                       filterOption={(input, option) => {
                         return (
                           option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -424,7 +449,12 @@ const BuyerRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.buyerregistration.field.emailId',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -451,7 +481,9 @@ const BuyerRegistration = props => {
                   >
                     <Input
                       size="large"
-                      placeholder="Phone number"
+                      placeholder={intl.formatMessage({
+                        id: 'app.buyerregistration.field.phoneNumber1',
+                      })}
                       addonBefore={prefixSelector('phone1_prefix')}
                       style={{ width: '100%' }}
                     />
@@ -477,7 +509,9 @@ const BuyerRegistration = props => {
                   >
                     <Input
                       size="large"
-                      placeholder="Phone number"
+                      placeholder={intl.formatMessage({
+                        id: 'app.buyerregistration.field.phoneNumber2',
+                      })}
                       addonBefore={prefixSelector('phone2_prefix')}
                       style={{ width: '100%' }}
                     />

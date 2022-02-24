@@ -6,6 +6,7 @@ import ClpFormatter from '../../../../shared/CLP';
 import { clpToNumber, numberToClp } from '../../../../util/util';
 import FilesManager from '../../../common/FileManager';
 import { CURRENCY } from '../../../../util/appConstants';
+import { useIntl } from 'react-intl';
 
 const QuotationCompleted = props => {
   const { onSave } = props;
@@ -29,7 +30,7 @@ const QuotationCompleted = props => {
   const [netValue, setNetValue] = useState(netWorth || null);
 
   const [form] = Form.useForm();
-
+  const intl = useIntl();
   const initialFormData = {
     netWorth: numberToClp(netWorth),
     currency: currency,
@@ -117,7 +118,10 @@ const QuotationCompleted = props => {
                 },
               ]}
             >
-              <Select placeholder="Select Currency" disabled>
+              <Select
+                placeholder={intl.formatMessage({ id: 'app.project.field.currency' })}
+                disabled
+              >
                 {Object.keys(CURRENCY).map(item => (
                   <Option key={item} value={CURRENCY[item].toLowerCase()}>
                     {CURRENCY[item]}
@@ -143,7 +147,9 @@ const QuotationCompleted = props => {
             >
               <DatePicker
                 style={{ width: '100%' }}
-                placeholder="Delivery Date"
+                placeholder={intl.formatMessage({
+                  id: 'app.quotationresponses.field.deliveryDate',
+                })}
                 disabled
                 onChange={deliveryDateChangeHandler}
                 format="DD/MM/YYYY"
@@ -165,7 +171,12 @@ const QuotationCompleted = props => {
                 },
               ]}
             >
-              <Input placeholder="Number Of Purchase Order" disabled />
+              <Input
+                placeholder={intl.formatMessage({
+                  id: 'app.quotationresponses.field.purchaseOrderNumber',
+                })}
+                disabled
+              />
             </Form.Item>
           </Col>
           <Col xl={6} xs={24}>
@@ -183,7 +194,13 @@ const QuotationCompleted = props => {
                 },
               ]}
             >
-              <Select allowClear placeholder="Payment Conditions" disabled>
+              <Select
+                allowClear
+                placeholder={intl.formatMessage({
+                  id: 'app.quotationresponses.field.paymentCondition',
+                })}
+                disabled
+              >
                 <Option value="al-contado">al contado</Option>
                 <Option value="7">7 días</Option>
                 <Option value="15">15 días</Option>
@@ -202,7 +219,10 @@ const QuotationCompleted = props => {
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
-              <Input.TextArea placeholder="Comments" disabled></Input.TextArea>
+              <Input.TextArea
+                placeholder={intl.formatMessage({ id: 'app.quotationresponses.field.description' })}
+                disabled
+              ></Input.TextArea>
             </Form.Item>
           </Col>
           {/* <Col xl={6} xs={24}>

@@ -24,6 +24,7 @@ import { isEmpty } from 'lodash';
 // Styles
 import '../../styles/form-page.css';
 import { TODO_CHILE } from '../../util/appConstants';
+import { useIntl } from 'react-intl';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -48,7 +49,7 @@ const SupplierRegistration = props => {
   const [isLogoUploaded, setLogoUploaded] = useState(false);
   const [files, setFiles] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
-
+  const intl = useIntl();
   useEffect(() => {
     fetchRegions(({ regions }) => {
       setRegions(regions);
@@ -247,7 +248,12 @@ const SupplierRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Fantasy Name" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_fantasyName',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -263,7 +269,12 @@ const SupplierRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Business Name" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_legalName',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -290,7 +301,9 @@ const SupplierRegistration = props => {
                       value={rut}
                       size="large"
                       onChange={onChange}
-                      placeholder="RUT"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_rut',
+                      })}
                     />
                   </FormItem>
                 </Col>
@@ -309,7 +322,12 @@ const SupplierRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="san pascual" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_addressLine1',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -327,7 +345,12 @@ const SupplierRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="1234" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_addressLine2',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -346,7 +369,9 @@ const SupplierRegistration = props => {
                     <Select
                       showSearch
                       size="large"
-                      placeholder="Please select Region"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_regionId.PleaseSelectRegion',
+                      })}
                       onChange={businessRegionChangeHandler}
                       filterOption={(input, option) => {
                         return (
@@ -382,7 +407,9 @@ const SupplierRegistration = props => {
                     <Select
                       showSearch
                       size="large"
-                      placeholder="Select your service locations"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.serviceLocations.selectYourServiceLocation',
+                      })}
                       mode="multiple"
                       filterOption={(input, option) => {
                         return (
@@ -416,7 +443,9 @@ const SupplierRegistration = props => {
                     <Select
                       showSearch
                       size="large"
-                      placeholder="Please select Commune"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_communeId.pleaseSelectCommune',
+                      })}
                       filterOption={(input, option) => {
                         return (
                           option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -472,7 +501,12 @@ const SupplierRegistration = props => {
                       },
                     ]}
                   >
-                    <Select size="large" placeholder="Please select type">
+                    <Select
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_type.pleaseSelectType',
+                      })}
+                    >
                       <Option value="Emprendedor">Emprendedor</Option>
                       <Option value="Pyme">Pyme</Option>
                     </Select>
@@ -505,7 +539,9 @@ const SupplierRegistration = props => {
                     <Input
                       size="large"
                       addonBefore={prefixSelector('business_telephone1')}
-                      placeholder="Telephone1"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_phoneNumber1',
+                      })}
                     />
                   </FormItem>
                 </Col>
@@ -530,7 +566,9 @@ const SupplierRegistration = props => {
                     ]}
                   >
                     <Input
-                      placeholder="Telephone2"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_phoneNumber2',
+                      })}
                       addonBefore={prefixSelector('business_telephone2')}
                     />
                   </FormItem>
@@ -549,7 +587,12 @@ const SupplierRegistration = props => {
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_emailId',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col xs={24}>
@@ -569,7 +612,9 @@ const SupplierRegistration = props => {
                     <Select
                       size="large"
                       mode="multiple"
-                      placeholder="Please select your categories"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_categories.pleaseSelectYourCategories',
+                      })}
                       filterOption={(input, option) => {
                         return (
                           option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -610,7 +655,12 @@ const SupplierRegistration = props => {
                     }
                     name="business_supplier_info"
                   >
-                    <TextArea placeholder="services offer" autosize />
+                    <TextArea
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.business_supplier_info',
+                      })}
+                      autosize
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -636,7 +686,12 @@ const SupplierRegistration = props => {
                       }
                       name="billing_addressLine1"
                     >
-                      <Input size="large" placeholder="san pascual" />
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.billing_addressLine1',
+                        })}
+                      />
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
@@ -646,7 +701,12 @@ const SupplierRegistration = props => {
                       }
                       name="billing_addressLine2"
                     >
-                      <Input size="large" placeholder="1234" />
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.billing_addressLine2',
+                        })}
+                      />
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
@@ -656,7 +716,9 @@ const SupplierRegistration = props => {
                     >
                       <Select
                         size="large"
-                        placeholder="Please select Region"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_regionId.PleaseSelectRegion',
+                        })}
                         onChange={billingRegionChangeHandler}
                       >
                         {regions &&
@@ -675,7 +737,12 @@ const SupplierRegistration = props => {
                       label={<IntlMessages id="app.supplierregistration.field.billing_communeId" />}
                       name="billing_communeId"
                     >
-                      <Select size="large" placeholder="Please select Commune">
+                      <Select
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_communeId.pleaseSelectCommune',
+                        })}
+                      >
                         {communes2 &&
                           communes2.map(commune => (
                             <Option key={commune.id + commune.name} value={commune.id}>
@@ -707,7 +774,9 @@ const SupplierRegistration = props => {
                     >
                       <Input
                         size="large"
-                        placeholder="Telephone1"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.billing_phoneNumber1',
+                        })}
                         addonBefore={prefixSelector('billing_telephone1')}
                       />
                     </FormItem>
@@ -734,7 +803,9 @@ const SupplierRegistration = props => {
                     >
                       <Input
                         size="large"
-                        placeholder="Telephone2"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.billing_phoneNumber2',
+                        })}
                         addonBefore={prefixSelector('billing_telephone2')}
                       />
                     </FormItem>
@@ -753,7 +824,12 @@ const SupplierRegistration = props => {
                     label={<IntlMessages id="app.supplierregistration.field.bcontact_name" />}
                     name="bcontact_name"
                   >
-                    <Input size="large" placeholder="Name" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.bcontact_name',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -761,7 +837,12 @@ const SupplierRegistration = props => {
                     label={<IntlMessages id="app.supplierregistration.field.bcontact_surname" />}
                     name="bcontact_surname"
                   >
-                    <Input size="large" placeholder="Surname" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.bcontact_surname',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -772,18 +853,16 @@ const SupplierRegistration = props => {
                       {
                         required: false,
                         type: 'email',
-                        validator: (_, value) => {
-                          if (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-                            return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.bcontact_email.error.email" />,
-                            );
-                          }
-                          return Promise.resolve();
-                        },
+                        warningOnly: true,
                       },
                     ]}
                   >
-                    <Input size="large" placeholder="Email" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.bcontact_email',
+                      })}
+                    />
                   </FormItem>
                 </Col>
                 <Col sm={12} xs={24}>
@@ -791,7 +870,12 @@ const SupplierRegistration = props => {
                     label={<IntlMessages id="app.supplierregistration.field.bcontact_charge" />}
                     name="bcontact_charge"
                   >
-                    <Input size="large" placeholder="Charge" />
+                    <Input
+                      size="large"
+                      placeholder={intl.formatMessage({
+                        id: 'app.supplierregistration.field.bcontact_charge',
+                      })}
+                    />
                   </FormItem>
                 </Col>
               </Row>
