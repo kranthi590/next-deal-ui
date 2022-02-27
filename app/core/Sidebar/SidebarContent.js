@@ -27,7 +27,13 @@ const SidebarContent = () => {
   }, [router.pathname]);
 
   const selectedKeys = router.pathname.substr(1) || '';
-  const defaultOpenKeys = selectedKeys.split('/')[1] || 'dashboardgroup';
+  let defaultOpenKeys = selectedKeys.split('/')[1];
+
+  const dashboardGroup = ['dashboard', 'quotations-per-project', 'suppliers-and-quotations'];
+
+  if (!defaultOpenKeys && dashboardGroup.includes(selectedKeys.split('/')[0])) {
+    defaultOpenKeys = 'dashboardgroup';
+  }
 
   return (
     <React.Fragment>
@@ -40,48 +46,16 @@ const SidebarContent = () => {
             theme={themeType === THEME_TYPE_LITE ? 'lite' : 'dark'}
             mode="inline"
           >
-            <SubMenu
-              key="dashboardgroup"
-              title={
-                <span>
-                  <i className="icon icon-dasbhoard" />
+            <Menu.Item key="">
+              <Link href="/">
+                <a>
+                  <i className="icon icon-calendar" />
                   <span>
-                    <IntlMessages id="sidebar.menu.dashboard" />
+                    <IntlMessages id="sidebar.menu.calendar" />
                   </span>
-                </span>
-              }
-            >
-              <Menu.Item key="">
-                <Link href="/">
-                  <a>
-                    <i className="icon icon-revenue-new" />
-                    <span>
-                      <IntlMessages id="sidebar.menu.budget" />
-                    </span>
-                  </a>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="quotations-per-project">
-                <Link href="/quotations-per-project">
-                  <a>
-                    <i className="icon icon-pricing-table" />
-                    <span>
-                      <IntlMessages id="sidebar.menu.quotations" />
-                    </span>
-                  </a>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="suppliers-and-quotations">
-                <Link href="/suppliers-and-quotations">
-                  <a>
-                    <i className="icon icon-auth-screen" />
-                    <span>
-                      <IntlMessages id="sidebar.menu.suppliers" />
-                    </span>
-                  </a>
-                </Link>
-              </Menu.Item>
-            </SubMenu>
+                </a>
+              </Link>
+            </Menu.Item>
             <Menu.Item key="projects">
               <Link href="/projects">
                 <a>
@@ -112,16 +86,48 @@ const SidebarContent = () => {
                 </a>
               </Link>
             </Menu.Item>
-            <Menu.Item key="calendar">
-              <Link href="/calendar">
-                <a>
-                  <i className="icon icon-calendar" />
+            <SubMenu
+              key="dashboardgroup"
+              title={
+                <span>
+                  <i className="icon icon-dasbhoard" />
                   <span>
-                    <IntlMessages id="sidebar.menu.calendar" />
+                    <IntlMessages id="sidebar.menu.dashboard" />
                   </span>
-                </a>
-              </Link>
-            </Menu.Item>
+                </span>
+              }
+            >
+              <Menu.Item key="dashboard">
+                <Link href="/dashboard">
+                  <a>
+                    <i className="icon icon-revenue-new" />
+                    <span>
+                      <IntlMessages id="sidebar.menu.budget" />
+                    </span>
+                  </a>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="quotations-per-project">
+                <Link href="/quotations-per-project">
+                  <a>
+                    <i className="icon icon-pricing-table" />
+                    <span>
+                      <IntlMessages id="sidebar.menu.quotations" />
+                    </span>
+                  </a>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="suppliers-and-quotations">
+                <Link href="/suppliers-and-quotations">
+                  <a>
+                    <i className="icon icon-auth-screen" />
+                    <span>
+                      <IntlMessages id="sidebar.menu.suppliers" />
+                    </span>
+                  </a>
+                </Link>
+              </Menu.Item>
+            </SubMenu>
           </Menu>
         </CustomScrollbars>
       </div>

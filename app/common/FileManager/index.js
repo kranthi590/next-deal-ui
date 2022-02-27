@@ -1,5 +1,5 @@
 import React from 'react';
-import { Upload, Modal } from 'antd';
+import { Upload, Modal, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Cookies } from 'react-cookie';
 import IntlMessages from '../../../util/IntlMessages';
@@ -52,8 +52,8 @@ export default class PicturesWall extends React.Component {
     });
   };
 
-  handleChange = ({ fileList}) => {
-    fileList.forEach((file) => {
+  handleChange = ({ fileList }) => {
+    fileList.forEach(file => {
       if (!file.url && file.response) {
         file.url = `${file.response.data[0].fileUrl}?token=${cookie.get('token')}`;
       } else {
@@ -80,9 +80,16 @@ export default class PicturesWall extends React.Component {
 
   render() {
     const { previewVisible, previewImage, fileList, previewTitle, mimeType } = this.state;
-    const { context, maxCount, customSubmitHandler, hideButton = false, accept = [] } = this.props;
+    const {
+      context,
+      maxCount,
+      customSubmitHandler,
+      hideButton = false,
+      accept = [],
+      tooltiptext,
+    } = this.props;
     const uploadButton = (
-      <div>
+      <div className="gx-d-flex gx-flex-column gx-h-100 gx-w-100 gx-justify-content-center">
         <PlusOutlined />
         <div style={{ marginTop: 8 }}>
           <IntlMessages id="file.manager.upload" />
@@ -146,7 +153,7 @@ export default class PicturesWall extends React.Component {
           disabled={maxCount && fileList.length > maxCount}
           accept={accept.length > 0 ? accept.join(',') : acceptedTypes.join(',')}
         >
-          {!hideButton && uploadButton}
+          <Tooltip title={tooltiptext}>{!hideButton && uploadButton}</Tooltip>
         </Upload>
         <Modal
           visible={previewVisible}

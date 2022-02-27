@@ -4,14 +4,18 @@ import {
   SearchOutlined,
   UserAddOutlined,
   EyeOutlined,
+  InboxOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Modal, Space, Table, Input, Row, Col } from 'antd';
+import { Button, Card, Modal, Space, Table, Input, Row, Col, message } from 'antd';
 import React, { useState, useEffect } from 'react';
 import SupplierDetails from '../../app/components/NextDeal/SupplierDetails';
 import { useRegistration } from '../../contexts/business-registration';
 import SupplierRegistrationPage from '../../pages/supplier-registration';
 import IntlMessages from '../../util/IntlMessages';
 import { Cookies } from 'react-cookie';
+import Dragger from 'antd/lib/upload/Dragger';
+import Axios from 'axios';
+import { errorNotification, successNotification } from '../../util/util';
 const MySuppliers = props => {
   const { getBuyerSuppliers, getSupplier, downloadSuppliers } = useRegistration();
   const [visible, setVisible] = useState(false);
@@ -20,9 +24,10 @@ const MySuppliers = props => {
   const [suppliersList, setSuppliersList] = useState([]);
   const [isSupplierModalVisible, setIsSupplierModalVisible] = useState(false);
   const [supplierDetails, setSupplierDetails] = useState(null);
-  const [, setBuyerId] = useState(null);
+  const [buyerId, setBuyerId] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [uploadSuppliers, setUploadSuppliers] = useState(false);
   const cookie = new Cookies();
 
   useEffect(() => {
@@ -158,7 +163,31 @@ const MySuppliers = props => {
     downloadSuppliers();
   };
 
-  const onUploadXls = () => {};
+  const onUploadXls = () => {
+    setUploadSuppliers(true);
+    showModal();
+  };
+  const beforeUpload = file => {
+    const isXlsm = file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12';
+    if (!isXlsm) {
+      errorNotification('', 'file.message.fileTypeNotSupported');
+    }
+    return isXlsm || Dragger.LIST_IGNORE;
+  };
+
+  const onfileChange = info => {
+    const { status } = info.file;
+
+    if (status === 'done') {
+      setVisible(false);
+      successNotification('file.message.success');
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    } else if (status === 'error') {
+      errorNotification('', 'file.message.error');
+    }
+  };
   return (
     <>
       <Card className="gx-card gx-card-widget">
@@ -202,24 +231,53 @@ const MySuppliers = props => {
         />
       </Card>
       <Modal
-        title={<IntlMessages id="app.supplierregistration.page_title" />}
+        title={
+          <IntlMessages
+            id={
+              uploadSuppliers
+                ? 'app.common.text.uploadSuppliers'
+                : 'app.supplierregistration.page_title'
+            }
+          />
+        }
         centered
         visible={visible}
         onCancel={() => setVisible(false)}
+        width={'auto'}
         bodyStyle={{ padding: '0' }}
         okButtonProps={{ style: { display: 'none' } }}
         destroyOnClose={true}
-        width={1000}
+        width={uploadSuppliers ? 500 : 1000}
         maskClosable={false}
-        footer={false}
       >
-        <SupplierRegistrationPage
-          isBannerShown={false}
-          showLoginLink={false}
-          isBuyer={true}
-          isAuthenticated={true}
-          onAletSuccess={reloadSuppliers}
-        />
+        {uploadSuppliers ? (
+          <div className="gx-p-2">
+            <Dragger
+              {...props}
+              multiple={false}
+              accept={['application/vnd.ms-excel.sheet.macroEnabled.12']}
+              action={`${process.env.NEXT_PUBLIC_API_HOST}api/v1/buyers/${buyerId}/uploadSuppliers`}
+              beforeUpload={beforeUpload}
+              onChange={onfileChange}
+            >
+              <p className="ant-upload-drag-icon">
+                <InboxOutlined />
+              </p>
+              <p className="ant-upload-text">
+                Haga clic o arrastre el archivo a esta área para cargarlo
+              </p>
+              <p className="ant-upload-hint">Sólo se admiten los tipos de archivo .xlsm</p>
+            </Dragger>
+          </div>
+        ) : (
+          <SupplierRegistrationPage
+            isBannerShown={false}
+            showLoginLink={false}
+            isBuyer={true}
+            isAuthenticated={true}
+            onAletSuccess={reloadSuppliers}
+          />
+        )}
       </Modal>
       <Modal
         title={<IntlMessages id="app.common.text.supplierDetails" />}

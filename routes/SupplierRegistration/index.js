@@ -34,8 +34,14 @@ const SupplierRegistration = props => {
   const router = useRouter();
   const { isLoading } = useAuth();
   const { isAuthenticated, onAletSuccess } = props;
-  const { fetchRegions, fetchCommune, registerSupplier, error, uploadSupplierLogo } =
-    useRegistration();
+  const {
+    fetchRegions,
+    fetchCommune,
+    registerSupplier,
+    error,
+    uploadSupplierLogo,
+    fetchCategories,
+  } = useRegistration();
 
   const [form] = Form.useForm();
 
@@ -43,6 +49,7 @@ const SupplierRegistration = props => {
   const [regions, setRegions] = useState([]);
   const [communes1, setCommunes1] = useState([]);
   const [communes2, setCommunes2] = useState([]);
+  const [supplierCategories, setSupplierCategories] = useState([]);
   const [iAccept, setIAccept] = useState(false);
   const [isSupplierInfoShareable, setSupplierInfoShareable] = useState(false);
   const [rut, setRut] = useState(null);
@@ -54,6 +61,7 @@ const SupplierRegistration = props => {
     fetchRegions(({ regions }) => {
       setRegions(regions);
     });
+    loadCategories();
   }, []);
 
   const businessRegionChangeHandler = value => {
@@ -80,6 +88,12 @@ const SupplierRegistration = props => {
 
   const businessAddressHandler = () => {
     setSameAsBusiness(!sameAsBusiness);
+  };
+
+  const loadCategories = () => {
+    fetchCategories(data => {
+      setSupplierCategories(data);
+    });
   };
 
   const prefixSelector = name => (
@@ -621,30 +635,12 @@ const SupplierRegistration = props => {
                         );
                       }}
                     >
-                      <Option value="6">Alimentación</Option>
-                      <Option value="19">Artículos de oficina</Option>
-                      <Option value="10">Bodegaje</Option>
-                      <Option value="13">Capacitación</Option>
-                      <Option value="14">Contabilidad</Option>
-                      <Option value="2">Delivery</Option>
-                      <Option value="5">Diseño web y logo</Option>
-                      <Option value="4">E-commerce</Option>
-                      <Option value="16">Entretenimiento</Option>
-                      <Option value="18">Eventos</Option>
-                      <Option value="27">Fotografía</Option>
-                      <Option value="21">Imprenta y gráficas</Option>
-                      <Option value="26">Ingeniería</Option>
-                      <Option value="15">Legal</Option>
-                      <Option value="30">Limpieza y aseo</Option>
-                      <Option value="9">Manufactura y decoración</Option>
-                      <Option value="28">Maquinaria y construcción</Option>
-                      <Option value="1">Marketing digital</Option>
-                      <Option value="3">Packaging</Option>
-                      <Option value="17">Productos y regalos corporativos</Option>
-                      <Option value="29">Salud y belleza</Option>
-                      <Option value="20">Servicios de importación y exportación</Option>
-                      <Option value="8">Software y programación</Option>
-                      <Option value="25">Textil y calzado</Option>
+                      {supplierCategories &&
+                        supplierCategories.map(category => (
+                          <Option key={category.id + category.name} value={category.id}>
+                            {category.name}
+                          </Option>
+                        ))}
                     </Select>
                   </Form.Item>
                 </Col>
