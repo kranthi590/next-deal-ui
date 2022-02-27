@@ -566,5 +566,9 @@
   "app.common.text.confirmDeleteProject": "¿Estas seguro de que desea eliminar el proyecto?",
   "app.common.text.confirmDeleteQuotationResponse": "¿Estas seguro de que desea eliminar la respuesta de la cotizacion?",
   "app.api.error.400Msg": "Se ha producido un error inesperado!",
-  "app.api.error.500Msg": "Se ha producido un error inesperado!"
+  "app.api.error.500Msg": "Se ha producido un error inesperado!",
+  "file.message.success": "Archivo cargado con éxito",
+  "file.message.error": "Error en la carga de archivos",
+  "file.message.fileTypeNotSupported": "Tipo de archivo no admitido",
+  "app.common.text.uploadSuppliers":"Subir proveedores"
 }

@@ -332,6 +332,7 @@ const NewQuote = props => {
                 >
                   <FilesManager
                     files={files}
+                    tooltiptext="Arroja los archivos relevantes para tu cotización"
                     context={{
                       assetRelation: 'quotation_request',
                     }}

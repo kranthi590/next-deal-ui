@@ -234,6 +234,25 @@ const useProviderRegistration = () => {
       });
   };
 
+  const fetchCategories = callbackFun => {
+    fetchStart();
+    httpClient
+      .get(`config/categories`)
+      .then(({ data }) => {
+        if (data.data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -246,5 +265,6 @@ const useProviderRegistration = () => {
     getSupplier,
     downloadSuppliers,
     getNextDealSuppliers,
+    fetchCategories,
   };
 };
