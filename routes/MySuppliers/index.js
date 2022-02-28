@@ -161,6 +161,11 @@ const MySuppliers = props => {
     setVisible(true);
   };
 
+  const showCreateSupplierModal = () => {
+    setUploadSuppliers(false);
+    showModal();
+  };
+
   const onDownloadXls = () => {
     downloadSuppliers();
   };
@@ -215,14 +220,14 @@ const MySuppliers = props => {
           <Button type="primary" onClick={onUploadXls}>
             <CloudUploadOutlined className="gx-mr-2" />
             <IntlMessages id="app.common.text.upload" />
-            Xls
+            Xlsm
           </Button>
           <Button type="primary" onClick={onDownloadXls}>
             <CloudDownloadOutlined className="gx-mr-2" />
             <IntlMessages id="app.common.text.download" />
-            Xls
+            Xlsx
           </Button>
-          <Button type="primary" onClick={showModal}>
+          <Button type="primary" onClick={showCreateSupplierModal}>
             <UserAddOutlined className="gx-mr-2" />
             <IntlMessages id="app.quotation.addsupplier" />
           </Button>
