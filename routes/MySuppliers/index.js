@@ -5,6 +5,7 @@ import {
   UserAddOutlined,
   EyeOutlined,
   InboxOutlined,
+  FileExcelOutlined,
 } from '@ant-design/icons';
 import { Button, Card, Modal, Space, Table, Input, Row, Col, message } from 'antd';
 import React, { useState, useEffect } from 'react';
@@ -14,8 +15,9 @@ import SupplierRegistrationPage from '../../pages/supplier-registration';
 import IntlMessages from '../../util/IntlMessages';
 import { Cookies } from 'react-cookie';
 import Dragger from 'antd/lib/upload/Dragger';
-import Axios from 'axios';
 import { errorNotification, successNotification } from '../../util/util';
+import Link from 'next/link';
+
 const MySuppliers = props => {
   const { getBuyerSuppliers, getSupplier, downloadSuppliers } = useRegistration();
   const [visible, setVisible] = useState(false);
@@ -202,6 +204,14 @@ const MySuppliers = props => {
           </div>
         </div>
         <div align="end" style={{ textAlign: 'right' }}>
+          <Link href="/Suppliers.xlsm">
+            <a>
+              <Button type="secondary" className="gx-mr-3">
+                <FileExcelOutlined className="gx-mr-2" />
+                <IntlMessages id="app.common.text.downloadTemplate" />
+              </Button>
+            </a>
+          </Link>
           <Button type="primary" onClick={onUploadXls}>
             <CloudUploadOutlined className="gx-mr-2" />
             <IntlMessages id="app.common.text.upload" />
