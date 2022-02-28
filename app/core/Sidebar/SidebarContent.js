@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react';
 import { Menu } from 'antd';
 import Link from 'next/link';
-
 import { useRouter } from 'next/router';
 import CustomScrollbars from '../../../util/CustomScrollbars';
 import SidebarLogo from './SidebarLogo';
-import {
-  NAV_STYLE_NO_HEADER_EXPANDED_SIDEBAR,
-  NAV_STYLE_NO_HEADER_MINI_SIDEBAR,
-  THEME_TYPE_LITE,
-} from '../../../constants/ThemeSetting';
+import { THEME_TYPE_LITE } from '../../../constants/ThemeSetting';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPathName } from '../../../redux/actions';
 import IntlMessages from '../../../util/IntlMessages';
