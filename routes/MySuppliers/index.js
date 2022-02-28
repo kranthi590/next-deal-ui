@@ -300,7 +300,7 @@ const MySuppliers = props => {
         visible={isSupplierModalVisible}
         onCancel={hideSupplierModal}
         bodyStyle={{ padding: '0' }}
-        footer={null}
+        footer={false}
         destroyOnClose={true}
         width={1000}
         maskClosable={false}
