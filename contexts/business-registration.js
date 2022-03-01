@@ -253,6 +253,31 @@ const useProviderRegistration = () => {
       });
   };
 
+  const uploadSupplierDetails = (formdata, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    const buyerId = cookie.get('buyerId');
+    httpClient
+      .post(`buyers/${buyerId}/uploadSuppliers`, formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        responseType: 'blob',
+      })
+      .then(response => {
+        fileDownload(response.data, 'Suppliers.xlsx');
+        fetchSuccess();
+        if (callbackFun) {
+          callbackFun();
+        }
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -266,5 +291,6 @@ const useProviderRegistration = () => {
     downloadSuppliers,
     getNextDealSuppliers,
     fetchCategories,
+    uploadSupplierDetails,
   };
 };
