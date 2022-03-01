@@ -195,3 +195,9 @@ body {
 .gx-module-sidenav{
   z-index: 2;
 }
+.my-suppliers-table{
+  height: calc(100vh - 343px)!important;
+}
+.next-suppliers-table{
+  height: calc(100vh - 291px)!important;
+}

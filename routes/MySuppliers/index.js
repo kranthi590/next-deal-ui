@@ -17,9 +17,11 @@ import { Cookies } from 'react-cookie';
 import Dragger from 'antd/lib/upload/Dragger';
 import { errorNotification, successNotification } from '../../util/util';
 import Link from 'next/link';
+import CustomScrollbars from '../../util/CustomScrollbars';
 
 const MySuppliers = props => {
-  const { getBuyerSuppliers, getSupplier, downloadSuppliers } = useRegistration();
+  const { getBuyerSuppliers, getSupplier, downloadSuppliers, uploadSupplierDetails } =
+    useRegistration();
   const [visible, setVisible] = useState(false);
   const [, setSearchText] = useState('');
   const [, setSearchedColumn] = useState('');
@@ -174,26 +176,23 @@ const MySuppliers = props => {
     setUploadSuppliers(true);
     showModal();
   };
-  const beforeUpload = file => {
-    const isXlsm = file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12';
+
+  const handleUpload = files => {
+    const isXlsm = files.file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12';
     if (!isXlsm) {
-      errorNotification('', 'file.message.fileTypeNotSupported');
-    }
-    return isXlsm || Dragger.LIST_IGNORE;
-  };
-
-  const onfileChange = info => {
-    const { status } = info.file;
-
-    if (status === 'done') {
       setVisible(false);
-      successNotification('file.message.success');
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    } else if (status === 'error') {
-      errorNotification('', 'file.message.error');
+      setUploadSuppliers(false);
+      errorNotification('', 'file.message.fileTypeNotSupported');
+      return;
     }
+    const formData = new FormData();
+    formData.append('suppliers', files.file);
+    uploadSupplierDetails(formData, () => {
+      successNotification('file.message.success');
+      setVisible(false);
+      setUploadSuppliers(false);
+      loadMySuppliers(1);
+    });
   };
   return (
     <>
@@ -232,18 +231,21 @@ const MySuppliers = props => {
             <IntlMessages id="app.quotation.addsupplier" />
           </Button>
         </div>
-        <Table
-          loading={loading}
-          columns={suppliersColumns}
-          dataSource={suppliersList}
-          scroll={{ y: 500 }}
-          pagination={{
-            showSizeChanger: false,
-            pageSize: 20,
-            total: totalPages,
-            onChange: loadMySuppliers,
-          }}
-        />
+        <CustomScrollbars className="my-suppliers-table" sid="mySuppliersScrollableWrapper">
+          <div className="gx-p-2">
+            <Table
+              loading={loading}
+              columns={suppliersColumns}
+              dataSource={suppliersList}
+              pagination={{
+                showSizeChanger: false,
+                pageSize: 20,
+                total: totalPages,
+                onChange: loadMySuppliers,
+              }}
+            />
+          </div>
+        </CustomScrollbars>
       </Card>
       <Modal
         title={
@@ -271,9 +273,7 @@ const MySuppliers = props => {
               {...props}
               multiple={false}
               accept={['application/vnd.ms-excel.sheet.macroEnabled.12']}
-              action={`${process.env.NEXT_PUBLIC_API_HOST}api/v1/buyers/${buyerId}/uploadSuppliers`}
-              beforeUpload={beforeUpload}
-              onChange={onfileChange}
+              customRequest={handleUpload}
             >
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />

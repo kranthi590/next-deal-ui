@@ -5,6 +5,7 @@ import SupplierDetails from '../../app/components/NextDeal/SupplierDetails';
 import { useRegistration } from '../../contexts/business-registration';
 import IntlMessages from '../../util/IntlMessages';
 import { Cookies } from 'react-cookie';
+import CustomScrollbars from '../../util/CustomScrollbars';
 const NextDealSuppliers = props => {
   const { getNextDealSuppliers, getSupplier } = useRegistration();
   const [, setSearchText] = useState('');
@@ -144,20 +145,21 @@ const NextDealSuppliers = props => {
             </div>
           </div>
         </div>
-
-        <Table
-          loading={loading}
-          columns={suppliersColumns}
-          dataSource={suppliersList}
-          hei
-          scroll={{ y: 500 }}
-          pagination={{
-            showSizeChanger: false,
-            pageSize: 20,
-            total: totalPages,
-            onChange: loadNextDealSuppliers,
-          }}
-        />
+        <CustomScrollbars className="next-suppliers-table" sid="mySuppliersScrollableWrapper">
+          <div className="gx-p-2">
+            <Table
+              loading={loading}
+              columns={suppliersColumns}
+              dataSource={suppliersList}
+              pagination={{
+                showSizeChanger: false,
+                pageSize: 20,
+                total: totalPages,
+                onChange: loadNextDealSuppliers,
+              }}
+            />
+          </div>
+        </CustomScrollbars>
       </Card>
       <Modal
         title={<IntlMessages id="app.common.text.supplierDetails" />}
