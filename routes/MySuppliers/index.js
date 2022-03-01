@@ -31,6 +31,7 @@ const MySuppliers = props => {
   const [buyerId, setBuyerId] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(null);
   const [uploadSuppliers, setUploadSuppliers] = useState(false);
   const cookie = new Cookies();
 
@@ -47,6 +48,7 @@ const MySuppliers = props => {
   };
 
   const loadMySuppliers = (page = 1) => {
+    setCurrentPage(page);
     setLoading(true);
     getBuyerSuppliers(
       data => {
@@ -191,7 +193,7 @@ const MySuppliers = props => {
       successNotification('file.message.success');
       setVisible(false);
       setUploadSuppliers(false);
-      loadMySuppliers(1);
+      loadMySuppliers(currentPage);
     });
   };
   return (
