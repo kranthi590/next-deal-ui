@@ -261,6 +261,7 @@ const useProviderRegistration = () => {
     httpClient
       .post(`buyers/${buyerId}/uploadSuppliers`, formdata, {
         headers: {
+          ...headers,
           'Content-Type': 'multipart/form-data',
         },
         responseType: 'blob',

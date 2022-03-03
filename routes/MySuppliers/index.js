@@ -180,13 +180,19 @@ const MySuppliers = props => {
   };
 
   const handleUpload = files => {
-    const isXlsm = files.file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12';
-    if (!isXlsm) {
+    //const isXlsm = files.file.type === 'application/vnd.ms-excel.sheet.macroEnabled.12';
+    if (files.file.name.split('.').pop() !== 'xlsm') {
       setVisible(false);
       setUploadSuppliers(false);
       errorNotification('', 'file.message.fileTypeNotSupported');
       return;
     }
+    /*  if (!isXlsm) {
+      setVisible(false);
+      setUploadSuppliers(false);
+      errorNotification('', 'file.message.fileTypeNotSupported');
+      return;
+    }*/
     const formData = new FormData();
     formData.append('suppliers', files.file);
     uploadSupplierDetails(formData, () => {
