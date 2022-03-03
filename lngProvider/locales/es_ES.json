@@ -571,5 +571,6 @@
   "file.message.success": "Archivo cargado con éxito",
   "file.message.error": "Error en la carga de archivos",
   "file.message.fileTypeNotSupported": "Tipo de archivo no admitido",
-  "app.common.text.uploadSuppliers":"Subir proveedores"
+  "app.common.text.uploadSuppliers":"Subir proveedores",
+  "app.common.deleting":"Eliminación de..."
 }

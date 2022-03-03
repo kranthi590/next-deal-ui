@@ -106,7 +106,7 @@ const useProviderProject = () => {
       });
   };
 
-  const deleteProject = (pid, callbackFun) => {
+  const deleteProject = (pid, callbackFun, errorCallback) => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies();
@@ -119,11 +119,17 @@ const useProviderProject = () => {
           fetchSuccess();
           if (callbackFun) callbackFun(data.data);
         } else {
+          if (errorCallback) {
+            errorCallback();
+          }
           errorNotification(data.error, 'app.registration.errorMessageTitle');
           fetchError(data.error);
         }
       })
       .catch(function (error) {
+        if (errorCallback) {
+          errorCallback();
+        }
         errorNotification(error.message, 'app.registration.errorMessageTitle');
         fetchError(error.message);
       });

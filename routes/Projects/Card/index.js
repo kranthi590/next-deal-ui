@@ -21,6 +21,7 @@ function CardList({ projects, loader, totalCount }) {
   const [projectsCount, setProjectsCount] = useState(totalCount);
   const [showLoading, setSetShowLoading] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
   const onDeleteClick = pid => {
@@ -28,17 +29,26 @@ function CardList({ projects, loader, totalCount }) {
     setShowDeleteAlert(true);
   };
 
-  const onDeleteConfirmed = () => {
-    deleteProject(selectedProject.id, data => {
-      successNotification('app.registration.detailsSaveSuccessMessage');
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    });
-  };
   const onDeleteCancel = () => {
     setShowDeleteAlert(false);
     setSelectedProject(null);
+    setDisableButton(false);
+  };
+
+  const onDeleteConfirmed = () => {
+    setDisableButton(true);
+    deleteProject(
+      selectedProject.id,
+      data => {
+        successNotification('app.registration.detailsSaveSuccessMessage');
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      },
+      () => {
+        onDeleteCancel();
+      },
+    );
   };
 
   const loadMoreProjects = () => {
@@ -90,7 +100,13 @@ function CardList({ projects, loader, totalCount }) {
         </Col>
       </div>
       <SweetAlert
-        confirmBtnText={<IntlMessages id="button.delete" />}
+        confirmBtnText={
+          disableButton ? (
+            <IntlMessages id="app.common.deleting" />
+          ) : (
+            <IntlMessages id="button.delete" />
+          )
+        }
         cancelBtnText={<IntlMessages id="button.cancel" />}
         show={showDeleteAlert}
         success
@@ -98,6 +114,7 @@ function CardList({ projects, loader, totalCount }) {
         onConfirm={onDeleteConfirmed}
         onCancel={onDeleteCancel}
         showCancel
+        disabled={disableButton}
         type="warning"
         customClass="gx-sweetalert-wrapper"
       >
