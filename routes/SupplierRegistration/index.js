@@ -520,6 +520,12 @@ const SupplierRegistration = props => {
                       placeholder={intl.formatMessage({
                         id: 'app.supplierregistration.field.business_type.pleaseSelectType',
                       })}
+                      showSearch
+                      filterOption={(input, option) => {
+                        return (
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        );
+                      }}
                     >
                       <Option value="Emprendedor">Emprendedor</Option>
                       <Option value="Pyme">Pyme</Option>
@@ -716,6 +722,12 @@ const SupplierRegistration = props => {
                           id: 'app.supplierregistration.field.business_regionId.PleaseSelectRegion',
                         })}
                         onChange={billingRegionChangeHandler}
+                        showSearch
+                        filterOption={(input, option) => {
+                          return (
+                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                          );
+                        }}
                       >
                         {regions &&
                           regions
@@ -738,6 +750,12 @@ const SupplierRegistration = props => {
                         placeholder={intl.formatMessage({
                           id: 'app.supplierregistration.field.business_communeId.pleaseSelectCommune',
                         })}
+                        showSearch
+                        filterOption={(input, option) => {
+                          return (
+                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                          );
+                        }}
                       >
                         {communes2 &&
                           communes2.map(commune => (

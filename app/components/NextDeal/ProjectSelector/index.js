@@ -86,8 +86,12 @@ const ProjectSelector = ({
               wrapperCol={colSetInput}
             >
               <Select
+                showSearch
                 placeholder={intl.formatMessage({ id: 'app.common.text.selectProject' })}
                 onSelect={handleProjectChanged}
+                filterOption={(input, option) => {
+                  return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                }}
               >
                 {allProjects &&
                   allProjects.map(item => (
@@ -107,17 +111,21 @@ const ProjectSelector = ({
                 wrapperCol={colSetInput}
               >
                 <Select
+                  showSearch
                   placeholder={intl.formatMessage({ id: 'calendar.filter.status' })}
                   onSelect={handleStatusChanged}
+                  filterOption={(input, option) => {
+                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                  }}
                 >
                   <Option value="all">
-                    <IntlMessages id="calendar.filter.option.all" />
+                    {intl.formatMessage({ id: 'calendar.filter.option.all' })}
                   </Option>
                   <Option value="awarded">
-                    <IntlMessages id="calendar.filter.option.awarded" />
+                    {intl.formatMessage({ id: 'calendar.filter.option.awarded' })}
                   </Option>
                   <Option value="unawarded">
-                    <IntlMessages id="calendar.filter.option.dewarded" />
+                    {intl.formatMessage({ id: 'calendar.filter.option.dewarded' })}
                   </Option>
                 </Select>
               </Form.Item>

@@ -7,6 +7,7 @@ import 'moment/locale/es';
 import { Card, Popover } from 'antd';
 import { ResponsesProvider, useResponse } from '../../contexts/responses';
 import IntlMessages from '../../util/IntlMessages';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
 const localizer = momentLocalizer(moment);
 
@@ -34,7 +35,7 @@ const EventComponent = evtData => {
               <IntlMessages id="app.common.text.validityDate" />
             )}
           </h6>
-          <p className="gx-text-muted">{moment(evtData.event.start).format('MMM Do YY')}</p>
+          <p className="gx-text-muted">{moment(evtData.event.start).format('DD-MM-YYYY')}</p>
         </div>
       </div>
     );
@@ -167,8 +168,8 @@ const ProjectsCalendarWrapper = () => {
           }}
           eventPropGetter={eventStyleGetter}
           messages={{
-            next: 'Siguiente',
-            previous: 'Antes',
+            next: <RightOutlined />,
+            previous: <LeftOutlined />,
             today: 'Hoy',
             month: 'Mes',
             week: 'Semana',

@@ -241,7 +241,13 @@ const NewQuote = props => {
                 name="currency"
                 rules={[stringRule]}
               >
-                <Select placeholder={intl.formatMessage({ id: 'app.quotation.field.currency' })}>
+                <Select
+                  placeholder={intl.formatMessage({ id: 'app.quotation.field.currency' })}
+                  showSearch
+                  filterOption={(input, option) => {
+                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                  }}
+                >
                   {Object.keys(CURRENCY).map(item => (
                     <Option key={item} value={CURRENCY[item].toLowerCase()}>
                       {CURRENCY[item]}

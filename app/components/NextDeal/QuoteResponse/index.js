@@ -175,6 +175,10 @@ const QuoteResponses = props => {
               <Select
                 placeholder={intl.formatMessage({ id: 'app.project.field.currency' })}
                 disabled={awarded || !newQuote}
+                showSearch
+                filterOption={(input, option) => {
+                  return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                }}
               >
                 {Object.keys(CURRENCY).map(item => (
                   <Option key={item} value={CURRENCY[item].toLowerCase()}>
@@ -257,6 +261,10 @@ const QuoteResponses = props => {
                   id: 'app.quotationresponses.field.paymentCondition',
                 })}
                 disabled={awarded || !newQuote}
+                showSearch
+                filterOption={(input, option) => {
+                  return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                }}
               >
                 <Option value="al-contado">al contado</Option>
                 <Option value="7-dias">7 días</Option>
@@ -288,6 +296,10 @@ const QuoteResponses = props => {
                 allowClear
                 placeholder={intl.formatMessage({ id: 'app.quotationresponses.field.incoterm' })}
                 disabled={awarded || !newQuote}
+                showSearch
+                filterOption={(input, option) => {
+                  return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                }}
               >
                 <Option value="NO_APLICA">No Aplica</Option>
                 <Option value="EXW">EXW</Option>
