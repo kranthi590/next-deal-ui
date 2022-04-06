@@ -121,6 +121,10 @@ const QuotationCompleted = props => {
               <Select
                 placeholder={intl.formatMessage({ id: 'app.project.field.currency' })}
                 disabled
+                showSearch
+                filterOption={(input, option) => {
+                  return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                }}
               >
                 {Object.keys(CURRENCY).map(item => (
                   <Option key={item} value={CURRENCY[item].toLowerCase()}>
@@ -200,6 +204,10 @@ const QuotationCompleted = props => {
                   id: 'app.quotationresponses.field.paymentCondition',
                 })}
                 disabled
+                showSearch
+                filterOption={(input, option) => {
+                  return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                }}
               >
                 <Option value="al-contado">al contado</Option>
                 <Option value="7">7 días</Option>
