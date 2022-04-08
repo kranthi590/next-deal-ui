@@ -892,7 +892,7 @@ const SupplierRegistration = props => {
                   </FormItem>
                 </Col>
               </Row>
-              {props.isBuyer && (
+              {/*              {props.isBuyer && (
                 <Row
                   style={{ width: '100%', justifyContent: 'right' }}
                   gutter={24}
@@ -907,7 +907,7 @@ const SupplierRegistration = props => {
                     </Form.Item>
                   </Col>
                 </Row>
-              )}
+              )}*/}
               <Row gutter={24} style={{ marginBottom: 20 }}>
                 <Col xs={24}>
                   <WidgetHeader
