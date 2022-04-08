@@ -52,7 +52,12 @@ const SidebarLogo = () => {
           ) : themeType === THEME_TYPE_LITE ? (
             <img alt="logo1" src={'/app/images/logo-white.png'} />
           ) : (
-            <img alt="logo2" src={'/app/images/nd-logo.png'} width="180" class="img-fluid main-logo"/>
+            <img
+              alt="logo2"
+              src={'/app/images/nd-logo.png'}
+              width="180"
+              className="img-fluid main-logo"
+            />
           )}
         </a>
       </Link>

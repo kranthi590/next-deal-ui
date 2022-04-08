@@ -29,7 +29,6 @@ const SidebarContent = () => {
   if (!defaultOpenKeys && dashboardGroup.includes(selectedKeys.split('/')[0])) {
     defaultOpenKeys = 'dashboardgroup';
   }
-
   return (
     <React.Fragment>
       <SidebarLogo />
@@ -71,16 +70,18 @@ const SidebarContent = () => {
                 </a>
               </Link>
             </Menu.Item>
-            <Menu.Item key="nextdeal-suppliers">
-              <Link href="/nextdeal-suppliers">
-                <a>
-                  <i className="icon icon-product-list" />
-                  <span>
-                    <IntlMessages id="sidebar.suppliers.suppliersNextDeal" />
-                  </span>
-                </a>
-              </Link>
-            </Menu.Item>
+            {process.env.NEXT_PUBLIC_IS_ND_SUPPLIERS_SHOWN === 'true' && (
+              <Menu.Item key="nextdeal-suppliers">
+                <Link href="/nextdeal-suppliers">
+                  <a>
+                    <i className="icon icon-product-list" />
+                    <span>
+                      <IntlMessages id="sidebar.suppliers.suppliersNextDeal" />
+                    </span>
+                  </a>
+                </Link>
+              </Menu.Item>
+            )}
             <SubMenu
               key="dashboardgroup"
               title={

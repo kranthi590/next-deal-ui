@@ -14,6 +14,7 @@ ENV NODE_ENV=production
 ENV NEXT_PUBLIC_GRAFANA_HOST=https://metrics.nextdeal.cl
 ENV NEXT_PUBLIC_WEB_HOST=www.nextdeal.cl
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+ENV NEXT_PUBLIC_IS_ND_SUPPLIERS_SHOWN=false
 
 #Sets the working directory for any RUN, CMD, ENTRYPOINT, COPY, and ADD commands
 WORKDIR /usr/src/app
