@@ -140,8 +140,7 @@ const SupplierRegistration = props => {
       categories: business.categories,
       serviceLocations: data.serviceLocations,
       type: business.type,
-
-      isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
+      isShared: false /*props.isBuyer ? isSupplierInfoShareable : props.isShared,*/,
       inchargeRole: contact.charge,
     };
     if (business.supplier_info) {
@@ -979,7 +978,7 @@ const SupplierRegistration = props => {
 
 SupplierRegistration.defaultProps = {
   showLoginLink: true,
-  isShared: true,
+  isShared: false,
   isBannerShown: true,
 };
 export default SupplierRegistration;
