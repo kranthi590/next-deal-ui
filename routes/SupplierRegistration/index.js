@@ -148,7 +148,7 @@ const SupplierRegistration = props => {
       // serviceLocations: data.serviceLocations,
       // type: business.type,
 
-      isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
+      isShared: false, //props.isBuyer ? isSupplierInfoShareable : props.isShared,
       inchargeRole: contact.charge,
     };
     if (isValidObject(businessAddress)) {
@@ -1104,7 +1104,7 @@ const SupplierRegistration = props => {
                     </FormItem>
                   </Col>
                 </Row>
-                {props.isBuyer && (
+                {/*            {props.isBuyer && (
                   <Row
                     style={{ width: '100%', justifyContent: 'right' }}
                     gutter={24}
@@ -1121,7 +1121,7 @@ const SupplierRegistration = props => {
                       </Form.Item>
                     </Col>
                   </Row>
-                )}
+                )}*/}
                 <Row gutter={24} style={{ marginBottom: 20 }}>
                   <Col xs={24}>
                     <WidgetHeader
