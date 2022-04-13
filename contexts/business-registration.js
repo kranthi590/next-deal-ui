@@ -100,7 +100,9 @@ const useProviderRegistration = () => {
       const cookie = new Cookies();
       const buyerId = cookie.get('buyerId');
       httpClient
-        .post(`buyers/${buyerId}/suppliers`, data, { headers })
+        .post(`${process.env.NEXT_PUBLIC_API_HOST}api/v2/buyers/${buyerId}/suppliers`, data, {
+          headers,
+        })
         .then(({ data }) => {
           if (data.data) {
             fetchSuccess();
@@ -116,7 +118,7 @@ const useProviderRegistration = () => {
         });
     } else {
       httpClient
-        .post('suppliers', data)
+        .post(`${process.env.NEXT_PUBLIC_API_HOST}api/v2/suppliers`, data)
         .then(({ data }) => {
           if (data) {
             fetchSuccess();

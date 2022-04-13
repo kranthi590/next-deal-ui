@@ -115,9 +115,12 @@ const SupplierRegistration = props => {
       communeId: business.communeId,
       regionId: business.regionId,
       emailId: business.emailId,
-      phoneNumber1: getPhonePrefix(business.telephone1) + business.phoneNumber1,
-      phoneNumber2: getPhonePrefix(business.telephone2) + business.phoneNumber2,
-      countryId: 1,
+      phoneNumber1: business.phoneNumber1
+        ? getPhonePrefix(business.telephone1) + business.phoneNumber1
+        : undefined,
+      // phoneNumber2: business.phoneNumber2 ? getPhonePrefix(business.telephone2) + business.phoneNumber2 : undefined,
+      countryId: isAuthenticated ? undefined : 1,
+      // referencia: business.referencia
     };
 
     const billingAddress = {
@@ -126,23 +129,31 @@ const SupplierRegistration = props => {
       communeId: billing.communeId,
       regionId: billing.regionId,
       emailId: billing.emailId,
-      phoneNumber1: getPhonePrefix(billing.telephone1) + billing.phoneNumber1,
-      phoneNumber2: getPhonePrefix(billing.telephone2) + billing.phoneNumber2,
+      phoneNumber1: billing.phoneNumber1
+        ? getPhonePrefix(billing.telephone1) + billing.phoneNumber1
+        : undefined,
+      phoneNumber2: billing.phoneNumber2
+        ? getPhonePrefix(billing.telephone2) + billing.phoneNumber2
+        : undefined,
       countryId: 1,
     };
 
     let formData = {
-      businessAddress: businessAddress,
+      // businessAddress: businessAddress,
       legalName: business.legalName,
-      fantasyName: business.fantasyName,
+      // fantasyName: business.fantasyName,
       rut: business.rut ? clean(business.rut) : business.rut,
       emailId: business.emailId,
       categories: business.categories,
-      serviceLocations: data.serviceLocations,
-      type: business.type,
-      isShared: false /*props.isBuyer ? isSupplierInfoShareable : props.isShared,*/,
+      // serviceLocations: data.serviceLocations,
+      // type: business.type,
+
+      isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
       inchargeRole: contact.charge,
     };
+    if (isValidObject(businessAddress)) {
+      formData.businessAddress = businessAddress;
+    }
     if (business.supplier_info) {
       formData.comments = business.supplier_info;
     }
@@ -233,33 +244,229 @@ const SupplierRegistration = props => {
                 <IntlMessages id="app.supplierregistration.page_title" />
               </h1>
             </div>
-            <Form
-              layout="inline"
-              form={form}
-              initialValues={{ remember: true }}
-              name="basic"
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              className="gx-signin-form gx-form-row0"
-            >
-              <Row gutter={24} className="bottom-divider">
-                <Col xs={24}>
-                  <WidgetHeader title={<IntlMessages id="app.supplierregistration.form_title" />} />
-                </Col>
-                <Col sm={12} xs={24}>
+            {isAuthenticated ? (
+              <>
+                <Form
+                  layout="inline"
+                  form={form}
+                  initialValues={{ remember: true }}
+                  name="basic"
+                  onFinish={onFinish}
+                  onFinishFailed={onFinishFailed}
+                  className="gx-signin-form gx-form-row0"
+                >
+                  <Row gutter={24} className="bottom-divider">
+                    <Col xs={24}>
+                      <WidgetHeader
+                        title={<IntlMessages id="app.supplierregistration.form_title" />}
+                      />
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        name="business_legalName"
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.business_legalName" />
+                        }
+                        rules={[
+                          {
+                            required: true,
+                            message: (
+                              <IntlMessages id="app.supplierregistration.field.business_legalName.error.required" />
+                            ),
+                          },
+                        ]}
+                      >
+                        <Input
+                          size="large"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.business_legalName',
+                          })}
+                        />
+                      </FormItem>
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        name="business_rut"
+                        label={<IntlMessages id="app.supplierregistration.field.business_rut" />}
+                        rules={[
+                          {
+                            required: true,
+                            validator: (_, value) => {
+                              if (!validate(value)) {
+                                return Promise.reject(
+                                  <IntlMessages id="app.supplierregistration.field.business_rut.error.valid" />,
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          },
+                        ]}
+                      >
+                        <Rut
+                          {...props}
+                          className="gx-w-100"
+                          value={rut}
+                          size="large"
+                          onChange={onChange}
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.business_rut',
+                          })}
+                        />
+                      </FormItem>
+                    </Col>
+                    <Col xs={24}>
+                      <Form.Item
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.business_categories" />
+                        }
+                        name="business_categories"
+                        rules={[
+                          {
+                            required: true,
+                            message: (
+                              <IntlMessages id="app.supplierregistration.field.business_categories.error.required" />
+                            ),
+                            type: 'array',
+                          },
+                        ]}
+                      >
+                        <Select
+                          size="large"
+                          mode="multiple"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.business_categories.pleaseSelectYourCategories',
+                          })}
+                          filterOption={(input, option) => {
+                            return (
+                              option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            );
+                          }}
+                        >
+                          {supplierCategories &&
+                            supplierCategories.map(category => (
+                              <Option key={category.id + category.name} value={category.id}>
+                                {category.name}
+                              </Option>
+                            ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col sm={6} xs={24}>
+                      <FormItem
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.business_emailId" />
+                        }
+                        name="business_emailId"
+                        rules={[
+                          {
+                            required: false,
+                            type: 'email',
+                            message: (
+                              <IntlMessages id="app.supplierregistration.field.business_emailId.error.email" />
+                            ),
+                          },
+                        ]}
+                      >
+                        <Input
+                          size="large"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.business_emailId',
+                          })}
+                        />
+                      </FormItem>
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.business_phoneNumber1" />
+                        }
+                        name="business_phoneNumber1"
+                        rules={[
+                          {
+                            required: false,
+                            validator: (_, value) => {
+                              if (value && isNaN(value)) {
+                                return Promise.reject(
+                                  <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input
+                          size="large"
+                          addonBefore={prefixSelector('business_telephone1')}
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.business_phoneNumber1',
+                          })}
+                        />
+                      </FormItem>
+                    </Col>
+                  </Row>
+
+                  <Row style={{ width: '100%', justifyContent: 'right' }}>
+                    <Col>
+                      <Form.Item
+                        name="iAccept"
+                        rules={[
+                          {
+                            required: !iAccept && true,
+                            message: (
+                              <IntlMessages id="app.supplierregistration.field.iAccept.error.required" />
+                            ),
+                          },
+                        ]}
+                      >
+                        <Checkbox onChange={() => setIAccept(!iAccept)}>
+                          <IntlMessages id="appModule.iAccept" />
+                        </Checkbox>
+                        <span className="gx-signup-form-forgot gx-link">
+                          <Link
+                            href={`https://${process.env.NEXT_PUBLIC_WEB_HOST + '/terms-of-use'}`}
+                          >
+                            <a target="_blank">
+                              <IntlMessages id="appModule.termAndCondition" />
+                            </a>
+                          </Link>
+                        </span>
+                      </Form.Item>
+                    </Col>
+                    <Col>
+                      <FormItem>
+                        <div>
+                          <Button type="primary" className="gx-mb-0" htmlType="submit">
+                            <IntlMessages id="app.supplierregistration.field.register.button" />
+                          </Button>
+                        </div>
+                      </FormItem>
+                    </Col>
+                  </Row>
+                </Form>
+              </>
+            ) : (
+              <Form
+                layout="inline"
+                form={form}
+                initialValues={{ remember: true }}
+                name="basic"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                className="gx-signin-form gx-form-row0"
+              >
+                <Row gutter={24} className="bottom-divider">
+                  <Col xs={24}>
+                    <WidgetHeader
+                      title={<IntlMessages id="app.supplierregistration.form_title" />}
+                    />
+                  </Col>
+                  {/* <Col sm={12} xs={24}>
                   <FormItem
                     name="business_fantasyName"
                     label={
                       <IntlMessages id="app.supplierregistration.field.business_fantasyName" />
                     }
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_fantasyName.error.required" />
-                        ),
-                      },
-                    ]}
                   >
                     <Input
                       size="large"
@@ -268,154 +475,199 @@ const SupplierRegistration = props => {
                       })}
                     />
                   </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    name="business_legalName"
-                    label={<IntlMessages id="app.supplierregistration.field.business_legalName" />}
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_legalName.error.required" />
-                        ),
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_legalName',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    name="business_rut"
-                    label={<IntlMessages id="app.supplierregistration.field.business_rut" />}
-                    rules={[
-                      {
-                        required: true,
-                        validator: (_, value) => {
-                          if (!validate(value)) {
-                            return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.business_rut.error.valid" />,
-                            );
-                          }
-                          return Promise.resolve();
+                </Col> */}
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      name="business_legalName"
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.business_legalName" />
+                      }
+                      rules={[
+                        {
+                          required: true,
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.business_legalName.error.required" />
+                          ),
                         },
-                      },
-                    ]}
-                  >
-                    <Rut
-                      {...props}
-                      className="gx-w-100"
-                      value={rut}
-                      size="large"
-                      onChange={onChange}
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_rut',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    name="business_addressLine1"
-                    label={
-                      <IntlMessages id="app.supplierregistration.field.business_addressLine1" />
-                    }
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_addressLine1.error.required" />
-                        ),
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_addressLine1',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    name="business_addressLine2"
-                    label={
-                      <IntlMessages id="app.supplierregistration.field.business_addressLine2" />
-                    }
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_addressLine2.error.required" />
-                        ),
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_addressLine2_placeholder',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.business_regionId" />}
-                    name="business_regionId"
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_regionId.error.required" />
-                        ),
-                      },
-                    ]}
-                  >
-                    <Select
-                      showSearch
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_regionId.PleaseSelectRegion',
-                      })}
-                      onChange={businessRegionChangeHandler}
-                      filterOption={(input, option) => {
-                        return (
-                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        );
-                      }}
+                      ]}
                     >
-                      {regions &&
-                        regions
-                          .filter(r => r.name !== TODO_CHILE)
-                          .map(region => (
-                            <Option key={region.id + region.name} value={region.id}>
-                              {region.name}
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_legalName',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      name="business_rut"
+                      label={<IntlMessages id="app.supplierregistration.field.business_rut" />}
+                      rules={[
+                        {
+                          required: true,
+                          validator: (_, value) => {
+                            if (!validate(value)) {
+                              return Promise.reject(
+                                <IntlMessages id="app.supplierregistration.field.business_rut.error.valid" />,
+                              );
+                            }
+                            return Promise.resolve();
+                          },
+                        },
+                      ]}
+                    >
+                      <Rut
+                        {...props}
+                        className="gx-w-100"
+                        value={rut}
+                        size="large"
+                        onChange={onChange}
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_rut',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      label={<IntlMessages id="app.supplierregistration.field.business_regionId" />}
+                      name="business_regionId"
+                      rules={[
+                        {
+                          required: true,
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.business_regionId.error.required" />
+                          ),
+                        },
+                      ]}
+                    >
+                      <Select
+                        showSearch
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_regionId.PleaseSelectRegion',
+                        })}
+                        onChange={businessRegionChangeHandler}
+                        filterOption={(input, option) => {
+                          return (
+                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                          );
+                        }}
+                      >
+                        {regions &&
+                          regions
+                            .filter(r => r.name !== TODO_CHILE)
+                            .map(region => (
+                              <Option key={region.id + region.name} value={region.id}>
+                                {region.name}
+                              </Option>
+                            ))}
+                      </Select>
+                    </FormItem>
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.business_communeId" />
+                      }
+                      name="business_communeId"
+                      rules={[
+                        {
+                          required: true,
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.business_communeId.error.required" />
+                          ),
+                        },
+                      ]}
+                    >
+                      <Select
+                        showSearch
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_communeId.pleaseSelectCommune',
+                        })}
+                        filterOption={(input, option) => {
+                          return (
+                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                          );
+                        }}
+                      >
+                        {communes1 &&
+                          communes1.map(commune => (
+                            <Option key={commune.id + commune.name} value={commune.id}>
+                              {commune.name}
                             </Option>
                           ))}
-                    </Select>
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
+                      </Select>
+                    </FormItem>
+                  </Col>
+
+                  <Col sm={8} xs={24}>
+                    <FormItem
+                      name="business_addressLine1"
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.business_addressLine1" />
+                      }
+                      rules={[
+                        {
+                          required: true,
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.business_addressLine1.error.required" />
+                          ),
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_addressLine1',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  <Col sm={4} xs={24}>
+                    <FormItem
+                      name="business_addressLine2"
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.business_addressLine2" />
+                      }
+                      rules={[
+                        {
+                          required: true,
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.business_addressLine2.error.required" />
+                          ),
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_addressLine2_placeholder',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      name="business_referencia"
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.business_referencia" />
+                      }
+                    >
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_referencia_placeholder',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  {/* <Col sm={12} xs={24}>
                   <FormItem
                     label={<IntlMessages id="app.supplierregistration.field.serviceLocations" />}
                     name="serviceLocations"
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.serviceLocations.error.required" />
-                        ),
-                        type: 'array',
-                      },
-                    ]}
                   >
                     <Select
                       showSearch
@@ -438,81 +690,98 @@ const SupplierRegistration = props => {
                         ))}
                     </Select>
                   </FormItem>
-                </Col>
-
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.business_communeId" />}
-                    name="business_communeId"
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_communeId.error.required" />
-                        ),
-                      },
-                    ]}
-                  >
-                    <Select
-                      showSearch
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_communeId.pleaseSelectCommune',
-                      })}
-                      filterOption={(input, option) => {
-                        return (
-                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        );
-                      }}
-                    >
-                      {communes1 &&
-                        communes1.map(commune => (
-                          <Option key={commune.id + commune.name} value={commune.id}>
-                            {commune.name}
-                          </Option>
-                        ))}
-                    </Select>
-                  </FormItem>
-                </Col>
-
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    name="business_webSiteUrl"
-                    label={<IntlMessages id="app.supplierregistration.field.business_webSiteUrl" />}
-                    rules={[
-                      { required: false },
-                      {
-                        validator(_, value, cb) {
-                          if (!value) {
-                            return Promise.resolve();
-                          }
-                          let tempUrl = addProdocol(value);
-                          if (urlRegx().test(tempUrl)) {
-                            return Promise.resolve();
-                          } else {
-                            return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.business_webSiteUrl.error.required" />,
-                            );
-                          }
+                </Col> */}
+                  <Col xs={24}>
+                    <Form.Item
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.business_categories" />
+                      }
+                      name="business_categories"
+                      rules={[
+                        {
+                          required: true,
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.business_categories.error.required" />
+                          ),
+                          type: 'array',
                         },
-                      },
-                    ]}
-                  >
-                    <Input addonBefore="https://" size="large" placeholder="nextdeal.cl" />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
+                      ]}
+                    >
+                      <Select
+                        size="large"
+                        mode="multiple"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_categories.pleaseSelectYourCategories',
+                        })}
+                        filterOption={(input, option) => {
+                          return (
+                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                          );
+                        }}
+                      >
+                        {supplierCategories &&
+                          supplierCategories.map(category => (
+                            <Option key={category.id + category.name} value={category.id}>
+                              {category.name}
+                            </Option>
+                          ))}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col sm={6} xs={24}>
+                    <FormItem
+                      name="business_webSiteUrl"
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.business_webSiteUrl" />
+                      }
+                      rules={[
+                        { required: false },
+                        {
+                          validator(_, value, cb) {
+                            if (!value) {
+                              return Promise.resolve();
+                            }
+                            let tempUrl = addProdocol(value);
+                            if (urlRegx().test(tempUrl)) {
+                              return Promise.resolve();
+                            } else {
+                              return Promise.reject(
+                                <IntlMessages id="app.supplierregistration.field.business_webSiteUrl.error.required" />,
+                              );
+                            }
+                          },
+                        },
+                      ]}
+                    >
+                      <Input addonBefore="https://" size="large" placeholder="nextdeal.cl" />
+                    </FormItem>
+                  </Col>
+                  <Col sm={6} xs={24}>
+                    <FormItem
+                      label={<IntlMessages id="app.supplierregistration.field.business_emailId" />}
+                      name="business_emailId"
+                      rules={[
+                        {
+                          required: true,
+                          type: 'email',
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.business_emailId.error.email" />
+                          ),
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_emailId',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  {/* <Col sm={12} xs={24}>
                   <FormItem
                     name="business_type"
                     label={<IntlMessages id="app.supplierregistration.field.business_type" />}
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_type.error.required" />
-                        ),
-                      },
-                    ]}
                   >
                     <Select
                       size="large"
@@ -530,41 +799,37 @@ const SupplierRegistration = props => {
                       <Option value="Pyme">Pyme</Option>
                     </Select>
                   </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label={
-                      <IntlMessages id="app.supplierregistration.field.business_phoneNumber1" />
-                    }
-                    name="business_phoneNumber1"
-                    rules={[
-                      {
-                        required: true,
-                        validator: (_, value) => {
-                          if (!value) {
-                            return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
-                            );
-                          } else if (isNaN(value)) {
-                            return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
-                            );
-                          }
-                          return Promise.resolve();
+                </Col> */}
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      label={
+                        <IntlMessages id="app.supplierregistration.field.business_phoneNumber1" />
+                      }
+                      name="business_phoneNumber1"
+                      rules={[
+                        {
+                          required: false,
+                          validator: (_, value) => {
+                            if (value && isNaN(value)) {
+                              return Promise.reject(
+                                <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                              );
+                            }
+                            return Promise.resolve();
+                          },
                         },
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      addonBefore={prefixSelector('business_telephone1')}
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_phoneNumber1',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        addonBefore={prefixSelector('business_telephone1')}
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.business_phoneNumber1',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  {/* <Col sm={12} xs={24}>
                   <FormItem
                     label={
                       <IntlMessages id="app.supplierregistration.field.business_phoneNumber2" />
@@ -591,385 +856,337 @@ const SupplierRegistration = props => {
                       addonBefore={prefixSelector('business_telephone2')}
                     />
                   </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.business_emailId" />}
-                    name="business_emailId"
-                    rules={[
-                      {
-                        required: true,
-                        type: 'email',
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_emailId.error.email" />
-                        ),
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_emailId',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col xs={24}>
-                  <Form.Item
-                    label={<IntlMessages id="app.supplierregistration.field.business_categories" />}
-                    name="business_categories"
-                    rules={[
-                      {
-                        required: true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.business_categories.error.required" />
-                        ),
-                        type: 'array',
-                      },
-                    ]}
-                  >
-                    <Select
-                      size="large"
-                      mode="multiple"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_categories.pleaseSelectYourCategories',
-                      })}
-                      filterOption={(input, option) => {
-                        return (
-                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        );
-                      }}
-                    >
-                      {supplierCategories &&
-                        supplierCategories.map(category => (
-                          <Option key={category.id + category.name} value={category.id}>
-                            {category.name}
-                          </Option>
-                        ))}
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col xs={24}>
-                  <FormItem
-                    label={
-                      <IntlMessages id="app.supplierregistration.field.business_supplier_info" />
-                    }
-                    name="business_supplier_info"
-                  >
-                    <TextArea
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_supplier_info',
-                      })}
-                      autosize
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <Form.Item>
-                    <Checkbox onChange={businessAddressHandler} checked={sameAsBusiness}>
-                      <IntlMessages id="app.supplierregistration.field.samebilling_address" />
-                    </Checkbox>
-                  </Form.Item>
-                </Col>
-              </Row>
-
-              {!sameAsBusiness && (
-                <Row gutter={24} className="bottom-divider">
+                </Col> */}
                   <Col xs={24}>
-                    <WidgetHeader
-                      title={<IntlMessages id="app.supplierregistration.billing_title" />}
-                    />
-                  </Col>
-                  <Col sm={12} xs={24}>
                     <FormItem
                       label={
-                        <IntlMessages id="app.supplierregistration.field.billing_addressLine1" />
+                        <IntlMessages id="app.supplierregistration.field.business_supplier_info" />
                       }
-                      name="billing_addressLine1"
+                      name="business_supplier_info"
                     >
-                      <Input
-                        size="large"
+                      <TextArea
                         placeholder={intl.formatMessage({
-                          id: 'app.supplierregistration.field.billing_addressLine1',
+                          id: 'app.supplierregistration.field.business_supplier_info',
                         })}
+                        autosize
                       />
                     </FormItem>
                   </Col>
                   <Col sm={12} xs={24}>
-                    <FormItem
-                      label={
-                        <IntlMessages id="app.supplierregistration.field.billing_addressLine2" />
-                      }
-                      name="billing_addressLine2"
-                    >
-                      <Input
-                        size="large"
-                        placeholder={intl.formatMessage({
-                          id: 'app.supplierregistration.field.billing_addressLine2_placeholder',
-                        })}
-                      />
-                    </FormItem>
-                  </Col>
-                  <Col sm={12} xs={24}>
-                    <FormItem
-                      label={<IntlMessages id="app.supplierregistration.field.billing_regionId" />}
-                      name="billing_regionId"
-                    >
-                      <Select
-                        size="large"
-                        placeholder={intl.formatMessage({
-                          id: 'app.supplierregistration.field.business_regionId.PleaseSelectRegion',
-                        })}
-                        onChange={billingRegionChangeHandler}
-                        showSearch
-                        filterOption={(input, option) => {
-                          return (
-                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                          );
-                        }}
-                      >
-                        {regions &&
-                          regions
-                            .filter(r => r.name !== TODO_CHILE)
-                            .map(region => (
-                              <Option key={region.id + region.name} value={region.id}>
-                                {region.name}
-                              </Option>
-                            ))}
-                      </Select>
-                    </FormItem>
-                  </Col>
-                  <Col sm={12} xs={24}>
-                    <FormItem
-                      label={<IntlMessages id="app.supplierregistration.field.billing_communeId" />}
-                      name="billing_communeId"
-                    >
-                      <Select
-                        size="large"
-                        placeholder={intl.formatMessage({
-                          id: 'app.supplierregistration.field.business_communeId.pleaseSelectCommune',
-                        })}
-                        showSearch
-                        filterOption={(input, option) => {
-                          return (
-                            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                          );
-                        }}
-                      >
-                        {communes2 &&
-                          communes2.map(commune => (
-                            <Option key={commune.id + commune.name} value={commune.id}>
-                              {commune.name}
-                            </Option>
-                          ))}
-                      </Select>
-                    </FormItem>
-                  </Col>
-                  <Col sm={12} xs={24}>
-                    <FormItem
-                      label={
-                        <IntlMessages id="app.supplierregistration.field.billing_phoneNumber1" />
-                      }
-                      name="billing_phoneNumber1"
-                      rules={[
-                        {
-                          required: false,
-                          validator: (_, value) => {
-                            if (value && isNaN(value)) {
-                              return Promise.reject(
-                                <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
-                      ]}
-                    >
-                      <Input
-                        size="large"
-                        placeholder={intl.formatMessage({
-                          id: 'app.supplierregistration.field.billing_phoneNumber1',
-                        })}
-                        addonBefore={prefixSelector('billing_telephone1')}
-                      />
-                    </FormItem>
-                  </Col>
-                  <Col sm={12} xs={24}>
-                    <FormItem
-                      label={
-                        <IntlMessages id="app.supplierregistration.field.billing_phoneNumber2" />
-                      }
-                      name="billing_phoneNumber2"
-                      rules={[
-                        {
-                          required: false,
-                          validator: (_, value) => {
-                            if (value && isNaN(value)) {
-                              return Promise.reject(
-                                <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
-                              );
-                            }
-                            return Promise.resolve();
-                          },
-                        },
-                      ]}
-                    >
-                      <Input
-                        size="large"
-                        placeholder={intl.formatMessage({
-                          id: 'app.supplierregistration.field.billing_phoneNumber2',
-                        })}
-                        addonBefore={prefixSelector('billing_telephone2')}
-                      />
-                    </FormItem>
-                  </Col>
-                </Row>
-              )}
-
-              <Row gutter={24} style={{ marginBottom: 20 }}>
-                <Col xs={24}>
-                  <WidgetHeader
-                    title={<IntlMessages id="app.supplierregistration.business_contact_title" />}
-                  />
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.bcontact_name" />}
-                    name="bcontact_name"
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.bcontact_name',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.bcontact_surname" />}
-                    name="bcontact_surname"
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.bcontact_surname',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.bcontact_email" />}
-                    name="bcontact_email"
-                    rules={[
-                      {
-                        required: false,
-                        type: 'email',
-                        warningOnly: true,
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.bcontact_email',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-                <Col sm={12} xs={24}>
-                  <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.bcontact_charge" />}
-                    name="bcontact_charge"
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.bcontact_charge',
-                      })}
-                    />
-                  </FormItem>
-                </Col>
-              </Row>
-              {/*              {props.isBuyer && (
-                <Row
-                  style={{ width: '100%', justifyContent: 'right' }}
-                  gutter={24}
-                  className="bottom-divider"
-                >
-                  <Col>
-                    <Form.Item name="supplierInfoSharing">
-                      <Checkbox onChange={() => setSupplierInfoShareable(!isSupplierInfoShareable)}>
-                        <IntlMessages id="app.supplierregistration.shareinfo_message" />
+                    <Form.Item>
+                      <Checkbox onChange={businessAddressHandler} checked={sameAsBusiness}>
+                        <IntlMessages id="app.supplierregistration.field.samebilling_address" />
                       </Checkbox>
-                      <span className="gx-signup-form-forgot gx-link"></span>
                     </Form.Item>
                   </Col>
                 </Row>
-              )}*/}
-              <Row gutter={24} style={{ marginBottom: 20 }}>
-                <Col xs={24}>
-                  <WidgetHeader
-                    title={<IntlMessages id="app.supplierregistration.business_logo_title" />}
-                  />
-                </Col>
-                <Col
-                  xs={24}
-                  style={{
-                    height: '150px',
-                    overflowX: 'auto',
-                  }}
-                >
-                  <FilesManager
-                    files={files}
-                    context={{
-                      assetRelation: 'supplier_logo',
-                    }}
-                    maxCount={1}
-                    customSubmitHandler={({ fileList }) => {
-                      setFiles(fileList);
-                    }}
-                    accept={['image/*']}
-                  />
-                </Col>
-              </Row>
-              <Row style={{ width: '100%', justifyContent: 'right' }}>
-                <Col>
-                  <Form.Item
-                    name="iAccept"
-                    rules={[
-                      {
-                        required: !iAccept && true,
-                        message: (
-                          <IntlMessages id="app.supplierregistration.field.iAccept.error.required" />
-                        ),
-                      },
-                    ]}
+
+                {!sameAsBusiness && (
+                  <Row gutter={24} className="bottom-divider">
+                    <Col xs={24}>
+                      <WidgetHeader
+                        title={<IntlMessages id="app.supplierregistration.billing_title" />}
+                      />
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.billing_addressLine1" />
+                        }
+                        name="billing_addressLine1"
+                      >
+                        <Input
+                          size="large"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.billing_addressLine1',
+                          })}
+                        />
+                      </FormItem>
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.billing_addressLine2" />
+                        }
+                        name="billing_addressLine2"
+                      >
+                        <Input
+                          size="large"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.billing_addressLine2_placeholder',
+                          })}
+                        />
+                      </FormItem>
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.billing_regionId" />
+                        }
+                        name="billing_regionId"
+                      >
+                        <Select
+                          size="large"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.business_regionId.PleaseSelectRegion',
+                          })}
+                          onChange={billingRegionChangeHandler}
+                          showSearch
+                          filterOption={(input, option) => {
+                            return (
+                              option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            );
+                          }}
+                        >
+                          {regions &&
+                            regions
+                              .filter(r => r.name !== TODO_CHILE)
+                              .map(region => (
+                                <Option key={region.id + region.name} value={region.id}>
+                                  {region.name}
+                                </Option>
+                              ))}
+                        </Select>
+                      </FormItem>
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.billing_communeId" />
+                        }
+                        name="billing_communeId"
+                      >
+                        <Select
+                          size="large"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.business_communeId.pleaseSelectCommune',
+                          })}
+                          showSearch
+                          filterOption={(input, option) => {
+                            return (
+                              option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                            );
+                          }}
+                        >
+                          {communes2 &&
+                            communes2.map(commune => (
+                              <Option key={commune.id + commune.name} value={commune.id}>
+                                {commune.name}
+                              </Option>
+                            ))}
+                        </Select>
+                      </FormItem>
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.billing_phoneNumber1" />
+                        }
+                        name="billing_phoneNumber1"
+                        rules={[
+                          {
+                            required: false,
+                            validator: (_, value) => {
+                              if (value && isNaN(value)) {
+                                return Promise.reject(
+                                  <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input
+                          size="large"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.billing_phoneNumber1',
+                          })}
+                          addonBefore={prefixSelector('billing_telephone1')}
+                        />
+                      </FormItem>
+                    </Col>
+                    <Col sm={12} xs={24}>
+                      <FormItem
+                        label={
+                          <IntlMessages id="app.supplierregistration.field.billing_phoneNumber2" />
+                        }
+                        name="billing_phoneNumber2"
+                        rules={[
+                          {
+                            required: false,
+                            validator: (_, value) => {
+                              if (value && isNaN(value)) {
+                                return Promise.reject(
+                                  <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
+                                );
+                              }
+                              return Promise.resolve();
+                            },
+                          },
+                        ]}
+                      >
+                        <Input
+                          size="large"
+                          placeholder={intl.formatMessage({
+                            id: 'app.supplierregistration.field.billing_phoneNumber2',
+                          })}
+                          addonBefore={prefixSelector('billing_telephone2')}
+                        />
+                      </FormItem>
+                    </Col>
+                  </Row>
+                )}
+
+                <Row gutter={24} style={{ marginBottom: 20 }}>
+                  <Col xs={24}>
+                    <WidgetHeader
+                      title={<IntlMessages id="app.supplierregistration.business_contact_title" />}
+                    />
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      label={<IntlMessages id="app.supplierregistration.field.bcontact_name" />}
+                      name="bcontact_name"
+                    >
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.bcontact_name',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      label={<IntlMessages id="app.supplierregistration.field.bcontact_surname" />}
+                      name="bcontact_surname"
+                    >
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.bcontact_surname',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      label={<IntlMessages id="app.supplierregistration.field.bcontact_email" />}
+                      name="bcontact_email"
+                      rules={[
+                        {
+                          required: false,
+                          type: 'email',
+                          warningOnly: true,
+                        },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.bcontact_email',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                  <Col sm={12} xs={24}>
+                    <FormItem
+                      label={<IntlMessages id="app.supplierregistration.field.bcontact_charge" />}
+                      name="bcontact_charge"
+                    >
+                      <Input
+                        size="large"
+                        placeholder={intl.formatMessage({
+                          id: 'app.supplierregistration.field.bcontact_charge',
+                        })}
+                      />
+                    </FormItem>
+                  </Col>
+                </Row>
+                {props.isBuyer && (
+                  <Row
+                    style={{ width: '100%', justifyContent: 'right' }}
+                    gutter={24}
+                    className="bottom-divider"
                   >
-                    <Checkbox onChange={() => setIAccept(!iAccept)}>
-                      <IntlMessages id="appModule.iAccept" />
-                    </Checkbox>
-                    <span className="gx-signup-form-forgot gx-link">
-                      <Link href={`https://${process.env.NEXT_PUBLIC_WEB_HOST + '/terms-of-use'}`}>
-                        <a target="_blank">
-                          <IntlMessages id="appModule.termAndCondition" />
-                        </a>
-                      </Link>
-                    </span>
-                  </Form.Item>
-                </Col>
-                <Col>
-                  <FormItem>
-                    <div>
-                      <Button type="primary" className="gx-mb-0" htmlType="submit">
-                        <IntlMessages id="app.supplierregistration.field.register.button" />
-                      </Button>
-                    </div>
-                  </FormItem>
-                </Col>
-              </Row>
-            </Form>
+                    <Col>
+                      <Form.Item name="supplierInfoSharing">
+                        <Checkbox
+                          onChange={() => setSupplierInfoShareable(!isSupplierInfoShareable)}
+                        >
+                          <IntlMessages id="app.supplierregistration.shareinfo_message" />
+                        </Checkbox>
+                        <span className="gx-signup-form-forgot gx-link"></span>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                )}
+                <Row gutter={24} style={{ marginBottom: 20 }}>
+                  <Col xs={24}>
+                    <WidgetHeader
+                      title={<IntlMessages id="app.supplierregistration.business_logo_title" />}
+                    />
+                  </Col>
+                  <Col
+                    xs={24}
+                    style={{
+                      height: '150px',
+                      overflowX: 'auto',
+                    }}
+                  >
+                    <FilesManager
+                      files={files}
+                      context={{
+                        assetRelation: 'supplier_logo',
+                      }}
+                      maxCount={1}
+                      customSubmitHandler={({ fileList }) => {
+                        setFiles(fileList);
+                      }}
+                      accept={['image/*']}
+                    />
+                  </Col>
+                </Row>
+                <Row style={{ width: '100%', justifyContent: 'right' }}>
+                  <Col>
+                    <Form.Item
+                      name="iAccept"
+                      rules={[
+                        {
+                          required: !iAccept && true,
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.iAccept.error.required" />
+                          ),
+                        },
+                      ]}
+                    >
+                      <Checkbox onChange={() => setIAccept(!iAccept)}>
+                        <IntlMessages id="appModule.iAccept" />
+                      </Checkbox>
+                      <span className="gx-signup-form-forgot gx-link">
+                        <Link
+                          href={`https://${process.env.NEXT_PUBLIC_WEB_HOST + '/terms-of-use'}`}
+                        >
+                          <a target="_blank">
+                            <IntlMessages id="appModule.termAndCondition" />
+                          </a>
+                        </Link>
+                      </span>
+                    </Form.Item>
+                  </Col>
+                  <Col>
+                    <FormItem>
+                      <div>
+                        <Button type="primary" className="gx-mb-0" htmlType="submit">
+                          <IntlMessages id="app.supplierregistration.field.register.button" />
+                        </Button>
+                      </div>
+                    </FormItem>
+                  </Col>
+                </Row>
+              </Form>
+            )}
           </div>
         </div>
         {!isAuthenticated ? <Footer /> : <></>}
