@@ -469,6 +469,7 @@
   "app.supplierregistration.field.isshared":"¿Proveedor compartido?",
   "app.supplierregistration.field.business_emailId.error.email":"Por favor ingresa un email válido!",
   "app.supplierregistration.field.business_categories":"Categorías",
+  "app.supplierregistration.field.business_categories.tooltip":"Es posible seleccionar más de una opción",
   "app.supplierregistration.field.business_categories.pleaseSelectYourCategories":"Seleccione tus categorías",
   "app.supplierregistration.field.business_categories.error.required":"Por favor selecciona las categorías!",
   "app.supplierregistration.field.business_supplier_info":"Comentarios",
