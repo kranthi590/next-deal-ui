@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Checkbox, Form, Input, Select, Col, Row } from 'antd';
+import { Button, Checkbox, Form, Input, Select, Col, Row, Tooltip } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import SweetAlert from 'react-bootstrap-sweetalert';
@@ -25,6 +25,7 @@ import { isEmpty } from 'lodash';
 import '../../styles/form-page.css';
 import { TODO_CHILE } from '../../util/appConstants';
 import { useIntl } from 'react-intl';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
@@ -148,7 +149,7 @@ const SupplierRegistration = props => {
       // serviceLocations: data.serviceLocations,
       // type: business.type,
 
-      isShared: false, //props.isBuyer ? isSupplierInfoShareable : props.isShared,
+      isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
       inchargeRole: contact.charge,
     };
     if (isValidObject(businessAddress)) {
@@ -317,7 +318,18 @@ const SupplierRegistration = props => {
                     <Col xs={24}>
                       <Form.Item
                         label={
-                          <IntlMessages id="app.supplierregistration.field.business_categories" />
+                          <span>
+                            <IntlMessages id="app.supplierregistration.field.business_categories" />
+                            &nbsp;
+                            <Tooltip
+                              title={
+                                <IntlMessages id="app.supplierregistration.field.business_categories.tooltip" />
+                              }
+                            >
+                              <ExclamationCircleOutlined />
+                            </Tooltip>
+                            &nbsp;
+                          </span>
                         }
                         name="business_categories"
                         rules={[
@@ -603,7 +615,7 @@ const SupplierRegistration = props => {
                     </FormItem>
                   </Col>
 
-                  <Col sm={8} xs={24}>
+                  <Col sm={6} xs={24}>
                     <FormItem
                       name="business_addressLine1"
                       label={
@@ -626,7 +638,7 @@ const SupplierRegistration = props => {
                       />
                     </FormItem>
                   </Col>
-                  <Col sm={4} xs={24}>
+                  <Col sm={6} xs={24}>
                     <FormItem
                       name="business_addressLine2"
                       label={
@@ -694,7 +706,18 @@ const SupplierRegistration = props => {
                   <Col xs={24}>
                     <Form.Item
                       label={
-                        <IntlMessages id="app.supplierregistration.field.business_categories" />
+                        <span>
+                          <IntlMessages id="app.supplierregistration.field.business_categories" />
+                          &nbsp;
+                          <Tooltip
+                            title={
+                              <IntlMessages id="app.supplierregistration.field.business_categories.tooltip" />
+                            }
+                          >
+                            <ExclamationCircleOutlined />
+                          </Tooltip>
+                          &nbsp;
+                        </span>
                       }
                       name="business_categories"
                       rules={[
@@ -728,7 +751,7 @@ const SupplierRegistration = props => {
                       </Select>
                     </Form.Item>
                   </Col>
-                  <Col sm={6} xs={24}>
+                  <Col sm={12} xs={24}>
                     <FormItem
                       name="business_webSiteUrl"
                       label={
@@ -756,7 +779,7 @@ const SupplierRegistration = props => {
                       <Input addonBefore="https://" size="large" placeholder="nextdeal.cl" />
                     </FormItem>
                   </Col>
-                  <Col sm={6} xs={24}>
+                  <Col sm={12} xs={24}>
                     <FormItem
                       label={<IntlMessages id="app.supplierregistration.field.business_emailId" />}
                       name="business_emailId"
@@ -1104,7 +1127,7 @@ const SupplierRegistration = props => {
                     </FormItem>
                   </Col>
                 </Row>
-                {/*            {props.isBuyer && (
+                {props.isBuyer && (
                   <Row
                     style={{ width: '100%', justifyContent: 'right' }}
                     gutter={24}
@@ -1121,7 +1144,7 @@ const SupplierRegistration = props => {
                       </Form.Item>
                     </Col>
                   </Row>
-                )}*/}
+                )}
                 <Row gutter={24} style={{ marginBottom: 20 }}>
                   <Col xs={24}>
                     <WidgetHeader
