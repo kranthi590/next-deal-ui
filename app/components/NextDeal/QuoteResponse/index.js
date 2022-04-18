@@ -25,7 +25,8 @@ const QuoteResponses = props => {
   const { onSave, awarded, onDeleteResponse } = props;
   const {
     id,
-    fantasyName,
+    legalName,
+    // fantasyName,
     newQuote,
     netWorth,
     paymentCondition,
@@ -120,7 +121,7 @@ const QuoteResponses = props => {
   };
   return (
     <Card
-      title={fantasyName ? fantasyName : supplier.fantasyName}
+      title={legalName ? legalName : supplier.legalName}
       className="ant-card-bordered gx-card-widget"
     >
       <Divider />

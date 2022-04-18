@@ -58,6 +58,7 @@ const SupplierRegistration = props => {
   const [files, setFiles] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const intl = useIntl();
+  const [newSupplierName, setNewSupplierName] = useState('');
   useEffect(() => {
     fetchRegions(({ regions }) => {
       setRegions(regions);
@@ -195,6 +196,7 @@ const SupplierRegistration = props => {
 
   const onFinish = async values => {
     registerSupplier(getFormData(values), isAuthenticated, async data => {
+      setNewSupplierName(data.legalName);
       try {
         if (files.length > 0) {
           await uploadFiles(
@@ -1227,7 +1229,11 @@ const SupplierRegistration = props => {
         onConfirm={onAlertConfirmed}
       >
         <div>
-          <IntlMessages id="app.supplierregistration.successmessage.content" />
+          {isAuthenticated ? (
+            <>{`El proveedor ${newSupplierName} fue registrado con éxito`}</>
+          ) : (
+            <IntlMessages id="app.supplierregistration.successmessage.content" />
+          )}
         </div>
       </SweetAlert>
     </div>

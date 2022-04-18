@@ -10,7 +10,7 @@ const SupplierDetails = props => {
   const {
     logoUrl,
     legalName,
-    fantasyName,
+    // fantasyName,
     businessAddress,
     webSiteUrl,
     rut,
@@ -20,7 +20,7 @@ const SupplierDetails = props => {
     emailId,
     inchargeRole,
     isShared,
-    serviceLocations,
+    // serviceLocations,
     logo,
     comments,
   } = props.supplierDetails;
@@ -81,14 +81,14 @@ const SupplierDetails = props => {
   ];
   const { fetchRegions, fetchCommune } = useRegistration();
   let selectedCategories = '',
-    categorieslength = 0,
-    serviceLocationsLength = 0;
+    categorieslength = 0;
+  // serviceLocationsLength = 0;
   const [businessRegion, setBusinessRegion] = useState('');
   const [businessRegionBilling, setBusinessRegionBilling] = useState('');
   const [communesBusiness, setCommunesBusiness] = useState('');
   const [communesBilling, setCommunesBilling] = useState('');
-  const [serviceLocation, setServiceLocation] = useState('');
-  let serviceLocationString = '';
+  // const [serviceLocation, setServiceLocation] = useState('');
+  // let serviceLocationString = '';
   const loadRegionsAndComuna = () => {
     fetchRegions(({ regions }) => {
       regions.map(item => {
@@ -100,15 +100,16 @@ const SupplierDetails = props => {
             setBusinessRegionBilling(item.name);
           }
         }
-        if (serviceLocations.some(sl => sl.region_id === item.id)) {
-          serviceLocationsLength++;
-          if (serviceLocationsLength < serviceLocations.length && serviceLocationsLength > 1) {
-            serviceLocationString += ', ' + item.name;
-          } else {
-            serviceLocationString += item.name;
-          }
-        }
-        setServiceLocation(serviceLocationString);
+
+        // if (serviceLocations && serviceLocations.some(sl => sl.region_id === item.id)) {
+        //   serviceLocationsLength++;
+        //   if (serviceLocationsLength < serviceLocations.length && serviceLocationsLength > 1) {
+        //     serviceLocationString += ', ' + item.name;
+        //   } else {
+        //     serviceLocationString += item.name;
+        //   }
+        // }
+        // setServiceLocation(serviceLocationString);
       });
     });
     fetchCommune({ regionId: businessAddress.regionId }, data => {
@@ -163,10 +164,10 @@ const SupplierDetails = props => {
                   {getAvatar(legalName)}
                 </Avatar>
               </div>
-              <div className="gx-profile-banner-avatar-info">
+              {/* <div className="gx-profile-banner-avatar-info">
                 <h2 className="gx-mb-2 gx-mb-sm-3 gx-fs-xxl gx-font-weight-light">{legalName}</h2>
                 {fantasyName ? <p className="gx-mb-0 gx-fs-lg">{fantasyName}</p> : null}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -200,7 +201,8 @@ const SupplierDetails = props => {
                     </div>
                   </Col>
                 ) : null}
-                {fantasyName ? (
+                {/* {
+                  fantasyName ?
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                       <div className="gx-mr-3">
@@ -208,15 +210,15 @@ const SupplierDetails = props => {
                       </div>
                       <div className="gx-media-body">
                         <h6 className="gx-mb-1 gx-text-grey">
-                          {
-                            <IntlMessages id="app.supplierregistration.field.business_fantasyName" />
-                          }
+                            {<IntlMessages id="app.supplierregistration.field.business_fantasyName" />}
                         </h6>
                         <p className="gx-mb-0">{fantasyName ? fantasyName : '-'}</p>
                       </div>
                     </div>
                   </Col>
-                ) : null}
+                    :
+                    null
+                } */}
                 {rut ? (
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
@@ -289,7 +291,8 @@ const SupplierDetails = props => {
                     </div>
                   </Col>
                 ) : null}
-                {serviceLocation ? (
+                {/* {
+                  serviceLocation ?
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                       <div className="gx-mr-3">
@@ -303,7 +306,8 @@ const SupplierDetails = props => {
                       </div>
                     </div>
                   </Col>
-                ) : null}
+                    : null
+                } */}
                 {communesBusiness ? (
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
