@@ -1103,7 +1103,9 @@ const SupplierRegistration = props => {
                         {
                           required: false,
                           type: 'email',
-                          warningOnly: true,
+                          message: (
+                            <IntlMessages id="app.supplierregistration.field.business_emailId.error.email" />
+                          ),
                         },
                       ]}
                     >
