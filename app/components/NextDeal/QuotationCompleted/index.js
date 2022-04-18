@@ -71,7 +71,7 @@ const QuotationCompleted = props => {
   };
 
   return (
-    <Card title={supplier.fantasyName} className="ant-card-bordered gx-card-widget">
+    <Card title={supplier.legalName} className="ant-card-bordered gx-card-widget">
       <Divider />
       <Form
         form={form}

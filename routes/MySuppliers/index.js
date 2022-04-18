@@ -108,17 +108,17 @@ const MySuppliers = props => {
   };
 
   const suppliersColumns = [
-    {
-      title: <IntlMessages id="app.supplierregistration.field.business_fantasyName" />,
-      dataIndex: 'fantasyName',
-      key: 'fantasyName',
-      ...getColumnSearchProps('fantasyName', 'Nombre de fantasía'),
-      render: (text, record) => (
-        <div className="gx-w-100">
-          <a onClick={() => handleOnShow(record.id)}>{record.fantasyName}</a>
-        </div>
-      ),
-    },
+    // {
+    //   title: <IntlMessages id="app.supplierregistration.field.business_fantasyName" />,
+    //   dataIndex: 'fantasyName',
+    //   key: 'fantasyName',
+    //   ...getColumnSearchProps('fantasyName', 'Nombre de fantasía'),
+    //   render: (text, record) => (
+    //     <div className="gx-w-100">
+    //       <a onClick={() => handleOnShow(record.id)}>{record.fantasyName}</a>
+    //     </div>
+    //   ),
+    // },
     {
       title: <IntlMessages id="app.supplierregistration.field.business_legalName" />,
       dataIndex: 'legalName',
@@ -268,7 +268,6 @@ const MySuppliers = props => {
         centered
         visible={visible}
         onCancel={() => setVisible(false)}
-        width={'auto'}
         bodyStyle={{ padding: '0' }}
         okButtonProps={{ style: { display: 'none' } }}
         destroyOnClose={true}
