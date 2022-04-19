@@ -1227,7 +1227,11 @@ const SupplierRegistration = props => {
         confirmBtnText={<IntlMessages id="button.ok" />}
         show={showAlert}
         success
-        title={<IntlMessages id="app.supplierregistration.successmessage.title" />}
+        title={
+          isAuthenticated ? null : (
+            <IntlMessages id="app.supplierregistration.successmessage.title" />
+          )
+        }
         onConfirm={onAlertConfirmed}
       >
         <div>
