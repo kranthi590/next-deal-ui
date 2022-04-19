@@ -20,8 +20,13 @@ import Link from 'next/link';
 import CustomScrollbars from '../../util/CustomScrollbars';
 
 const MySuppliers = props => {
-  const { getBuyerSuppliers, getSupplier, downloadSuppliers, uploadSupplierDetails } =
-    useRegistration();
+  const {
+    getBuyerSuppliers,
+    getSupplier,
+    downloadSuppliers,
+    uploadSupplierDetails,
+    fetchCategories,
+  } = useRegistration();
   const [visible, setVisible] = useState(false);
   const [, setSearchText] = useState('');
   const [, setSearchedColumn] = useState('');
@@ -34,6 +39,7 @@ const MySuppliers = props => {
   const [currentPage, setCurrentPage] = useState(null);
   const [uploadSuppliers, setUploadSuppliers] = useState(false);
   const cookie = new Cookies();
+  const [supplierCategories, setSupplierCategories] = useState([]);
 
   useEffect(() => {
     setBuyerId(cookie.get('buyerId'));
@@ -61,8 +67,15 @@ const MySuppliers = props => {
     );
   };
 
+  const loadCategories = () => {
+    fetchCategories(data => {
+      setSupplierCategories(data);
+    });
+  };
+
   useEffect(() => {
     loadMySuppliers(1);
+    loadCategories();
   }, []);
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -314,7 +327,10 @@ const MySuppliers = props => {
       >
         <div className="gx-main-content-wrapper">
           {supplierDetails ? (
-            <SupplierDetails supplierDetails={supplierDetails} />
+            <SupplierDetails
+              supplierDetails={supplierDetails}
+              categoriesList={supplierCategories}
+            />
           ) : (
             <Row>
               <Col xs={24} md={12}></Col>
