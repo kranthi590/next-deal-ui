@@ -348,8 +348,10 @@
   "app.project.field.manager": "Responsable",
   "app.project.field.costcenter": "Centro de costos",
   "app.project.field.description": "Descripción",
+  "app.project.field.projectDescription": "Descripción del proyecto",
   "app.project.field.startdate": "Fecha de inicio",
   "app.project.field.enddate": "Fecha de finalización",
+  "app.project.field.projectenddate": "Fecha estimada de finalización del Proyecto",
   "app.project.field.estimatedBudget": "Presupuesto estimado",
   "app.project.field.currency": "Tipo de Moneda",
   "app.project.create.validations": "El campo no puede estar vacío",
@@ -575,5 +577,7 @@
   "file.message.error": "Error en la carga de archivos",
   "file.message.fileTypeNotSupported": "Tipo de archivo no admitido",
   "app.common.text.uploadSuppliers":"Subir proveedores",
-  "app.common.deleting":"Eliminación de..."
+  "app.common.deleting":"Eliminación de...",
+  "app.common.filesAcceptTooltip": "Se aceptan todo tipo de formatos",
+  "app.common.confirmDeleteFile": "¿Está seguro de que quiere eliminar el archivo?"
 }

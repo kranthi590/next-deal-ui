@@ -64,6 +64,20 @@ export default class PicturesWall extends React.Component {
     this.props.customSubmitHandler && this.props.customSubmitHandler({ fileList });
   };
 
+  handleDelete = file => {
+    const { confirm } = Modal;
+    return new Promise((resolve, reject) => {
+      confirm({
+        title: '¿Está seguro de que quiere eliminar el archivo?', //<IntlMessages id="app.common.confirmDeleteFile" />,
+        onOk: () => {
+          resolve(true);
+        },
+        onCancel: () => {
+          reject(true);
+        },
+      });
+    });
+  };
   componentDidMount() {
     this.setState({
       fileList: this.props.files.map((file, index) => {
@@ -87,6 +101,7 @@ export default class PicturesWall extends React.Component {
       hideButton = false,
       accept = [],
       tooltiptext,
+      allowDelete,
     } = this.props;
     const uploadButton = (
       <div className="gx-d-flex gx-flex-column gx-h-100 gx-w-100 gx-justify-content-center">
@@ -146,12 +161,13 @@ export default class PicturesWall extends React.Component {
           onPreview={this.handlePreview}
           onChange={this.handleChange}
           showUploadList={{
-            showRemoveIcon: false,
+            showRemoveIcon: allowDelete ? true : false,
           }}
           beforeUpload={() => !customSubmitHandler}
           maxCount={maxCount}
           disabled={maxCount && fileList.length > maxCount}
           accept={accept.length > 0 ? accept.join(',') : acceptedTypes.join(',')}
+          onRemove={this.handleDelete}
         >
           <Tooltip title={tooltiptext}>{!hideButton && uploadButton}</Tooltip>
         </Upload>
