@@ -8,9 +8,7 @@ import { format } from 'rut.js';
 
 const SupplierDetails = props => {
   const {
-    logoUrl,
     legalName,
-    // fantasyName,
     businessAddress,
     webSiteUrl,
     rut,
@@ -20,7 +18,6 @@ const SupplierDetails = props => {
     emailId,
     inchargeRole,
     isShared,
-    // serviceLocations,
     logo,
     comments,
   } = props.supplierDetails;
@@ -58,41 +55,14 @@ const SupplierDetails = props => {
     contact2Exists = true;
   }
 
-  // let categoriesList = [
-  //   { value: 6, text: 'Alimentación' },
-  //   { value: 19, text: 'Artículos de oficina' },
-  //   { value: 10, text: 'Bodegaje' },
-  //   { value: 13, text: 'Capacitación' },
-  //   { value: 14, text: 'Contabilidad' },
-  //   { value: 5, text: 'Diseño web y logo' },
-  //   { value: 4, text: 'E-commerce' },
-  //   { value: 16, text: 'Entretenimiento' },
-  //   { value: 18, text: 'Eventos' },
-  //   { value: 27, text: 'Fotografía' },
-  //   { value: 21, text: 'Imprenta y gráficas' },
-  //   { value: 26, text: 'Ingeniería' },
-  //   { value: 15, text: 'Legal' },
-  //   { value: 30, text: 'Limpieza y aseo' },
-  //   { value: 28, text: 'Maquinaria y construcción' },
-  //   { value: 1, text: 'Marketing digital' },
-  //   { value: 3, text: 'Packaging' },
-  //   { value: 17, text: 'Productos y regalos corporativos' },
-  //   { value: 29, text: 'Salud y belleza' },
-  //   { value: 20, text: 'PackaServicios de importación y exportaciónging' },
-  //   { value: 8, text: 'Software y programación' },
-  //   { value: 25, text: 'Textil y calzado' },
-  // ];
   const { fetchRegions, fetchCommune } = useRegistration();
   let selectedCategories = '';
   let categorieslength = 0;
-  // serviceLocationsLength = 0;
   const [businessRegion, setBusinessRegion] = useState('');
   const [businessRegionBilling, setBusinessRegionBilling] = useState('');
   const [communesBusiness, setCommunesBusiness] = useState('');
   const [communesBilling, setCommunesBilling] = useState('');
 
-  // const [serviceLocation, setServiceLocation] = useState('');
-  // let serviceLocationString = '';
   const loadRegionsAndComuna = () => {
     fetchRegions(({ regions }) => {
       regions.map(item => {
@@ -104,16 +74,6 @@ const SupplierDetails = props => {
             setBusinessRegionBilling(item.name);
           }
         }
-
-        // if (serviceLocations && serviceLocations.some(sl => sl.region_id === item.id)) {
-        //   serviceLocationsLength++;
-        //   if (serviceLocationsLength < serviceLocations.length && serviceLocationsLength > 1) {
-        //     serviceLocationString += ', ' + item.name;
-        //   } else {
-        //     serviceLocationString += item.name;
-        //   }
-        // }
-        // setServiceLocation(serviceLocationString);
       });
     });
     fetchCommune({ regionId: businessAddress.regionId }, data => {
@@ -143,8 +103,9 @@ const SupplierDetails = props => {
   categoriesList.forEach(item => {
     if (categories && categories.some(categorie => categorie.category_id === item.id)) {
       categorieslength++;
+
       selectedCategories +=
-        categorieslength < categories.length && categorieslength !== 1
+        categorieslength <= categories.length && categorieslength !== 1
           ? ', ' + item.name
           : item.name;
     }
@@ -209,24 +170,7 @@ const SupplierDetails = props => {
                     </div>
                   </Col>
                 ) : null}
-                {/* {
-                  fantasyName ?
-                  <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-                    <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
-                      <div className="gx-mr-3">
-                        <i className={`icon icon-important-o gx-fs-xxl gx-text-grey`} />
-                      </div>
-                      <div className="gx-media-body">
-                        <h6 className="gx-mb-1 gx-text-grey">
-                            {<IntlMessages id="app.supplierregistration.field.business_fantasyName" />}
-                        </h6>
-                        <p className="gx-mb-0">{fantasyName ? fantasyName : '-'}</p>
-                      </div>
-                    </div>
-                  </Col>
-                    :
-                    null
-                } */}
+
                 {rut ? (
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
