@@ -164,11 +164,11 @@ const NewProject = props => {
               </Form.Item>
               <Form.Item
                 name="expectedEndDate"
-                label={<IntlMessages id="app.project.field.enddate" />}
+                label={<IntlMessages id="app.project.field.projectenddate" />}
               >
                 <DatePicker
                   className="gx-w-100"
-                  placeholder={intl.formatMessage({ id: 'app.project.field.enddate' })}
+                  placeholder={intl.formatMessage({ id: 'app.project.field.projectenddate' })}
                   onChange={endDateChangeHandler}
                   format="DD/MM/YYYY"
                 />
@@ -176,7 +176,6 @@ const NewProject = props => {
               <Form.Item
                 name="estimatedBudget"
                 label={<IntlMessages id="app.project.field.estimatedBudget" />}
-                rules={[stringRule]}
               >
                 <ClpFormatter
                   {...props}
@@ -208,11 +207,10 @@ const NewProject = props => {
               </Form.Item>
               <Form.Item
                 name="description"
-                label={<IntlMessages id="app.project.field.description" />}
-                rules={[stringRule]}
+                label={<IntlMessages id="app.project.field.projectDescription" />}
               >
                 <TextArea
-                  placeholder={intl.formatMessage({ id: 'app.project.field.description' })}
+                  placeholder={intl.formatMessage({ id: 'app.project.field.projectDescription' })}
                   rows={8}
                 />
               </Form.Item>
@@ -232,6 +230,11 @@ const NewProject = props => {
                 customSubmitHandler={({ fileList }) => {
                   setFiles(fileList);
                 }}
+                tooltiptext={
+                  intl.formatMessage({ id: 'app.common.filesAcceptTooltip' }) +
+                  ` (pdf, .xlsx, jpg. etc)`
+                }
+                allowDelete={true}
               />
             </Col>
           </Row>

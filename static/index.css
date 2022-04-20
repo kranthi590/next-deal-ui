@@ -216,3 +216,7 @@ body {
 .next-suppliers-table{
   height: calc(100vh - 291px)!important;
 }
+.ant-upload-list-item-card-actions-btn.ant-btn-sm{
+  height: 16px;
+  line-height: 16px;
+}
