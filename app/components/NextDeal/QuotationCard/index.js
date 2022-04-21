@@ -2,6 +2,7 @@ import React from 'react';
 import Widget from '../../Widget';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import IntlMessages from '../../../../util/IntlMessages';
 const QuotationCard = ({ data, activeTab }) => {
   let navTo = '';
   if (activeTab) {
@@ -23,13 +24,17 @@ const QuotationCard = ({ data, activeTab }) => {
           <div className="gx-currentplan-col">
             <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">
               {data.quotationsCount}
-              <sub className="gx-fs-md gx-bottom-0">/Responses</sub>
+              <sub className="gx-fs-md gx-bottom-0">
+                /<IntlMessages id="app.common.responses" />
+              </sub>
             </h2>
           </div>
           <div className="gx-currentplan-col gx-currentplan-right">
             <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">
               {data.suppliersCount}
-              <sub className="gx-fs-md gx-bottom-0">/Suppliers</sub>
+              <sub className="gx-fs-md gx-bottom-0">
+                /<IntlMessages id="app.common.suppliers" />
+              </sub>
             </h2>
           </div>
         </div>

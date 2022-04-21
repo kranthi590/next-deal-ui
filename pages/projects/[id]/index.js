@@ -15,7 +15,8 @@ import BreadCrumb from '../../../app/components/BreadCrumb';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ResponsesProvider, useResponse } from '../../../contexts/responses';
 import { PlusOutlined } from '@ant-design/icons';
-
+import { useIntl } from 'react-intl';
+import moment from 'moment';
 const colSpan = 24 / 3;
 
 const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
@@ -37,6 +38,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
   const [completedCount, setCompletedCount] = useState(completed.count || 0);
 
   const { getQuotationsByPagination } = useResponse();
+  const intl = useIntl();
   const loadMoreInprogressQuotations = () => {
     if (inProgressCount <= inprogressQuotationsData.length) {
       loadMoreIn_progressQuotations();
@@ -148,6 +150,46 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                 </div>
                 <div className="gx-media-body gx-featured-content">
                   <div className="gx-featured-content-left">
+                    {/* <h3 className="gx-mb-2">{project.name}</h3> */}
+
+                    <p className="gx-mb-1">
+                      <IntlMessages id="app.project.field.projectname" />:{' '}
+                      <span className="gx-text-grey">{project.name}</span>
+                    </p>
+                    <p className="gx-mb-1">
+                      <IntlMessages id="app.project.field.estimatedBudget" />:
+                      <span className="gx-text-grey">
+                        {' '}
+                        {formatAmount(`${project.estimatedBudget}`)}
+                        <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
+                          {' '}
+                          {project.currency}
+                        </span>
+                      </span>
+                    </p>
+                    <p className="gx-mb-1">
+                      <IntlMessages id="app.project.field.startdate" />:{' '}
+                      <span className="gx-text-grey">
+                        {moment(project.startDate).format('DD-MM-YYYY')}
+                      </span>
+                    </p>
+                    {/*<p className="gx-mb-1"><IntlMessages id="app.project.field.projectenddate" />: <span className='gx-text-grey'>{moment(project.expectedEndDate).format('DD-MM-YYYY')}</span></p>
+                     <p className="gx-mb-1"><IntlMessages id="app.project.field.costcenter" />: <span className='gx-text-grey'>{project.costCenter}</span></p>
+                    <p className="gx-mb-1"><IntlMessages id="app.project.field.manager" />: <span className='gx-text-grey'>{project.managerName}</span></p>
+                    <p className="gx-mb-1"><IntlMessages id="app.project.field.projectDescription" />: <span className='gx-text-grey'>{project.description}</span></p> */}
+
+                    {/* <p className="gx-text-grey gx-mb-1">{project.additionalData}</p> */}
+                    {/* <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
+                      ${formatAmount(`${project.estimatedBudget}`)}
+                      <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
+                        {' '}
+                        {project.currency}
+                      </span>
+                    </h2> */}
+                  </div>
+                </div>
+                {/* <div className="gx-media-body gx-featured-content">
+                  <div className="gx-featured-content-left">
                     <h3 className="gx-mb-2">{project.name}</h3>
                     <p className="gx-text-grey gx-mb-1">{project.additionalData}</p>
                     <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
@@ -158,7 +200,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                       </span>
                     </h2>
                   </div>
-                </div>
+                </div> */}
               </div>
             </Col>
             <Col
@@ -175,6 +217,11 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                   assetRelation: 'project',
                   assetRelationId: project.id,
                 }}
+                tooltiptext={
+                  intl.formatMessage({ id: 'app.common.filesAcceptTooltip' }) +
+                  ` (pdf, .xlsx, jpg. etc)`
+                }
+                allowDelete={true}
               />
             </Col>
           </Row>
