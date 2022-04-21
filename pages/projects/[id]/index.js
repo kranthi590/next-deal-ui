@@ -156,17 +156,19 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                       <IntlMessages id="app.project.field.projectname" />:{' '}
                       <span className="gx-text-grey">{project.name}</span>
                     </p>
-                    <p className="gx-mb-1">
-                      <IntlMessages id="app.project.field.estimatedBudget" />:
-                      <span className="gx-text-grey">
-                        {' '}
-                        {formatAmount(`${project.estimatedBudget}`)}
-                        <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
+                    {project.estimatedBudget && (
+                      <p className="gx-mb-1">
+                        <IntlMessages id="app.project.field.estimatedBudget" />:
+                        <span className="gx-text-grey">
                           {' '}
-                          {project.currency}
+                          {formatAmount(`${project.estimatedBudget}`)}
+                          <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
+                            {' '}
+                            {project.currency}
+                          </span>
                         </span>
-                      </span>
-                    </p>
+                      </p>
+                    )}
                     <p className="gx-mb-1">
                       <IntlMessages id="app.project.field.startdate" />:{' '}
                       <span className="gx-text-grey">
