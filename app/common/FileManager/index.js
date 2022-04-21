@@ -56,9 +56,10 @@ export default class PicturesWall extends React.Component {
     fileList.forEach(file => {
       if (!file.url && file.response) {
         file.url = `${file.response.data[0].fileUrl}?token=${cookie.get('token')}`;
-      } else {
-        file.url = URL.createObjectURL(file.originFileObj);
       }
+      // else {
+      //   file.url = URL.createObjectURL(file.originFileObj);
+      // }
     });
     this.setState({ fileList });
     this.props.customSubmitHandler && this.props.customSubmitHandler({ fileList });
@@ -148,7 +149,6 @@ export default class PicturesWall extends React.Component {
     const actionUrl = customSubmitHandler
       ? undefined
       : `${process.env.NEXT_PUBLIC_API_HOST}api/v1/secureFiles?token=${cookie.get('token')}`;
-
     return (
       <>
         <Upload
