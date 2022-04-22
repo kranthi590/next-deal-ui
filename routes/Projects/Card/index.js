@@ -12,7 +12,7 @@ import { useProject } from '../../../contexts/projects';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { successNotification } from '../../../util/util';
 
-function CardList({ projects, loader, totalCount }) {
+function CardList({ projects, loader, totalCount, onViewClick }) {
   const { getProjectsByPagination, deleteProject } = useProject();
   const [projectsList, setProjectsList] = useState(projects);
   const [size, setSize] = useState(10);
@@ -89,6 +89,7 @@ function CardList({ projects, loader, totalCount }) {
                 data={data}
                 styleName="gx-card-list"
                 onDeleteClick={onDeleteClick}
+                onViewClick={onViewClick}
               />
             ))}
           {(loader || showLoading) &&

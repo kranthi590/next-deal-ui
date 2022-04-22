@@ -142,6 +142,31 @@ const useProvideAuth = () => {
       });
   };
 
+  const deleteFile = (id, callbackFun, errorCallback) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    httpClient
+      .delete(`files/${id}`, {
+        headers: headers,
+      })
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        if (errorCallback) {
+          errorCallback();
+        }
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
+  };
+
   // Return the user object and auth methods
   return {
     isLoadingUser,
@@ -153,6 +178,7 @@ const useProvideAuth = () => {
     userLogin,
     userSignup,
     userSignOut,
+    deleteFile,
   };
 };
 
