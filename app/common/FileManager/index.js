@@ -103,6 +103,7 @@ export default class PicturesWall extends React.Component {
       accept = [],
       tooltiptext,
       allowDelete,
+      handleCustomDelete,
     } = this.props;
     const uploadButton = (
       <div className="gx-d-flex gx-flex-column gx-h-100 gx-w-100 gx-justify-content-center">
@@ -167,7 +168,7 @@ export default class PicturesWall extends React.Component {
           maxCount={maxCount}
           disabled={maxCount && fileList.length > maxCount}
           accept={accept.length > 0 ? accept.join(',') : acceptedTypes.join(',')}
-          onRemove={this.handleDelete}
+          onRemove={handleCustomDelete || this.handleDelete}
         >
           <Tooltip title={tooltiptext}>{!hideButton && uploadButton}</Tooltip>
         </Upload>

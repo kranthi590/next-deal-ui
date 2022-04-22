@@ -5,7 +5,7 @@ import { getAvatar } from '../../../util/util';
 import IntlMessages from '../../../util/IntlMessages';
 import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
-const CardsListItem = ({ styleName, data, onDeleteClick }) => {
+const CardsListItem = ({ styleName, data, onDeleteClick, onViewClick }) => {
   const { status, costCenter, name, managerName, quotationsCount, id } = data;
   return (
     <Badge.Ribbon text={status} color="cyan" placement="start" style={{ top: 0 }}>
@@ -46,12 +46,12 @@ const CardsListItem = ({ styleName, data, onDeleteClick }) => {
           <div className="gx-featured-content-right">
             <div>
               <span className="gx-p-2">
-                <a>
-                  <Link href={'/projects/' + [id]} as={'/projects/' + id}>
-                    <span>
-                      <EyeOutlined />
-                    </span>
-                  </Link>
+                <a
+                  onClick={() => {
+                    onViewClick(id);
+                  }}
+                >
+                  <EyeOutlined />
                 </a>
               </span>
               <span className="gx-p-2">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, Avatar } from 'antd';
+import { Row, Col, Button, Avatar, Modal } from 'antd';
 import Link from 'next/link';
 import { handleApiErrors, httpClient, setApiContext } from '../../../util/Api';
 import cookie from 'cookie';
@@ -9,7 +9,7 @@ import IntlMessages from '../../../util/IntlMessages';
 import QuotationCard from '../../../app/components/NextDeal/QuotationCard';
 import FilesManager from '../../../app/common/FileManager';
 
-import { formatAmount, getAvatar } from '../../../util/util';
+import { formatAmount, getAvatar, successNotification } from '../../../util/util';
 import CustomScrollbars from '../../../util/CustomScrollbars';
 import BreadCrumb from '../../../app/components/BreadCrumb';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -17,6 +17,7 @@ import { ResponsesProvider, useResponse } from '../../../contexts/responses';
 import { PlusOutlined } from '@ant-design/icons';
 import { useIntl } from 'react-intl';
 import moment from 'moment';
+import { useAuth } from '../../../contexts/use-auth';
 const colSpan = 24 / 3;
 
 const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
@@ -36,6 +37,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
   const [sizeCompleted, setSizeCompleted] = useState(10);
   const [hasMoreCompleted, setHasMoreCompleted] = useState(true);
   const [completedCount, setCompletedCount] = useState(completed.count || 0);
+  const { deleteFile } = useAuth();
 
   const { getQuotationsByPagination } = useResponse();
   const intl = useIntl();
@@ -126,6 +128,30 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
     );
   };
 
+  const customFileDelete = file => {
+    const { confirm } = Modal;
+    return new Promise((resolve, reject) => {
+      confirm({
+        title: '¿Está seguro de que quiere eliminar el archivo?', //<IntlMessages id="app.common.confirmDeleteFile" />,
+        onOk: () => {
+          deleteFile(
+            file.url.split('files/')[1].split('/')[0],
+            data => {
+              successNotification('app.registration.detailsSaveSuccessMessage');
+              resolve(true);
+            },
+            () => {
+              reject(true);
+            },
+          );
+        },
+        onCancel: () => {
+          reject(true);
+        },
+      });
+    });
+  };
+
   const ProjectDetails = () => {
     return (
       <>
@@ -156,25 +182,30 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                       <IntlMessages id="app.project.field.projectname" />:{' '}
                       <span className="gx-text-grey">{project.name}</span>
                     </p>
-                    {project.estimatedBudget && (
+                    {project.estimatedBudget || project.currency ? (
                       <p className="gx-mb-1">
                         <IntlMessages id="app.project.field.estimatedBudget" />:
                         <span className="gx-text-grey">
-                          {' '}
-                          {formatAmount(`${project.estimatedBudget}`)}
-                          <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
-                            {' '}
-                            {project.currency}
-                          </span>
+                          {project.estimatedBudget ? (
+                            <> {formatAmount(`${project.estimatedBudget}`)}</>
+                          ) : null}
+                          {project.currency ? (
+                            <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
+                              {' '}
+                              {project.currency}
+                            </span>
+                          ) : null}
                         </span>
                       </p>
-                    )}
-                    <p className="gx-mb-1">
-                      <IntlMessages id="app.project.field.startdate" />:{' '}
-                      <span className="gx-text-grey">
-                        {moment(project.startDate).format('DD-MM-YYYY')}
-                      </span>
-                    </p>
+                    ) : null}
+                    {project.startDate ? (
+                      <p className="gx-mb-1">
+                        <IntlMessages id="app.project.field.startdate" />:{' '}
+                        <span className="gx-text-grey">
+                          {moment(project.startDate).format('DD-MM-YYYY')}
+                        </span>
+                      </p>
+                    ) : null}
                     {/*<p className="gx-mb-1"><IntlMessages id="app.project.field.projectenddate" />: <span className='gx-text-grey'>{moment(project.expectedEndDate).format('DD-MM-YYYY')}</span></p>
                      <p className="gx-mb-1"><IntlMessages id="app.project.field.costcenter" />: <span className='gx-text-grey'>{project.costCenter}</span></p>
                     <p className="gx-mb-1"><IntlMessages id="app.project.field.manager" />: <span className='gx-text-grey'>{project.managerName}</span></p>
@@ -190,19 +221,6 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                     </h2> */}
                   </div>
                 </div>
-                {/* <div className="gx-media-body gx-featured-content">
-                  <div className="gx-featured-content-left">
-                    <h3 className="gx-mb-2">{project.name}</h3>
-                    <p className="gx-text-grey gx-mb-1">{project.additionalData}</p>
-                    <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
-                      ${formatAmount(`${project.estimatedBudget}`)}
-                      <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
-                        {' '}
-                        {project.currency}
-                      </span>
-                    </h2>
-                  </div>
-                </div> */}
               </div>
             </Col>
             <Col
@@ -224,6 +242,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                   ` (pdf, .xlsx, jpg. etc)`
                 }
                 allowDelete={true}
+                handleCustomDelete={customFileDelete}
               />
             </Col>
           </Row>

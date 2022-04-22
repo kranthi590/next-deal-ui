@@ -7,6 +7,7 @@ import mails from './data/mails';
 import IntlMessages from '../../util/IntlMessages';
 import Card from './Card';
 import { PlusOutlined } from '@ant-design/icons';
+import ProjectDrawer from '../../app/components/NextDeal/ProjectDrawer';
 
 class Projects extends PureComponent {
   ProjectSideBar = () => {
@@ -63,7 +64,7 @@ class Projects extends PureComponent {
     });
   };
 
-  displayProjects = (projects, noContentFoundMessage, loader, totalCount) => {
+  displayProjects = (projects, noContentFoundMessage, loader, totalCount, onViewClick) => {
     return (
       <div className="gx-module-box-column">
         {projects && projects.length === 0 ? (
@@ -72,7 +73,12 @@ class Projects extends PureComponent {
           </div>
         ) : (
           <CustomScrollbars className="gx-module-side-scroll" sid="projectsScrollableWrapper">
-            <Card projects={projects} loader={loader} totalCount={totalCount} />
+            <Card
+              projects={projects}
+              loader={loader}
+              totalCount={totalCount}
+              onViewClick={onViewClick}
+            />
           </CustomScrollbars>
         )}
       </div>
@@ -97,6 +103,8 @@ class Projects extends PureComponent {
       selectedFolder: 0,
       composeMail: false,
       folderMails: mails.filter(mail => mail.folder === 0),
+      openProjectDetails: false,
+      activeProjectId: null,
     };
   }
 
@@ -131,8 +139,24 @@ class Projects extends PureComponent {
     });
   }
 
+  handleViewClick = projectId => {
+    this.setState({ openProjectDetails: true, activeProjectId: projectId });
+  };
+
+  onProjectDetailsClose() {
+    this.setState({ openProjectDetails: false, activeProjectId: null });
+  }
+
   render() {
-    const { loader, drawerState, alertMessage, showMessage, noContentFoundMessage } = this.state;
+    const {
+      loader,
+      drawerState,
+      alertMessage,
+      showMessage,
+      noContentFoundMessage,
+      openProjectDetails,
+      activeProjectId,
+    } = this.state;
     const { projectsList = [], totalCount = 0 } = this.props;
     return (
       <div className="gx-main-content">
@@ -161,12 +185,23 @@ class Projects extends PureComponent {
             </div>
 
             <div className="gx-module-box-content cards-wrapper">
-              {this.displayProjects(projectsList, noContentFoundMessage, loader, totalCount)}
+              {this.displayProjects(
+                projectsList,
+                noContentFoundMessage,
+                loader,
+                totalCount,
+                this.handleViewClick.bind(this),
+              )}
             </div>
           </div>
         </div>
         {showMessage &&
           message.info(<span id="message-id">{alertMessage}</span>, 3, this.handleRequestClose)}
+        <ProjectDrawer
+          isCustomizerOpened={openProjectDetails}
+          projectId={activeProjectId}
+          onClose={this.onProjectDetailsClose.bind(this)}
+        />
       </div>
     );
   }
