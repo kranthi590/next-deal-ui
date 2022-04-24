@@ -135,6 +135,33 @@ const useProviderProject = () => {
       });
   };
 
+  const updateProject = (data, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    const buyerId = cookie.get('buyerId');
+    httpClient
+      .patch(
+        `projects`,
+        { ...data },
+        {
+          headers: headers,
+        },
+      )
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -142,5 +169,6 @@ const useProviderProject = () => {
     getProjectById,
     getProjectsByPagination,
     deleteProject,
+    updateProject,
   };
 };

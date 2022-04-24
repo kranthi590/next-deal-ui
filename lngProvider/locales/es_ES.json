@@ -583,5 +583,6 @@
   "app.common.responses": "Respuestas",
   "app.common.suppliers": "Proveedores",
   "app.common.projectDetails": "Detalles del proyecto",
-  "app.common.edit": "Editar"
+  "app.common.edit": "Editar",
+  "button.save": "Guardar"
 }
