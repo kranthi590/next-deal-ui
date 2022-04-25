@@ -182,7 +182,27 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                       <IntlMessages id="app.project.field.projectname" />:{' '}
                       <span className="gx-text-grey">{project.name}</span>
                     </p>
-                    {project.estimatedBudget || project.currency ? (
+                    {project.managerName ? (
+                      <p className="gx-mb-1">
+                        <IntlMessages id="app.project.field.manager" />:{' '}
+                        <span className="gx-text-grey">{project.managerName}</span>
+                      </p>
+                    ) : null}
+                    {project.costCenter ? (
+                      <p className="gx-mb-1">
+                        <IntlMessages id="app.project.field.costcenter" />:{' '}
+                        <span className="gx-text-grey">{project.costCenter}</span>
+                      </p>
+                    ) : null}
+                    {project.startDate ? (
+                      <p className="gx-mb-1">
+                        <IntlMessages id="app.project.field.startdate" />:{' '}
+                        <span className="gx-text-grey">
+                          {moment(project.startDate).format('DD-MM-YYYY')}
+                        </span>
+                      </p>
+                    ) : null}
+                    {project.estimatedBudget ? (
                       <p className="gx-mb-1">
                         <IntlMessages id="app.project.field.estimatedBudget" />:
                         <span className="gx-text-grey">
@@ -195,14 +215,6 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                               {project.currency}
                             </span>
                           ) : null}
-                        </span>
-                      </p>
-                    ) : null}
-                    {project.startDate ? (
-                      <p className="gx-mb-1">
-                        <IntlMessages id="app.project.field.startdate" />:{' '}
-                        <span className="gx-text-grey">
-                          {moment(project.startDate).format('DD-MM-YYYY')}
                         </span>
                       </p>
                     ) : null}
@@ -239,7 +251,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                 }}
                 tooltiptext={
                   intl.formatMessage({ id: 'app.common.filesAcceptTooltip' }) +
-                  ` (.pdf, .xlsx, .jpg, etc)`
+                  ` (pdf, .xlsx, jpg. etc)`
                 }
                 allowDelete={true}
                 handleCustomDelete={customFileDelete}
