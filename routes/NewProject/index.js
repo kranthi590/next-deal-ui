@@ -232,7 +232,7 @@ const NewProject = props => {
                 }}
                 tooltiptext={
                   intl.formatMessage({ id: 'app.common.filesAcceptTooltip' }) +
-                  ` (.pdf, .xlsx, .jpg. etc)`
+                  ` (.pdf, .xlsx, .jpg, etc)`
                 }
                 allowDelete={true}
               />
