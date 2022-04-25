@@ -3,7 +3,12 @@ import { Form, Input, Button, DatePicker, Drawer, Skeleton } from 'antd';
 import CustomScrollbars from '../../../../util/CustomScrollbars';
 import { useProject } from '../../../../contexts/projects';
 import IntlMessages from '../../../../util/IntlMessages';
-import { formatAmount, getDateInMilliseconds, successNotification } from '../../../../util/util';
+import {
+  formatAmount,
+  getDateInMilliseconds,
+  NOTIFICATION_TIMEOUT,
+  successNotification,
+} from '../../../../util/util';
 import moment from 'moment';
 import { FormOutlined } from '@ant-design/icons';
 import { useIntl } from 'react-intl';
@@ -11,15 +16,9 @@ import { useIntl } from 'react-intl';
 const formLayout = {
   wrapperCol: {
     xs: { span: 24 },
-    // sm: { span: 20 },
-    // md: { span: 20 },
-    // lg: { span: 20 },
   },
   labelCol: {
     xs: { span: 24 },
-    // sm: { span: 7 },
-    // md: { span: 7 },
-    // lg: { span: 7 },
   },
 };
 const { TextArea } = Input;
@@ -69,8 +68,11 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
   const onSave = values => {
     updateProject({ id: projectDetails.id, ...getFormData(values) }, async data => {
       successNotification('app.registration.detailsSaveSuccessMessage');
-      loadProjectDetails();
-      toggleForm(false);
+      // loadProjectDetails();
+      // toggleForm(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, NOTIFICATION_TIMEOUT);
     });
   };
   const setFormData = () => {
@@ -128,16 +130,6 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
           <div className="gx-px-2 gx-p-2">
             {!openForm ? (
               <>
-                <Button
-                  type="primary"
-                  className="gx-btn gx-w-100 gx-mb-4 nd-add-quote"
-                  onClick={() => {
-                    toggleForm(true);
-                  }}
-                >
-                  <FormOutlined style={{ fontSize: '14px', marginRight: '5px' }} />
-                  <IntlMessages id="app.common.edit" />
-                </Button>
                 {projectDetails && !projectLoading ? (
                   <div className="gx-pt-2">
                     {projectDetails.name ? (
@@ -219,6 +211,16 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
                     <Skeleton active paragraph={{ rows: 4 }} />
                   </div>
                 )}
+                <Button
+                  type="primary"
+                  className="gx-btn gx-w-100 gx-mb-4 nd-add-quote"
+                  onClick={() => {
+                    toggleForm(true);
+                  }}
+                >
+                  <FormOutlined style={{ fontSize: '14px', marginRight: '5px' }} />
+                  <IntlMessages id="app.common.edit" />
+                </Button>
               </>
             ) : null}
             {openForm ? (
