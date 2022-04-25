@@ -65,7 +65,7 @@ const CardsListItem = ({ styleName, data, onDeleteClick, onViewClick }) => {
                       onDeleteClick({ id, name });
                     }}
                   >
-                    <DeleteOutlined />
+                    <DeleteOutlined style={{ fontSize: '20px' }} />
                   </a>
                 </span>
               </div>
