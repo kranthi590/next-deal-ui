@@ -281,6 +281,28 @@ const useProviderRegistration = () => {
       });
   };
 
+  const getBuyerSuppliersByCategory = (id, callbackFun, offset = 0, size = 100) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    const buyerId = cookie.get('buyerId');
+    httpClient
+      .get(`buyers/suppliersByCategory/${id}?offset=${offset}&size=${size}`, { headers })
+      .then(({ data }) => {
+        if (data.data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
+        fetchError(error.message);
+      });
+  };
+
   return {
     isLoading,
     error,
@@ -295,5 +317,6 @@ const useProviderRegistration = () => {
     getNextDealSuppliers,
     fetchCategories,
     uploadSupplierDetails,
+    getBuyerSuppliersByCategory,
   };
 };

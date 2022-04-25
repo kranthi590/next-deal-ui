@@ -18,10 +18,11 @@ import Dragger from 'antd/lib/upload/Dragger';
 import { errorNotification, successNotification } from '../../util/util';
 import Link from 'next/link';
 import CustomScrollbars from '../../util/CustomScrollbars';
+import SupplierCategories from '../../app/components/NextDeal/SupplierCategories';
 
 const MySuppliers = props => {
   const {
-    getBuyerSuppliers,
+    getBuyerSuppliersByCategory,
     getSupplier,
     downloadSuppliers,
     uploadSupplierDetails,
@@ -40,7 +41,8 @@ const MySuppliers = props => {
   const [uploadSuppliers, setUploadSuppliers] = useState(false);
   const cookie = new Cookies();
   const [supplierCategories, setSupplierCategories] = useState([]);
-
+  const [showTable, setShowTable] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   useEffect(() => {
     setBuyerId(cookie.get('buyerId'));
   });
@@ -56,14 +58,15 @@ const MySuppliers = props => {
   const loadMySuppliers = (page = 1) => {
     setCurrentPage(page);
     setLoading(true);
-    getBuyerSuppliers(
+    getBuyerSuppliersByCategory(
+      selectedCategory,
       data => {
         setSuppliersList(data.rows);
         setTotalPages(data.count);
         setLoading(false);
       },
-      (page - 1) * 20,
-      20,
+      (page - 1) * 5,
+      5,
     );
   };
 
@@ -74,7 +77,7 @@ const MySuppliers = props => {
   };
 
   useEffect(() => {
-    loadMySuppliers(1);
+    // loadMySuppliers(1);
     loadCategories();
   }, []);
 
@@ -215,6 +218,19 @@ const MySuppliers = props => {
       loadMySuppliers(currentPage);
     });
   };
+
+  const onCategoryClick = id => {
+    setShowTable(true);
+    setSelectedCategory(id);
+    // loadMySuppliers(1);
+  };
+
+  useEffect(() => {
+    if (selectedCategory) {
+      loadMySuppliers(1);
+    }
+  }, [selectedCategory]);
+
   return (
     <>
       <Card className="gx-card gx-card-widget">
@@ -252,21 +268,27 @@ const MySuppliers = props => {
             <IntlMessages id="app.quotation.addsupplier" />
           </Button>
         </div>
-        <CustomScrollbars className="my-suppliers-table" sid="mySuppliersScrollableWrapper">
-          <div className="gx-p-2">
-            <Table
-              loading={loading}
-              columns={suppliersColumns}
-              dataSource={suppliersList}
-              pagination={{
-                showSizeChanger: false,
-                pageSize: 20,
-                total: totalPages,
-                onChange: loadMySuppliers,
-              }}
-            />
+        {!showTable ? (
+          <div className="gx-mt-2">
+            <SupplierCategories categories={supplierCategories} onClick={onCategoryClick} />
           </div>
-        </CustomScrollbars>
+        ) : (
+          <CustomScrollbars className="my-suppliers-table" sid="mySuppliersScrollableWrapper">
+            <div className="gx-p-2">
+              <Table
+                loading={loading}
+                columns={suppliersColumns}
+                dataSource={suppliersList}
+                pagination={{
+                  showSizeChanger: false,
+                  pageSize: 5,
+                  total: totalPages,
+                  onChange: loadMySuppliers,
+                }}
+              />
+            </div>
+          </CustomScrollbars>
+        )}
       </Card>
       <Modal
         title={
