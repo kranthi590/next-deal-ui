@@ -251,7 +251,7 @@ const QuotationsList = ({ project = {}, inProgress, awarded, completed }) => {
                 }}
                 tooltiptext={
                   intl.formatMessage({ id: 'app.common.filesAcceptTooltip' }) +
-                  ` (pdf, .xlsx, jpg, etc)`
+                  ` (.pdf, .xlsx, .jpg, etc)`
                 }
                 allowDelete={true}
                 handleCustomDelete={customFileDelete}
