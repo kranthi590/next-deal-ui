@@ -220,3 +220,13 @@ body {
   height: 16px;
   line-height: 16px;
 }
+.project-drawer{
+  margin-top: 72px;
+}
+.project-drawer > .ant-drawer-mask{
+  margin-top: 72px;
+}
+.project-drawer > .ant-drawer-content-wrapper{
+  border-top: 1px solid #eeeeee;
+  padding-bottom: 60px;
+}

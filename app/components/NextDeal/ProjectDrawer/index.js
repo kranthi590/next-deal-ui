@@ -68,11 +68,9 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
   const onSave = values => {
     updateProject({ id: projectDetails.id, ...getFormData(values) }, async data => {
       successNotification('app.registration.detailsSaveSuccessMessage');
-      // loadProjectDetails();
-      // toggleForm(false);
       setTimeout(() => {
         window.location.reload();
-      }, NOTIFICATION_TIMEOUT);
+      }, 3000);
     });
   };
   const setFormData = () => {
@@ -308,6 +306,7 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
         closeIcon={<i className="icon icon-close-circle gx-fs-xl" />}
         onClose={toggleCustomizer}
         visible={isCustomizerOpened}
+        className={'project-drawer'}
       >
         {getCustomizerContent()}
       </Drawer>
