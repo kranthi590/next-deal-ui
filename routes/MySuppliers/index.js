@@ -7,7 +7,7 @@ import {
   InboxOutlined,
   FileExcelOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Modal, Space, Table, Input, Row, Col, message } from 'antd';
+import { Button, Card, Modal, Space, Table, Input, Row, Col, message, Breadcrumb } from 'antd';
 import React, { useState, useEffect } from 'react';
 import SupplierDetails from '../../app/components/NextDeal/SupplierDetails';
 import { useRegistration } from '../../contexts/business-registration';
@@ -59,14 +59,14 @@ const MySuppliers = props => {
     setCurrentPage(page);
     setLoading(true);
     getBuyerSuppliersByCategory(
-      selectedCategory,
+      selectedCategory.id,
       data => {
         setSuppliersList(data.rows);
         setTotalPages(data.count);
         setLoading(false);
       },
-      (page - 1) * 5,
-      5,
+      (page - 1) * 20,
+      20,
     );
   };
 
@@ -77,7 +77,6 @@ const MySuppliers = props => {
   };
 
   useEffect(() => {
-    // loadMySuppliers(1);
     loadCategories();
   }, []);
 
@@ -174,8 +173,9 @@ const MySuppliers = props => {
     },
   ];
   const reloadSuppliers = () => {
-    setVisible(false);
-    loadMySuppliers(1);
+    window.location.reload();
+    // setVisible(false);
+    // loadMySuppliers(1);
   };
   const showModal = () => {
     setVisible(true);
@@ -215,24 +215,53 @@ const MySuppliers = props => {
       successNotification('file.message.success');
       setVisible(false);
       setUploadSuppliers(false);
-      loadMySuppliers(currentPage);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     });
   };
 
-  const onCategoryClick = id => {
+  const onCategoryClick = category => {
     setShowTable(true);
-    setSelectedCategory(id);
+    setSelectedCategory(category);
     // loadMySuppliers(1);
   };
 
+  const handleCategoryBreadcrumbClick = () => {
+    setShowTable(false);
+    setSelectedCategory(null);
+  };
+
   useEffect(() => {
-    if (selectedCategory) {
+    if (selectedCategory && selectedCategory.id) {
       loadMySuppliers(1);
     }
   }, [selectedCategory]);
 
   return (
     <>
+      <div className="gx-mb-4">
+        <Breadcrumb>
+          {selectedCategory ? (
+            <Breadcrumb.Item>
+              <span onClick={handleCategoryBreadcrumbClick} className="gx-link">
+                <IntlMessages id="app.supplierregistration.field.business_categories" />
+              </span>
+            </Breadcrumb.Item>
+          ) : (
+            <Breadcrumb.Item>
+              <span>
+                <IntlMessages id="app.supplierregistration.field.business_categories" />
+              </span>
+            </Breadcrumb.Item>
+          )}
+          {selectedCategory && selectedCategory.name ? (
+            <Breadcrumb.Item>
+              <span>{selectedCategory.name}</span>
+            </Breadcrumb.Item>
+          ) : null}
+        </Breadcrumb>
+      </div>
       <Card className="gx-card gx-card-widget">
         <div className="ant-card-head gx-pt-0">
           <div className="ant-card-head-wrapper">
@@ -281,7 +310,7 @@ const MySuppliers = props => {
                 dataSource={suppliersList}
                 pagination={{
                   showSizeChanger: false,
-                  pageSize: 5,
+                  pageSize: 20,
                   total: totalPages,
                   onChange: loadMySuppliers,
                 }}
