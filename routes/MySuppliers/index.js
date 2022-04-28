@@ -27,6 +27,7 @@ const MySuppliers = props => {
     downloadSuppliers,
     uploadSupplierDetails,
     fetchCategories,
+    suppliersCountByCategories,
   } = useRegistration();
   const [visible, setVisible] = useState(false);
   const [, setSearchText] = useState('');
@@ -71,7 +72,7 @@ const MySuppliers = props => {
   };
 
   const loadCategories = () => {
-    fetchCategories(data => {
+    suppliersCountByCategories(data => {
       setSupplierCategories(data);
     });
   };
@@ -242,15 +243,9 @@ const MySuppliers = props => {
     <>
       <div className="gx-mb-4">
         <Breadcrumb>
-          {selectedCategory ? (
+          {selectedCategory && (
             <Breadcrumb.Item>
               <span onClick={handleCategoryBreadcrumbClick} className="gx-link">
-                <IntlMessages id="app.supplierregistration.field.business_categories" />
-              </span>
-            </Breadcrumb.Item>
-          ) : (
-            <Breadcrumb.Item>
-              <span>
                 <IntlMessages id="app.supplierregistration.field.business_categories" />
               </span>
             </Breadcrumb.Item>

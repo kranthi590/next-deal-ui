@@ -19,9 +19,11 @@ const SupplierCategories = ({ categories = [], onClick }) => {
                     <div className="ant-card-body">
                       <div className="gx-media gx-align-items-center gx-flex-nowrap">
                         <div className="gx-media-body gx-text-center">
-                          <h1 className="gx-fs-xxxl gx-font-weight-medium gx-mb-1">12</h1>
-                          <div className="gx-text-grey gx-text-truncate gx-mb-0">
+                          <h4 className="gx-fs-xl gx-font-weight-medium gx-mb-1">
                             {category.name}
+                          </h4>
+                          <div className="gx-fs-xl gx-text-grey gx-text-truncate gx-mb-0">
+                            {category.suppliersCount}
                           </div>
                         </div>
                       </div>
