@@ -255,6 +255,26 @@ const useProviderRegistration = () => {
       });
   };
 
+  const suppliersCountByCategories = callbackFun => {
+    fetchStart();
+    const headers = setAuthToken();
+    httpClient
+      .get(`config/suppliersCountByCategories`, { headers })
+      .then(({ data }) => {
+        if (data.data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
+          errorNotification(data.error, 'app.registration.errorMessageTitle');
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        errorNotification(error.message, 'app.registration.errorMessageTitle');
+        fetchError(error.message);
+      });
+  };
+
   const uploadSupplierDetails = (formdata, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
@@ -318,5 +338,6 @@ const useProviderRegistration = () => {
     fetchCategories,
     uploadSupplierDetails,
     getBuyerSuppliersByCategory,
+    suppliersCountByCategories,
   };
 };
