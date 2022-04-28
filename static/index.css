@@ -230,3 +230,6 @@ body {
   border-top: 1px solid #eeeeee;
   padding-bottom: 60px;
 }
+.suppliersCountLabel {
+  font-size: 40px !important;
+}

@@ -38,9 +38,6 @@ const Topbar = () => {
           />
         </div>
       ) : null}
-      <Link href="/">
-        <img alt="" className="gx-d-block gx-d-lg-none gx-pointer" src={'/images/w-logo.jpeg'} />
-      </Link>
       {authUser ? (
         <div>
           <span style={{ fontWeight: 500 }}>
