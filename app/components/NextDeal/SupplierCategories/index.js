@@ -10,26 +10,38 @@ const SupplierCategories = ({ categories = [], onClick }) => {
           categories.map(category => {
             return (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} key={category.id}>
-                <Widget styleName={`gx-card-full gx-card-quote-border gx-mb-3`}>
-                  <a
-                    onClick={() => {
-                      if (onClick) {
-                        onClick(category);
-                      }
-                    }}
-                  >
-                    <h2 className="h3 gx-mb-2 gx-pt-2 gx-show-hand">{category.name}</h2>
-                    <div className="gx-currentplan-row gx-card-full">
-                      <div className="gx-currentplan-col">
-                        <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">
-                          {category.suppliersCount}
-                          <sub className="gx-fs-md gx-bottom-0">
-                            /<IntlMessages id="app.quotation.suppliers" />
-                          </sub>
-                        </h2>
+                <Widget styleName="gx-card-full gx-dot-arrow-hover gx-py-2">
+                  <div className="gx-media gx-align-items-center gx-flex-nowrap">
+                    <div
+                      className="gx-px-3 gx-build-box-lay gx-d-flex gx-justify-content-center gx-align-items-center"
+                      style={{ width: '70px' }}
+                    >
+                      <h2 className="gx-fs-xxxl gx-font-weight-medium gx-text-primary gx-mb-0 suppliersCountLabel">
+                        {category.suppliersCount}
+                      </h2>
+                    </div>
+                    <div className="gx-media-body gx-py-3 gx-pr-4 gx-build-box-lay-content">
+                      <h2 className="h3 gx-mb-0">{category.name}</h2>
+                      <p className="gx-mb-0 gx-text-grey gx-fs-sm">
+                        <IntlMessages id="app.quotation.suppliers" />
+                      </p>
+                      <div
+                        className="gx-dot-arrow"
+                        onClick={() => {
+                          if (onClick) {
+                            onClick(category);
+                          }
+                        }}
+                      >
+                        <div className="gx-bg-primary gx-hover-arrow">
+                          <i className="icon icon-long-arrow-right gx-text-white" />
+                        </div>
+                        <div className="gx-dot">
+                          <i className="icon icon-ellipse-v gx-text-primary" />
+                        </div>
                       </div>
                     </div>
-                  </a>
+                  </div>
                 </Widget>
               </Col>
             );
