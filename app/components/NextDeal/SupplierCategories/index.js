@@ -1,5 +1,7 @@
 import { Row, Col } from 'antd';
 import React from 'react';
+import IntlMessages from '../../../../util/IntlMessages';
+import Widget from '../../Widget';
 const SupplierCategories = ({ categories = [], onClick }) => {
   return (
     <div>
@@ -8,28 +10,27 @@ const SupplierCategories = ({ categories = [], onClick }) => {
           categories.map(category => {
             return (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} key={category.id}>
-                <a
-                  onClick={() => {
-                    if (onClick) {
-                      onClick(category);
-                    }
-                  }}
-                >
-                  <div className="ant-card ant-card-bordered gx-card-widget gx-w-100">
-                    <div className="ant-card-body">
-                      <div className="gx-media gx-align-items-center gx-flex-nowrap">
-                        <div className="gx-media-body gx-text-center">
-                          <h4 className="gx-fs-xl gx-font-weight-medium gx-mb-1">
-                            {category.name}
-                          </h4>
-                          <div className="gx-fs-xl gx-text-grey gx-text-truncate gx-mb-0">
-                            {category.suppliersCount}
-                          </div>
-                        </div>
+                <Widget styleName={`gx-card-full gx-card-quote-border gx-mb-3`}>
+                  <a
+                    onClick={() => {
+                      if (onClick) {
+                        onClick(category);
+                      }
+                    }}
+                  >
+                    <h2 className="h3 gx-mb-2 gx-pt-2 gx-show-hand">{category.name}</h2>
+                    <div className="gx-currentplan-row gx-card-full">
+                      <div className="gx-currentplan-col">
+                        <h2 className="gx-text-primary gx-fs-xlxl gx-font-weight-medium gx-mb-1">
+                          {category.suppliersCount}
+                          <sub className="gx-fs-md gx-bottom-0">
+                            /<IntlMessages id="app.quotation.suppliers" />
+                          </sub>
+                        </h2>
                       </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </Widget>
               </Col>
             );
           })}
