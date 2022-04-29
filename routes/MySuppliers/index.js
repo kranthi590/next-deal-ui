@@ -147,20 +147,20 @@ const MySuppliers = props => {
       key: 'emailId',
       ...getColumnSearchProps('emailId', 'Email del negocio'),
     },
-    {
-      title: <IntlMessages id="app.supplierregistration.field.isshared" />,
-      dataIndex: 'isShared',
-      key: 'isShared',
-      render: (text, record) => (
-        <Space size="middle">
-          {record.isShared ? (
-            <IntlMessages id="app.common.text.yes" />
-          ) : (
-            <IntlMessages id="app.common.text.no" />
-          )}
-        </Space>
-      ),
-    },
+    // {
+    //   title: <IntlMessages id="app.supplierregistration.field.isshared" />,
+    //   dataIndex: 'isShared',
+    //   key: 'isShared',
+    //   render: (text, record) => (
+    //     <Space size="middle">
+    //       {record.isShared ? (
+    //         <IntlMessages id="app.common.text.yes" />
+    //       ) : (
+    //         <IntlMessages id="app.common.text.no" />
+    //       )}
+    //     </Space>
+    //   ),
+    // },
     {
       title: 'Acciones',
       key: 'Action',
@@ -303,6 +303,7 @@ const MySuppliers = props => {
                 loading={loading}
                 columns={suppliersColumns}
                 dataSource={suppliersList}
+                rowKey="id"
                 pagination={{
                   showSizeChanger: false,
                   pageSize: 20,
