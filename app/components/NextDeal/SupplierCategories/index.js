@@ -18,12 +18,12 @@ const SupplierCategories = ({ categories = [], onClick }) => {
                     ></div>
                     <div className="gx-media-body gx-py-3 gx-pr-4 gx-build-box-lay-content">
                       <h2 className="h3 gx-mb-0">{category.name}</h2>
-                      <p className="gx-mb-0 gx-text-grey gx-fs-sm suppliersContainer gx-fs-lg">
+                      <div className="gx-mb-0 gx-text-grey gx-fs-sm suppliersContainer gx-fs-lg">
                         <h2 className="gx-fs-xl gx-font-weight-medium gx-text-primary gx-mb-0 suppliersCountLabel">
                           {category.suppliersCount}/
                         </h2>
                         <IntlMessages id="app.quotation.suppliers" />
-                      </p>
+                      </div>
                       <div
                         className="gx-dot-arrow"
                         onClick={() => {
