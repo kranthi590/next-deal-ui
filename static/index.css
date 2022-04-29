@@ -231,5 +231,10 @@ body {
   padding-bottom: 60px;
 }
 .suppliersCountLabel {
-  font-size: 40px !important;
+  font-size: 35px !important;
+}
+.suppliersContainer {
+  display: flex;
+  vertical-align: middle;
+  align-items: center;
 }
