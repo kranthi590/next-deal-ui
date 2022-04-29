@@ -238,3 +238,7 @@ body {
   vertical-align: middle;
   align-items: center;
 }
+.ant-form-horizontal .ant-form-item-label{
+  overflow: unset;
+  white-space: normal;
+}
