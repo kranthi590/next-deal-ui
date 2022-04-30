@@ -7,7 +7,19 @@ import {
   InboxOutlined,
   FileExcelOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Modal, Space, Table, Input, Row, Col, message, Breadcrumb } from 'antd';
+import {
+  Button,
+  Card,
+  Modal,
+  Space,
+  Table,
+  Input,
+  Row,
+  Col,
+  message,
+  Breadcrumb,
+  Tooltip,
+} from 'antd';
 import React, { useState, useEffect } from 'react';
 import SupplierDetails from '../../app/components/NextDeal/SupplierDetails';
 import { useRegistration } from '../../contexts/business-registration';
@@ -19,6 +31,7 @@ import { errorNotification, successNotification } from '../../util/util';
 import Link from 'next/link';
 import CustomScrollbars from '../../util/CustomScrollbars';
 import SupplierCategories from '../../app/components/NextDeal/SupplierCategories';
+import { useIntl } from 'react-intl';
 
 const MySuppliers = props => {
   const {
@@ -44,6 +57,8 @@ const MySuppliers = props => {
   const [supplierCategories, setSupplierCategories] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const intl = useIntl();
+
   useEffect(() => {
     setBuyerId(cookie.get('buyerId'));
   });
@@ -264,6 +279,11 @@ const MySuppliers = props => {
               <h4 className="gx-card-bordered-title">
                 <i className="icon icon-product-list gx-mr-3" />
                 <IntlMessages id="sidebar.suppliers.mySuppliers" />
+                {selectedCategory && selectedCategory.name
+                  ? ` - ${intl.formatMessage({
+                      id: 'app.supplierregistration.field.business_categories',
+                    })}: ${selectedCategory.name}`
+                  : null}
               </h4>
             </div>
           </div>
@@ -277,11 +297,13 @@ const MySuppliers = props => {
               </Button>
             </a>
           </Link>
-          <Button type="primary" onClick={onUploadXls}>
-            <CloudUploadOutlined className="gx-mr-2" />
-            <IntlMessages id="app.common.text.upload" />
-            Xlsm
-          </Button>
+          <Tooltip title={<IntlMessages id="app.common.tooltip.uploadxls" />}>
+            <Button type="primary" onClick={onUploadXls}>
+              <CloudUploadOutlined className="gx-mr-2" />
+              <IntlMessages id="app.common.text.upload" />
+              Xlsm
+            </Button>
+          </Tooltip>
           <Button type="primary" onClick={onDownloadXls}>
             <CloudDownloadOutlined className="gx-mr-2" />
             <IntlMessages id="app.common.text.download" />

@@ -152,7 +152,7 @@ const QuotationTimeline = ({ activities, onSaveActivity }) => {
                           <>
                             <br />
                             <span className="gx-text-muted">
-                              {moment(item.createdAt).format('MMM Do YY')}
+                              {moment(item.createdAt).format('DD-MM-YYYY')}
                             </span>
                           </>
                         ) : (
