@@ -350,8 +350,8 @@ const NewQuoteResponse = props => {
         <div className="quotations-header">
           <div className="project-details">
             {ProjectDetails()}
-            <ProjectProgressTabs tabsConfig={projectDetailsTabs} enableHash />
             <QuotationTimeline activities={quotationActivities} onSaveActivity={onSaveActivity} />
+            <ProjectProgressTabs tabsConfig={projectDetailsTabs} enableHash />
           </div>
         </div>
       </div>

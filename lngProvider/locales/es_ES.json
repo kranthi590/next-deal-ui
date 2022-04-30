@@ -360,7 +360,7 @@
   "app.registration.detailsSaveSuccessMessage": "Detalles guardados con éxito!",
   "app.registration.errorMessageTitle": "Se ha producido un error inesperado!",
   "app.quotation.addQuotation": "Agregar cotización",
-  "app.quotation.field.projectName":"Nombre del Projecto",
+  "app.quotation.field.projectName":"Nombre del Proyecto",
   "app.quotation.field.quotationname": "Nombre de la cotización",
   "app.quotation.field.supplier": "Proveedor",
   "app.quotation.field.currency": "Tipo de Moneda",
@@ -371,7 +371,7 @@
   "app.quotation.selectNDSuppliers": "Seleccione proveedores NextDeal",
   "app.quotation.suppliers.error.required": "Por favor selección tus proveedores!",
   "app.quotation.addsupplier": "Crear proveedor",
-  "invalid_project_id":"Nombre de projecto inválido",
+  "invalid_project_id":"Nombre de proyecto inválido",
   "invalid_quotation_status":"Estado de cotización inválida",
   "invalid_quotation_id":"Nombre de cotización inválido",
   "quotation_already_awarded":"Cotización ya adjudicada",
@@ -545,7 +545,7 @@
   "app.common.text.selectProject": "Seleccione el proyecto",
   "app.common.text.download": "Descargar",
   "app.common.text.upload": "Subir",
-  "app.common.text.downloadTemplate": "Plantilla de proveedores",
+  "app.common.text.downloadTemplate": "Plantilla de carga massiva",
   "app.common.text.quotationAborted": "Cita abortada",
   "app.common.text.confirmquotationDeaward": "¿Estas seguro de desadjudicar cotizacion?",
   "app.common.text.confirmQuotationAborted": "¿Estas seguro de abortar cotizacion?",
@@ -584,5 +584,6 @@
   "app.common.suppliers": "Proveedores",
   "app.common.projectDetails": "Detalles del proyecto",
   "app.common.edit": "Editar",
-  "button.save": "Guardar"
+  "button.save": "Guardar",
+  "app.common.tooltip.uploadxls": "Se debe adjuntar la plantilla carga masiva de proveedores"
 }

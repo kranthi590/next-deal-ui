@@ -365,7 +365,7 @@ const SupplierRegistration = props => {
                         </Select>
                       </Form.Item>
                     </Col>
-                    <Col sm={6} xs={24}>
+                    <Col sm={12} xs={24}>
                       <FormItem
                         label={
                           <IntlMessages id="app.supplierregistration.field.business_emailId" />

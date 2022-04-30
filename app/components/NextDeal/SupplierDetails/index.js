@@ -324,25 +324,6 @@ const SupplierDetails = props => {
                     </div>
                   </Col>
                 ) : null}
-                <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-                  <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
-                    <div className="gx-mr-3">
-                      <i className={`icon icon-forward-o gx-fs-xxl gx-text-grey`} />
-                    </div>
-                    <div className="gx-media-body">
-                      <h6 className="gx-mb-1 gx-text-grey">
-                        <IntlMessages id="app.supplierregistration.field.isshared" />
-                      </h6>
-                      <p className="gx-mb-0">
-                        {isShared ? (
-                          <IntlMessages id="app.common.text.yes" />
-                        ) : (
-                          <IntlMessages id="app.common.text.no" />
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </Col>
               </Row>
             </Card>
             {billingaddressExists ? (
