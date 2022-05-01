@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, Card, Col, Row, DatePicker, Select, Divider, Modal } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Card,
+  Col,
+  Row,
+  DatePicker,
+  Select,
+  Divider,
+  Modal,
+  Badge,
+  Checkbox,
+} from 'antd';
 import { useRouter } from 'next/router';
 
 // Utils
@@ -17,9 +30,38 @@ import ClpFormatter from '../../../../shared/CLP';
 import { FileAddOutlined } from '@ant-design/icons';
 import { CURRENCY } from '../../../../util/appConstants';
 import { useIntl } from 'react-intl';
-
+const dummyData = [
+  {
+    name: 'Acuicultura y Pesca',
+    id: 52,
+    suppliersCount: 6,
+    suppliers: [
+      { id: 515, legalName: 'Harish', emailId: null, isShared: false },
+      { id: 542, legalName: 'Zentech02', emailId: 'accounts@zentechh.com', isShared: false },
+    ],
+  },
+  {
+    name: 'Agroindustria',
+    id: 33,
+    suppliersCount: 10,
+    suppliers: [
+      {
+        id: 63,
+        legalName: 'Zieme, Haley and Baumbach',
+        emailId: 'oghelardoni9@elpais.com',
+        isShared: true,
+      },
+      {
+        id: 489,
+        legalName: 'Testing v2 from user',
+        emailId: 'testingv2user@gmail.com',
+        isShared: false,
+      },
+    ],
+  },
+];
 const { TextArea } = Input;
-const { Option } = Select;
+const { Option, OptGroup } = Select;
 
 const formLayout = {
   wrapperCol: {
@@ -42,7 +84,12 @@ const stringRule = {
 };
 
 const NewQuote = props => {
-  const { getBuyerSuppliers, getNextDealSuppliers } = useRegistration();
+  const {
+    getBuyerSuppliers,
+    getNextDealSuppliers,
+    suppliersCountByCategories,
+    getBuyerSuppliersByCategory,
+  } = useRegistration();
   const { createQuotation } = useQuotation();
   const { getProjectById } = useProject();
   const [estimatedBudget, setEstimatedBudget] = useState(0);
@@ -52,6 +99,8 @@ const NewQuote = props => {
   const [sharedSuppliers, setSharedSuppliers] = useState([]);
   const [visible, setVisible] = useState(false);
   const [projectInfo, setProjectInfo] = useState({});
+  const [suppliersData, setSuppliersData] = useState([]);
+
   const [form] = Form.useForm();
   const router = useRouter();
   const [files, setFiles] = useState([]);
@@ -69,12 +118,23 @@ const NewQuote = props => {
     });
   };
 
+  const loadCategories = () => {
+    suppliersCountByCategories(data => {
+      data = data.map(item => {
+        item.suppliers = [];
+        return item;
+      });
+      setSuppliersData(data);
+    });
+  };
+
   useEffect(() => {
     const projectId = router.query.id;
     getProjectById(projectId, data => {
       setProjectInfo(data);
     });
-    loadSuppliers();
+    // loadSuppliers();
+    loadCategories();
   }, []);
 
   const reloadSuppliers = () => {
@@ -133,6 +193,23 @@ const NewQuote = props => {
 
   const onBudgetChange = async value => {
     setEstimatedBudget(value);
+  };
+
+  const onCategoryGroupSelect = (e, selectedCategory, dataloaded) => {
+    if (!dataloaded) {
+      const updatedData = [...suppliersData];
+      if (e.target.checked) {
+        getBuyerSuppliersByCategory(selectedCategory, ({ rows }) => {
+          for (let i = 0; i < suppliersData.length; i++) {
+            if (suppliersData[i].id === selectedCategory) {
+              updatedData[i].suppliers = rows;
+              break;
+            }
+          }
+          setSuppliersData(updatedData);
+        });
+      }
+    }
   };
   return (
     <>
@@ -267,7 +344,7 @@ const NewQuote = props => {
               </Form.Item>
             </Col>
             <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-              <Form.Item
+              {/* <Form.Item
                 label={<IntlMessages id="app.quotation.suppliers" />}
                 name="suppliers"
                 rules={[
@@ -293,7 +370,74 @@ const NewQuote = props => {
                       </Option>
                     ))}
                 </Select>
+              </Form.Item> */}
+              {/* suppliers with categories */}
+              <Form.Item
+                label={<IntlMessages id="app.quotation.suppliers" />}
+                name="suppliers"
+                rules={[
+                  {
+                    required: true,
+                    message: <IntlMessages id="app.quotation.suppliers.error.required" />,
+                    type: 'array',
+                  },
+                ]}
+              >
+                <Select
+                  size="large"
+                  placeholder={intl.formatMessage({ id: 'app.quotation.selectYourSuppliers' })}
+                  mode="multiple"
+                  filterOption={(input, option) => {
+                    return option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+                  }}
+                >
+                  {suppliersData &&
+                    suppliersData.map(category => (
+                      <OptGroup
+                        label={
+                          <div className="gx-d-flex">
+                            <span style={{ flexGrow: 1 }}>{category.name}</span>
+                            <span>
+                              <Badge
+                                count={category.suppliersCount}
+                                style={{ backgroundColor: '#038FDE' }}
+                                className="gx-mx-2"
+                              />
+                            </span>
+                            <span>
+                              <Checkbox
+                                disabled={
+                                  category && category.suppliers && category.suppliers.length
+                                }
+                                checked={
+                                  category && category.suppliers && category.suppliers.length
+                                }
+                                onChange={e =>
+                                  onCategoryGroupSelect(e, category.id, category.suppliers.length)
+                                }
+                              />
+                            </span>
+                          </div>
+                        }
+                        key={category.id}
+                        title={category.name}
+                      >
+                        {category.suppliers &&
+                          category.suppliers.map(supplier => (
+                            <Option
+                              key={supplier.id + supplier.legalName}
+                              value={supplier.id}
+                              title={supplier.legalName}
+                            >
+                              {supplier.legalName}
+                            </Option>
+                          ))}
+                      </OptGroup>
+                    ))}
+                </Select>
               </Form.Item>
+              {/* suppliers with categories */}
+
               <Form.Item className="gx-d-flex gx-justify-content-center">
                 <Divider>
                   <IntlMessages id="app.userAuth.or" />
@@ -306,26 +450,6 @@ const NewQuote = props => {
                 <Divider>
                   <IntlMessages id="app.userAuth.or" />
                 </Divider>
-              </Form.Item>
-              <Form.Item
-                label={<IntlMessages id="sidebar.suppliers.suppliersNextDeal" />}
-                name="sharedSuppliers"
-              >
-                <Select
-                  size="large"
-                  placeholder={intl.formatMessage({ id: 'app.quotation.selectNDSuppliers' })}
-                  mode="multiple"
-                  filterOption={(input, option) => {
-                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                  }}
-                >
-                  {sharedSuppliers &&
-                    sharedSuppliers.map(supplier => (
-                      <Option key={supplier.id + supplier.legalName} value={supplier.id}>
-                        {supplier.legalName}
-                      </Option>
-                    ))}
-                </Select>
               </Form.Item>
               <Row gutter={24} style={{ marginBottom: 20 }}>
                 <Col xs={24}></Col>
