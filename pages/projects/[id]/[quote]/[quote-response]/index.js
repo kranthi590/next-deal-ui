@@ -197,7 +197,7 @@ const NewQuoteResponse = props => {
                 <div className="gx-featured-content-left">
                   {projectsDetails && projectsDetails.name ? (
                     <p className="gx-mb-1">
-                      {/* <IntlMessages id="app.project.field.projectname" />:{' '} */}
+                      <IntlMessages id="app.quotation.field.projectName" />:{' '}
                       <span className="gx-text-grey">{projectsDetails.name}</span>
                     </p>
                   ) : null}
