@@ -19,6 +19,7 @@ import IntlMessages from '../../../../../util/IntlMessages';
 import { CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import QuotationTimeline from '../../../../../app/components/NextDeal/QuotationTimeline';
+import moment from 'moment';
 
 const NewQuoteResponse = props => {
   const { projectsList, quotationData, awardedResponses, projectsDetails, activitiesList } = props;
@@ -194,7 +195,57 @@ const NewQuoteResponse = props => {
               </div>
               <div className="gx-media-body gx-featured-content">
                 <div className="gx-featured-content-left">
-                  <h3 className="gx-mb-2">
+                  {projectsDetails && projectsDetails.name ? (
+                    <p className="gx-mb-1">
+                      {/* <IntlMessages id="app.project.field.projectname" />:{' '} */}
+                      <span className="gx-text-grey">{projectsDetails.name}</span>
+                    </p>
+                  ) : null}
+                  {quotationData.name ? (
+                    <p className="gx-mb-1">
+                      <IntlMessages id="app.quotation.field.quotationname" />:{' '}
+                      <span className="gx-text-grey">{quotationData.name}</span>
+                    </p>
+                  ) : null}
+                  {quotationData.estimatedBudget ? (
+                    <p className="gx-mb-1">
+                      <IntlMessages id="app.project.field.estimatedBudget" />:
+                      <span className="gx-text-grey">
+                        {quotationData.estimatedBudget ? (
+                          <> {formatAmount(`${quotationData.estimatedBudget}`)}</>
+                        ) : null}
+                        {quotationData.currency ? (
+                          <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
+                            {' '}
+                            {quotationData.currency}
+                          </span>
+                        ) : null}
+                      </span>
+                    </p>
+                  ) : null}
+                  {quotationData.startDate ? (
+                    <p className="gx-mb-1">
+                      <IntlMessages id="app.project.field.startdate" />:{' '}
+                      <span className="gx-text-grey">
+                        {moment(quotationData.startDate).format('DD-MM-YYYY')}
+                      </span>
+                    </p>
+                  ) : null}
+                  {quotationData.expectedEndDate ? (
+                    <p className="gx-mb-1">
+                      <IntlMessages id="app.project.field.enddate" />:{' '}
+                      <span className="gx-text-grey">
+                        {moment(quotationData.expectedEndDate).format('DD-MM-YYYY')}
+                      </span>
+                    </p>
+                  ) : null}
+                  {/* {quotationData.name ? (
+                    <p className="gx-mb-1">
+                      <IntlMessages id="app.quotation.field.quotationname" />:{' '}
+                      <span className="gx-text-grey">{quotationData.name}</span>
+                    </p>
+                  ) : null} */}
+                  {/* <h3 className="gx-mb-2">
                     <Link
                       href={'/projects/' + [quotationData.projectId]}
                       as={'/projects/' + quotationData.projectId}
@@ -207,7 +258,8 @@ const NewQuoteResponse = props => {
                     <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
                       {quotationData.currency}
                     </span>
-                  </h2>
+                  </h2> */}
+
                   {quotationData.status === 'created' || quotationData.status === 'in_progress' ? (
                     <Button
                       type="primary"
