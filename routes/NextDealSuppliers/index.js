@@ -177,7 +177,7 @@ const NextDealSuppliers = props => {
             <SupplierDetails supplierDetails={supplierDetails} />
           ) : (
             <Row>
-              <Col xs={24} md={12}></Col>
+              <Col xs={24} md={12} />
             </Row>
           )}
         </div>

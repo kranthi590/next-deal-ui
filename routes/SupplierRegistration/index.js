@@ -35,14 +35,7 @@ const SupplierRegistration = props => {
   const router = useRouter();
   const { isLoading } = useAuth();
   const { isAuthenticated, onAletSuccess, onSupplierCreated } = props;
-  const {
-    fetchRegions,
-    fetchCommune,
-    registerSupplier,
-    error,
-    uploadSupplierLogo,
-    fetchCategories,
-  } = useRegistration();
+  const { fetchRegions, fetchCommune, registerSupplier, fetchCategories } = useRegistration();
 
   const [form] = Form.useForm();
 
@@ -120,9 +113,7 @@ const SupplierRegistration = props => {
       phoneNumber1: business.phoneNumber1
         ? getPhonePrefix(business.telephone1) + business.phoneNumber1
         : undefined,
-      // phoneNumber2: business.phoneNumber2 ? getPhonePrefix(business.telephone2) + business.phoneNumber2 : undefined,
       countryId: isAuthenticated ? undefined : 1,
-      // referencia: business.referencia
     };
 
     const billingAddress = {
@@ -141,15 +132,10 @@ const SupplierRegistration = props => {
     };
 
     let formData = {
-      // businessAddress: businessAddress,
       legalName: business.legalName,
-      // fantasyName: business.fantasyName,
       rut: business.rut ? clean(business.rut) : business.rut,
       emailId: business.emailId,
       categories: business.categories,
-      // serviceLocations: data.serviceLocations,
-      // type: business.type,
-
       isShared: props.isBuyer ? isSupplierInfoShareable : props.isShared,
       inchargeRole: contact.charge,
     };
@@ -479,21 +465,6 @@ const SupplierRegistration = props => {
                       title={<IntlMessages id="app.supplierregistration.form_title" />}
                     />
                   </Col>
-                  {/* <Col sm={12} xs={24}>
-                  <FormItem
-                    name="business_fantasyName"
-                    label={
-                      <IntlMessages id="app.supplierregistration.field.business_fantasyName" />
-                    }
-                  >
-                    <Input
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_fantasyName',
-                      })}
-                    />
-                  </FormItem>
-                </Col> */}
                   <Col sm={12} xs={24}>
                     <FormItem
                       name="business_legalName"
@@ -682,33 +653,6 @@ const SupplierRegistration = props => {
                       />
                     </FormItem>
                   </Col>
-                  {/* <Col sm={12} xs={24}>
-                  <FormItem
-                    label={<IntlMessages id="app.supplierregistration.field.serviceLocations" />}
-                    name="serviceLocations"
-                  >
-                    <Select
-                      showSearch
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.serviceLocations.selectYourServiceLocation',
-                      })}
-                      mode="multiple"
-                      filterOption={(input, option) => {
-                        return (
-                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        );
-                      }}
-                    >
-                      {regions &&
-                        regions.map(region => (
-                          <Option key={region.id + region.name} value={region.id}>
-                            {region.name}
-                          </Option>
-                        ))}
-                    </Select>
-                  </FormItem>
-                </Col> */}
                   <Col xs={24}>
                     <Form.Item
                       label={
@@ -807,28 +751,6 @@ const SupplierRegistration = props => {
                       />
                     </FormItem>
                   </Col>
-                  {/* <Col sm={12} xs={24}>
-                  <FormItem
-                    name="business_type"
-                    label={<IntlMessages id="app.supplierregistration.field.business_type" />}
-                  >
-                    <Select
-                      size="large"
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_type.pleaseSelectType',
-                      })}
-                      showSearch
-                      filterOption={(input, option) => {
-                        return (
-                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        );
-                      }}
-                    >
-                      <Option value="Emprendedor">Emprendedor</Option>
-                      <Option value="Pyme">Pyme</Option>
-                    </Select>
-                  </FormItem>
-                </Col> */}
                   <Col sm={12} xs={24}>
                     <FormItem
                       label={
@@ -858,34 +780,6 @@ const SupplierRegistration = props => {
                       />
                     </FormItem>
                   </Col>
-                  {/* <Col sm={12} xs={24}>
-                  <FormItem
-                    label={
-                      <IntlMessages id="app.supplierregistration.field.business_phoneNumber2" />
-                    }
-                    name="business_phoneNumber2"
-                    rules={[
-                      {
-                        required: false,
-                        validator: (_, value) => {
-                          if (value && isNaN(value)) {
-                            return Promise.reject(
-                              <IntlMessages id="app.supplierregistration.field.business_phoneNumber1.error.required" />,
-                            );
-                          }
-                          return Promise.resolve();
-                        },
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder={intl.formatMessage({
-                        id: 'app.supplierregistration.field.business_phoneNumber2',
-                      })}
-                      addonBefore={prefixSelector('business_telephone2')}
-                    />
-                  </FormItem>
-                </Col> */}
                   <Col xs={24}>
                     <FormItem
                       label={
