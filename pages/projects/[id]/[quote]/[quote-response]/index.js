@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import cookie from 'cookie';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Avatar, Row, Col, Button } from 'antd';
+import { Avatar, Row, Col, Button, Modal, Divider } from 'antd';
 
 import Widget from '../../../../../app/components/Widget';
 import { formatAmount, getAvatar, successNotification } from '../../../../../util/util';
@@ -16,10 +16,13 @@ import QuotationCompleted from '../../../../../app/components/NextDeal/Quotation
 import FilesManager from '../../../../../app/common/FileManager';
 import BreadCrumb from '../../../../../app/components/BreadCrumb';
 import IntlMessages from '../../../../../util/IntlMessages';
-import { CloseOutlined, DeleteOutlined } from '@ant-design/icons';
+import { CloseOutlined, DeleteOutlined, UserAddOutlined } from '@ant-design/icons';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import QuotationTimeline from '../../../../../app/components/NextDeal/QuotationTimeline';
 import moment from 'moment';
+import SupplierRegistrationPage from '../../../../supplier-registration';
+import SupplierSelector from '../../../../../app/components/NextDeal/SuppliersSelector';
+import { RegistrationProvider } from '../../../../../contexts/business-registration';
 
 const NewQuoteResponse = props => {
   const { projectsList, quotationData, awardedResponses, projectsDetails, activitiesList } = props;
@@ -33,12 +36,15 @@ const NewQuoteResponse = props => {
     getActivities,
     deleteQuotationResponse,
     deleteQuotation,
+    assignSuppliersToQuotation,
   } = useResponse();
   const [showAbortAlert, setShowAbortAlert] = useState(false);
   const [activeAbortId, setActiveAbortId] = useState(null);
   const [alertInfo, setAlertInfo] = useState({ type: '', confirmText: '' });
   const [quotationActivities, setQuotationActivities] = useState(activitiesList);
   const [selectedResponseId, setSelectedResponseId] = useState(null);
+  const [visible, setVisible] = useState(false);
+
   const router = useRouter();
   const projectId = router.query.quote;
   let awarded = false,
@@ -49,7 +55,6 @@ const NewQuoteResponse = props => {
       completed = true;
     }
   }
-
   const onSave = (values, qid) => {
     if (!qid) {
       const files = values.files;
@@ -178,6 +183,18 @@ const NewQuoteResponse = props => {
     });
   };
 
+  const showCreateSupplierModal = () => {
+    setVisible(true);
+  };
+  const onSupplierCreated = newSupplier => {
+    assignSuppliersToQuotation(quotationData.id, { suppliers: [newSupplier] }, () => {
+      successNotification('app.registration.detailsSaveSuccessMessage');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    });
+  };
+
   const ProjectDetails = () => {
     return (
       <Widget>
@@ -197,7 +214,6 @@ const NewQuoteResponse = props => {
                 <div className="gx-featured-content-left">
                   {projectsDetails && projectsDetails.name ? (
                     <p className="gx-mb-1">
-                      <IntlMessages id="app.quotation.field.projectName" />:{' '}
                       <span className="gx-text-grey">{projectsDetails.name}</span>
                     </p>
                   ) : null}
@@ -239,60 +255,6 @@ const NewQuoteResponse = props => {
                       </span>
                     </p>
                   ) : null}
-                  {/* {quotationData.name ? (
-                    <p className="gx-mb-1">
-                      <IntlMessages id="app.quotation.field.quotationname" />:{' '}
-                      <span className="gx-text-grey">{quotationData.name}</span>
-                    </p>
-                  ) : null} */}
-                  {/* <h3 className="gx-mb-2">
-                    <Link
-                      href={'/projects/' + [quotationData.projectId]}
-                      as={'/projects/' + quotationData.projectId}
-                    >
-                      <a>{quotationData.name}</a>
-                    </Link>
-                  </h3>
-                  <h2 className="gx-text-primary gx-mb-1 gx-font-weight-medium">
-                    ${formatAmount(`${quotationData.estimatedBudget}`)}{' '}
-                    <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
-                      {quotationData.currency}
-                    </span>
-                  </h2> */}
-
-                  {quotationData.status === 'created' || quotationData.status === 'in_progress' ? (
-                    <Button
-                      type="primary"
-                      icon={<CloseOutlined />}
-                      className="gx-mb-0 gx-mt-1"
-                      onClick={onAbortQuotation}
-                    >
-                      <span>
-                        <IntlMessages id="app.quotationresponses.button.abort" />
-                      </span>
-                    </Button>
-                  ) : (
-                    <></>
-                  )}
-                  {quotationData.status === 'created' || quotationData.status === 'in_progress' ? (
-                    <Button
-                      type="primary"
-                      icon={<DeleteOutlined />}
-                      className="gx-mb-0 gx-mt-1"
-                      onClick={onDeleteQuotation}
-                    >
-                      <span>
-                        <IntlMessages id="button.delete" />
-                      </span>
-                    </Button>
-                  ) : (
-                    <></>
-                  )}
-                  {quotationData.status === 'aborted' ? (
-                    <p className="gx-text-danger">
-                      <IntlMessages id="app.common.text.quotationAborted" />
-                    </p>
-                  ) : null}
                 </div>
               </div>
             </div>
@@ -311,6 +273,57 @@ const NewQuoteResponse = props => {
                 assetRelationId: quotationData.id,
               }}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <div className="gx-d-flex gx-justify-content-end gx-mt-4">
+              {quotationData.status === 'created' || quotationData.status === 'in_progress' ? (
+                <Button
+                  type="primary"
+                  icon={<CloseOutlined />}
+                  className="gx-mb-0 gx-mt-1"
+                  onClick={onAbortQuotation}
+                >
+                  <span>
+                    <IntlMessages id="app.quotationresponses.button.abort" />
+                  </span>
+                </Button>
+              ) : (
+                <></>
+              )}
+              {quotationData.status === 'created' || quotationData.status === 'in_progress' ? (
+                <Button
+                  type="primary"
+                  className="gx-mb-0 gx-mt-1"
+                  onClick={showCreateSupplierModal}
+                >
+                  <UserAddOutlined className="gx-mr-2" />
+                  <IntlMessages id="app.common.addSupplier" />
+                </Button>
+              ) : (
+                <></>
+              )}
+              {quotationData.status === 'created' || quotationData.status === 'in_progress' ? (
+                <Button
+                  type="primary"
+                  icon={<DeleteOutlined />}
+                  className="gx-mb-0 gx-mt-1"
+                  onClick={onDeleteQuotation}
+                >
+                  <span>
+                    <IntlMessages id="button.delete" />
+                  </span>
+                </Button>
+              ) : (
+                <></>
+              )}
+              {quotationData.status === 'aborted' ? (
+                <p className="gx-text-danger">
+                  <IntlMessages id="app.common.text.quotationAborted" />
+                </p>
+              ) : null}
+            </div>
           </Col>
         </Row>
       </Widget>
@@ -421,6 +434,34 @@ const NewQuoteResponse = props => {
           <span>{alertInfo.confirmText}</span>
         </div>
       </SweetAlert>
+      <Modal
+        title={<IntlMessages id={'app.common.addSupplier'} />}
+        centered
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        bodyStyle={{ padding: '0' }}
+        okButtonProps={{ style: { display: 'none' } }}
+        destroyOnClose={true}
+        width={1000}
+        maskClosable={false}
+      >
+        <SupplierRegistrationPage
+          isBannerShown={false}
+          showLoginLink={false}
+          isBuyer={true}
+          isAuthenticated={true}
+          onAletSuccess={() => {
+            window.location.reload();
+          }}
+          onSupplierCreated={onSupplierCreated}
+        />
+        <Divider>
+          <IntlMessages id="app.userAuth.or" />
+        </Divider>
+        <div className="gx-p-4">
+          <SupplierSelector quotationId={quotationData.id} />
+        </div>
+      </Modal>
     </>
   );
 };
@@ -504,8 +545,10 @@ export async function getServerSideProps(context) {
 }
 
 const QuoteResponse = props => (
-  <ResponsesProvider>
-    <NewQuoteResponse {...props} />
-  </ResponsesProvider>
+  <RegistrationProvider>
+    <ResponsesProvider>
+      <NewQuoteResponse {...props} />
+    </ResponsesProvider>
+  </RegistrationProvider>
 );
 export default QuoteResponse;
