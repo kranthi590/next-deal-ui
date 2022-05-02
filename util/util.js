@@ -127,7 +127,6 @@ export const getBuyerId = () => {
     const buyerInfo = getData('user');
     return buyerInfo && JSON.parse(buyerInfo.buyerId);
   }
-  return;
 };
 
 export const getSubDomain = (url = '') => {

@@ -66,14 +66,6 @@ const CardsListItem = ({ styleName, data, onDeleteClick, onViewClick }) => {
                 </a>
               </span>
             </div>
-            {/* <p className="gx-text-primary gx-text-truncate gx-mt-auto gx-mb-0 gx-pointer">
-              <Link href={'/projects/' + [id]} as={'/projects/' + id}>
-                <span>
-                  <IntlMessages id="app.common.CheckInDetail" />
-                  <i className="icon icon-long-arrow-right gx-fs-xxl gx-ml-2 gx-d-inline-flex gx-vertical-align-middle" />
-                </span>
-              </Link>
-            </p> */}
           </div>
         </div>
       </div>

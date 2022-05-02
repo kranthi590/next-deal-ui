@@ -17,7 +17,6 @@ function CardList({ projects, loader, totalCount, onViewClick }) {
   const [projectsList, setProjectsList] = useState(projects);
   const [size, setSize] = useState(10);
   const [hasMore, setHasMore] = useState(true);
-  const [offset, setOffset] = useState(projects.length);
   const [projectsCount, setProjectsCount] = useState(totalCount);
   const [showLoading, setSetShowLoading] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
