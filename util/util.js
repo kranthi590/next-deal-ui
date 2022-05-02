@@ -47,6 +47,7 @@ const validationErrors = [
   'ACCOUNT_LICENSE_EXPIRED',
   'QUOTATION_NOT_FOUND',
   'INVALID_ACCOUNT_CREDENTIALS',
+  'SUPPLIER_ALREADY_ADDED_TO_QUOTATION',
 ];
 
 export const successNotification = messageId => {

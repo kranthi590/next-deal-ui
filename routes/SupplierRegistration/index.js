@@ -34,7 +34,7 @@ const { Option } = Select;
 const SupplierRegistration = props => {
   const router = useRouter();
   const { isLoading } = useAuth();
-  const { isAuthenticated, onAletSuccess } = props;
+  const { isAuthenticated, onAletSuccess, onSupplierCreated } = props;
   const {
     fetchRegions,
     fetchCommune,
@@ -181,6 +181,7 @@ const SupplierRegistration = props => {
     if (!isAuthenticated) {
       router.push(`https://${process.env.NEXT_PUBLIC_WEB_HOST}`);
     }
+
     if (onAletSuccess) {
       onAletSuccess();
     }
@@ -197,6 +198,9 @@ const SupplierRegistration = props => {
   const onFinish = async values => {
     registerSupplier(getFormData(values), isAuthenticated, async data => {
       setNewSupplierName(data.legalName);
+      if (onSupplierCreated) {
+        onSupplierCreated(data.id);
+      }
       try {
         if (files.length > 0) {
           await uploadFiles(

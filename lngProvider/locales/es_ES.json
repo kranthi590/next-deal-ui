@@ -401,6 +401,7 @@
   "purchase_order_number_not_found":"Número de pedido no encontrado",
   "quotation_not_found":"Cotización no encontrado.",
   "invalid_account_credentials":"No se ha podido iniciar la sesión. Por favor, verifique sus credenciales e inténtelo de nuevo.",
+  "supplier_already_added_to_quotation":"Proveedor ya añadido al presupuesto",
   "app.buyerregistration.page_title":"Registro de Usuario",
   "app.buyerregistration.form_title":"Información de Usuario",
   "app.buyerregistration.field.fantasyName":"Nombre de Fantasía",
@@ -585,5 +586,7 @@
   "app.common.projectDetails": "Detalles del proyecto",
   "app.common.edit": "Editar",
   "button.save": "Guardar",
-  "app.common.tooltip.uploadxls": "Se debe adjuntar la plantilla carga masiva de proveedores"
+  "app.common.tooltip.uploadxls": "Se debe adjuntar la plantilla carga masiva de proveedores",
+  "app.common.addSupplier": "Agregar Proveedor",
+  "app.common.assignSuppliers": "Asignar proveedores"
 }
