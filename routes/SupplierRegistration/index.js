@@ -1176,6 +1176,7 @@ const SupplierRegistration = props => {
                         setFiles(fileList);
                       }}
                       accept={['image/*']}
+                      allowDelete={true}
                     />
                   </Col>
                 </Row>
