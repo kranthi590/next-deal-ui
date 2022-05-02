@@ -206,7 +206,7 @@ const useProviderRegistration = () => {
     httpClient
       .get(`buyers/${buyerId}/downloadSuppliers`, { headers: { ...headers }, responseType: 'blob' })
       .then(response => {
-        fileDownload(response.data, 'Suppliers.xlsm');
+        fileDownload(response.data, 'ProveedoresLista.xlsx');
         fetchSuccess();
       })
       .catch(function (error) {
@@ -289,7 +289,7 @@ const useProviderRegistration = () => {
         responseType: 'blob',
       })
       .then(response => {
-        fileDownload(response.data, 'Suppliers.xlsx');
+        fileDownload(response.data, 'ResultadoProveedoresCarga.xlsx');
         fetchSuccess();
         if (callbackFun) {
           callbackFun();

@@ -280,7 +280,7 @@ const NewQuote = props => {
                   value={estimatedBudget}
                   size="large"
                   onChange={onBudgetChange}
-                  placeholder="1.00.00"
+                  placeholder="1.000.000"
                 />
               </Form.Item>
               <Form.Item

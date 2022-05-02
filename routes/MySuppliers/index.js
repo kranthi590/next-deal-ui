@@ -289,7 +289,7 @@ const MySuppliers = props => {
           </div>
         </div>
         <div align="end" style={{ textAlign: 'right' }}>
-          <Link href="/Suppliers.xlsm">
+          <Link href="/ProveedoresCargaMassiva.xlsm">
             <a>
               <Button type="secondary" className="gx-mr-3">
                 <FileExcelOutlined className="gx-mr-2" />
