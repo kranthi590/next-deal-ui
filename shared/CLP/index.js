@@ -11,7 +11,7 @@ class ClpFormatter extends Component {
     this.props.onChange(response);
   };
   render() {
-    return <Input {...this.props} onChange={this.onChange} placeholder="1.00.000" />;
+    return <Input {...this.props} onChange={this.onChange} placeholder="1.000.000" />;
   }
 }
 
