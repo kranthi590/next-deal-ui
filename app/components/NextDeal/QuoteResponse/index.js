@@ -12,7 +12,13 @@ import {
   Divider,
   Tooltip,
 } from 'antd';
-import { SaveOutlined, QuestionCircleOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  SaveOutlined,
+  QuestionCircleOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  CloseOutlined,
+} from '@ant-design/icons';
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';
@@ -22,7 +28,7 @@ import { CURRENCY } from '../../../../util/appConstants';
 import { useIntl } from 'react-intl';
 
 const QuoteResponses = props => {
-  const { onSave, awarded, onDeleteResponse } = props;
+  const { onSave, awarded, onDeleteResponse, onUpdateData } = props;
   const {
     id,
     legalName,
@@ -41,6 +47,7 @@ const QuoteResponses = props => {
   } = props.formData;
   const [cdeliveryDate, setCDeliveryDate] = useState(moment(deliveryDate).valueOf());
   const [cvalidityDate, setCValidityDate] = useState(moment(validityDate).valueOf());
+  const [editForm, setEditForm] = useState(false);
   const [filesList, setFiles] = useState(files);
   const intl = useIntl();
 
@@ -98,12 +105,25 @@ const QuoteResponses = props => {
   };
   const onFinish = values => {
     const formValues = getFormData(values);
-    onSave({
-      ...formValues,
-      supplierId: id,
-      includesTax: formValues.includesTax ? true : false,
-      files: newQuote ? filesList : [],
-    });
+    if (!newQuote) {
+      if (onUpdateData) {
+        onUpdateData(
+          {
+            ...formValues,
+            comments: formValues.comments ? formValues.comments : null,
+            includesTax: formValues.includesTax ? true : false,
+          },
+          id,
+        );
+      }
+    } else {
+      onSave({
+        ...formValues,
+        supplierId: id,
+        includesTax: formValues.includesTax ? true : false,
+        files: newQuote ? filesList : [],
+      });
+    }
   };
 
   const awardQuote = () => {
@@ -154,10 +174,10 @@ const QuoteResponses = props => {
                 value={netValue}
                 onChange={onNetValueChange}
                 placeholder="1.00.00"
-                disabled={awarded || !newQuote}
+                disabled={(awarded || !newQuote) && !editForm}
                 addonAfter={
                   <Form.Item name="includesTax" valuePropName="checked" className="gx-mb-0">
-                    <Checkbox disabled={awarded || !newQuote}>
+                    <Checkbox disabled={(awarded || !newQuote) && !editForm}>
                       <IntlMessages id="app.quotationresponses.field.includesTax" />
                     </Checkbox>
                   </Form.Item>
@@ -175,7 +195,7 @@ const QuoteResponses = props => {
             >
               <Select
                 placeholder={intl.formatMessage({ id: 'app.project.field.currency' })}
-                disabled={awarded || !newQuote}
+                disabled={(awarded || !newQuote) && !editForm}
                 showSearch
                 filterOption={(input, option) => {
                   return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -209,7 +229,7 @@ const QuoteResponses = props => {
                 placeholder={intl.formatMessage({
                   id: 'app.quotationresponses.field.deliveryDateWithPO',
                 })}
-                disabled={awarded || !newQuote}
+                disabled={(awarded || !newQuote) && !editForm}
                 onChange={deliveryDateChangeHandler}
                 format="DD/MM/YYYY"
               />
@@ -235,7 +255,7 @@ const QuoteResponses = props => {
                 placeholder={intl.formatMessage({
                   id: 'app.quotationresponses.field.validityDate',
                 })}
-                disabled={awarded || !newQuote}
+                disabled={(awarded || !newQuote) && !editForm}
                 onChange={validityDateChangeHandler}
                 format="DD/MM/YYYY"
               />
@@ -261,7 +281,7 @@ const QuoteResponses = props => {
                 placeholder={intl.formatMessage({
                   id: 'app.quotationresponses.field.paymentCondition',
                 })}
-                disabled={awarded || !newQuote}
+                disabled={(awarded || !newQuote) && !editForm}
                 showSearch
                 filterOption={(input, option) => {
                   return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -296,7 +316,7 @@ const QuoteResponses = props => {
               <Select
                 allowClear
                 placeholder={intl.formatMessage({ id: 'app.quotationresponses.field.incoterm' })}
-                disabled={awarded || !newQuote}
+                disabled={(awarded || !newQuote) && !editForm}
                 showSearch
                 filterOption={(input, option) => {
                   return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -379,21 +399,52 @@ const QuoteResponses = props => {
             <Form.Item>
               {!awarded && (
                 <>
-                  {newQuote ? (
-                    <></>
+                  {!newQuote ? (
+                    <>
+                      {editForm ? (
+                        <>
+                          <Button
+                            type="primary"
+                            htmlType="submit"
+                            icon={<SaveOutlined />}
+                            className="gx-mb-0"
+                          >
+                            <span>
+                              <IntlMessages id="app.quotationresponses.button.save" />
+                            </span>
+                          </Button>
+                          <Button
+                            type="primary"
+                            icon={<CloseOutlined />}
+                            className="gx-mb-0"
+                            onClick={e => {
+                              window.location.reload();
+                            }}
+                          >
+                            <span>
+                              <IntlMessages id="button.cancel" />
+                            </span>
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button
+                            type="primary"
+                            icon={<EditOutlined />}
+                            className="gx-mb-0"
+                            onClick={e => {
+                              e.preventDefault();
+                              setEditForm(true);
+                            }}
+                          >
+                            <span>
+                              <IntlMessages id="app.common.edit" />
+                            </span>
+                          </Button>
+                        </>
+                      )}
+                    </>
                   ) : (
-                    <Button
-                      type="primary"
-                      icon={<SaveOutlined />}
-                      className="gx-mb-0"
-                      onClick={awardQuote}
-                    >
-                      <span>
-                        <IntlMessages id="app.quotationresponses.button.award" />
-                      </span>
-                    </Button>
-                  )}
-                  {newQuote ? (
                     <>
                       <Button
                         type="primary"
@@ -406,10 +457,26 @@ const QuoteResponses = props => {
                         </span>
                       </Button>
                     </>
-                  ) : (
-                    <></>
                   )}
-                  {!awarded ? (
+                  {newQuote ? (
+                    <></>
+                  ) : (
+                    <>
+                      {!editForm ? (
+                        <Button
+                          type="primary"
+                          icon={<SaveOutlined />}
+                          className="gx-mb-0"
+                          onClick={awardQuote}
+                        >
+                          <span>
+                            <IntlMessages id="app.quotationresponses.button.award" />
+                          </span>
+                        </Button>
+                      ) : null}
+                    </>
+                  )}
+                  {!awarded && !editForm ? (
                     <Button
                       type="primary"
                       icon={<DeleteOutlined />}

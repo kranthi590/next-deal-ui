@@ -10,7 +10,7 @@ import { CURRENCY } from '../../../../util/appConstants';
 import { useIntl } from 'react-intl';
 
 const QuoteAwarded = props => {
-  const { onSave, completed, onDeaward } = props;
+  const { onSave, completed, onDeaward, onUpdateData } = props;
   const {
     id,
     netWorth,
@@ -22,7 +22,7 @@ const QuoteAwarded = props => {
     comments,
     files = [],
   } = props.formData;
-  const [cdeliveryDate, setCDeliveryDate] = useState(null);
+  const [cdeliveryDate, setCDeliveryDate] = useState(moment(deliveryDate).valueOf());
   const [cvalidityDate, setCValidityDate] = useState(null);
   const [netValue, setNetValue] = useState(netWorth || null);
   const intl = useIntl();
@@ -60,16 +60,6 @@ const QuoteAwarded = props => {
   };
   const onFinish = values => {
     // on finish
-    // const awardedData = {};
-    // if(values.purchaseOrderNumber){
-    //   awardedData.purchaseOrderNumber = values.purchaseOrderNumber;
-    // }
-    // if(values.purchaseOrderNumber){
-    //   awardedData.purchaseOrderNumber = values.purchaseOrderNumber;
-    // }
-    // if(values.comments){
-    //   awardedData.comments = values.comments;
-    // }
     onSave(
       {
         purchaseOrderNumber: values.purchaseOrderNumber,
@@ -81,6 +71,24 @@ const QuoteAwarded = props => {
   };
   const onNetValueChange = async value => {
     setNetValue(value);
+  };
+
+  const onUpdateSave = async () => {
+    try {
+      const values = await form.validateFields();
+      if (onUpdateData) {
+        onUpdateData(
+          {
+            purchaseOrderNumber: values.purchaseOrderNumber ? values.purchaseOrderNumber : null,
+            comments: values.comments ? values.comments : null,
+            deliveryDate: cdeliveryDate,
+          },
+          id,
+        );
+      }
+    } catch (errorInfo) {
+      return;
+    }
   };
 
   return (
@@ -284,6 +292,18 @@ const QuoteAwarded = props => {
               xs={24}
               className="gx-d-flex gx-justify-content-start gx-align-items-start"
             >
+              <Form.Item wrapperCol={{ span: 24 }}>
+                <Button
+                  type="primary"
+                  icon={<SaveOutlined />}
+                  className="gx-mb-0"
+                  onClick={onUpdateSave}
+                >
+                  <span>
+                    <IntlMessages id="app.quotationresponses.button.save" />
+                  </span>
+                </Button>
+              </Form.Item>
               <Form.Item wrapperCol={{ span: 24 }}>
                 <Button
                   type="primary"

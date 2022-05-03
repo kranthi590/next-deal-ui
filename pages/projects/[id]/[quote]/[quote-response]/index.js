@@ -37,7 +37,8 @@ const NewQuoteResponse = props => {
     deleteQuotationResponse,
     deleteQuotation,
     assignSuppliersToQuotation,
-    usassignQuotationResponse,
+    unAssignQuotationResponse,
+    updateQuotationResponse,
   } = useResponse();
   const [showAbortAlert, setShowAbortAlert] = useState(false);
   const [activeAbortId, setActiveAbortId] = useState(null);
@@ -114,6 +115,15 @@ const NewQuoteResponse = props => {
     });
   };
 
+  const onUpdateData = (values, qid) => {
+    updateQuotationResponse(qid, values, data => {
+      successNotification('app.registration.detailsSaveSuccessMessage');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    });
+  };
+
   const onConfirmAlert = () => {
     if (alertInfo.type === 'deaward') {
       deAwardQuotation(activeAbortId, data => {
@@ -152,7 +162,7 @@ const NewQuoteResponse = props => {
     }
 
     if (alertInfo.type === 'unassign') {
-      usassignQuotationResponse(quotationData.id, { suppliers: [selectedResponseId] }, data => {
+      unAssignQuotationResponse(quotationData.id, { suppliers: [selectedResponseId] }, data => {
         successNotification('app.registration.detailsSaveSuccessMessage');
         setTimeout(() => {
           window.location.reload();
@@ -356,6 +366,7 @@ const NewQuoteResponse = props => {
             formData={item}
             key={item.id}
             onSave={onSave}
+            onUpdateData={onUpdateData}
             awarded={awarded}
             onDeleteResponse={onDeleteResponse}
           />
@@ -372,6 +383,7 @@ const NewQuoteResponse = props => {
             <QuotationAwarded
               formData={item}
               key={item.id}
+              onUpdateData={onUpdateData}
               onSave={onCompleteQuotation}
               completed={completed}
               onDeaward={() => {
