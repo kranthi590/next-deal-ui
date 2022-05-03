@@ -52,12 +52,21 @@ export default class PicturesWall extends React.Component {
     });
   };
 
+  getBase64 = file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  };
+
   handleChange = ({ fileList }) => {
     fileList.forEach(file => {
       if (!file.url && file.response) {
         file.url = `${file.response.data[0].fileUrl}?token=${cookie.get('token')}`;
-      } else {
-        file.url = URL.createObjectURL(file.originFileObj);
+      } else if (!file.url && file.originFileObj) {
+        file.url = window.URL.createObjectURL(file.originFileObj);
       }
     });
     this.setState({ fileList });
