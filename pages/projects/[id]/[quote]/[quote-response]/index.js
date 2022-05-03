@@ -37,6 +37,7 @@ const NewQuoteResponse = props => {
     deleteQuotationResponse,
     deleteQuotation,
     assignSuppliersToQuotation,
+    usassignQuotationResponse,
   } = useResponse();
   const [showAbortAlert, setShowAbortAlert] = useState(false);
   const [activeAbortId, setActiveAbortId] = useState(null);
@@ -87,12 +88,19 @@ const NewQuoteResponse = props => {
     }
   };
 
-  const onDeleteResponse = deleteId => {
+  const onDeleteResponse = (deleteId, newQuote) => {
     setShowAbortAlert(true);
-    setAlertInfo({
-      type: 'delete',
-      confirmText: <IntlMessages id="app.common.text.confirmDeleteQuotationResponse" />,
-    });
+    if (newQuote) {
+      setAlertInfo({
+        type: 'unassign',
+        confirmText: <IntlMessages id="app.common.text.confirmUnassignQuotationResponse" />,
+      });
+    } else {
+      setAlertInfo({
+        type: 'delete',
+        confirmText: <IntlMessages id="app.common.text.confirmDeleteQuotationResponse" />,
+      });
+    }
     setSelectedResponseId(deleteId);
   };
 
@@ -139,6 +147,15 @@ const NewQuoteResponse = props => {
         successNotification('app.registration.detailsSaveSuccessMessage');
         setTimeout(() => {
           window.location.href = `${window.location.origin}/app/projects/${quotationData.projectId}`;
+        }, 1000);
+      });
+    }
+
+    if (alertInfo.type === 'unassign') {
+      usassignQuotationResponse(quotationData.id, { suppliers: [selectedResponseId] }, data => {
+        successNotification('app.registration.detailsSaveSuccessMessage');
+        setTimeout(() => {
+          window.location.reload();
         }, 1000);
       });
     }
@@ -459,7 +476,10 @@ const NewQuoteResponse = props => {
           <IntlMessages id="app.userAuth.or" />
         </Divider>
         <div className="gx-p-4">
-          <SupplierSelector quotationId={quotationData.id} />
+          <SupplierSelector
+            quotationId={quotationData.id}
+            existingSuppliers={projectsList.map(item => item.id)}
+          />
         </div>
       </Modal>
     </>

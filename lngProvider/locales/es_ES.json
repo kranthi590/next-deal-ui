@@ -588,5 +588,6 @@
   "button.save": "Guardar",
   "app.common.tooltip.uploadxls": "Se debe adjuntar la plantilla carga masiva de proveedores",
   "app.common.addSupplier": "Agregar Proveedor",
-  "app.common.assignSuppliers": "Asignar proveedores"
+  "app.common.assignSuppliers": "Asignar proveedores",
+  "app.common.text.confirmUnassignQuotationResponse": "¿Desea desasignar al proveedor?"
 }

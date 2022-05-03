@@ -60,7 +60,24 @@ const QuoteAwarded = props => {
   };
   const onFinish = values => {
     // on finish
-    onSave({ purchaseOrderNumber: values.purchaseOrderNumber, comments: values.comments }, id);
+    // const awardedData = {};
+    // if(values.purchaseOrderNumber){
+    //   awardedData.purchaseOrderNumber = values.purchaseOrderNumber;
+    // }
+    // if(values.purchaseOrderNumber){
+    //   awardedData.purchaseOrderNumber = values.purchaseOrderNumber;
+    // }
+    // if(values.comments){
+    //   awardedData.comments = values.comments;
+    // }
+    onSave(
+      {
+        purchaseOrderNumber: values.purchaseOrderNumber,
+        comments: values.comments,
+        deliveryDate: cdeliveryDate,
+      },
+      id,
+    );
   };
   const onNetValueChange = async value => {
     setNetValue(value);
@@ -151,7 +168,6 @@ const QuoteAwarded = props => {
                   id: 'app.quotationresponses.field.deliveryDate',
                 })}
                 onChange={deliveryDateChangeHandler}
-                disabled
                 format="DD/MM/YYYY"
               />
             </Form.Item>
@@ -164,7 +180,7 @@ const QuoteAwarded = props => {
               wrapperCol={{ span: 24 }}
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: (
                     <IntlMessages id="app.quotationresponses.field.purchaseOrderNumber.error.required" />
                   ),

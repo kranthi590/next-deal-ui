@@ -11,7 +11,7 @@ const CardsListItem = ({ styleName, data, onDeleteClick, onViewClick }) => {
   const router = useRouter();
   return (
     <Badge.Ribbon text={status} color="cyan" placement="start" style={{ top: 0 }}>
-      <div className={`gx-user-list ${styleName}`}>
+      <div className={`gx-user-list ${styleName} gx-align-items-stretch`}>
         <Avatar
           className={`gx-mr-2`}
           size={40}
@@ -44,6 +44,12 @@ const CardsListItem = ({ styleName, data, onDeleteClick, onViewClick }) => {
             </div>
           </div>
         </div>
+        <div
+          className="gx-flex-grow-1 gx-hide-small gx-cursor-pointer"
+          onClick={() => {
+            onViewClick(id);
+          }}
+        ></div>
         <div className="gx-card-list-footer">
           <div className="gx-featured-content-right">
             <div>

@@ -242,3 +242,21 @@ body {
   overflow: unset;
   white-space: normal;
 }
+.gx-card-list .gx-description{
+  width: auto;
+}
+.gx-flex-grow-1{
+  flex-grow: 1;
+}
+.gx-card-list .gx-card-list-footer{
+  min-width: auto;
+  padding-left: 0px;
+}
+.gx-cursor-pointer:hover{
+  cursor: pointer;
+}
+@media screen and (max-width: 387px) {
+  .gx-hide-small{
+    display: none;
+  }
+}

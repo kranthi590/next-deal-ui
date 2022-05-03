@@ -409,13 +409,13 @@ const QuoteResponses = props => {
                   ) : (
                     <></>
                   )}
-                  {!awarded && !newQuote ? (
+                  {!awarded ? (
                     <Button
                       type="primary"
                       icon={<DeleteOutlined />}
                       className="gx-mb-0"
                       onClick={() => {
-                        onDeleteResponse(id);
+                        onDeleteResponse(id, newQuote);
                       }}
                     >
                       <span>
