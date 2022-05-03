@@ -311,13 +311,14 @@ const useProviderResponses = () => {
       });
   };
 
-  const usassignQuotationResponse = (id, data, callbackFun) => {
+  const unAssignQuotationResponse = (id, data, callbackFun) => {
     fetchStart();
     const headers = setAuthToken();
     const cookie = new Cookies();
     httpClient
-      .post(`/quotations/${id}/unassignSuppliers`, data, {
+      .delete(`/quotations/${id}/unassignSuppliers`, {
         headers: headers,
+        data,
       })
       .then(({ data }) => {
         if (data) {
@@ -325,6 +326,28 @@ const useProviderResponses = () => {
           if (callbackFun) callbackFun(data.data);
         } else {
           errorNotification(data.error, 'app.registration.errorMessageTitle');
+          fetchError(data.error);
+        }
+      })
+      .catch(function (error) {
+        handleErrorNotification(error);
+        fetchError(error.message);
+      });
+  };
+
+  const updateQuotationResponse = (id, data, callbackFun) => {
+    fetchStart();
+    const headers = setAuthToken();
+    const cookie = new Cookies();
+    httpClient
+      .patch(`quotations/response/${id}`, data, {
+        headers: headers,
+      })
+      .then(({ data }) => {
+        if (data) {
+          fetchSuccess();
+          if (callbackFun) callbackFun(data.data);
+        } else {
           fetchError(data.error);
         }
       })
@@ -349,6 +372,7 @@ const useProviderResponses = () => {
     deleteQuotationResponse,
     deleteQuotation,
     assignSuppliersToQuotation,
-    usassignQuotationResponse,
+    unAssignQuotationResponse,
+    updateQuotationResponse,
   };
 };
