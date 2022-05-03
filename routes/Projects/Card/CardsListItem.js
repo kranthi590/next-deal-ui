@@ -47,7 +47,7 @@ const CardsListItem = ({ styleName, data, onDeleteClick, onViewClick }) => {
         <div
           className="gx-flex-grow-1 gx-hide-small gx-cursor-pointer"
           onClick={() => {
-            onViewClick(id);
+            router.push('/projects/' + [id]);
           }}
         ></div>
         <div className="gx-card-list-footer">
