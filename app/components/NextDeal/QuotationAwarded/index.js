@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
-import { Button, Row, Col, Form, Input, DatePicker, Card, Divider, Select, Tooltip } from 'antd';
+import {
+  Button,
+  Row,
+  Col,
+  Form,
+  Input,
+  DatePicker,
+  Card,
+  Divider,
+  Select,
+  Tooltip,
+  Modal,
+} from 'antd';
 import { QuestionCircleOutlined, SaveOutlined, UndoOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
-import { clpToNumber, numberToClp } from '../../../../util/util';
+import { clpToNumber, numberToClp, successNotification } from '../../../../util/util';
 import ClpFormatter from '../../../../shared/CLP';
 import FilesManager from '../../../common/FileManager';
 import { CURRENCY } from '../../../../util/appConstants';
 import { useIntl } from 'react-intl';
+import { useAuth } from '../../../../contexts/use-auth';
 
 const QuoteAwarded = props => {
-  const { onSave, completed, onDeaward, onUpdateData } = props;
+  const { onSave, completed, onDeaward, onUpdateData, allowDelete } = props;
   const {
     id,
     netWorth,
@@ -27,6 +40,7 @@ const QuoteAwarded = props => {
   const [netValue, setNetValue] = useState(netWorth || null);
   const intl = useIntl();
   const [form] = Form.useForm();
+  const { deleteFile } = useAuth();
   const initialFormData = {
     netWorth: numberToClp(netWorth),
     currency: currency,
@@ -89,6 +103,32 @@ const QuoteAwarded = props => {
     } catch (errorInfo) {
       return;
     }
+  };
+  const customFileDelete = file => {
+    const { confirm } = Modal;
+    return new Promise((resolve, reject) => {
+      confirm({
+        title: '¿Está seguro de que quiere eliminar el archivo?', //<IntlMessages id="app.common.confirmDeleteFile" />,
+        onOk: () => {
+          deleteFile(
+            file.url.split('files/')[1].split('/')[0],
+            data => {
+              successNotification('app.registration.detailsSaveSuccessMessage');
+              setTimeout(() => {
+                window.location.reload();
+              }, 100);
+              resolve(true);
+            },
+            () => {
+              reject(true);
+            },
+          );
+        },
+        onCancel: () => {
+          reject(true);
+        },
+      });
+    });
   };
 
   return (
@@ -281,6 +321,8 @@ const QuoteAwarded = props => {
                   assetRelationId: id,
                 }}
                 hideButton={completed}
+                allowDelete={allowDelete}
+                handleCustomDelete={customFileDelete}
               />
             </Form.Item>
           </Col>

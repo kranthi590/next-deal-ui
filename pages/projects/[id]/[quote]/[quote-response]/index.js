@@ -23,6 +23,7 @@ import moment from 'moment';
 import SupplierRegistrationPage from '../../../../supplier-registration';
 import SupplierSelector from '../../../../../app/components/NextDeal/SuppliersSelector';
 import { RegistrationProvider } from '../../../../../contexts/business-registration';
+import { useAuth } from '../../../../../contexts/use-auth';
 
 const NewQuoteResponse = props => {
   const { projectsList, quotationData, awardedResponses, projectsDetails, activitiesList } = props;
@@ -46,6 +47,7 @@ const NewQuoteResponse = props => {
   const [quotationActivities, setQuotationActivities] = useState(activitiesList);
   const [selectedResponseId, setSelectedResponseId] = useState(null);
   const [visible, setVisible] = useState(false);
+  const { deleteFile } = useAuth();
 
   const router = useRouter();
   const projectId = router.query.quote;
@@ -222,6 +224,30 @@ const NewQuoteResponse = props => {
     });
   };
 
+  const customFileDelete = file => {
+    const { confirm } = Modal;
+    return new Promise((resolve, reject) => {
+      confirm({
+        title: '¿Está seguro de que quiere eliminar el archivo?', //<IntlMessages id="app.common.confirmDeleteFile" />,
+        onOk: () => {
+          deleteFile(
+            file.url.split('files/')[1].split('/')[0],
+            data => {
+              successNotification('app.registration.detailsSaveSuccessMessage');
+              resolve(true);
+            },
+            () => {
+              reject(true);
+            },
+          );
+        },
+        onCancel: () => {
+          reject(true);
+        },
+      });
+    });
+  };
+
   const ProjectDetails = () => {
     return (
       <Widget>
@@ -299,6 +325,8 @@ const NewQuoteResponse = props => {
                 assetRelation: 'quotation_request',
                 assetRelationId: quotationData.id,
               }}
+              allowDelete={quotationData.status === 'completed' ? false : true}
+              handleCustomDelete={customFileDelete}
             />
           </Col>
         </Row>
@@ -369,6 +397,7 @@ const NewQuoteResponse = props => {
             onUpdateData={onUpdateData}
             awarded={awarded}
             onDeleteResponse={onDeleteResponse}
+            allowDelete={quotationData.status !== 'completed'}
           />
         ))}
       </>
@@ -389,6 +418,7 @@ const NewQuoteResponse = props => {
               onDeaward={() => {
                 onDeawardQuotation(item.id);
               }}
+              allowDelete={quotationData.status === 'completed' ? false : true}
             />
           ))}
       </>

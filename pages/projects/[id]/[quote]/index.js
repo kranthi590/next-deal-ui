@@ -433,6 +433,7 @@ const NewQuote = props => {
                     customSubmitHandler={({ fileList }) => {
                       setFiles(fileList);
                     }}
+                    allowDelete={true}
                   />
                 </Col>
               </Row>

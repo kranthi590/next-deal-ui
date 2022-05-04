@@ -174,7 +174,7 @@ export default class PicturesWall extends React.Component {
           }}
           beforeUpload={() => !customSubmitHandler}
           maxCount={maxCount}
-          disabled={maxCount && fileList.length > maxCount}
+          disabled={(maxCount && fileList.length > maxCount) || hideButton}
           accept={accept.length > 0 ? accept.join(',') : acceptedTypes.join(',')}
           onRemove={handleCustomDelete || this.handleDelete}
         >

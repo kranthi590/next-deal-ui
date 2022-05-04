@@ -11,6 +11,7 @@ import {
   Card,
   Divider,
   Tooltip,
+  Modal,
 } from 'antd';
 import {
   SaveOutlined,
@@ -22,13 +23,14 @@ import {
 import moment from 'moment';
 import IntlMessages from '../../../../util/IntlMessages';
 import ClpFormatter from '../../../../shared/CLP';
-import { clpToNumber, numberToClp } from '../../../../util/util';
+import { clpToNumber, numberToClp, successNotification } from '../../../../util/util';
 import FilesManager from '../../../common/FileManager';
 import { CURRENCY } from '../../../../util/appConstants';
 import { useIntl } from 'react-intl';
+import { useAuth } from '../../../../contexts/use-auth';
 
 const QuoteResponses = props => {
-  const { onSave, awarded, onDeleteResponse, onUpdateData } = props;
+  const { onSave, awarded, onDeleteResponse, onUpdateData, allowDelete } = props;
   const {
     id,
     legalName,
@@ -50,6 +52,7 @@ const QuoteResponses = props => {
   const [editForm, setEditForm] = useState(false);
   const [filesList, setFiles] = useState(files);
   const intl = useIntl();
+  const { deleteFile } = useAuth();
 
   const [netValue, setNetValue] = useState(netWorth);
   let initialFormData = {};
@@ -135,10 +138,38 @@ const QuoteResponses = props => {
     setNetValue(value);
   };
 
+  const customFileDelete = file => {
+    const { confirm } = Modal;
+    return new Promise((resolve, reject) => {
+      confirm({
+        title: '¿Está seguro de que quiere eliminar el archivo?', //<IntlMessages id="app.common.confirmDeleteFile" />,
+        onOk: () => {
+          deleteFile(
+            file.url.split('files/')[1].split('/')[0],
+            data => {
+              successNotification('app.registration.detailsSaveSuccessMessage');
+              setTimeout(() => {
+                window.location.reload();
+              }, 100);
+              resolve(true);
+            },
+            () => {
+              reject(true);
+            },
+          );
+        },
+        onCancel: () => {
+          reject(true);
+        },
+      });
+    });
+  };
+
   const stringRule = {
     required: true,
     message: <IntlMessages id="app.project.create.validations" />,
   };
+
   return (
     <Card
       title={legalName ? legalName : supplier.legalName}
@@ -381,6 +412,7 @@ const QuoteResponses = props => {
                 customSubmitHandler={({ fileList }) => {
                   setFiles(fileList);
                 }}
+                allowDelete={allowDelete}
               />
             ) : (
               <FilesManager
@@ -390,6 +422,8 @@ const QuoteResponses = props => {
                   assetRelationId: id,
                 }}
                 hideButton={awarded}
+                allowDelete={allowDelete}
+                handleCustomDelete={customFileDelete}
               />
             )}
           </Col>
