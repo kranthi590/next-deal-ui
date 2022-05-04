@@ -103,13 +103,12 @@ const NewQuote = props => {
     getProjectById(projectId, data => {
       setProjectInfo(data);
     });
-    // loadSuppliers();
     loadCategories();
   }, []);
 
   const reloadSuppliers = () => {
     setVisible(false);
-    loadSuppliers();
+    loadCategories();
   };
 
   const startDateChangeHandler = date => {
