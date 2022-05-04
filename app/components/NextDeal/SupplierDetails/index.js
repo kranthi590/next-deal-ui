@@ -144,9 +144,12 @@ const SupplierDetails = props => {
       <div className="gx-profile-content">
         <Row>
           <Col
-            xl={contact1Exists || contact1Exists ? 16 : 24}
-            lg={contact1Exists || contact1Exists ? 14 : 24}
-            md={contact1Exists || contact1Exists ? 14 : 24}
+            // xl={contact1Exists || contact1Exists ? 16 : 24}
+            // lg={contact1Exists || contact1Exists ? 14 : 24}
+            // md={contact1Exists || contact1Exists ? 14 : 24}
+            xl={16}
+            lg={14}
+            md={14}
             sm={24}
             xs={24}
           >
@@ -155,38 +158,38 @@ const SupplierDetails = props => {
               className="gx-card-widget gx-card-tabs gx-card-profile"
             >
               <Row>
-                {legalName ? (
-                  <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-                    <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
-                      <div className="gx-mr-3">
-                        <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
-                      </div>
-                      <div className="gx-media-body">
-                        <h6 className="gx-mb-1 gx-text-grey">
-                          <IntlMessages id="app.supplierregistration.field.business_legalName" />
-                        </h6>
-                        <p className="gx-mb-0">{legalName ? legalName : '-'}</p>
-                      </div>
+                {/* {legalName ? ( */}
+                <Col xl={8} lg={12} md={12} sm={12} xs={24}>
+                  <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
+                    <div className="gx-mr-3">
+                      <i className={`icon icon-company gx-fs-xxl gx-text-grey`} />
                     </div>
-                  </Col>
-                ) : null}
+                    <div className="gx-media-body">
+                      <h6 className="gx-mb-1 gx-text-grey">
+                        <IntlMessages id="app.supplierregistration.field.business_legalName" />
+                      </h6>
+                      <p className="gx-mb-0">{legalName ? legalName : '-'}</p>
+                    </div>
+                  </div>
+                </Col>
+                {/*  ) : null} */}
 
-                {rut ? (
-                  <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-                    <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
-                      <div className="gx-mr-3">
-                        <IdcardOutlined className="gx-fs-xxl gx-text-grey" />
-                      </div>
-                      <div className="gx-media-body">
-                        <h6 className="gx-mb-1 gx-text-grey">
-                          {<IntlMessages id="app.supplierregistration.field.business_rut" />}
-                        </h6>
-                        <p className="gx-mb-0">{rut ? format(rut) : '-'}</p>
-                      </div>
+                {/* {rut ? ( */}
+                <Col xl={8} lg={12} md={12} sm={12} xs={24}>
+                  <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
+                    <div className="gx-mr-3">
+                      <IdcardOutlined className="gx-fs-xxl gx-text-grey" />
                     </div>
-                  </Col>
-                ) : null}
-                {businessAddress && businessAddress.addressLine1 ? (
+                    <div className="gx-media-body">
+                      <h6 className="gx-mb-1 gx-text-grey">
+                        {<IntlMessages id="app.supplierregistration.field.business_rut" />}
+                      </h6>
+                      <p className="gx-mb-0">{rut ? format(rut) : '-'}</p>
+                    </div>
+                  </div>
+                </Col>
+                {/*  ) : null} */}
+                {/* {businessAddress && businessAddress.addressLine1 ? (
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                       <div className="gx-mr-3">
@@ -206,8 +209,8 @@ const SupplierDetails = props => {
                       </div>
                     </div>
                   </Col>
-                ) : null}
-                {businessAddress && businessAddress.addressLine2 ? (
+                ) : null} */}
+                {/* {businessAddress && businessAddress.addressLine2 ? (
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                       <div className="gx-mr-3">
@@ -242,7 +245,7 @@ const SupplierDetails = props => {
                       </div>
                     </div>
                   </Col>
-                ) : null}
+                ) : null} */}
                 {/* {
                   serviceLocation ?
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
@@ -260,7 +263,7 @@ const SupplierDetails = props => {
                   </Col>
                     : null
                 } */}
-                {communesBusiness ? (
+                {/* {communesBusiness ? (
                   <Col xl={8} lg={12} md={12} sm={12} xs={24}>
                     <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
                       <div className="gx-mr-3">
@@ -306,27 +309,27 @@ const SupplierDetails = props => {
                       </div>
                     </div>
                   </Col>
-                ) : null}
-                {categories && categories.length ? (
-                  <Col xl={8} lg={12} md={12} sm={12} xs={24}>
-                    <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
-                      <div className="gx-mr-3">
-                        <i className={`icon icon-select gx-fs-xxl gx-text-grey`} />
-                      </div>
-                      <div className="gx-media-body">
-                        <h6 className="gx-mb-1 gx-text-grey">
-                          {<IntlMessages id="app.supplierregistration.field.business_categories" />}
-                        </h6>
-                        <p className="gx-mb-0">
-                          {selectedCategories.length ? selectedCategories : '-'}
-                        </p>
-                      </div>
+                ) : null} */}
+                {/* {categories && categories.length ? ( */}
+                <Col xl={8} lg={12} md={12} sm={12} xs={24}>
+                  <div className="gx-media gx-flex-nowrap gx-mt-3 gx-mt-lg-4 gx-mb-2">
+                    <div className="gx-mr-3">
+                      <i className={`icon icon-select gx-fs-xxl gx-text-grey`} />
                     </div>
-                  </Col>
-                ) : null}
+                    <div className="gx-media-body">
+                      <h6 className="gx-mb-1 gx-text-grey">
+                        {<IntlMessages id="app.supplierregistration.field.business_categories" />}
+                      </h6>
+                      <p className="gx-mb-0">
+                        {selectedCategories.length ? selectedCategories : '-'}
+                      </p>
+                    </div>
+                  </div>
+                </Col>
+                {/* ) : null} */}
               </Row>
             </Card>
-            {billingaddressExists ? (
+            {/* {billingaddressExists ? (
               <Card
                 title={<IntlMessages id="app.supplierregistration.billing_title" />}
                 className="gx-card-widget gx-card-tabs gx-card-profile"
@@ -456,40 +459,40 @@ const SupplierDetails = props => {
                   ) : null}
                 </Row>
               </Card>
-            ) : null}
+            ) : null} */}
           </Col>
-          {contact1Exists || contact1Exists ? (
-            <Col xl={8} lg={10} md={10} sm={24} xs={24}>
-              {contact1Exists ? (
-                <Card
-                  title={<IntlMessages id="app.common.text.contact" />}
-                  className="gx-card-widget gx-card-profile-sm"
-                >
-                  {businessAddress && businessAddress.emailId ? (
-                    <div className="gx-media gx-align-items-center gx-flex-nowrap gx-pro-contact-list">
-                      <div className="gx-mr-3">
-                        <i className={`icon icon-email gx-fs-xxl gx-text-grey`} />
-                      </div>
-                      <div className="gx-media-body">
-                        <span className="gx-mb-0 gx-text-grey gx-fs-sm">
-                          <IntlMessages id="app.supplierregistration.field.business_emailId" />
-                        </span>
-                        <p className="gx-mb-0">
-                          {businessAddress && businessAddress.emailId ? (
-                            <a
-                              className="gx-link gx-text-break"
-                              href={`mailto:${businessAddress.emailId}`}
-                            >
-                              {businessAddress.emailId}
-                            </a>
-                          ) : (
-                            '-'
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  ) : null}
-                  {webSiteUrl ? (
+          {/* {contact1Exists || contact1Exists ? ( */}
+          <Col xl={8} lg={10} md={10} sm={24} xs={24}>
+            {/* {contact1Exists ? ( */}
+            <Card
+              title={<IntlMessages id="app.common.text.contact" />}
+              className="gx-card-widget gx-card-profile-sm"
+            >
+              {/* {businessAddress && businessAddress.emailId ? ( */}
+              <div className="gx-media gx-align-items-center gx-flex-nowrap gx-pro-contact-list">
+                <div className="gx-mr-3">
+                  <i className={`icon icon-email gx-fs-xxl gx-text-grey`} />
+                </div>
+                <div className="gx-media-body">
+                  <span className="gx-mb-0 gx-text-grey gx-fs-sm">
+                    <IntlMessages id="app.supplierregistration.field.business_emailId" />
+                  </span>
+                  <p className="gx-mb-0">
+                    {businessAddress && businessAddress.emailId ? (
+                      <a
+                        className="gx-link gx-text-break"
+                        href={`mailto:${businessAddress.emailId}`}
+                      >
+                        {businessAddress.emailId}
+                      </a>
+                    ) : (
+                      '-'
+                    )}
+                  </p>
+                </div>
+              </div>
+              {/* // ) : null} */}
+              {/* {webSiteUrl ? (
                     <div className="gx-media gx-align-items-center gx-flex-nowrap gx-pro-contact-list">
                       <div className="gx-mr-3">
                         <i className={`icon icon-link gx-fs-xxl gx-text-grey`} />
@@ -509,32 +512,32 @@ const SupplierDetails = props => {
                         </p>
                       </div>
                     </div>
-                  ) : null}
-                  {businessAddress && businessAddress.phoneNumber1 ? (
-                    <div className="gx-media gx-align-items-center gx-flex-nowrap gx-pro-contact-list">
-                      <div className="gx-mr-3">
-                        <i className={`icon icon-phone gx-fs-xxl gx-text-grey`} />
-                      </div>
-                      <div className="gx-media-body">
-                        <span className="gx-mb-0 gx-text-grey gx-fs-sm">
-                          <IntlMessages id="app.supplierregistration.field.business_phoneNumber1" />
-                        </span>
-                        <p className="gx-mb-0">
-                          {businessAddress && businessAddress.phoneNumber1 ? (
-                            <a
-                              className="gx-link gx-text-break"
-                              href={`tel:${businessAddress.phoneNumber1}`}
-                            >
-                              {businessAddress.phoneNumber1}
-                            </a>
-                          ) : (
-                            '-'
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  ) : null}
-                  {businessAddress && businessAddress.phoneNumber2 ? (
+                  ) : null} */}
+              {/* {businessAddress && businessAddress.phoneNumber1 ? ( */}
+              <div className="gx-media gx-align-items-center gx-flex-nowrap gx-pro-contact-list">
+                <div className="gx-mr-3">
+                  <i className={`icon icon-phone gx-fs-xxl gx-text-grey`} />
+                </div>
+                <div className="gx-media-body">
+                  <span className="gx-mb-0 gx-text-grey gx-fs-sm">
+                    <IntlMessages id="app.supplierregistration.field.business_phoneNumber1" />
+                  </span>
+                  <p className="gx-mb-0">
+                    {businessAddress && businessAddress.phoneNumber1 ? (
+                      <a
+                        className="gx-link gx-text-break"
+                        href={`tel:${businessAddress.phoneNumber1}`}
+                      >
+                        {businessAddress.phoneNumber1}
+                      </a>
+                    ) : (
+                      '-'
+                    )}
+                  </p>
+                </div>
+              </div>
+              {/* ) : null} */}
+              {/* {businessAddress && businessAddress.phoneNumber2 ? (
                     <div className="gx-media gx-align-items-center gx-flex-nowrap gx-pro-contact-list">
                       <div className="gx-mr-3">
                         <i className={`icon icon-phone gx-fs-xxl gx-text-grey`} />
@@ -557,10 +560,10 @@ const SupplierDetails = props => {
                         </p>
                       </div>
                     </div>
-                  ) : null}
-                </Card>
-              ) : null}
-              {contact2Exists ? (
+                  ) : null} */}
+            </Card>
+            {/* ) : null} */}
+            {/* {contact2Exists ? (
                 <Card
                   title={<IntlMessages id="app.supplierregistration.business_contact_title" />}
                   className="gx-card-widget gx-card-profile-sm"
@@ -613,9 +616,9 @@ const SupplierDetails = props => {
                     </div>
                   ) : null}
                 </Card>
-              ) : null}
-            </Col>
-          ) : null}
+              ) : null} */}
+          </Col>
+          {/* ) : null} */}
         </Row>
       </div>
     </div>

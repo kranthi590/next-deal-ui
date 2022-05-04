@@ -33,6 +33,7 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
   const [openForm, setOpenForm] = useState(false);
   const [expectedEndDate, setExpectedEndDate] = useState(null);
   const [projectLoading, setProjectLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { getProjectById, updateProject } = useProject();
 
@@ -66,13 +67,16 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
   };
 
   const onSave = values => {
+    setIsLoading(true);
     updateProject({ id: projectDetails.id, ...getFormData(values) }, async data => {
       successNotification('app.registration.detailsSaveSuccessMessage');
       setTimeout(() => {
+        setIsLoading(false);
         window.location.reload();
-      }, 3000);
+      }, 1000);
     });
   };
+
   const setFormData = () => {
     const newFormData = {};
     if (projectDetails.name) {
@@ -130,76 +134,69 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
               <>
                 {projectDetails && !projectLoading ? (
                   <div className="gx-pt-2">
-                    {projectDetails.name ? (
-                      <>
-                        <h4>
-                          <IntlMessages id="app.project.field.projectname" /> :
-                        </h4>
-                        <p className="gx-text-grey gx-mb-4">{projectDetails.name}</p>
-                      </>
-                    ) : null}
-                    {projectDetails.estimatedBudget || projectDetails.currency ? (
-                      <>
-                        <h4>
-                          <IntlMessages id="app.project.field.estimatedBudget" /> :
-                        </h4>
-                        <p className="gx-text-grey gx-mb-4">
-                          {projectDetails.estimatedBudget ? (
-                            <> {formatAmount(`${projectDetails.estimatedBudget}`)}</>
-                          ) : null}
+                    <h4>
+                      <IntlMessages id="app.project.field.projectname" /> :
+                    </h4>
+                    <p className="gx-text-grey gx-mb-4">
+                      {projectDetails.name ? projectDetails.name : '-'}
+                    </p>
+
+                    <h4>
+                      <IntlMessages id="app.project.field.estimatedBudget" /> :
+                    </h4>
+                    <p className="gx-text-grey gx-mb-4">
+                      {projectDetails.estimatedBudget ? (
+                        <>
+                          {' '}
+                          {formatAmount(`${projectDetails.estimatedBudget}`)}
                           {projectDetails.currency ? (
                             <span className="gx-text-grey gx-fs-sm gx-text-uppercase">
                               {' '}
                               {projectDetails.currency}
                             </span>
                           ) : null}
-                        </p>
-                      </>
-                    ) : null}
-                    {projectDetails.startDate ? (
-                      <>
-                        <h4>
-                          <IntlMessages id="app.project.field.startdate" /> :
-                        </h4>
-                        <p className="gx-text-grey gx-mb-4">
-                          {moment(projectDetails.startDate).format('DD-MM-YYYY')}
-                        </p>
-                      </>
-                    ) : null}
-                    {projectDetails.expectedEndDate ? (
-                      <>
-                        <h4>
-                          <IntlMessages id="app.project.field.projectenddate" /> :
-                        </h4>
-                        <p className="gx-text-grey gx-mb-4">
-                          {moment(projectDetails.expectedEndDate).format('DD-MM-YYYY')}
-                        </p>
-                      </>
-                    ) : null}
-                    {projectDetails.costCenter ? (
-                      <>
-                        <h4>
-                          <IntlMessages id="app.project.field.costcenter" /> :
-                        </h4>
-                        <p className="gx-text-grey gx-mb-4">{projectDetails.costCenter}</p>
-                      </>
-                    ) : null}
-                    {projectDetails.managerName ? (
-                      <>
-                        <h4>
-                          <IntlMessages id="app.project.field.manager" /> :
-                        </h4>
-                        <p className="gx-text-grey gx-mb-4">{projectDetails.managerName}</p>
-                      </>
-                    ) : null}
-                    {projectDetails.description ? (
-                      <>
-                        <h4>
-                          <IntlMessages id="app.project.field.projectDescription" /> :
-                        </h4>
-                        <p className="gx-text-grey gx-mb-4">{projectDetails.description}</p>
-                      </>
-                    ) : null}
+                        </>
+                      ) : (
+                        '-'
+                      )}
+                    </p>
+
+                    <h4>
+                      <IntlMessages id="app.project.field.startdate" /> :
+                    </h4>
+                    <p className="gx-text-grey gx-mb-4">
+                      {projectDetails.startDate
+                        ? moment(projectDetails.startDate).format('DD-MM-YYYY')
+                        : '-'}
+                    </p>
+                    <h4>
+                      <IntlMessages id="app.project.field.projectenddate" /> :
+                    </h4>
+                    <p className="gx-text-grey gx-mb-4">
+                      {projectDetails.expectedEndDate
+                        ? moment(projectDetails.expectedEndDate).format('DD-MM-YYYY')
+                        : '-'}
+                    </p>
+                    <h4>
+                      <IntlMessages id="app.project.field.costcenter" /> :
+                    </h4>
+                    <p className="gx-text-grey gx-mb-4">
+                      {projectDetails.costCenter ? projectDetails.costCenter : '-'}
+                    </p>
+
+                    <h4>
+                      <IntlMessages id="app.project.field.manager" /> :
+                    </h4>
+                    <p className="gx-text-grey gx-mb-4">
+                      {projectDetails.managerName ? projectDetails.managerName : '-'}
+                    </p>
+
+                    <h4>
+                      <IntlMessages id="app.project.field.projectDescription" /> :
+                    </h4>
+                    <p className="gx-text-grey gx-mb-4">
+                      {projectDetails.description ? projectDetails.description : '-'}
+                    </p>
                   </div>
                 ) : (
                   <div>
@@ -277,7 +274,7 @@ const ProjectDrawer = ({ isCustomizerOpened, onClose, projectId }) => {
                     />
                   </Form.Item>
                   <div className="gx-text-right">
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" loading={isLoading}>
                       <IntlMessages id="button.save" />
                     </Button>
                     <Button

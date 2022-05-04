@@ -38,7 +38,12 @@ const SupplierSelector = ({ quotationId, existingSuppliers }) => {
       const updatedData = [...suppliersData];
       if (e.target.checked) {
         getBuyerSuppliersByCategory(selectedCategory, ({ rows }) => {
-          rows = rows.filter(item => !existingSuppliers.includes(item.id));
+          rows = rows.map(item => {
+            if (existingSuppliers.includes(item.id)) {
+              item.readonly = true;
+            }
+            return item;
+          });
           for (let i = 0; i < suppliersData.length; i++) {
             if (suppliersData[i].id === selectedCategory) {
               updatedData[i].suppliers = rows;
@@ -125,6 +130,7 @@ const SupplierSelector = ({ quotationId, existingSuppliers }) => {
                           key={supplier.id + supplier.legalName}
                           value={supplier.id}
                           title={supplier.legalName}
+                          disabled={supplier.readonly}
                         >
                           {supplier.legalName}
                         </Option>
