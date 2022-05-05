@@ -217,6 +217,7 @@ const QuoteAwarded = props => {
                 })}
                 onChange={deliveryDateChangeHandler}
                 format="DD/MM/YYYY"
+                disabled={completed}
               />
             </Form.Item>
           </Col>

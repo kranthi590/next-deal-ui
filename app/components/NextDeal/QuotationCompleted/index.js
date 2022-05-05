@@ -168,7 +168,7 @@ const QuotationCompleted = props => {
               wrapperCol={{ span: 24 }}
               rules={[
                 {
-                  required: true,
+                  required: false,
                   message: (
                     <IntlMessages id="app.quotationresponses.field.purchaseOrderNumber.error.required" />
                   ),

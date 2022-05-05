@@ -164,22 +164,21 @@ const NewQuote = props => {
     setEstimatedBudget(value);
   };
 
-  const onCategoryGroupSelect = (e, selectedCategory, dataloaded) => {
+  const onCategoryGroupSelect = (selectedCategory, dataloaded) => {
     if (!dataloaded) {
       const updatedData = [...suppliersData];
-      if (e.target.checked) {
-        getBuyerSuppliersByCategory(selectedCategory, ({ rows }) => {
-          for (let i = 0; i < suppliersData.length; i++) {
-            if (suppliersData[i].id === selectedCategory) {
-              updatedData[i].suppliers = rows;
-              break;
-            }
+      getBuyerSuppliersByCategory(selectedCategory, ({ rows }) => {
+        for (let i = 0; i < suppliersData.length; i++) {
+          if (suppliersData[i].id === selectedCategory) {
+            updatedData[i].suppliers = rows;
+            break;
           }
-          setSuppliersData(updatedData);
-        });
-      }
+        }
+        setSuppliersData(updatedData);
+      });
     }
   };
+
   return (
     <>
       <BreadCrumb
@@ -360,44 +359,43 @@ const NewQuote = props => {
                     return option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                   }}
                 >
-                  {suppliersData.map(category => (
-                    <OptGroup
-                      label={
-                        <div className="gx-d-flex">
-                          <span style={{ flexGrow: 1 }}>{category.name}</span>
-                          <span>
-                            <Badge
-                              count={category.suppliersCount}
-                              style={{ backgroundColor: '#038FDE' }}
-                              className="gx-mx-2"
-                            />
-                          </span>
-                          <span>
-                            <Checkbox
-                              disabled={category && category.suppliers && category.suppliers.length}
-                              checked={category && category.suppliers && category.suppliers.length}
-                              onChange={e =>
-                                onCategoryGroupSelect(e, category.id, category.suppliers.length)
-                              }
-                            />
-                          </span>
-                        </div>
-                      }
-                      key={category.id}
-                      title={category.name}
-                    >
-                      {category.suppliers &&
-                        category.suppliers.map(supplier => (
-                          <Option
-                            key={supplier.id + supplier.legalName}
-                            value={supplier.id}
-                            title={supplier.legalName}
-                          >
-                            {supplier.legalName}
-                          </Option>
-                        ))}
-                    </OptGroup>
-                  ))}
+                  {suppliersData &&
+                    suppliersData.map(category => (
+                      <OptGroup
+                        label={
+                          <div className="gx-d-flex">
+                            <span
+                              style={{ flexGrow: 1, cursor: 'pointer' }}
+                              onClick={() => {
+                                onCategoryGroupSelect(category.id, category.suppliers.length);
+                              }}
+                            >
+                              {category.name}
+                            </span>
+                            <span>
+                              <Badge
+                                count={category.suppliersCount}
+                                style={{ backgroundColor: '#038FDE' }}
+                                className="gx-mx-2"
+                              />
+                            </span>
+                          </div>
+                        }
+                        key={category.id}
+                        title={category.name}
+                      >
+                        {category.suppliers &&
+                          category.suppliers.map(supplier => (
+                            <Option
+                              key={supplier.id + supplier.legalName}
+                              value={supplier.id}
+                              title={supplier.legalName}
+                            >
+                              {supplier.legalName}
+                            </Option>
+                          ))}
+                      </OptGroup>
+                    ))}
                 </Select>
               </Form.Item>
               {/* suppliers with categories */}
