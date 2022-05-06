@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import {
   Button,
   Row,
@@ -70,7 +70,7 @@ const QuoteResponses = props => {
   } else {
     initialFormData = {
       netWorth: null,
-      currency: null,
+      currency: 'clp',
       includesTax: false,
       paymentCondition: null,
       incoterm: 'NO-APLICA',
@@ -536,4 +536,4 @@ const QuoteResponses = props => {
   );
 };
 
-export default QuoteResponses;
+export default memo(QuoteResponses);

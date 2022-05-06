@@ -96,44 +96,43 @@ const SupplierSelector = ({ quotationId, existingSuppliers }) => {
                   return option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0;
                 }}
               >
-                {suppliersData &&
-                  suppliersData.map((category, index) => (
-                    <OptGroup
-                      key={index}
-                      label={
-                        <div className="gx-d-flex">
-                          <span
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => {
-                              onCategoryGroupSelect(category.id, category.suppliers.length);
-                            }}
-                          >
-                            {category.name}
-                          </span>
-                          <span>
-                            <Badge
-                              count={category.suppliersCount}
-                              style={{ backgroundColor: '#038FDE' }}
-                              className="gx-mx-2"
-                            />
-                          </span>
-                        </div>
-                      }
-                      title={category.name}
-                    >
-                      {category.suppliers &&
-                        category.suppliers.map((supplier, index) => (
-                          <Option
-                            key={index}
-                            value={supplier.id}
-                            title={supplier.legalName}
-                            disabled={supplier.readonly}
-                          >
-                            {supplier.legalName}
-                          </Option>
-                        ))}
-                    </OptGroup>
-                  ))}
+                {suppliersData.map((category, index) => (
+                  <OptGroup
+                    label={
+                      <div className="gx-d-flex">
+                        <span
+                          style={{ flexGrow: 1, cursor: 'pointer' }}
+                          onClick={() => {
+                            onCategoryGroupSelect(category.id, category.suppliers.length);
+                          }}
+                        >
+                          {category.name}
+                        </span>
+                        <span>
+                          <Badge
+                            count={category.suppliersCount}
+                            style={{ backgroundColor: '#038FDE' }}
+                            className="gx-mx-2"
+                          />
+                        </span>
+                      </div>
+                    }
+                    key={category.id + '_' + index}
+                    title={category.name}
+                  >
+                    {category.suppliers &&
+                      category.suppliers.map((supplier, index) => (
+                        <Option
+                          key={category.id + '_' + supplier.id + '_' + index}
+                          value={supplier.id}
+                          title={supplier.legalName}
+                          disabled={supplier.readonly}
+                        >
+                          {supplier.legalName}
+                        </Option>
+                      ))}
+                  </OptGroup>
+                ))}
               </Select>
             </Form.Item>
           </Col>

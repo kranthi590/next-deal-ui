@@ -48,6 +48,7 @@ const validationErrors = [
   'QUOTATION_NOT_FOUND',
   'INVALID_ACCOUNT_CREDENTIALS',
   'SUPPLIER_ALREADY_ADDED_TO_QUOTATION',
+  'LIMIT_FILE_SIZE',
 ];
 
 export const successNotification = messageId => {

@@ -5,7 +5,12 @@ import { useRouter } from 'next/router';
 import { Avatar, Row, Col, Button, Modal, Divider } from 'antd';
 
 import Widget from '../../../../../app/components/Widget';
-import { formatAmount, getAvatar, successNotification } from '../../../../../util/util';
+import {
+  formatAmount,
+  getAvatar,
+  handleErrorNotification,
+  successNotification,
+} from '../../../../../util/util';
 import ProjectProgressTabs from '../../../../../app/components/NextDeal/ProjectProgressTabs';
 import QuoteResponses from '../../../../../app/components/NextDeal/QuoteResponse';
 import QuotationAwarded from '../../../../../app/components/NextDeal/QuotationAwarded';
@@ -64,15 +69,28 @@ const NewQuoteResponse = props => {
       const files = values.files;
       delete values.files;
       createResponses(projectId, values, async data => {
-        if (files.length > 0) {
-          await uploadFiles(
-            files,
-            {
-              assetRelation: 'quotation_response',
-              assetRelationId: data.id,
-            },
-            true,
-          );
+        try {
+          if (files.length > 0) {
+            await uploadFiles(
+              files,
+              {
+                assetRelation: 'quotation_response',
+                assetRelationId: data.id,
+              },
+              true,
+            );
+          }
+        } catch (error) {
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.data &&
+            error.response.data.data.errors &&
+            error.response.data.data.errors.length
+          ) {
+            error.response.data = error.response.data.data;
+            handleErrorNotification(error);
+          }
         }
         successNotification('app.registration.detailsSaveSuccessMessage');
         setTimeout(() => {
@@ -397,7 +415,7 @@ const NewQuoteResponse = props => {
             onUpdateData={onUpdateData}
             awarded={awarded}
             onDeleteResponse={onDeleteResponse}
-            allowDelete={quotationData.status !== 'completed'}
+            allowDelete={quotationData.status === 'completed' ? false : true}
           />
         ))}
       </>
