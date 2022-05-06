@@ -402,6 +402,7 @@
   "quotation_not_found":"Cotización no encontrado.",
   "invalid_account_credentials":"No se ha podido iniciar la sesión. Por favor, verifique sus credenciales e inténtelo de nuevo.",
   "supplier_already_added_to_quotation":"Proveedor ya añadido al presupuesto",
+  "limit_file_size":"Archivo demasiado grande, por favor, inténtelo más tarde",
   "app.buyerregistration.page_title":"Registro de Usuario",
   "app.buyerregistration.form_title":"Información de Usuario",
   "app.buyerregistration.field.fantasyName":"Nombre de Fantasía",

@@ -19,7 +19,12 @@ import { useRouter } from 'next/router';
 import IntlMessages from '../../../../util/IntlMessages';
 import { RegistrationProvider, useRegistration } from '../../../../contexts/business-registration';
 import { ProjectProvider, useProject } from '../../../../contexts/projects';
-import { getDateInMilliseconds, successNotification, clpToNumber } from '../../../../util/util';
+import {
+  getDateInMilliseconds,
+  successNotification,
+  clpToNumber,
+  handleErrorNotification,
+} from '../../../../util/util';
 import SupplierRegistrationPage from '../../../supplier-registration';
 import { QuotationProvider, useQuotation } from '../../../../contexts/quotations';
 import FilesManager from '../../../../app/common/FileManager';
@@ -143,15 +148,28 @@ const NewQuote = props => {
   const onSave = values => {
     const projectId = projectInfo && projectInfo.id;
     createQuotation(projectId, getFormData(values), async data => {
-      if (files.length > 0) {
-        await uploadFiles(
-          files,
-          {
-            assetRelation: 'quotation_request',
-            assetRelationId: data.id,
-          },
-          true,
-        );
+      try {
+        if (files.length > 0) {
+          await uploadFiles(
+            files,
+            {
+              assetRelation: 'quotation_request',
+              assetRelationId: data.id,
+            },
+            true,
+          );
+        }
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.errors &&
+          error.response.data.data.errors.length
+        ) {
+          error.response.data = error.response.data.data;
+          handleErrorNotification(error);
+        }
       }
       successNotification('app.registration.detailsSaveSuccessMessage');
       setTimeout(() => {
@@ -178,7 +196,6 @@ const NewQuote = props => {
       });
     }
   };
-
   return (
     <>
       <BreadCrumb
@@ -209,6 +226,10 @@ const NewQuote = props => {
             {
               name: ['costCenter'],
               value: projectInfo.costCenter ? projectInfo.costCenter : 'NA',
+            },
+            {
+              name: ['currency'],
+              value: 'clp',
             },
           ]}
           onFinish={onSave}
@@ -312,33 +333,6 @@ const NewQuote = props => {
               </Form.Item>
             </Col>
             <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-              {/* <Form.Item
-                label={<IntlMessages id="app.quotation.suppliers" />}
-                name="suppliers"
-                rules={[
-                  {
-                    required: true,
-                    message: <IntlMessages id="app.quotation.suppliers.error.required" />,
-                    type: 'array',
-                  },
-                ]}
-              >
-                <Select
-                  size="large"
-                  placeholder={intl.formatMessage({ id: 'app.quotation.selectYourSuppliers' })}
-                  mode="multiple"
-                  filterOption={(input, option) => {
-                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-                  }}
-                >
-                  {suppliers &&
-                    suppliers.map(supplier => (
-                      <Option key={supplier.id + supplier.legalName} value={supplier.id}>
-                        {supplier.legalName}
-                      </Option>
-                    ))}
-                </Select>
-              </Form.Item> */}
               {/* suppliers with categories */}
               <Form.Item
                 label={<IntlMessages id="app.quotation.suppliers" />}
@@ -360,7 +354,7 @@ const NewQuote = props => {
                   }}
                 >
                   {suppliersData &&
-                    suppliersData.map(category => (
+                    suppliersData.map((category, index) => (
                       <OptGroup
                         label={
                           <div className="gx-d-flex">
@@ -379,15 +373,28 @@ const NewQuote = props => {
                                 className="gx-mx-2"
                               />
                             </span>
+                            {/*      <span>
+                              <Checkbox
+                                disabled={
+                                  category && category.suppliers && category.suppliers.length
+                                }
+                                checked={
+                                  category && category.suppliers && category.suppliers.length
+                                }
+                                onChange={e =>
+                                  onCategoryGroupSelect(e, category.id, category.suppliers.length)
+                                }
+                              />
+                            </span>*/}
                           </div>
                         }
-                        key={category.id}
+                        key={category.id + '_' + index}
                         title={category.name}
                       >
                         {category.suppliers &&
-                          category.suppliers.map(supplier => (
+                          category.suppliers.map((supplier, index) => (
                             <Option
-                              key={supplier.id + supplier.legalName}
+                              key={category.id + '_' + supplier.id + '_' + index}
                               value={supplier.id}
                               title={supplier.legalName}
                             >

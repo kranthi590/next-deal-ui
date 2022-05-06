@@ -9,6 +9,7 @@ import {
   successNotification,
   getDateInMilliseconds,
   clpToNumber,
+  handleErrorNotification,
 } from '../../util/util';
 import { useRouter } from 'next/router';
 import BreadCrumb from '../../app/components/BreadCrumb';
@@ -87,15 +88,28 @@ const NewProject = props => {
 
   const onSave = values => {
     newProject(getFormData(values), async data => {
-      if (files.length > 0) {
-        await uploadFiles(
-          files,
-          {
-            assetRelation: 'project',
-            assetRelationId: data.id,
-          },
-          true,
-        );
+      try {
+        if (files.length > 0) {
+          await uploadFiles(
+            files,
+            {
+              assetRelation: 'project',
+              assetRelationId: data.id,
+            },
+            true,
+          );
+        }
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.data &&
+          error.response.data.data.errors &&
+          error.response.data.data.errors.length
+        ) {
+          error.response.data = error.response.data.data;
+          handleErrorNotification(error);
+        }
       }
       successNotification('app.registration.detailsSaveSuccessMessage');
       setTimeout(() => {
@@ -127,7 +141,12 @@ const NewProject = props => {
             </div>
           </div>
         </div>
-        <Form form={form} initialValues={{ remember: true }} onFinish={onSave} {...formLayout}>
+        <Form
+          form={form}
+          initialValues={{ remember: true, currency: 'clp' }}
+          onFinish={onSave}
+          {...formLayout}
+        >
           <Row>
             <Col xl={14} lg={24} md={24} sm={24} xs={24}>
               <Form.Item
