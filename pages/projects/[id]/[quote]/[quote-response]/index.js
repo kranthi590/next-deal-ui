@@ -246,18 +246,22 @@ const NewQuoteResponse = props => {
     const { confirm } = Modal;
     return new Promise((resolve, reject) => {
       confirm({
-        title: '¿Está seguro de que quiere eliminar el archivo?', //<IntlMessages id="app.common.confirmDeleteFile" />,
+        title: '¿Está seguro de que quiere eliminar el archivo?',
         onOk: () => {
-          deleteFile(
-            file.url.split('files/')[1].split('/')[0],
-            data => {
-              successNotification('app.registration.detailsSaveSuccessMessage');
-              resolve(true);
-            },
-            () => {
-              reject(true);
-            },
-          );
+          if (file.status !== 'error') {
+            deleteFile(
+              file.url.split('files/')[1].split('/')[0],
+              data => {
+                successNotification('app.registration.detailsSaveSuccessMessage');
+                resolve(true);
+              },
+              () => {
+                reject(true);
+              },
+            );
+          } else {
+            resolve(true);
+          }
         },
         onCancel: () => {
           reject(true);

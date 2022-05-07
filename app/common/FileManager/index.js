@@ -3,6 +3,7 @@ import { Upload, Modal, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { Cookies } from 'react-cookie';
 import IntlMessages from '../../../util/IntlMessages';
+import { handleErrorNotification } from '../../../util/util';
 
 const cookie = new Cookies();
 
@@ -61,14 +62,29 @@ export default class PicturesWall extends React.Component {
     });
   };
 
-  handleChange = ({ fileList }) => {
+  handleChange = ({ file: newfile, fileList }) => {
     fileList.forEach(file => {
-      if (!file.url && file.response) {
-        file.url = `${file.response.data[0].fileUrl}?token=${cookie.get('token')}`;
-      } else if (!file.url && file.originFileObj) {
-        file.url = window.URL.createObjectURL(file.originFileObj);
+      if (file.status === 'done') {
+        if (!file.url && file.response) {
+          file.url = `${file.response.data[0].fileUrl}?token=${cookie.get('token')}`;
+        } else if (!file.url && file.originFileObj) {
+          file.url = window.URL.createObjectURL(file.originFileObj);
+        }
       }
     });
+    if (newfile.status === 'error') {
+      if (
+        newfile.response &&
+        newfile.response.data &&
+        newfile.response.data.errors &&
+        newfile.response.data.errors.length
+      ) {
+        if (newfile.response.data.errors[0].errorCode === 'LIMIT_FILE_SIZE') {
+          newfile.error.message = 'Archivo demasiado grande, por favor, inténtelo más tarde';
+        }
+        handleErrorNotification(newfile);
+      }
+    }
     this.setState({ fileList });
     this.props.customSubmitHandler && this.props.customSubmitHandler({ fileList });
   };
