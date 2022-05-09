@@ -542,7 +542,9 @@ const NewQuoteResponse = props => {
         <div className="gx-p-4">
           <SupplierSelector
             quotationId={quotationData.id}
-            existingSuppliers={projectsList.map(item => item.id)}
+            existingSuppliers={projectsList.map(item =>
+              item.supplier && item.supplier.id ? item.supplier.id : item.id,
+            )}
           />
         </div>
       </Modal>

@@ -64,10 +64,12 @@ export default class PicturesWall extends React.Component {
 
   handleChange = ({ file: newfile, fileList }) => {
     fileList.forEach(file => {
-      if (!file.url && file.response) {
-        file.url = `${file.response.data[0].fileUrl}?token=${cookie.get('token')}`;
-      } else if (!file.url && file.originFileObj) {
-        file.url = window.URL.createObjectURL(file.originFileObj);
+      if (file.status !== 'error') {
+        if (!file.url && file.response) {
+          file.url = `${file.response.data[0].fileUrl}?token=${cookie.get('token')}`;
+        } else if (!file.url && file.originFileObj) {
+          file.url = window.URL.createObjectURL(file.originFileObj);
+        }
       }
     });
     if (newfile.status === 'error') {
