@@ -13,7 +13,21 @@ import { AuthProvider } from '../contexts/use-auth';
 import Layout from '../app/core/Layout';
 import '../static/index.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { useRouter } from 'next/router';
 const Page = ({ Component, pageProps, store }) => {
+  const router = useRouter();
+  useEffect(() => {
+    const handleRouteChange = url => {
+      window.gtag('config', 'G-JFLD24SWY4', {
+        page_path: url,
+      });
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <React.Fragment>
       <Head>
