@@ -528,7 +528,7 @@
   "app.common.noDataAvailable":"No hay datos disponibles",
   "app.common.clickOrDragfiles":"Haga clic o arrastre el archivo a esta área para cargarlo.",
   "app.common.supportSingleOrBulkFiles":"Support for a single or bulk upload.",
-  "app.common.newQuotation":"Nuevo presupuesto",
+  "app.common.newQuotation":"Nueva cotización",
   "app.common.createProject":"Crear proyecto",
   "app.common.CheckInDetail":"Más detalles",
   "app.common.quotations":"Cotizaciónes",
@@ -589,6 +589,6 @@
   "button.save": "Guardar",
   "app.common.tooltip.uploadxls": "Se debe adjuntar la plantilla carga masiva de proveedores",
   "app.common.addSupplier": "Agregar Proveedor",
-  "app.common.assignSuppliers": "Asignar proveedores",
+  "app.common.assignSuppliers": "Asignar Proveedores",
   "app.common.text.confirmUnassignQuotationResponse": "¿Desea desasignar al proveedor?"
 }
