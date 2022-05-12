@@ -14,6 +14,7 @@ import Layout from '../app/core/Layout';
 import '../static/index.css';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useRouter } from 'next/router';
+
 const Page = ({ Component, pageProps, store }) => {
   const router = useRouter();
   useEffect(() => {
