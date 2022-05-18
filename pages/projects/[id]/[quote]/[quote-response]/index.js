@@ -180,7 +180,6 @@ const NewQuoteResponse = props => {
         }, 1000);
       });
     }
-
     if (alertInfo.type === 'unassign') {
       unAssignQuotationResponse(quotationData.id, { suppliers: [selectedResponseId] }, data => {
         successNotification('app.registration.detailsSaveSuccessMessage');
@@ -207,6 +206,7 @@ const NewQuoteResponse = props => {
     });
   };
   const onDeleteQuotation = () => {
+    console.log('work');
     setShowAbortAlert(true);
     setAlertInfo({
       type: 'deleteQuotation',
@@ -419,6 +419,7 @@ const NewQuoteResponse = props => {
             onUpdateData={onUpdateData}
             awarded={awarded}
             onDeleteResponse={onDeleteResponse}
+            quotationData={quotationData}
             allowDelete={quotationData.status === 'completed' ? false : true}
           />
         ))}

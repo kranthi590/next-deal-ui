@@ -28,13 +28,14 @@ import FilesManager from '../../../common/FileManager';
 import { CURRENCY } from '../../../../util/appConstants';
 import { useIntl } from 'react-intl';
 import { useAuth } from '../../../../contexts/use-auth';
+import SweetAlert from 'react-bootstrap-sweetalert';
+import { useResponse } from '../../../../contexts/responses';
 
 const QuoteResponses = props => {
-  const { onSave, awarded, onDeleteResponse, onUpdateData, allowDelete } = props;
+  const { onSave, awarded, onDeleteResponse, onUpdateData, allowDelete, quotationData } = props;
   const {
     id,
     legalName,
-    // fantasyName,
     newQuote,
     netWorth,
     paymentCondition,
@@ -53,6 +54,9 @@ const QuoteResponses = props => {
   const [filesList, setFiles] = useState(files);
   const intl = useIntl();
   const { deleteFile } = useAuth();
+  const { unAssignQuotationResponse, deleteQuotationResponse } = useResponse();
+  const [isShown, setIsShown] = useState(false);
+  const [alertInfo, setAlertInfo] = useState({ type: '', confirmText: '' });
 
   const [netValue, setNetValue] = useState(netWorth);
   let initialFormData = {};
@@ -106,6 +110,26 @@ const QuoteResponses = props => {
 
     return formData;
   };
+
+  const deleteQuoteResponse = () => {
+    console.log('data');
+
+    if (alertInfo.type === 'unassign') {
+      unAssignQuotationResponse(quotationData.id, { suppliers: [id] }, data => {
+        successNotification('app.registration.detailsSaveSuccessMessage');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      });
+    } else {
+      deleteQuotationResponse(id, data => {
+        successNotification('app.registration.detailsSaveSuccessMessage');
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      });
+    }
+  };
   const onFinish = values => {
     const formValues = getFormData(values);
     if (!newQuote) {
@@ -114,7 +138,7 @@ const QuoteResponses = props => {
           {
             ...formValues,
             comments: formValues.comments ? formValues.comments : null,
-            includesTax: formValues.includesTax ? true : false,
+            includesTax: !!formValues.includesTax,
           },
           id,
         );
@@ -123,7 +147,7 @@ const QuoteResponses = props => {
       onSave({
         ...formValues,
         supplierId: id,
-        includesTax: formValues.includesTax ? true : false,
+        includesTax: !!formValues.includesTax,
         files: newQuote ? filesList : [],
       });
     }
@@ -181,7 +205,6 @@ const QuoteResponses = props => {
     >
       <Divider />
       <Form
-        form={form}
         initialValues={initialFormData}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -519,9 +542,28 @@ const QuoteResponses = props => {
                       type="primary"
                       icon={<DeleteOutlined />}
                       className="gx-mb-0"
-                      onClick={() => {
-                        onDeleteResponse(id, newQuote);
-                      }}
+                      onClick={
+                        () => {
+                          console.log('alerting');
+                          if (newQuote) {
+                            setAlertInfo({
+                              type: 'unassign',
+                              confirmText: (
+                                <IntlMessages id="app.common.text.confirmUnassignQuotationResponse" />
+                              ),
+                            });
+                          } else {
+                            setAlertInfo({
+                              type: 'delete',
+                              confirmText: (
+                                <IntlMessages id="app.common.text.confirmDeleteQuotationResponse" />
+                              ),
+                            });
+                          }
+                          setIsShown(true);
+                        }
+                        //onDeleteResponse(id, newQuote);
+                      }
                     >
                       <span>
                         <IntlMessages id="button.delete" />
@@ -536,6 +578,20 @@ const QuoteResponses = props => {
           </Col>
         </Row>
       </Form>
+      <SweetAlert
+        confirmBtnText={<IntlMessages id="button.ok" />}
+        show={isShown}
+        warning
+        title={<IntlMessages id="app.common.text.confirm" />}
+        onConfirm={() => deleteQuoteResponse()}
+        cancelBtnText={<IntlMessages id="button.cancel" />}
+        showCancel
+        onCancel={() => setIsShown(false)}
+      >
+        <div>
+          <span>{alertInfo.confirmText}</span>
+        </div>
+      </SweetAlert>
     </Card>
   );
 };
